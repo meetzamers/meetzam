@@ -50,7 +50,7 @@ We aim to address such problem by creating a mobile application that not only pr
 22. As a user, I want to watch a movie in a group with my friends and strangers.
 23. As a user, I want to report another user if he or she assaulted me when we are matched and went to movie together.
 24. As a user, I want to search and add friends by their user names or phone numbers.
-25. As a user, I want to have my friends on other social media as my friends in meetZam. (As a user, I want to link my friends on other social media.?)
+25. As a user, I want to have my friends on other social media as my friends in meetZam.
 26. As a user, I want to know what movies my friends have watched.
 27. As a user, I want to filter movies comments to show only my friends’ comments.
 28. As a user, I want to know what movies my friends want to watch.
