@@ -26,35 +26,33 @@ We aim to address the problem by creating a mobile application that not only pro
 ### Functional Requirements
 
 1. As a user, I would like to create an account
-2. As a user, I want to have other signup / login options
-3. As a user, I want to know what movies are on nearby me this week
-4. As a user, I wish to know the relative heat order of the movies
+2. As a user, I want to have other signup/login options
+3. As a user, I want to know what movies are out this week
+4. As a user, I wish to know the popularity of the movies
 5. As a user, I want to filter movies according to category
 6. As a user, I want to look at posters and introductions of movies
-7. As a user, I want to have my friend list
+7. As a user, I want to have a friend list
 8. As a user, I want to invite my friends to watch movies
 9. As a user, I want to receive notification when my friends send me movie invitations
 10. As a user, I may want to choose to watch movies with strangers rather than alone when my friends are not available
 11. As a user, I want to mark movies I want to watch and wait for others to join me
-12. As a user, I want to see who (can be friends/strangers, according to my option) are still finding a movie buddy for the movie I want to watch
+12. As a user, I want to see who (friends/strangers) are still finding a movie buddy for the movie I want to watch
 13. As a developer, I would like to add users who agree to watch movies together to a group chat with 3-10 people
-14. As a user, after being added to a stranger group chat, I may want to quit the group chat if I decided not to go with people in group chat
-15. As a user, I want to rate the strangers I went to movie with
-16. As a user, I would like to comment the movies I have watched
-17. As a user, I would like to see other public comments on movies
+14. As a user, after being added to a stranger group chat, I may want to quit the group chat if I change my mind
+15. As a user, I want to rate the strangers that I went to the movie with
+16. As a user, I would like to comment on the movies I have watched
+17. As a user, I would like to see other public comments on the movies
 18. As a user, I want to chat with friends or strangers about specific plans of watching movies
-19. As a user, I want to rate the movies I have watched.
-20. As a user, I want to create my personal movie list to save the movies I liked, which can be shared to the public or my friends.
-
-21. As a user, I want to know what movies will be on in next few weeks
-22. As a user, I want to watch a movie in a group with my friends and strangers
-23. As a user, I want to report another user if he or she assaulted me when we are matched and went to movie together
-24. As a user, I want to search and add friends by their user names or phone numbers
-25. As a user, I want to have my friends on other social media as my friends in meetZam
+19. As a user, I want to rate the movies I have watched
+20. As a user, I want to create a personal movie list that saves the movies I like, which can be shared to the public or my friends
+21. As a user, I want to know what movies will be out in the next few weeks
+22. As a user, I want to see short reviews of the movies that I want to watch
+23. As a user, I want to have the option to report another user after returning from a movie together
+24. As a user, I want to search and add friends by their usernames
+25. As a user, I want to have the option of adding my friends on social media to my friendlist on meetZam
 26. As a user, I want to know what movies my friends have watched
 27. As a user, I want to filter movies comments to show only my friends’ comments
 28. As a user, I want to know what movies my friends want to watch
-29. As a user, I want to see short reviews of the movies that I want to watch
 
 
 ### Non-Functional Requirements
