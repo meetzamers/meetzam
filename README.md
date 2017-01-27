@@ -21,7 +21,7 @@ There are a couple of movie apps currently available on the App Store, Movies by
 
 While both of them have proven to be useful, they both lack the ability of helping people finding their movie-buddies. We believe one of major factor that stops people from going to the movie theater is the simple fact that they can’t find people to go with in a timely manner. 
 
-We aim to address such problem by creating a mobile application that not only providing showtime, commenting and reviewing, but also a matching mechanism that groups people based on what movie they wanted to watch.
+We aim to address such problem by creating a mobile application that provides not only showtime, commenting and reviewing, but also a matching mechanism that groups people based on what movie they wanted to watch.
 			
 ### Functional Requirements
 
