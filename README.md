@@ -65,9 +65,9 @@ The idea is that we will break our backend functionalities and logics into many 
 
 ##### Framework and Tools
 
-We will utilize Serverless Framework to help configure, provision and deploy Lambda functions onto AWS services. These Lambda functions responds to events, and can be triggered by our mobile app using AWS Mobile SDK or HTTP(s) requests via a custom API hosted on AWS API Gateway. Once triggered, the Lambda functions will perform tasks suitable to support the functional needs of our application. Such as data processing, user authentication, communicate with database, file system, and external APIs. 
+We will utilize Serverless Framework to help configure, provision and deploy Lambda functions onto AWS services. These Lambda functions respond to events, and can be triggered by our mobile app using AWS Mobile SDK or HTTP(s) requests via a custom API hosted on AWS API Gateway. Once triggered, the Lambda functions will perform tasks suitable to support the functional needs of our application, such as data processing, user authentication, communicate with database, file system, and external APIs. 
 
-Client side logics will be written in Swift and uses Xcode as primary development environment. Lambda functions will be written in JavaScript using Node.js 4.3 runtime. User authentication will support 3rd-party authentication providers such as Facebook, Google, and Amazon. Support in-app push notification using Amazon Pinpoint, email notification using AWS SNS. 
+Client side logics will be written in Swift and uses Xcode as the primary development environment. Lambda functions will be written in JavaScript using Node.js 4.3 runtime. User authentication will support 3rd-party authentication providers such as Facebook, Google, and Amazon. In-app push notification will be done using Amazon Pinpoint, while email notification will be done using AWS SNS. 
 
 ##### Security
 
@@ -75,12 +75,12 @@ One advantage of building backend on a matured platform like AWS is security. AW
 
 ##### Usability
 
-Our users are very important to us, because everything eventually comes down to if users like the product or not. Thus user experience will be a driven factor of our UI/UX design process. We try to make things easy for our users from the very beginning by allowing only 3rd-party authentication to free our users from memorizing yet another password and the frustrating process of entering the password. Once logged in, it is easy to navigate through, and understand the functionality of our app via a thoughtful, intuitive user interface. 
+Our users are very important to us, because everything eventually comes down to if users like the product or not. Thus user experience will be a driven factor of our UI/UX design process. We try to make things easy for our users from the very beginning by allowing only 3rd-party authentication to free our users from memorizing yet another password and the frustrating process of entering the password. Once logged in, it is easy to navigate through and understand the functionality of our app via a thoughtful, intuitive user interface. 
 
-In addition, we require essentially no input from our users to minimize the initial setup process so that a new user can start to enjoy the exciting service we aimed to provide right away. Furthermore, by utilize both in-app and email notification mechanism, we can provide our users with their matching status in real time to make sure everyone get notified as soon as we matched our user with a group. Combining with in-app group chat room, our users will be able to have more detailed discussion and planning with their new movie buddies. 
+In addition, we require essentially no input from our users to minimize the initial setup process so that a new user can start to enjoy the exciting service we aimed to provide right away. Furthermore, by utilizing both in-app and email notification mechanism, we can provide our users with their matching status in real time to make sure everyone gets notified as soon as we match our user with a group. Combining with an in-app group chat room, our users will be able to have more detailed discussions and plan an outing with their new movie buddies. 
 
 ##### Protecting Our Users
 
-We have reimagined the reviewing and commenting process because we understand the importance and how review and comment can be abused by hostile users which leads to significantly reduction in the experience for other users. And finally, to make sure our users have enjoyable experiences, we think beyond the scope of just the application by providing a user rating mechanism as a method encouraging proper social conduct during group movie sessions and possibly keeping the bad guys away.
+We have reimagined the reviewing and commenting process because we understand the importance of reviewing and commenting and how they can be abused by hostile users which leads to a significant drawback in the experience for other users. And finally, to make sure our users have enjoyable experiences, we think beyond the scope of just the application by providing a user rating mechanism as a method encouraging proper social conduct during group movie sessions.
 
 
