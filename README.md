@@ -34,26 +34,27 @@ We aim to address the problem by creating a mobile application that not only pro
 7. As a user, I want to have a friend list
 8. As a user, I want to invite my friends to watch movies
 9. As a user, I want to receive notification when my friends send me movie invitations
-10. As a user, I may want to choose to watch movies with strangers rather than alone when my friends are not available
-11. As a user, I want to mark the movies I want to watch and wait for others to join me
+10. As a user, I want to search and add friends by their usernames
+11. As a user, I want to have the option of adding my friends on social media to my friendlist on meetZam
 12. As a user, I want to see who (friends/strangers) are still finding a movie buddy for the movie I want to watch
-13. As a developer, I would like to add users who agree to watch movies together to a group chat with 3-10 people
-14. As a user, after being added to a stranger group chat, I may want to quit the group chat if I changed my mind
-15. As a user, I want to rate the strangers that I went to the movie with
-16. As a user, I would like to comment on the movies I have watched
-17. As a user, I would like to see other public comments on the movies
+13. As a user, I want to know what movies my friends want to watch
+14. As a developer, I would like to add users who agree to watch movies together to a group chat with 3-10 people
+15. As a user, I want to mark the movies I want to watch and wait for others to join me
+16. As a user, I want to receive notification when I am matched and added to a group chat.
+17. As a user, after being added to a stranger group chat, I may want to quit the group chat if I changed my mind
 18. As a user, I want to chat with friends or strangers about specific plans of how we are going to watch the movie
-19. As a user, I want to rate the movies I have watched
-20. As a user, I want to create a personal movie list that saves the movies I liked, which can be shared to the public or my friends
-21. As a user, I want to know what movies will be out in the next few weeks
-22. As a user, I want to see short reviews of the movies that I want to watch
-23. As a user, I want to check another user’s meetZam credit score, which indicates a user’s manner on meetZam application and post-matching behaviors
-24. As a user, I want to report another user if he or she demonstrated inappropriate behaviors, and their meetZam credit score will be deducted
-25. As a user, I want to search and add friends by their usernames
-26. As a user, I want to have the option of adding my friends on social media to my friendlist on meetZam
-27. As a user, I want to know what movies my friends have watched
-28. As a user, I want to filter movies comments to show only my friends’ comments
-29. As a user, I want to know what movies my friends want to watch
+19. As a user, I may want to choose to watch movies with strangers rather than alone when my friends are not available
+20. As a user, I would like to comment on the movies I have watched
+21. As a user, I would like to see other public comments on the movies
+22. As a user, I want to rate the movies I have watched
+23. As a user, I want to know what movies my friends have watched
+24. As a user, I want to filter movies comments to show only my friends’ comments
+25. As a user, I want to see short reviews of the movies that I want to watch
+26. As a user, I want to create a personal movie list that saves the movies I liked, which can be shared to the public or my friends
+27. As a user, I want to know what movies will be out in the next few weeks
+28. As a user, I want to rate the strangers that I went to the movie with
+29. As a user, I want to check another user’s meetZam credit score, which indicates a user’s manner on meetZam application and post-matching behaviors
+30. As a user, I want to report another user if he or she demonstrated inappropriate behaviors, and their meetZam credit score will be deducted
 
 
 ### Non-Functional Requirements
