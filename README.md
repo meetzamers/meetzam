@@ -25,12 +25,12 @@ We aim to address such problem by creating a mobile application that not only pr
 			
 ### Functional Requirements
 
-1. As a user, I would like to create an account.
+1. As a user, I would like to create an account
 2. As a user, I want to have other signup / login options
 3. As a user, I want to know what movies are on nearby me this week
 4. As a user, I wish to know the relative heat order of the movies
 5. As a user, I want to filter movies according to category
-6. As a user, I want to look at posters and introductions of movies.
+6. As a user, I want to look at posters and introductions of movies
 7. As a user, I want to have my friend list
 8. As a user, I want to invite my friends to watch movies
 9. As a user, I want to receive notification when my friends send me movie invitations
