@@ -25,26 +25,26 @@ We aim to address the problem by creating a mobile application that not only pro
 			
 ### Functional Requirements
 
-1. As a user, I would like to create an account
-2. As a user, I want to have other signup/login options
+1. As a user, I want to create an account
+2. As a user, I want to have multiple signup/login options
 3. As a user, I want to know what movies are out this week
-4. As a user, I wish to know the popularity of the movies
+4. As a user, I want to know the popularity of the movies
 5. As a user, I want to filter movies according to category
-6. As a user, I want to look at posters and introductions of movies
+6. As a user, I want to check posters and introductions of a movie
 7. As a user, I want to have a friend list
 8. As a user, I want to invite my friends to watch movies
 9. As a user, I want to receive notification when my friends send me movie invitations
 10. As a user, I may want to choose to watch movies with strangers rather than alone when my friends are not available
-11. As a user, I want to mark movies I want to watch and wait for others to join me
+11. As a user, I want to mark the movies I want to watch and wait for others to join me
 12. As a user, I want to see who (friends/strangers) are still finding a movie buddy for the movie I want to watch
 13. As a developer, I would like to add users who agree to watch movies together to a group chat with 3-10 people
-14. As a user, after being added to a stranger group chat, I may want to quit the group chat if I change my mind
+14. As a user, after being added to a stranger group chat, I may want to quit the group chat if I changed my mind
 15. As a user, I want to rate the strangers that I went to the movie with
 16. As a user, I would like to comment on the movies I have watched
 17. As a user, I would like to see other public comments on the movies
-18. As a user, I want to chat with friends or strangers about specific plans of watching movies
+18. As a user, I want to chat with friends or strangers about specific plans of how we are going to watch the movie
 19. As a user, I want to rate the movies I have watched
-20. As a user, I want to create a personal movie list that saves the movies I like, which can be shared to the public or my friends
+20. As a user, I want to create a personal movie list that saves the movies I liked, which can be shared to the public or my friends
 21. As a user, I want to know what movies will be out in the next few weeks
 22. As a user, I want to see short reviews of the movies that I want to watch
 23. As a user, I want to check another user’s meetZam credit score, which indicates a user’s manner on meetZam application and post-matching behaviors
