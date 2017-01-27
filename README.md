@@ -3,7 +3,7 @@
 				 	 						
 ### Problem Statement 
 
-Has anyone ever found any difficulty finding the correct movie and the ideal company to watch the movie with? Oftentimes, just the process of finding the right movie and organizing it with the right people can be a time-consuming task.
+Has anyone ever found any difficulty finding the correct movie and the ideal company to watch a movie with? Oftentimes, just the process of finding the right movie and organizing it with the right people can be a time-consuming task.
 
 We are envisioning a mobile application which allows people to find other people to go to a movie together. Users can select one or more movies that they want to watch and we will match them with a group of people with the same interests as them. 
 
