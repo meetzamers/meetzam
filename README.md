@@ -59,9 +59,9 @@ We aim to address the problem by creating a mobile application that not only pro
 							
 ##### Architecture 
 					
-We’ve decided to develop the application on iOS platform targeting iPhone users under several considerations, such as operating system performance, stability, security, and platform popularity. One highlight of our application architecture is that we’re building a No-Server backend, or so-called Serverless Architecture. 
+We’ve decided to develop the application on the iOS platform targeting iPhone users under several considerations, such as operating system performance, stability, security, and platform popularity. One highlight of our application architecture is that we’re building a No-Server backend, or so-called Serverless Architecture. 
 
-The idea is that we will break our backend functionalities and logics into many small pieces that each piece serve as an individual cloud-based micro-service that perform some simple task. This approach solves many problem arises from a traditional server-based architecture such as network and server management, compatibility and dependency management, scalability problems, and inefficient use of resources. In addition, since many application backends share common functionalities, breaking them into individual micro-services increased code reusability significantly. 
+The idea is that we will break our backend functionalities and logics into many small pieces that each serve as an individual cloud-based micro-service that performs some simple tasks. This approach solves many problems that arises from a traditional server-based architecture such as network and server management, compatibility and dependency management, scalability problems, and inefficient use of resources. In addition, since many application backends share common functionalities, breaking them into individual micro-services increases code reusability significantly. 
 
 ##### Framework and Tools
 
