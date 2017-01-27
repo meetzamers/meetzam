@@ -46,15 +46,15 @@ We aim to address such problem by creating a mobile application that provides no
 19. As a user, I want to rate the movies I have watched.
 20. As a user, I want to create my personal movie list to save the movies I liked, which can be shared to the public or my friends.
 
-21. As a user, I want to know what movies will be on in next few weeks. 
-22. As a user, I want to watch a movie in a group with my friends and strangers.
-23. As a user, I want to report another user if he or she assaulted me when we are matched and went to movie together.
-24. As a user, I want to search and add friends by their user names or phone numbers.
-25. As a user, I want to have my friends on other social media as my friends in meetZam.
-26. As a user, I want to know what movies my friends have watched.
-27. As a user, I want to filter movies comments to show only my friends’ comments.
-28. As a user, I want to know what movies my friends want to watch.
-29. As a user, I want to see short reviews of the movies that I want to watch.
+21. As a user, I want to know what movies will be on in next few weeks
+22. As a user, I want to watch a movie in a group with my friends and strangers
+23. As a user, I want to report another user if he or she assaulted me when we are matched and went to movie together
+24. As a user, I want to search and add friends by their user names or phone numbers
+25. As a user, I want to have my friends on other social media as my friends in meetZam
+26. As a user, I want to know what movies my friends have watched
+27. As a user, I want to filter movies comments to show only my friends’ comments
+28. As a user, I want to know what movies my friends want to watch
+29. As a user, I want to see short reviews of the movies that I want to watch
 
 
 ### Non-Functional Requirements
