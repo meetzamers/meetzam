@@ -47,12 +47,13 @@ We aim to address the problem by creating a mobile application that not only pro
 20. As a user, I want to create a personal movie list that saves the movies I like, which can be shared to the public or my friends
 21. As a user, I want to know what movies will be out in the next few weeks
 22. As a user, I want to see short reviews of the movies that I want to watch
-23. As a user, I want to have the option to report another user after returning from a movie together
-24. As a user, I want to search and add friends by their usernames
-25. As a user, I want to have the option of adding my friends on social media to my friendlist on meetZam
-26. As a user, I want to know what movies my friends have watched
-27. As a user, I want to filter movies comments to show only my friends’ comments
-28. As a user, I want to know what movies my friends want to watch
+23. As a user, I want to check another user’s meetZam credit score, which indicates a user’s manner on meetZam application and post-matching behaviors
+24. As a user, I want to report another user if he or she demonstrated inappropriate behaviors, and their meetZam credit score will be deducted
+25. As a user, I want to search and add friends by their usernames
+26. As a user, I want to have the option of adding my friends on social media to my friendlist on meetZam
+27. As a user, I want to know what movies my friends have watched
+28. As a user, I want to filter movies comments to show only my friends’ comments
+29. As a user, I want to know what movies my friends want to watch
 
 
 ### Non-Functional Requirements
