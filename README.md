@@ -11,17 +11,17 @@ Here at meetZam, we envision a mobile application that allows individuals to sea
 					
 ##### Targeted Users 
 		
-We noticed a gap in the market for individuals who have difficulty finding the ideal movie to watch. Even after deciding on a movie, oftentimes, finding the ideal company can prove to be an uphill task as well.
+We noticed a gap in the market for individuals who have difficulty finding the ideal movie to watch. Even after deciding on a movie, finding the ideal company can prove to be an uphill task as well.
 					
 ##### Similar Platforms 
 	
-There are a couple of movie apps currently available on the App Store, Movies by Flixster and Fandango Movies. They provide similar functionalities such as showtime information, commenting and reviewing, online ticketing and detailed movie information.  
+There are a couple of movie apps currently available on the App Store, such as Movies by Flixster and Fandango Movies. They provide similar functionalities such as showtime information, commenting and reviewing, online ticketing and detailed movie information.  
 
 ##### Limitations 
 
-While both of them have proven to be useful, they both lack the ability of helping people finding their movie-buddies. We believe one of major factor that stops people from going to the movie theater is the simple fact that they can’t find people to go with in a timely manner. 
+While both of the apps mentioned above have proven to be useful, they both lack the ability to help people find their movie-buddies. We believe that one of the major factor that hinders people from going to the movies is the fact that they can’t find other people to go with in a timely manner. 
 
-We aim to address such problem by creating a mobile application that provides not only showtime, commenting and reviewing, but also a matching mechanism that groups people based on what movie they wanted to watch.
+We aim to address the problem by creating a mobile application that not only provides movie showtimes, commenting and reviewing, but also a offers a matching mechanism that groups people based on what movies they want to watch.
 			
 ### Functional Requirements
 
