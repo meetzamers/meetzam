@@ -8,8 +8,7 @@ const dynamoDB = new AWS.DynamoDB({apiVersion: '2012-08-10'});
 
 // find the handler here
 module.exports.handler = (event, context, callback) => {
-  https://api.themoviedb.org/3/movie/now_playing?api_key=c0ed8b998275014fcf48784f97113281&language=en-US&page=1
-  let param = {   
+  let param = {
     hostname : "api.themoviedb.org",
     path : "/3/movie/now_playing?api_key=" + TMDB_API_key + "&language=en-US&page=1"
   };
@@ -30,7 +29,7 @@ module.exports.handler = (event, context, callback) => {
 
     response.on('end', function() {
       let parsedData = JSON.parse(rawData);
-      console.log("Fetched JSON is: " + parsedData);
+      console.log("Fetched JSON is: " + JSON.stringify(parsedData));
     });
 
   });
@@ -43,7 +42,7 @@ module.exports.handler = (event, context, callback) => {
 
 
 
-  
+
 
 
   // Use this code if you don't use the http event with the LAMBDA-PROXY integration

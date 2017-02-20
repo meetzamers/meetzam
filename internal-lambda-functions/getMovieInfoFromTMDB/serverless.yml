@@ -21,16 +21,9 @@ frameworkVersion: "=1.7.0"
 provider:
   name: aws
   runtime: nodejs4.3
-
-# you can overwrite defaults here
-#  stage: dev
-#  region: us-east-1
-
-# you can add statements to the Lambda function's IAM Role here
   iamRoleStatements:
-    - Effect: "Allow"
-      Action:
-        - "DynamoDB:putItem"
+    - Effect: Allow
+      Action: "DynamoDB:*"
       Resource: "arn:aws:dynamodb:us-east-1:397508666882:table/meetzam-mobilehub-1569925313-Movie"
 # won't upload to github
 custom: ${file(./credentials.json)}
@@ -61,10 +54,8 @@ custom: ${file(./credentials.json)}
 # define function here
 functions:
   movieInfoFromTMDB:
-    handler: "movieInfoFromTMDB.handler"
-    description: "get and parse movie data"
+    handler: movieInfoFromTMDB.handler
     events:
-    #run every 10 am utc
       - schedule: cron(0 10 * * ? *)
     environment:
       TMDB_API_key: ${self:custom.TMDB_API_key}

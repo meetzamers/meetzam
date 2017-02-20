@@ -88,9 +88,7 @@
             },
             {
               "Effect": "Allow",
-              "Action": [
-                "DynamoDB:putItem"
-              ],
+              "Action": "DynamoDB:*",
               "Resource": "arn:aws:dynamodb:us-east-1:397508666882:table/meetzam-mobilehub-1569925313-Movie"
             }
           ]
@@ -109,7 +107,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/getMovieInfoFromTMDB/dev/1487625448227-2017-02-20T21:17:28.227Z/getMovieInfoFromTMDB.zip"
+          "S3Key": "serverless/getMovieInfoFromTMDB/dev/1487627397822-2017-02-20T21:49:57.822Z/getMovieInfoFromTMDB.zip"
         },
         "FunctionName": "getMovieInfoFromTMDB-dev-movieInfoFromTMDB",
         "Handler": "movieInfoFromTMDB.handler",
@@ -122,11 +120,10 @@
         },
         "Runtime": "nodejs4.3",
         "Timeout": 6,
-        "Description": "get and parse movie data",
         "Environment": {
           "Variables": {
-            "TMDB_API_key": {},
-            "Gracenote_API_key": {}
+            "TMDB_API_key": "c0ed8b998275014fcf48784f97113281",
+            "Gracenote_API_key": "apch5z42htx9dhtutf8bd6wq"
           }
         }
       },
@@ -135,14 +132,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "MovieInfoFromTMDBLambdaVersionNML6iXHYWUQtMAjBiCn89iPKAEJYaz7FVxvv4us": {
+    "MovieInfoFromTMDBLambdaVersionx3ihA0W7LGkJ7ogDBKEoCWpAkiXyHzZ9yrsG0OkZI": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "MovieInfoFromTMDBLambdaFunction"
         },
-        "CodeSha256": "NML6iXHY+WUQtMAjB/iCn89iPKAEJY/az7+FVxvv4us="
+        "CodeSha256": "x3i/hA/0W7LGkJ7ogDBKEoCWpAkiXyHzZ9yrsG0OkZI="
       }
     },
     "MovieInfoFromTMDBEventsRuleSchedule1": {
@@ -192,7 +189,7 @@
     "MovieInfoFromTMDBLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "MovieInfoFromTMDBLambdaVersionNML6iXHYWUQtMAjBiCn89iPKAEJYaz7FVxvv4us"
+        "Ref": "MovieInfoFromTMDBLambdaVersionx3ihA0W7LGkJ7ogDBKEoCWpAkiXyHzZ9yrsG0OkZI"
       }
     }
   }
