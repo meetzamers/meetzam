@@ -5,10 +5,10 @@
     "ServerlessDeploymentBucket": {
       "Type": "AWS::S3::Bucket"
     },
-    "GetMovieInfoFromTMDBLogGroup": {
+    "MovieInfoFromTMDBLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/getMovieInfoFromTMDB-dev-getMovieInfoFromTMDB"
+        "LogGroupName": "/aws/lambda/getMovieInfoFromTMDB-dev-movieInfoFromTMDB"
       }
     },
     "IamRoleLambdaExecution": {
@@ -76,7 +76,7 @@
                     [
                       {
                         "Fn::GetAtt": [
-                          "GetMovieInfoFromTMDBLogGroup",
+                          "MovieInfoFromTMDBLogGroup",
                           "Arn"
                         ]
                       },
@@ -89,9 +89,7 @@
             {
               "Effect": "Allow",
               "Action": [
-                {
-                  "DynamoDB": "putItem"
-                }
+                "DynamoDB:putItem"
               ],
               "Resource": "arn:aws:dynamodb:us-east-1:397508666882:table/meetzam-mobilehub-1569925313-Movie"
             }
@@ -104,17 +102,17 @@
         ]
       }
     },
-    "GetMovieInfoFromTMDBLambdaFunction": {
+    "MovieInfoFromTMDBLambdaFunction": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/getMovieInfoFromTMDB/dev/1487624132627-2017-02-20T20:55:32.627Z/getMovieInfoFromTMDB.zip"
+          "S3Key": "serverless/getMovieInfoFromTMDB/dev/1487625448227-2017-02-20T21:17:28.227Z/getMovieInfoFromTMDB.zip"
         },
-        "FunctionName": "getMovieInfoFromTMDB-dev-getMovieInfoFromTMDB",
-        "Handler": "getMovieInfoFromTMDB.handler",
+        "FunctionName": "getMovieInfoFromTMDB-dev-movieInfoFromTMDB",
+        "Handler": "movieInfoFromTMDB.handler",
         "MemorySize": 1024,
         "Role": {
           "Fn::GetAtt": [
@@ -124,24 +122,30 @@
         },
         "Runtime": "nodejs4.3",
         "Timeout": 6,
-        "Description": "get and parse movie data"
+        "Description": "get and parse movie data",
+        "Environment": {
+          "Variables": {
+            "TMDB_API_key": {},
+            "Gracenote_API_key": {}
+          }
+        }
       },
       "DependsOn": [
         "IamPolicyLambdaExecution",
         "IamRoleLambdaExecution"
       ]
     },
-    "GetMovieInfoFromTMDBLambdaVersion4R3ilhSrOk3SWPEW5Sof5Ga5cE2dlXL021UL8yqwC0": {
+    "MovieInfoFromTMDBLambdaVersionNML6iXHYWUQtMAjBiCn89iPKAEJYaz7FVxvv4us": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
-          "Ref": "GetMovieInfoFromTMDBLambdaFunction"
+          "Ref": "MovieInfoFromTMDBLambdaFunction"
         },
-        "CodeSha256": "4R3ilhSrOk3SWPEW5Sof/5Ga5cE2dlXL021UL8yqwC0="
+        "CodeSha256": "NML6iXHY+WUQtMAjB/iCn89iPKAEJY/az7+FVxvv4us="
       }
     },
-    "GetMovieInfoFromTMDBEventsRuleSchedule1": {
+    "MovieInfoFromTMDBEventsRuleSchedule1": {
       "Type": "AWS::Events::Rule",
       "Properties": {
         "ScheduleExpression": "cron(0 10 * * ? *)",
@@ -150,21 +154,21 @@
           {
             "Arn": {
               "Fn::GetAtt": [
-                "GetMovieInfoFromTMDBLambdaFunction",
+                "MovieInfoFromTMDBLambdaFunction",
                 "Arn"
               ]
             },
-            "Id": "getMovieInfoFromTMDBSchedule"
+            "Id": "movieInfoFromTMDBSchedule"
           }
         ]
       }
     },
-    "GetMovieInfoFromTMDBLambdaPermissionEventsRuleSchedule1": {
+    "MovieInfoFromTMDBLambdaPermissionEventsRuleSchedule1": {
       "Type": "AWS::Lambda::Permission",
       "Properties": {
         "FunctionName": {
           "Fn::GetAtt": [
-            "GetMovieInfoFromTMDBLambdaFunction",
+            "MovieInfoFromTMDBLambdaFunction",
             "Arn"
           ]
         },
@@ -172,7 +176,7 @@
         "Principal": "events.amazonaws.com",
         "SourceArn": {
           "Fn::GetAtt": [
-            "GetMovieInfoFromTMDBEventsRuleSchedule1",
+            "MovieInfoFromTMDBEventsRuleSchedule1",
             "Arn"
           ]
         }
@@ -185,10 +189,10 @@
         "Ref": "ServerlessDeploymentBucket"
       }
     },
-    "GetMovieInfoFromTMDBLambdaFunctionQualifiedArn": {
+    "MovieInfoFromTMDBLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "GetMovieInfoFromTMDBLambdaVersion4R3ilhSrOk3SWPEW5Sof5Ga5cE2dlXL021UL8yqwC0"
+        "Ref": "MovieInfoFromTMDBLambdaVersionNML6iXHYWUQtMAjBiCn89iPKAEJYaz7FVxvv4us"
       }
     }
   }
