@@ -106,6 +106,8 @@ class MainViewController: UITableViewController {
                 })
                 
                 setupRightBarButtonItem()
+        
+        
     }
     
     deinit {
@@ -122,7 +124,9 @@ class MainViewController: UITableViewController {
                 navigationItem.rightBarButtonItem!.title = NSLocalizedString("Sign-Out", comment: "Label for the logout button.")
                 navigationItem.rightBarButtonItem!.action = #selector(MainViewController.handleLogout)
             }
+        
     }
+    
     
     func presentSignInViewController() {
         if !AWSIdentityManager.default().isLoggedIn {
@@ -186,6 +190,8 @@ class MainViewController: UITableViewController {
             assert(false)
         }
     }
+    
+    
 }
 
 class FeatureDescriptionViewController: UIViewController {
