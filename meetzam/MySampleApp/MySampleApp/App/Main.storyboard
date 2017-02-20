@@ -87,7 +87,7 @@
         <!--Home-->
         <scene sceneID="h0P-j0-maD">
             <objects>
-                <viewController id="Gbo-Ne-6Fx" sceneMemberID="viewController">
+                <viewController id="Gbo-Ne-6Fx" customClass="HomeNavViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="EJM-QY-q9Z"/>
                         <viewControllerLayoutGuide type="bottom" id="jZx-MZ-csh"/>
@@ -96,21 +96,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tIN-W6-8eb">
-                                <rect key="frame" x="166" y="323" width="42" height="21"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WuD-BA-GIA">
+                                <rect key="frame" x="114" y="318" width="146" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <state key="normal" title="meetzam Home View"/>
+                                <connections>
+                                    <action selector="gotoHomeButton:" destination="Gbo-Ne-6Fx" eventType="touchUpInside" id="e54-yx-JrN"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" id="bxX-4s-L7s"/>
+                    <connections>
+                        <segue destination="1TQ-Pm-y86" kind="show" identifier="gotoHomeSegue" id="yTT-9Y-MBv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ft9-CU-ZWE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3916" y="1066"/>
+            <point key="canvasLocation" x="2977" y="1128"/>
+        </scene>
+        <!--MainTabBar-->
+        <scene sceneID="wsI-eX-QWp">
+            <objects>
+                <viewControllerPlaceholder storyboardName="MainTabBar" id="1TQ-Pm-y86" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="7H0-Md-gXK"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="a03-dG-rb1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3726" y="1127"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="lcz-Ty-Ed3">
@@ -118,6 +132,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="YdP-tP-3Cx" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="SmL-2I-Tfy">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
