@@ -38,5 +38,6 @@ Thumbs.db
 
 # User specified files #
 ########################
-/internal-lambda-functions/getMovieInfoFromTMDB/credentials.json
+.npmignore
+/meetzamLambda/getInTheaterMovieInfo/credentials.json
 /meetzamLambda/getMovieInfoFromTMDB/credentials.json

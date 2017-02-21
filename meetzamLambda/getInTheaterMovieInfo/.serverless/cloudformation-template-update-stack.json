@@ -8,7 +8,7 @@
     "BackendLambdaLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/getMovieInfoFromTMDB-production-backendLambda"
+        "LogGroupName": "/aws/lambda/getInTheaterMovieInfo-production-backendLambda"
       }
     },
     "IamRoleLambdaExecution": {
@@ -35,7 +35,7 @@
           "Fn::Join": [
             "-",
             [
-              "getMovieInfoFromTMDB",
+              "getInTheaterMovieInfo",
               "production",
               "us-east-1",
               "lambdaRole"
@@ -55,7 +55,7 @@
             "-",
             [
               "production",
-              "getMovieInfoFromTMDB",
+              "getInTheaterMovieInfo",
               "lambda"
             ]
           ]
@@ -107,9 +107,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/getMovieInfoFromTMDB/production/1487641661860-2017-02-21T01:47:41.860Z/getMovieInfoFromTMDB.zip"
+          "S3Key": "serverless/getInTheaterMovieInfo/production/1487641051940-2017-02-21T01:37:31.940Z/getInTheaterMovieInfo.zip"
         },
-        "FunctionName": "getMovieInfoFromTMDB-production-backendLambda",
+        "FunctionName": "getInTheaterMovieInfo-production-backendLambda",
         "Handler": "backendLambda.handler",
         "MemorySize": 1024,
         "Role": {
@@ -132,14 +132,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "BackendLambdaLambdaVersionkocVSKAdPzwxV9UkMplmQcTWtSZEuep06gNYgjrWE": {
+    "BackendLambdaLambdaVersionFNsgsXAPe2Jm3FpYb0rQ9xOWOlaNWpFTnIks35brQ": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "BackendLambdaLambdaFunction"
         },
-        "CodeSha256": "kocVSKAdPzwxV9/UkMplmQcTWtSZ+Euep06gNYgjrWE="
+        "CodeSha256": "FNsgsXAP/e2Jm3F/pYb0rQ9xOWOlaNWpFTnIks35brQ="
       }
     },
     "BackendLambdaEventsRuleSchedule1": {
@@ -189,7 +189,7 @@
     "BackendLambdaLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "BackendLambdaLambdaVersionkocVSKAdPzwxV9UkMplmQcTWtSZEuep06gNYgjrWE"
+        "Ref": "BackendLambdaLambdaVersionFNsgsXAPe2Jm3FpYb0rQ9xOWOlaNWpFTnIks35brQ"
       }
     }
   }
