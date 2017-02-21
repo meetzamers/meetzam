@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6B443C481B5DB06200406B17"
+               BlueprintIdentifier = "E66DC04E0000000000000000"
                BuildableName = "MySampleApp.app"
                BlueprintName = "MySampleApp"
                ReferencedContainer = "container:MySampleApp.xcodeproj">
@@ -32,7 +32,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6B443C481B5DB06200406B17"
+            BlueprintIdentifier = "E66DC04E0000000000000000"
             BuildableName = "MySampleApp.app"
             BlueprintName = "MySampleApp"
             ReferencedContainer = "container:MySampleApp.xcodeproj">
@@ -55,12 +55,19 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6B443C481B5DB06200406B17"
+            BlueprintIdentifier = "E66DC04E0000000000000000"
             BuildableName = "MySampleApp.app"
             BlueprintName = "MySampleApp"
             ReferencedContainer = "container:MySampleApp.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <EnvironmentVariables>
+         <EnvironmentVariable
+            key = "OS_ACTIVITY_MODE"
+            value = "disable"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+      </EnvironmentVariables>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -74,7 +81,7 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6B443C481B5DB06200406B17"
+            BlueprintIdentifier = "E66DC04E0000000000000000"
             BuildableName = "MySampleApp.app"
             BlueprintName = "MySampleApp"
             ReferencedContainer = "container:MySampleApp.xcodeproj">

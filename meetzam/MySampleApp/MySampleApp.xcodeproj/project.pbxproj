@@ -8,8 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1B7A726B1E5A969900680202 /* SegueFromRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7A726A1E5A969900680202 /* SegueFromRight.swift */; };
-		C4BF9C3E1E5B609700C73405 /* HomeNavViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF9C3D1E5B609700C73405 /* HomeNavViewController.swift */; };
-		C4BF9C411E5B61A500C73405 /* MainTabBar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4BF9C401E5B61A500C73405 /* MainTabBar.storyboard */; };
+		C4BF9C411E5B61A500C73405 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4BF9C401E5B61A500C73405 /* Main.storyboard */; };
 		C4BF9C441E5B643C00C73405 /* TabBarHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF9C431E5B643C00C73405 /* TabBarHomeViewController.swift */; };
 		E7A30F04077D295600000000 /* SignIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1DD70E29F31C638F00000000 /* SignIn.storyboard */; };
 		E7A30F0407CAE03600000000 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DD70E29EBA6D9AE00000000 /* CFNetwork.framework */; };
@@ -20,7 +19,7 @@
 		E7A30F0413A7A78800000000 /* PushNotification.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1DD70E2902E65C3B00000000 /* PushNotification.storyboard */; };
 		E7A30F04195B4B7F00000000 /* UserSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD70E29167CCE5500000000 /* UserSettingsViewController.swift */; };
 		E7A30F041B4FE28C00000000 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DD70E2992FEE2B600000000 /* SystemConfiguration.framework */; };
-		E7A30F042D45845500000000 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD70E293060CB0400000000 /* MainViewController.swift */; };
+		E7A30F042D45845500000000 /* DemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD70E293060CB0400000000 /* DemoViewController.swift */; };
 		E7A30F0431BF140A00000000 /* AWSSNS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1DD70E297407256600000000 /* AWSSNS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E7A30F0431BF140A00000001 /* AWSSNS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DD70E297407256600000000 /* AWSSNS.framework */; };
 		E7A30F043CD1B25F00000000 /* CloudLogicAPIInvokeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD70E29EE275E5400000000 /* CloudLogicAPIInvokeViewController.swift */; };
@@ -49,7 +48,7 @@
 		E7A30F0491953CE700000000 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD70E29D8F3C33900000000 /* UserProfile.swift */; };
 		E7A30F0491C7F35D00000000 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1DD70E29B2447A6600000000 /* Launch Screen.storyboard */; };
 		E7A30F0495A1857C00000000 /* UserFilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD70E29862A01C500000000 /* UserFilesViewController.swift */; };
-		E7A30F04A0D4545E00000000 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1DD70E29096EDB9200000000 /* Main.storyboard */; };
+		E7A30F04A0D4545E00000000 /* DemoView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1DD70E29096EDB9200000000 /* DemoView.storyboard */; };
 		E7A30F04A21C25E100000000 /* NoSQLTableListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD70E29E5F9AA9000000000 /* NoSQLTableListViewController.swift */; };
 		E7A30F04A2C572B800000000 /* UtilityFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD70E29AA1F50A100000000 /* UtilityFunctions.swift */; };
 		E7A30F04A4541E2800000000 /* CloudLogicAPIFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD70E293DE93AF200000000 /* CloudLogicAPIFactory.swift */; };
@@ -108,12 +107,12 @@
 		1DD70E29008FEFA700000000 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignInViewController.swift; path = MySampleApp/App/SignIn/SignInViewController.swift; sourceTree = SOURCE_ROOT; };
 		1DD70E2902E65C3B00000000 /* PushNotification.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = PushNotification.storyboard; path = MySampleApp/Demo/Push/PushNotification.storyboard; sourceTree = SOURCE_ROOT; };
 		1DD70E29081A119000000000 /* ContentDeliveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentDeliveryViewController.swift; path = MySampleApp/Demo/ContentDelivery/ContentDeliveryViewController.swift; sourceTree = SOURCE_ROOT; };
-		1DD70E29096EDB9200000000 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Main.storyboard; path = MySampleApp/App/Main.storyboard; sourceTree = SOURCE_ROOT; };
+		1DD70E29096EDB9200000000 /* DemoView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = DemoView.storyboard; path = MySampleApp/App/DemoView.storyboard; sourceTree = SOURCE_ROOT; };
 		1DD70E290A7BF96600000000 /* ConversationTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConversationTable.swift; path = MySampleApp/Demo/NoSQL/ConversationTable.swift; sourceTree = SOURCE_ROOT; };
 		1DD70E29167CCE5500000000 /* UserSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserSettingsViewController.swift; path = MySampleApp/Demo/UserSettings/UserSettingsViewController.swift; sourceTree = SOURCE_ROOT; };
 		1DD70E29218BD6F000000000 /* DemoFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DemoFeature.swift; path = MySampleApp/Demo/DemoFeature.swift; sourceTree = SOURCE_ROOT; };
 		1DD70E292EA3F0F600000000 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MySampleApp/App/Images.xcassets; sourceTree = SOURCE_ROOT; };
-		1DD70E293060CB0400000000 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = MySampleApp/App/MainViewController.swift; sourceTree = SOURCE_ROOT; };
+		1DD70E293060CB0400000000 /* DemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DemoViewController.swift; path = MySampleApp/App/DemoViewController.swift; sourceTree = SOURCE_ROOT; };
 		1DD70E293DE93AF200000000 /* CloudLogicAPIFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CloudLogicAPIFactory.swift; path = MySampleApp/Demo/CloudLogic/CloudLogicAPIFactory.swift; sourceTree = SOURCE_ROOT; };
 		1DD70E29428BE7AC00000000 /* NoSQLTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NoSQLTableViewController.swift; path = MySampleApp/Demo/NoSQL/NoSQLTableViewController.swift; sourceTree = SOURCE_ROOT; };
 		1DD70E2942ED083600000000 /* CloudLogicAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CloudLogicAPI.swift; path = MySampleApp/Demo/CloudLogic/CloudLogicAPI.swift; sourceTree = SOURCE_ROOT; };
@@ -177,8 +176,7 @@
 		1DD70E29FC9496CC00000000 /* NoSQLDatabase.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = NoSQLDatabase.storyboard; path = MySampleApp/Demo/NoSQL/NoSQLDatabase.storyboard; sourceTree = SOURCE_ROOT; };
 		1DD70E29FDA0BE4900000000 /* AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.h; path = MySampleApp/AmazonAws/Api/AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.h; sourceTree = SOURCE_ROOT; };
 		1DD70E29FE33984F00000000 /* AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.m; path = MySampleApp/AmazonAws/Api/AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.m; sourceTree = SOURCE_ROOT; };
-		C4BF9C3D1E5B609700C73405 /* HomeNavViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeNavViewController.swift; path = MySampleApp/App/HomeNavViewController.swift; sourceTree = SOURCE_ROOT; };
-		C4BF9C401E5B61A500C73405 /* MainTabBar.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = MainTabBar.storyboard; path = MySampleApp/meetzam/MainTabBar.storyboard; sourceTree = SOURCE_ROOT; };
+		C4BF9C401E5B61A500C73405 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = MySampleApp/meetzam/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		C4BF9C431E5B643C00C73405 /* TabBarHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarHomeViewController.swift; path = MySampleApp/meetzam/HomeView/TabBarHomeViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -352,10 +350,8 @@
 				1DD70E29ECE4531800000000 /* AppDelegate.swift */,
 				1DD70E292EA3F0F600000000 /* Images.xcassets */,
 				1DD70E29B2447A6600000000 /* Launch Screen.storyboard */,
-				1DD70E29096EDB9200000000 /* Main.storyboard */,
-				1DD70E293060CB0400000000 /* MainViewController.swift */,
-				C4BF9C3D1E5B609700C73405 /* HomeNavViewController.swift */,
-				B401C979E100CAB200000000 /* SignIn */,
+				1DD70E29096EDB9200000000 /* DemoView.storyboard */,
+				1DD70E293060CB0400000000 /* DemoViewController.swift */,
 				B401C979DBB4629A00000000 /* SupportingFiles */,
 				B401C979E43C098A00000000 /* Utility */,
 			);
@@ -432,7 +428,6 @@
 		B401C979DBB4629A00000000 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				1B7A726A1E5A969900680202 /* SegueFromRight.swift */,
 				1DD70E2971CD20D500000000 /* Info.plist */,
 			);
 			name = SupportingFiles;
@@ -459,7 +454,7 @@
 				1DD70E29008FEFA700000000 /* SignInViewController.swift */,
 			);
 			name = SignIn;
-			path = mysampleapp/app/signin;
+			path = mysampleapp/app/mysampleapp/app/signin;
 			sourceTree = "<group>";
 		};
 		B401C979E43C098A00000000 /* Utility */ = {
@@ -471,11 +466,21 @@
 			path = mysampleapp/app/utility;
 			sourceTree = "<group>";
 		};
+		C412E65E1E5BF93100BE8B61 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				1B7A726A1E5A969900680202 /* SegueFromRight.swift */,
+			);
+			name = Animation;
+			sourceTree = "<group>";
+		};
 		C4BF9C3F1E5B618900C73405 /* meetzam */ = {
 			isa = PBXGroup;
 			children = (
-				C4BF9C401E5B61A500C73405 /* MainTabBar.storyboard */,
+				C4BF9C401E5B61A500C73405 /* Main.storyboard */,
 				C4BF9C421E5B640900C73405 /* HomeView */,
+				B401C979E100CAB200000000 /* SignIn */,
+				C412E65E1E5BF93100BE8B61 /* Animation */,
 			);
 			name = meetzam;
 			sourceTree = "<group>";
@@ -558,10 +563,10 @@
 				E7A30F04FAE410D900000000 /* UserDataStorage.storyboard in Resources */,
 				E7A30F0491C7F35D00000000 /* Launch Screen.storyboard in Resources */,
 				E7A30F04BE2015F700000000 /* Images.xcassets in Resources */,
-				C4BF9C411E5B61A500C73405 /* MainTabBar.storyboard in Resources */,
+				C4BF9C411E5B61A500C73405 /* Main.storyboard in Resources */,
 				E7A30F049002081F00000000 /* UserFiles.storyboard in Resources */,
 				E7A30F04FA69C05800000000 /* CloudLogicAPI.storyboard in Resources */,
-				E7A30F04A0D4545E00000000 /* Main.storyboard in Resources */,
+				E7A30F04A0D4545E00000000 /* DemoView.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -621,11 +626,10 @@
 				E7A30F0441798FFD00000000 /* NoSQLSampleDataGenerator.swift in Sources */,
 				E7A30F04A2C572B800000000 /* UtilityFunctions.swift in Sources */,
 				E7A30F04F01DFC3F00000000 /* NoSQLTableViewController.swift in Sources */,
-				E7A30F042D45845500000000 /* MainViewController.swift in Sources */,
+				E7A30F042D45845500000000 /* DemoViewController.swift in Sources */,
 				E7A30F046F849B0700000000 /* ChatRoomTable.swift in Sources */,
 				E7A30F04559CB61500000000 /* CloudLogicAPI.swift in Sources */,
 				E7A30F04B9F764D000000000 /* NoSQLQueryResultViewController.swift in Sources */,
-				C4BF9C3E1E5B609700C73405 /* HomeNavViewController.swift in Sources */,
 				E7A30F04FDE8AC3000000000 /* CloudLogicAPIOperationsViewController.swift in Sources */,
 				E7A30F04F461178300000000 /* SignInViewController.swift in Sources */,
 				E7A30F04A4541E2800000000 /* CloudLogicAPIFactory.swift in Sources */,
