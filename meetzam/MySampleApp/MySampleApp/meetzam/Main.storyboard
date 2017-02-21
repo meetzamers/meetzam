@@ -94,7 +94,7 @@
                     <connections>
                         <segue destination="M4r-Ps-iiq" kind="relationship" relationship="viewControllers" id="UI2-oI-zhW"/>
                         <segue destination="RcN-jF-z05" kind="relationship" relationship="viewControllers" id="Ura-bJ-DO5"/>
-                        <segue destination="RLX-0t-4ck" kind="relationship" relationship="viewControllers" id="h7j-DL-Ce4"/>
+                        <segue destination="0O2-CG-5wu" kind="relationship" relationship="viewControllers" id="h7j-DL-Ce4"/>
                         <segue destination="lgx-AO-AB4" kind="relationship" relationship="viewControllers" id="EOC-He-u2K"/>
                         <segue destination="wis-jw-d7L" kind="relationship" relationship="viewControllers" id="1rm-lY-ICN"/>
                     </connections>
@@ -125,11 +125,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Match" image="Match" id="T8d-at-rsD"/>
+                    <navigationItem key="navigationItem" title="Match" id="prY-EE-9sR">
+                        <barButtonItem key="leftBarButtonItem" image="BackHome" id="b3u-xo-qk7"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xmY-2f-fSy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="233" y="116"/>
+            <point key="canvasLocation" x="1172" y="115.59220389805098"/>
         </scene>
         <!--Profile-->
         <scene sceneID="flR-GG-ScD">
@@ -153,7 +155,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Profile" id="qCX-L0-MkU"/>
+                    <navigationItem key="navigationItem" title="Profile" id="qCX-L0-MkU">
+                        <barButtonItem key="rightBarButtonItem" image="Setting" id="212-yT-BHb"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n8g-Y9-yXm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -244,12 +248,33 @@
             </objects>
             <point key="canvasLocation" x="-1247" y="833"/>
         </scene>
+        <!--Match-->
+        <scene sceneID="bBq-n2-BUD">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0O2-CG-5wu" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Match" image="Match" id="T8d-at-rsD"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="kQk-QR-BUa">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="RLX-0t-4ck" kind="relationship" relationship="rootViewController" id="77F-E1-q1J"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ADM-jy-Vyv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="232.80000000000001" y="115.59220389805098"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="BackHome" width="25" height="25"/>
         <image name="Chat" width="25" height="25"/>
         <image name="Contacts" width="25" height="25"/>
         <image name="Home" width="25" height="25"/>
         <image name="Match" width="25" height="25"/>
         <image name="Profile" width="25" height="25"/>
+        <image name="Setting" width="25" height="25"/>
     </resources>
 </document>

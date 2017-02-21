@@ -479,6 +479,7 @@
 		C412E65F1E5C15E600BE8B61 /* ContactsView */ = {
 			isa = PBXGroup;
 			children = (
+				C412E6601E5C160C00BE8B61 /* ContactsViewController.swift */,
 			);
 			name = ContactsView;
 			sourceTree = "<group>";
@@ -489,7 +490,6 @@
 				C4BF9C401E5B61A500C73405 /* Main.storyboard */,
 				C4BF9C421E5B640900C73405 /* HomeView */,
 				C412E65F1E5C15E600BE8B61 /* ContactsView */,
-				C412E6601E5C160C00BE8B61 /* ContactsViewController.swift */,
 				B401C979E100CAB200000000 /* SignIn */,
 				C412E65E1E5BF93100BE8B61 /* Animation */,
 			);

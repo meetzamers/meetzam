@@ -17,22 +17,12 @@ import AWSMobileHubHelper
 import FBSDKLoginKit
 
 class SignInViewController: UIViewController {
-    @IBOutlet weak var anchorView: UIView!
+    //@IBOutlet weak var anchorView: UIView!
 
     @IBOutlet weak var facebookButton: UIButton!
 
-// Support code for Google provider UI.
-    @IBOutlet weak var googleButton: UIButton!
-
-// Support code for custom sign-in provider UI.
-    @IBOutlet weak var customProviderButton: UIButton!
-    @IBOutlet weak var customCreateAccountButton: UIButton!
-    @IBOutlet weak var customForgotPasswordButton: UIButton!
-    @IBOutlet weak var customUserIdField: UITextField!
-    @IBOutlet weak var customPasswordField: UITextField!
-    @IBOutlet weak var leftHorizontalBar: UIView!
-    @IBOutlet weak var rightHorizontalBar: UIView!
-    @IBOutlet weak var orSignInWithLabel: UIView!
+//// Support code for Google provider UI.
+//    @IBOutlet weak var googleButton: UIButton!
     
     var didSignInObserver: AnyObject!
     
@@ -42,42 +32,34 @@ class SignInViewController: UIViewController {
         super.viewDidLoad()
          print("Sign In Loading.")
         
-            didSignInObserver =  NotificationCenter.default.addObserver(forName: NSNotification.Name.AWSIdentityManagerDidSignIn,
+            didSignInObserver =  NotificationCenter.default.addObserver(
+                forName: NSNotification.Name.AWSIdentityManagerDidSignIn,
                 object: AWSIdentityManager.default(),
                 queue: OperationQueue.main,
                 using: {(note: Notification) -> Void in
                     // perform successful login actions here
             })
 
-                // Facebook login permissions can be optionally set, but must be set
-                // before user authenticates.
-                AWSFacebookSignInProvider.sharedInstance().setPermissions(["public_profile"]);
+            // Facebook login permissions can be optionally set, but must be set
+            // before user authenticates.
+            AWSFacebookSignInProvider.sharedInstance().setPermissions(["public_profile"]);
                 
-                // Facebook login behavior can be optionally set, but must be set
-                // before user authenticates.
-//                AWSFacebookSignInProvider.sharedInstance().setLoginBehavior(FBSDKLoginBehavior.Web.rawValue)
+            // Facebook login behavior can be optionally set, but must be set
+            // before user authenticates.
+            // AWSFacebookSignInProvider.sharedInstance().setLoginBehavior(FBSDKLoginBehavior.Web.rawValue)
                 
-                // Facebook UI Setup
-                facebookButton.addTarget(self, action: #selector(SignInViewController.handleFacebookLogin), for: .touchUpInside)
-                let facebookButtonImage: UIImage? = UIImage(named: "FacebookButton")
-                if let facebookButtonImage = facebookButtonImage{
-                    facebookButton.setImage(facebookButtonImage, for: UIControlState())
-                } else {
-                     print("Facebook button image unavailable. We're hiding this button.")
-                    facebookButton.isHidden = true
-                }
-                view.addConstraint(NSLayoutConstraint(item: facebookButton, attribute: .top, relatedBy: .equal, toItem: anchorViewForFacebook(), attribute: .bottom, multiplier: 1, constant: 8.0))
-                googleButton.removeFromSuperview()
-                customProviderButton.removeFromSuperview()
-                customCreateAccountButton.removeFromSuperview()
-                customForgotPasswordButton.removeFromSuperview()
-                customUserIdField.removeFromSuperview()
-                customPasswordField.removeFromSuperview()
-                leftHorizontalBar.removeFromSuperview()
-                rightHorizontalBar.removeFromSuperview()
-                orSignInWithLabel.removeFromSuperview()
-                customProviderButton.setImage(UIImage(named: "LoginButton"), for: UIControlState())
-        
+            // Facebook UI Setup
+            facebookButton.addTarget(self,
+                action: #selector(SignInViewController.handleFacebookLogin),
+                for: .touchUpInside)
+            let facebookButtonImage: UIImage? = UIImage(named: "Facebook Login")
+            if let facebookButtonImage = facebookButtonImage{
+                facebookButton.setImage(facebookButtonImage, for: UIControlState())
+            }
+            else {
+                print("Facebook button image unavailable. We're hiding this button.")
+                facebookButton.isHidden = true
+            }
         
     }
     
@@ -90,16 +72,17 @@ class SignInViewController: UIViewController {
     }
     
     // MARK: - Utility Methods
-    
     func handleLoginWithSignInProvider(_ signInProvider: AWSSignInProvider) {
-        AWSIdentityManager.default().login(signInProvider: signInProvider, completionHandler: {(result: Any?, error: Error?) in
+        AWSIdentityManager.default().login(
+            signInProvider: signInProvider,
+            completionHandler: {(result: Any?, error: Error?) in
             // If no error reported by SignInProvider, discard the sign-in view controller.
             if error == nil {
                 DispatchQueue.main.async(execute: {
                     self.presentingViewController?.dismiss(animated: true, completion: nil)
                 })
             }
-             print("result = \(result), error = \(error)")
+            print("result = \(result), error = \(error)")
         })
     }
 
@@ -116,9 +99,5 @@ class SignInViewController: UIViewController {
         handleLoginWithSignInProvider(AWSFacebookSignInProvider.sharedInstance())
     }
     
-
-    func anchorViewForFacebook() -> UIView {
-        return anchorView
-    }
     
 }
