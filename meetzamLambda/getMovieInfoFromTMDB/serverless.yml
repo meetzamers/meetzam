@@ -12,7 +12,7 @@
 # Happy Coding!
 
 # call by name of service
-service: getMovieInfoFromTMDB
+service: backendLambda
 
 # You can pin your service to only deploy with a specific Serverless version
 # Check out our docs for more details
@@ -53,8 +53,8 @@ custom: ${file(./credentials.json)}
 
 # define function here
 functions:
-  movieInfoFromTMDB:
-    handler: movieInfoFromTMDB.handler
+  getMovieInfoFromTMDB:
+    handler: getMovieInfoFromTMDB.handler
     events:
       - schedule: cron(0 10 * * ? *)
     environment:

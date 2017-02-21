@@ -5,10 +5,10 @@
     "ServerlessDeploymentBucket": {
       "Type": "AWS::S3::Bucket"
     },
-    "MovieInfoFromTMDBLogGroup": {
+    "GetMovieInfoFromTMDBLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/getMovieInfoFromTMDB-production-movieInfoFromTMDB"
+        "LogGroupName": "/aws/lambda/backendLambda-production-getMovieInfoFromTMDB"
       }
     },
     "IamRoleLambdaExecution": {
@@ -35,7 +35,7 @@
           "Fn::Join": [
             "-",
             [
-              "getMovieInfoFromTMDB",
+              "backendLambda",
               "production",
               "us-east-1",
               "lambdaRole"
@@ -55,7 +55,7 @@
             "-",
             [
               "production",
-              "getMovieInfoFromTMDB",
+              "backendLambda",
               "lambda"
             ]
           ]
@@ -76,7 +76,7 @@
                     [
                       {
                         "Fn::GetAtt": [
-                          "MovieInfoFromTMDBLogGroup",
+                          "GetMovieInfoFromTMDBLogGroup",
                           "Arn"
                         ]
                       },
@@ -100,17 +100,17 @@
         ]
       }
     },
-    "MovieInfoFromTMDBLambdaFunction": {
+    "GetMovieInfoFromTMDBLambdaFunction": {
       "Type": "AWS::Lambda::Function",
       "Properties": {
         "Code": {
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/getMovieInfoFromTMDB/production/1487634874785-2017-02-20T23:54:34.785Z/getMovieInfoFromTMDB.zip"
+          "S3Key": "serverless/backendLambda/production/1487636955669-2017-02-21T00:29:15.669Z/backendLambda.zip"
         },
-        "FunctionName": "getMovieInfoFromTMDB-production-movieInfoFromTMDB",
-        "Handler": "movieInfoFromTMDB.handler",
+        "FunctionName": "backendLambda-production-getMovieInfoFromTMDB",
+        "Handler": "getMovieInfoFromTMDB.handler",
         "MemorySize": 1024,
         "Role": {
           "Fn::GetAtt": [
@@ -132,17 +132,17 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "MovieInfoFromTMDBLambdaVersionRUeBSSIz7CFfAScxyjlQFwMKjgPfbFyAC572LCw3w0": {
+    "GetMovieInfoFromTMDBLambdaVersionrZ7L5ESuX4K0sle0n5Xtt5ZKL7E8AXnWhsCct3Eyo28": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
-          "Ref": "MovieInfoFromTMDBLambdaFunction"
+          "Ref": "GetMovieInfoFromTMDBLambdaFunction"
         },
-        "CodeSha256": "RUe+BSSIz7CFfAScxyjlQFwMKjgPfbFyAC572LCw3w0="
+        "CodeSha256": "rZ7L5ESuX4K0sle0n5Xtt5ZKL7E8AXnWhsCct3Eyo28="
       }
     },
-    "MovieInfoFromTMDBEventsRuleSchedule1": {
+    "GetMovieInfoFromTMDBEventsRuleSchedule1": {
       "Type": "AWS::Events::Rule",
       "Properties": {
         "ScheduleExpression": "cron(0 10 * * ? *)",
@@ -151,21 +151,21 @@
           {
             "Arn": {
               "Fn::GetAtt": [
-                "MovieInfoFromTMDBLambdaFunction",
+                "GetMovieInfoFromTMDBLambdaFunction",
                 "Arn"
               ]
             },
-            "Id": "movieInfoFromTMDBSchedule"
+            "Id": "getMovieInfoFromTMDBSchedule"
           }
         ]
       }
     },
-    "MovieInfoFromTMDBLambdaPermissionEventsRuleSchedule1": {
+    "GetMovieInfoFromTMDBLambdaPermissionEventsRuleSchedule1": {
       "Type": "AWS::Lambda::Permission",
       "Properties": {
         "FunctionName": {
           "Fn::GetAtt": [
-            "MovieInfoFromTMDBLambdaFunction",
+            "GetMovieInfoFromTMDBLambdaFunction",
             "Arn"
           ]
         },
@@ -173,7 +173,7 @@
         "Principal": "events.amazonaws.com",
         "SourceArn": {
           "Fn::GetAtt": [
-            "MovieInfoFromTMDBEventsRuleSchedule1",
+            "GetMovieInfoFromTMDBEventsRuleSchedule1",
             "Arn"
           ]
         }
@@ -186,10 +186,10 @@
         "Ref": "ServerlessDeploymentBucket"
       }
     },
-    "MovieInfoFromTMDBLambdaFunctionQualifiedArn": {
+    "GetMovieInfoFromTMDBLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "MovieInfoFromTMDBLambdaVersionRUeBSSIz7CFfAScxyjlQFwMKjgPfbFyAC572LCw3w0"
+        "Ref": "GetMovieInfoFromTMDBLambdaVersionrZ7L5ESuX4K0sle0n5Xtt5ZKL7E8AXnWhsCct3Eyo28"
       }
     }
   }
