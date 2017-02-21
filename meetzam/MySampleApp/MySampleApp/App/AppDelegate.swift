@@ -33,8 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // change title color
         navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white]
         
-        
-        
         // ====================================
         
         return AWSMobileClient.sharedInstance.didFinishLaunching(application, withOptions: launchOptions)

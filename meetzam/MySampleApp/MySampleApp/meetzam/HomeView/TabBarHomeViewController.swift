@@ -108,11 +108,8 @@ class TabBarHomeViewController: UIViewController {
         if (!AWSIdentityManager.default().isLoggedIn) {
             let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
             let viewController = storyboard.instantiateViewController(withIdentifier: "SignIn")
-                //as UIViewController
-            //let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            
-            //appDelegate.window?.self = viewController
-            self.present(viewController, animated: true, completion: nil)
+
+            self.present(viewController, animated: false, completion: nil)
 
         }
     }
