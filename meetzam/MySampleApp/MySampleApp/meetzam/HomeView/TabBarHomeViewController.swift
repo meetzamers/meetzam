@@ -79,6 +79,8 @@ class TabBarHomeViewController: UIViewController {
         if (AWSIdentityManager.default().isLoggedIn) {
             loginStatusButton.setTitle("Log out", for: .normal)
             loginStatusButton.addTarget(self, action: #selector(handleLogout), for: .touchUpInside)
+            
+            updateLabel()
         }
         
         self.view.addSubview(loginStatusButton)
@@ -118,7 +120,6 @@ class TabBarHomeViewController: UIViewController {
     func handleSigninStatus() {
         if (AWSIdentityManager.default().isLoggedIn) {
             loginStatusLabel.text = "Already Signed in"
-            updateLabel()
         }
         else {
             let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
