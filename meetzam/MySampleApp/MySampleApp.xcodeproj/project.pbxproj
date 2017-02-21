@@ -352,7 +352,6 @@
 				1DD70E29B2447A6600000000 /* Launch Screen.storyboard */,
 				1DD70E29096EDB9200000000 /* DemoView.storyboard */,
 				1DD70E293060CB0400000000 /* DemoViewController.swift */,
-				B401C979E100CAB200000000 /* SignIn */,
 				B401C979DBB4629A00000000 /* SupportingFiles */,
 				B401C979E43C098A00000000 /* Utility */,
 			);
@@ -429,7 +428,6 @@
 		B401C979DBB4629A00000000 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				1B7A726A1E5A969900680202 /* SegueFromRight.swift */,
 				1DD70E2971CD20D500000000 /* Info.plist */,
 			);
 			name = SupportingFiles;
@@ -456,7 +454,7 @@
 				1DD70E29008FEFA700000000 /* SignInViewController.swift */,
 			);
 			name = SignIn;
-			path = mysampleapp/app/signin;
+			path = mysampleapp/app/mysampleapp/app/signin;
 			sourceTree = "<group>";
 		};
 		B401C979E43C098A00000000 /* Utility */ = {
@@ -468,11 +466,21 @@
 			path = mysampleapp/app/utility;
 			sourceTree = "<group>";
 		};
+		C412E65E1E5BF93100BE8B61 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				1B7A726A1E5A969900680202 /* SegueFromRight.swift */,
+			);
+			name = Animation;
+			sourceTree = "<group>";
+		};
 		C4BF9C3F1E5B618900C73405 /* meetzam */ = {
 			isa = PBXGroup;
 			children = (
 				C4BF9C401E5B61A500C73405 /* Main.storyboard */,
 				C4BF9C421E5B640900C73405 /* HomeView */,
+				B401C979E100CAB200000000 /* SignIn */,
+				C412E65E1E5BF93100BE8B61 /* Animation */,
 			);
 			name = meetzam;
 			sourceTree = "<group>";

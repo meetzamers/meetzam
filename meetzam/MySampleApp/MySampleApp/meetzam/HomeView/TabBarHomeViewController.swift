@@ -14,6 +14,7 @@ class TabBarHomeViewController: UIViewController {
     // ============================================
     // Variable starts here
     var new_signinObserver: AnyObject!
+    var new_signoutObserver: AnyObject!
     
     fileprivate let loginStatusButton: UIButton = UIButton(frame: CGRect(x: 100, y: 400, width: 100, height: 50))
     
@@ -30,7 +31,8 @@ class TabBarHomeViewController: UIViewController {
         // AWS implementation starts here
         
         // 1. first attempt to pop sign in view controller
-         popSignInViewController()
+        perform(#selector(popSignInViewController), with: nil, afterDelay: 0)
+        //popSignInViewController()
         
         // 2. signinObserver: need to figure it out.
         new_signinObserver = NotificationCenter.default.addObserver(
@@ -44,28 +46,25 @@ class TabBarHomeViewController: UIViewController {
                 
             })
         
+        // 3. signoutObserver: need to figure it out.
+        new_signoutObserver = NotificationCenter.default.addObserver(
+            forName: NSNotification.Name.AWSIdentityManagerDidSignOut,
+            object: AWSIdentityManager.default(),
+            queue: OperationQueue.main,
+            using: { [weak self] (note: Notification) -> Void in
+                guard let strongSelf = self else { return }
+                print("Sign Out Observer observed sign out.")
+                strongSelf.setloginStatusButton()
+        })
         
+        // 4. attemp to add button
+        self.setloginStatusButton()
         
         // AWS implementation ends here
         // ============================================
         
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        popSignInViewController()
-//        
-//        new_signinObserver = NotificationCenter.default.addObserver(
-//                    forName: NSNotification.Name.AWSIdentityManagerDidSignIn,
-//                    object: AWSIdentityManager.default(),
-//                    queue: OperationQueue.main,
-//                    using: { [weak self] (note: Notification) -> Void in
-//                        guard let strongSelf = self else { return }
-//                        print("Sign in observer observed sign in.")
-//                        strongSelf.setloginStatusButton()
-//                        
-//                    })
-//    }
-
     // ============================================
     // AWS support functions start here
     
@@ -102,6 +101,10 @@ class TabBarHomeViewController: UIViewController {
         if (!AWSIdentityManager.default().isLoggedIn) {
             let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
             let viewController = storyboard.instantiateViewController(withIdentifier: "SignIn")
+                //as UIViewController
+            //let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            
+            //appDelegate.window?.self = viewController
             self.present(viewController, animated: true, completion: nil)
 
         }
@@ -115,12 +118,12 @@ class TabBarHomeViewController: UIViewController {
     func handleSigninStatus() {
         if (AWSIdentityManager.default().isLoggedIn) {
             loginStatusLabel.text = "Already Signed in"
+            updateLabel()
         }
         else {
             let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
             let viewController = storyboard.instantiateViewController(withIdentifier: "SignIn")
             self.present(viewController, animated: true, completion: nil)
-            updateLabel()
         }
     }
     
