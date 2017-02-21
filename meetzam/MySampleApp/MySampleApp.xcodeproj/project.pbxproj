@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1B7A726B1E5A969900680202 /* SegueFromRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7A726A1E5A969900680202 /* SegueFromRight.swift */; };
+		C412E6611E5C160C00BE8B61 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412E6601E5C160C00BE8B61 /* ContactsViewController.swift */; };
 		C4BF9C411E5B61A500C73405 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4BF9C401E5B61A500C73405 /* Main.storyboard */; };
 		C4BF9C441E5B643C00C73405 /* TabBarHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF9C431E5B643C00C73405 /* TabBarHomeViewController.swift */; };
 		E7A30F04077D295600000000 /* SignIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1DD70E29F31C638F00000000 /* SignIn.storyboard */; };
@@ -176,6 +177,7 @@
 		1DD70E29FC9496CC00000000 /* NoSQLDatabase.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = NoSQLDatabase.storyboard; path = MySampleApp/Demo/NoSQL/NoSQLDatabase.storyboard; sourceTree = SOURCE_ROOT; };
 		1DD70E29FDA0BE4900000000 /* AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.h; path = MySampleApp/AmazonAws/Api/AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.h; sourceTree = SOURCE_ROOT; };
 		1DD70E29FE33984F00000000 /* AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.m; path = MySampleApp/AmazonAws/Api/AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.m; sourceTree = SOURCE_ROOT; };
+		C412E6601E5C160C00BE8B61 /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactsViewController.swift; path = MySampleApp/meetzam/ContactsView/ContactsViewController.swift; sourceTree = SOURCE_ROOT; };
 		C4BF9C401E5B61A500C73405 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = MySampleApp/meetzam/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		C4BF9C431E5B643C00C73405 /* TabBarHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarHomeViewController.swift; path = MySampleApp/meetzam/HomeView/TabBarHomeViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -474,11 +476,20 @@
 			name = Animation;
 			sourceTree = "<group>";
 		};
+		C412E65F1E5C15E600BE8B61 /* ContactsView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ContactsView;
+			sourceTree = "<group>";
+		};
 		C4BF9C3F1E5B618900C73405 /* meetzam */ = {
 			isa = PBXGroup;
 			children = (
 				C4BF9C401E5B61A500C73405 /* Main.storyboard */,
 				C4BF9C421E5B640900C73405 /* HomeView */,
+				C412E65F1E5C15E600BE8B61 /* ContactsView */,
+				C412E6601E5C160C00BE8B61 /* ContactsViewController.swift */,
 				B401C979E100CAB200000000 /* SignIn */,
 				C412E65E1E5BF93100BE8B61 /* Animation */,
 			);
@@ -609,6 +620,7 @@
 				E7A30F045B5017B200000000 /* ChatRoom.swift in Sources */,
 				C4BF9C441E5B643C00C73405 /* TabBarHomeViewController.swift in Sources */,
 				E7A30F040FC546F300000000 /* PushNotificationViewController.swift in Sources */,
+				C412E6611E5C160C00BE8B61 /* ContactsViewController.swift in Sources */,
 				E7A30F047458C05600000000 /* ContentDeliveryViewController.swift in Sources */,
 				E7A30F043CD1B25F00000000 /* CloudLogicAPIInvokeViewController.swift in Sources */,
 				E7A30F0495A1857C00000000 /* UserFilesViewController.swift in Sources */,
