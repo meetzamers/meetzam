@@ -16,7 +16,7 @@ class TabBarHomeViewController: UIViewController {
     var new_signinObserver: AnyObject!
     var new_signoutObserver: AnyObject!
     
-    fileprivate let loginStatusButton: UIButton = UIButton(frame: CGRect(x: 100, y: 400, width: 100, height: 50))
+    fileprivate let loginStatusButton: UIButton = UIButton(frame: CGRect(x: UIScreen.main.bounds.width - 120, y: 28, width: 100, height: 50))
     
     // Variable ends here
     // ============================================
@@ -68,6 +68,11 @@ class TabBarHomeViewController: UIViewController {
     // ============================================
     // AWS support functions start here
     
+    deinit {
+        NotificationCenter.default.removeObserver(new_signinObserver)
+        NotificationCenter.default.removeObserver(new_signoutObserver)
+    }
+    
     // 1. set login/logout button
     func setloginStatusButton() {
         
@@ -103,11 +108,8 @@ class TabBarHomeViewController: UIViewController {
         if (!AWSIdentityManager.default().isLoggedIn) {
             let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
             let viewController = storyboard.instantiateViewController(withIdentifier: "SignIn")
-                //as UIViewController
-            //let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            
-            //appDelegate.window?.self = viewController
-            self.present(viewController, animated: true, completion: nil)
+
+            self.present(viewController, animated: false, completion: nil)
 
         }
     }

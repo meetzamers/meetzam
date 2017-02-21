@@ -21,6 +21,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // ====================================
+        // UINavigationBar customization
+        var navigationBarAppearace = UINavigationBar.appearance()
+        
+        // change nav bar color
+        navigationBarAppearace.tintColor = UIColor.init(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
+        navigationBarAppearace.barTintColor = UIColor.init(red: 253/255, green: 125/255, blue: 34/255, alpha: 1)
+        
+        // change title color
+        navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white]
+        
+        // ====================================
+        
         return AWSMobileClient.sharedInstance.didFinishLaunching(application, withOptions: launchOptions)
     }
     
