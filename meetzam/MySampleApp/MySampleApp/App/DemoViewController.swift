@@ -14,7 +14,7 @@
 import UIKit
 import AWSMobileHubHelper
 
-class MainViewController: UITableViewController {
+class DemoViewController: UITableViewController {
     
     var demoFeatures: [DemoFeature] = []
     var signInObserver: AnyObject!
@@ -122,7 +122,7 @@ class MainViewController: UITableViewController {
             
             if (AWSIdentityManager.default().isLoggedIn) {
                 navigationItem.rightBarButtonItem!.title = NSLocalizedString("Sign-Out", comment: "Label for the logout button.")
-                navigationItem.rightBarButtonItem!.action = #selector(MainViewController.handleLogout)
+                navigationItem.rightBarButtonItem!.action = #selector(DemoViewController.handleLogout)
             }
         
     }
