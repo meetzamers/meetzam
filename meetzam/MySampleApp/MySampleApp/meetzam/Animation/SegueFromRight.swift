@@ -1,8 +1,8 @@
 //
-//  SegueFromRight.swift
-//  meetzam
+//  SegueFromLeft.swift
+//  meetzam_sketch1
 //
-//  Created by ZuYuan Fan on 2/19/17.
+//  Created by ZuYuan Fan on 2/17/17.
 //  Copyright © 2017 Ryan Fan. All rights reserved.
 //
 
@@ -19,12 +19,12 @@ class SegueFromRight: UIStoryboardSegue {
         dst.view.transform = CGAffineTransform(translationX: src.view.frame.size.width, y: 0)
         
         UIView.animate(withDuration: 0.3,
-                       delay: 0.0,
-                       options: UIViewAnimationOptions.curveEaseInOut,
-                       animations: { dst.view.transform = CGAffineTransform(translationX: 0, y: 0) },
-                       completion: { finished in src.present(dst, animated: false, completion: nil) }
+                                   delay: 0.0,
+                                   options: UIViewAnimationOptions.curveEaseInOut,
+                                   animations: { dst.view.transform = CGAffineTransform(translationX: 0, y: 0) },
+                                   completion: { finished in src.present(dst, animated: false, completion: nil) }
         )
         
+        
     }
-    
 }

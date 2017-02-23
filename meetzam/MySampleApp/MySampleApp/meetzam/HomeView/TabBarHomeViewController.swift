@@ -22,6 +22,11 @@ class TabBarHomeViewController: UIViewController {
     // ============================================
     @IBOutlet weak var loginStatusLabel: UILabel!
     
+    // Change status bar type to default.
+    override func viewDidAppear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = .default
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
