@@ -9,7 +9,7 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action: "DynamoDB:*"
-      Resource: "arn:aws:dynamodb:us-east-1:397508666882:table/meetzam-mobilehub-1569925313-Movie"
+      Resource: "arn:aws:dynamodb:us-east-1:397508666882:table/Movie2"
 
 custom: ${file(./credentials.json)}
 

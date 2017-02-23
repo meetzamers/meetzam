@@ -58,8 +58,52 @@ function putMoviesToDBTable(parsedData)
          console.log("popularity is "+popularity);
          let release_date = results[i]["release_date"];
          console.log("release_date is "+release_date);
+         let poster_path = results[i]["poster_path"];
+         console.log("poster_path is "+poster_path);
 
-         var params =
+          var params = {
+            ExpressionAttributeNames: {
+             "#popularity": "TMDB_popularity",
+             "#poster_path": "poster_path"
+            }, 
+            ExpressionAttributeValues: {
+             ":popularity": {
+                S: popularity.toString()
+              },
+              ":poster_path": {
+                S: poster_path
+              }
+            }, 
+            Key: {
+             "TMDB_movie_id": {
+               S: TMDB_id.toString()
+              }
+            }, 
+            ReturnValues: "ALL_NEW", 
+            TableName: "Movie2", 
+            UpdateExpression: "SET #popularity = :popularity, #poster_path = :poster_path"
+           };
+           dynamoDB.updateItem(params, function(err, data) {
+             if (err) console.log(err, err.stack); // an error occurred
+             else     console.log(data);           // successful response
+             /*
+             data = {
+              Attributes: {
+               "AlbumTitle": {
+                 S: "Songs About Life"
+                }, 
+               "Artist": {
+                 S: "Acme Band"
+                }, 
+               "SongTitle": {
+                 S: "Happy Day"
+                }
+              }
+             }
+             */
+           });
+
+         /*var params =
           {
            Item: {
              "userId":{
@@ -88,7 +132,7 @@ function putMoviesToDBTable(parsedData)
              TableName: "meetzam-mobilehub-1569925313-Movie"
              }
             }
-            */
-          });
+            
+          });*/
      }
 }
