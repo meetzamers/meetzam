@@ -26,19 +26,23 @@ class SignInViewController: UIViewController {
     
     var didSignInObserver: AnyObject!
     
-    // MARK: - View lifecycle
+    // Change status bar type to default.
+    override func viewDidAppear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = .default
+    }
     
+    // MARK: - View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
          print("Sign In Loading.")
         
-            didSignInObserver =  NotificationCenter.default.addObserver(
-                forName: NSNotification.Name.AWSIdentityManagerDidSignIn,
-                object: AWSIdentityManager.default(),
-                queue: OperationQueue.main,
-                using: {(note: Notification) -> Void in
-                    // perform successful login actions here
-            })
+        didSignInObserver =  NotificationCenter.default.addObserver(
+            forName: NSNotification.Name.AWSIdentityManagerDidSignIn,
+            object: AWSIdentityManager.default(),
+            queue: OperationQueue.main,
+            using: {(note: Notification) -> Void in
+                // perform successful login actions here
+        })
 
             // Facebook login permissions can be optionally set, but must be set
             // before user authenticates.

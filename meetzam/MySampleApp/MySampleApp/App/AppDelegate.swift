@@ -24,14 +24,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // ====================================
         // UINavigationBar customization
-        var navigationBarAppearace = UINavigationBar.appearance()
+        let navigationBarAppearace = UINavigationBar.appearance()
         
         // change nav bar color
         navigationBarAppearace.tintColor = UIColor.init(red: 255/255, green: 255/255, blue: 255/255, alpha: 1)
         navigationBarAppearace.barTintColor = UIColor.init(red: 253/255, green: 125/255, blue: 34/255, alpha: 1)
         
         // change title color
-        navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.white]
+        navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white, NSFontAttributeName: UIFont.init(name: "HelveticaNeue", size: 19) as Any]
+        
+        // Status bar type
+        // UIApplication.shared.statusBarStyle = .lightContent
         
         // ====================================
         

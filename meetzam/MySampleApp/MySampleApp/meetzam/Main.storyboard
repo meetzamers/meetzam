@@ -82,10 +82,10 @@
             </objects>
             <point key="canvasLocation" x="233" y="-1259"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Main Tab Bar View Controller-->
         <scene sceneID="wJe-e0-wH6">
             <objects>
-                <tabBarController storyboardIdentifier="TabBarFirst" id="kPB-Rz-uBK" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarFirst" id="kPB-Rz-uBK" customClass="MainTabBarViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="bfh-fj-Meh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -106,7 +106,7 @@
         <!--Match-->
         <scene sceneID="BIt-fU-Iyv">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="RLX-0t-4ck" customClass="MatchViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MatchView" hidesBottomBarWhenPushed="YES" id="RLX-0t-4ck" customClass="MatchViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Snt-eH-Dlm"/>
                         <viewControllerLayoutGuide type="bottom" id="Jds-nx-4IH"/>
@@ -114,15 +114,6 @@
                     <view key="view" contentMode="scaleToFill" id="VUA-J6-Wzl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="This is Match" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w0N-IQ-8ui">
-                                <rect key="frame" x="118" y="318" width="138" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="25"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Match" id="prY-EE-9sR">
@@ -131,11 +122,16 @@
                                 <action selector="backHomeButton:" destination="RLX-0t-4ck" id="e6E-Zi-eK6"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="Chat" id="tZM-BZ-JlN">
+                            <connections>
+                                <action selector="toChatButton:" destination="RLX-0t-4ck" id="6gq-sW-61e"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xmY-2f-fSy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="988" y="116"/>
+            <point key="canvasLocation" x="988" y="115.59220389805098"/>
         </scene>
         <!--Profile-->
         <scene sceneID="flR-GG-ScD">
@@ -198,7 +194,7 @@
         <!--Contacts-->
         <scene sceneID="DGb-Tr-ERE">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RcN-jF-z05" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RcN-jF-z05" customClass="NaviViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Contacts" image="Contacts" id="hmi-ne-A3u"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="kce-y9-hjy">
@@ -217,7 +213,7 @@
         <!--Chat-->
         <scene sceneID="5IB-L2-wxC">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lgx-AO-AB4" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ChatNav" automaticallyAdjustsScrollViewInsets="NO" id="lgx-AO-AB4" customClass="NaviViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Chat" image="Chat" id="i37-eY-TPF"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="yxh-rP-jz5">
@@ -236,7 +232,7 @@
         <!--Profile-->
         <scene sceneID="4a3-ba-3lT">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wis-jw-d7L" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wis-jw-d7L" customClass="NaviViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Profile" image="Profile" id="pkS-UJ-mds"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="joM-tj-XfO">
@@ -255,7 +251,7 @@
         <!--Match-->
         <scene sceneID="bBq-n2-BUD">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0O2-CG-5wu" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="MatchNav" automaticallyAdjustsScrollViewInsets="NO" id="0O2-CG-5wu" customClass="NaviViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Match" image="Match" id="T8d-at-rsD"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="kQk-QR-BUa">
@@ -269,7 +265,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ADM-jy-Vyv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="232.80000000000001" y="115.59220389805098"/>
+            <point key="canvasLocation" x="233" y="116"/>
         </scene>
     </scenes>
     <resources>
