@@ -152,6 +152,14 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HI6-mc-0bT">
+                                <rect key="frame" x="172" y="506" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Edit"/>
+                                <connections>
+                                    <segue destination="wAD-EU-9I9" kind="show" id="J67-vS-gGd"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -162,6 +170,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n8g-Y9-yXm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="988" y="1487"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="QIg-hJ-gcc">
+            <objects>
+                <viewController id="wAD-EU-9I9" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MBN-BU-kSL"/>
+                        <viewControllerLayoutGuide type="bottom" id="vsY-Ld-Szd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DX3-c3-eoQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xOb-0Q-vG6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1672.8" y="1485.6071964017992"/>
         </scene>
         <!--Chat-->
         <scene sceneID="gIl-HV-LyU">
