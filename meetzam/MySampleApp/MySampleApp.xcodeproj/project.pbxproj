@@ -7,8 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B7A726B1E5A969900680202 /* SegueFromRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7A726A1E5A969900680202 /* SegueFromRight.swift */; };
+		C40661BA1E5CBC58005D2145 /* MatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40661B91E5CBC58005D2145 /* MatchViewController.swift */; };
+		C40661BD1E5CBC85005D2145 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40661BC1E5CBC85005D2145 /* ChatViewController.swift */; };
+		C40661C01E5CBCBF005D2145 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40661BF1E5CBCBF005D2145 /* ProfileViewController.swift */; };
+		C40661C21E5CBF52005D2145 /* SegueToptoBottom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40661C11E5CBF52005D2145 /* SegueToptoBottom.swift */; };
+		C40661C41E5CBF6D005D2145 /* SegueFromRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40661C31E5CBF6D005D2145 /* SegueFromRight.swift */; };
 		C412E6611E5C160C00BE8B61 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412E6601E5C160C00BE8B61 /* ContactsViewController.swift */; };
+		C442019B1E5E02B500731B7E /* CustomPresentAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C442019A1E5E02B500731B7E /* CustomPresentAnimationController.swift */; };
 		C4BF9C411E5B61A500C73405 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4BF9C401E5B61A500C73405 /* Main.storyboard */; };
 		C4BF9C441E5B643C00C73405 /* TabBarHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF9C431E5B643C00C73405 /* TabBarHomeViewController.swift */; };
 		E7A30F04077D295600000000 /* SignIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1DD70E29F31C638F00000000 /* SignIn.storyboard */; };
@@ -104,7 +109,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1B7A726A1E5A969900680202 /* SegueFromRight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegueFromRight.swift; path = MySampleApp/App/SupportingFiles/SegueFromRight.swift; sourceTree = SOURCE_ROOT; };
 		1DD70E29008FEFA700000000 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignInViewController.swift; path = MySampleApp/App/SignIn/SignInViewController.swift; sourceTree = SOURCE_ROOT; };
 		1DD70E2902E65C3B00000000 /* PushNotification.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = PushNotification.storyboard; path = MySampleApp/Demo/Push/PushNotification.storyboard; sourceTree = SOURCE_ROOT; };
 		1DD70E29081A119000000000 /* ContentDeliveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentDeliveryViewController.swift; path = MySampleApp/Demo/ContentDelivery/ContentDeliveryViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -177,7 +181,13 @@
 		1DD70E29FC9496CC00000000 /* NoSQLDatabase.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = NoSQLDatabase.storyboard; path = MySampleApp/Demo/NoSQL/NoSQLDatabase.storyboard; sourceTree = SOURCE_ROOT; };
 		1DD70E29FDA0BE4900000000 /* AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.h; path = MySampleApp/AmazonAws/Api/AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.h; sourceTree = SOURCE_ROOT; };
 		1DD70E29FE33984F00000000 /* AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.m; path = MySampleApp/AmazonAws/Api/AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.m; sourceTree = SOURCE_ROOT; };
+		C40661B91E5CBC58005D2145 /* MatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MatchViewController.swift; path = MySampleApp/meetzam/MatchView/MatchViewController.swift; sourceTree = SOURCE_ROOT; };
+		C40661BC1E5CBC85005D2145 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatViewController.swift; path = MySampleApp/meetzam/ChatView/ChatViewController.swift; sourceTree = SOURCE_ROOT; };
+		C40661BF1E5CBCBF005D2145 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = MySampleApp/meetzam/ProfileView/ProfileViewController.swift; sourceTree = SOURCE_ROOT; };
+		C40661C11E5CBF52005D2145 /* SegueToptoBottom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegueToptoBottom.swift; path = MySampleApp/meetzam/Animation/SegueToptoBottom.swift; sourceTree = SOURCE_ROOT; };
+		C40661C31E5CBF6D005D2145 /* SegueFromRight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegueFromRight.swift; sourceTree = "<group>"; };
 		C412E6601E5C160C00BE8B61 /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactsViewController.swift; path = MySampleApp/meetzam/ContactsView/ContactsViewController.swift; sourceTree = SOURCE_ROOT; };
+		C442019A1E5E02B500731B7E /* CustomPresentAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomPresentAnimationController.swift; path = MySampleApp/meetzam/Animation/CustomPresentAnimationController.swift; sourceTree = SOURCE_ROOT; };
 		C4BF9C401E5B61A500C73405 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = MySampleApp/meetzam/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		C4BF9C431E5B643C00C73405 /* TabBarHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarHomeViewController.swift; path = MySampleApp/meetzam/HomeView/TabBarHomeViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -468,10 +478,36 @@
 			path = mysampleapp/app/utility;
 			sourceTree = "<group>";
 		};
+		C40661B81E5CBC34005D2145 /* MatchView */ = {
+			isa = PBXGroup;
+			children = (
+				C40661B91E5CBC58005D2145 /* MatchViewController.swift */,
+			);
+			name = MatchView;
+			sourceTree = "<group>";
+		};
+		C40661BB1E5CBC69005D2145 /* ChatView */ = {
+			isa = PBXGroup;
+			children = (
+				C40661BC1E5CBC85005D2145 /* ChatViewController.swift */,
+			);
+			name = ChatView;
+			sourceTree = "<group>";
+		};
+		C40661BE1E5CBCA4005D2145 /* ProfileView */ = {
+			isa = PBXGroup;
+			children = (
+				C40661BF1E5CBCBF005D2145 /* ProfileViewController.swift */,
+			);
+			name = ProfileView;
+			sourceTree = "<group>";
+		};
 		C412E65E1E5BF93100BE8B61 /* Animation */ = {
 			isa = PBXGroup;
 			children = (
-				1B7A726A1E5A969900680202 /* SegueFromRight.swift */,
+				C40661C31E5CBF6D005D2145 /* SegueFromRight.swift */,
+				C40661C11E5CBF52005D2145 /* SegueToptoBottom.swift */,
+				C442019A1E5E02B500731B7E /* CustomPresentAnimationController.swift */,
 			);
 			name = Animation;
 			sourceTree = "<group>";
@@ -490,6 +526,9 @@
 				C4BF9C401E5B61A500C73405 /* Main.storyboard */,
 				C4BF9C421E5B640900C73405 /* HomeView */,
 				C412E65F1E5C15E600BE8B61 /* ContactsView */,
+				C40661B81E5CBC34005D2145 /* MatchView */,
+				C40661BB1E5CBC69005D2145 /* ChatView */,
+				C40661BE1E5CBCA4005D2145 /* ProfileView */,
 				B401C979E100CAB200000000 /* SignIn */,
 				C412E65E1E5BF93100BE8B61 /* Animation */,
 			);
@@ -626,6 +665,7 @@
 				E7A30F0495A1857C00000000 /* UserFilesViewController.swift in Sources */,
 				E7A30F04A21C25E100000000 /* NoSQLTableListViewController.swift in Sources */,
 				E7A30F04BE9D922C00000000 /* ConversationTable.swift in Sources */,
+				C442019B1E5E02B500731B7E /* CustomPresentAnimationController.swift in Sources */,
 				E7A30F0441E4A73C00000000 /* UserProfileTable.swift in Sources */,
 				E7A30F045ABE0B1B00000000 /* NoSQLTableFactory.swift in Sources */,
 				E7A30F0491953CE700000000 /* UserProfile.swift in Sources */,
@@ -635,6 +675,8 @@
 				E7A30F04EC8865D000000000 /* UserDataStorageViewController.swift in Sources */,
 				E7A30F04D9E365EC00000000 /* DemoFeature.swift in Sources */,
 				E7A30F040C06D8D800000000 /* ColorThemeSettings.swift in Sources */,
+				C40661BD1E5CBC85005D2145 /* ChatViewController.swift in Sources */,
+				C40661C21E5CBF52005D2145 /* SegueToptoBottom.swift in Sources */,
 				E7A30F0441798FFD00000000 /* NoSQLSampleDataGenerator.swift in Sources */,
 				E7A30F04A2C572B800000000 /* UtilityFunctions.swift in Sources */,
 				E7A30F04F01DFC3F00000000 /* NoSQLTableViewController.swift in Sources */,
@@ -644,13 +686,15 @@
 				E7A30F04B9F764D000000000 /* NoSQLQueryResultViewController.swift in Sources */,
 				E7A30F04FDE8AC3000000000 /* CloudLogicAPIOperationsViewController.swift in Sources */,
 				E7A30F04F461178300000000 /* SignInViewController.swift in Sources */,
+				C40661BA1E5CBC58005D2145 /* MatchViewController.swift in Sources */,
 				E7A30F04A4541E2800000000 /* CloudLogicAPIFactory.swift in Sources */,
-				1B7A726B1E5A969900680202 /* SegueFromRight.swift in Sources */,
 				E7A30F04195B4B7F00000000 /* UserSettingsViewController.swift in Sources */,
+				C40661C41E5CBF6D005D2145 /* SegueFromRight.swift in Sources */,
 				E7A30F0491170EF700000000 /* Conversation.swift in Sources */,
 				E7A30F04460EA60000000000 /* AWSConfiguration.swift in Sources */,
 				E7A30F0486375E6A00000000 /* AWSAPI_ADI48J5BXK_RequestSchema.m in Sources */,
 				E7A30F04F85210F300000000 /* CloudLogicAPIListViewController.swift in Sources */,
+				C40661C01E5CBCBF005D2145 /* ProfileViewController.swift in Sources */,
 				E7A30F04EF181B5600000000 /* NoSQLModelHelpers.swift in Sources */,
 				E7A30F048E97A0BD00000000 /* APIPathSelectorViewController.swift in Sources */,
 				E7A30F04AFAE825300000000 /* UserIdentityViewController.swift in Sources */,

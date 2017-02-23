@@ -40,7 +40,7 @@
         <!--Home-->
         <scene sceneID="Ub5-Dd-SXZ">
             <objects>
-                <viewController id="M4r-Ps-iiq" customClass="TabBarHomeViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeView" id="M4r-Ps-iiq" customClass="TabBarHomeViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ynZ-tb-KDp"/>
                         <viewControllerLayoutGuide type="bottom" id="Bhl-JD-h3F"/>
@@ -85,7 +85,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="wJe-e0-wH6">
             <objects>
-                <tabBarController id="kPB-Rz-uBK" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarFirst" id="kPB-Rz-uBK" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="bfh-fj-Meh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -106,7 +106,7 @@
         <!--Match-->
         <scene sceneID="BIt-fU-Iyv">
             <objects>
-                <viewController id="RLX-0t-4ck" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="RLX-0t-4ck" customClass="MatchViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Snt-eH-Dlm"/>
                         <viewControllerLayoutGuide type="bottom" id="Jds-nx-4IH"/>
@@ -126,7 +126,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Match" id="prY-EE-9sR">
-                        <barButtonItem key="leftBarButtonItem" image="BackHome" id="b3u-xo-qk7"/>
+                        <barButtonItem key="leftBarButtonItem" image="BackHome" id="b3u-xo-qk7">
+                            <connections>
+                                <action selector="backHomeButton:" destination="RLX-0t-4ck" id="e6E-Zi-eK6"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xmY-2f-fSy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -136,7 +140,7 @@
         <!--Profile-->
         <scene sceneID="flR-GG-ScD">
             <objects>
-                <viewController id="m4S-d2-sYW" sceneMemberID="viewController">
+                <viewController id="m4S-d2-sYW" customClass="ProfileViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8nv-fK-nOp"/>
                         <viewControllerLayoutGuide type="bottom" id="E7P-aW-o4o"/>
@@ -192,7 +196,7 @@
         <!--Chat-->
         <scene sceneID="gIl-HV-LyU">
             <objects>
-                <viewController id="oxD-MA-wBb" sceneMemberID="viewController">
+                <viewController id="oxD-MA-wBb" customClass="ChatViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="n1j-Ha-bCX"/>
                         <viewControllerLayoutGuide type="bottom" id="4IG-Nz-qxR"/>

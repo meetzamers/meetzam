@@ -91,12 +91,14 @@ class TabBarHomeViewController: UIViewController {
         self.view.addSubview(loginStatusButton)
     }
     
+    // 2. handle logout
     func handleLogout() {
         if (AWSIdentityManager.default().isLoggedIn) {
             AWSIdentityManager.default().logout(
                 completionHandler: { (result: Any?, error: Error?) in
                     self.setloginStatusButton()
-                    self.popSignInViewController()
+                    //self.popSignInViewController()
+                    self.animated_SignInViewController()
                 })
         }
         else {
@@ -104,6 +106,7 @@ class TabBarHomeViewController: UIViewController {
         }
     }
     
+    // 3. display sign in view controller
     func popSignInViewController() {
         if (!AWSIdentityManager.default().isLoggedIn) {
             let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
@@ -111,6 +114,16 @@ class TabBarHomeViewController: UIViewController {
 
             self.present(viewController, animated: false, completion: nil)
 
+        }
+    }
+    
+    func animated_SignInViewController() {
+        if (!AWSIdentityManager.default().isLoggedIn) {
+            let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
+            let viewController = storyboard.instantiateViewController(withIdentifier: "SignIn")
+            
+            self.present(viewController, animated: true, completion: nil)
+            
         }
     }
     
