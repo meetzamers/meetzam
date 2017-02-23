@@ -28,6 +28,11 @@ class UserIdentityViewController: UIViewController {
 
         let identityManager = AWSIdentityManager.default()
         
+        AWSIdentityManager.default()
+        
+        
+        
+        
         if let identityUserName = identityManager.userName {
             userName.text = identityUserName
         } else {
