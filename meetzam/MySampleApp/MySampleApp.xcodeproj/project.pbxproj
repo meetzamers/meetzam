@@ -13,6 +13,8 @@
 		C40661C21E5CBF52005D2145 /* SegueToptoBottom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40661C11E5CBF52005D2145 /* SegueToptoBottom.swift */; };
 		C40661C41E5CBF6D005D2145 /* SegueFromRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40661C31E5CBF6D005D2145 /* SegueFromRight.swift */; };
 		C412E6611E5C160C00BE8B61 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412E6601E5C160C00BE8B61 /* ContactsViewController.swift */; };
+		C42C56301E6126FA005C6D66 /* ZLSwipeableViewSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C42C562F1E6126FA005C6D66 /* ZLSwipeableViewSwift.framework */; };
+		C42C56331E6127D2005C6D66 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C56321E6127D2005C6D66 /* CardView.swift */; };
 		C442019B1E5E02B500731B7E /* CustomPresentAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C442019A1E5E02B500731B7E /* CustomPresentAnimationController.swift */; };
 		C4BF9C411E5B61A500C73405 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4BF9C401E5B61A500C73405 /* Main.storyboard */; };
 		C4BF9C441E5B643C00C73405 /* TabBarHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF9C431E5B643C00C73405 /* TabBarHomeViewController.swift */; };
@@ -187,6 +189,8 @@
 		C40661C11E5CBF52005D2145 /* SegueToptoBottom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegueToptoBottom.swift; path = MySampleApp/meetzam/Animation/SegueToptoBottom.swift; sourceTree = SOURCE_ROOT; };
 		C40661C31E5CBF6D005D2145 /* SegueFromRight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegueFromRight.swift; sourceTree = "<group>"; };
 		C412E6601E5C160C00BE8B61 /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactsViewController.swift; path = MySampleApp/meetzam/ContactsView/ContactsViewController.swift; sourceTree = SOURCE_ROOT; };
+		C42C562F1E6126FA005C6D66 /* ZLSwipeableViewSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZLSwipeableViewSwift.framework; path = Carthage/Build/iOS/ZLSwipeableViewSwift.framework; sourceTree = "<group>"; };
+		C42C56321E6127D2005C6D66 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardView.swift; path = MySampleApp/meetzam/MatchView/CardView.swift; sourceTree = SOURCE_ROOT; };
 		C442019A1E5E02B500731B7E /* CustomPresentAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomPresentAnimationController.swift; path = MySampleApp/meetzam/Animation/CustomPresentAnimationController.swift; sourceTree = SOURCE_ROOT; };
 		C4BF9C401E5B61A500C73405 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = MySampleApp/meetzam/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		C4BF9C431E5B643C00C73405 /* TabBarHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarHomeViewController.swift; path = MySampleApp/meetzam/HomeView/TabBarHomeViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -197,6 +201,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C42C56301E6126FA005C6D66 /* ZLSwipeableViewSwift.framework in Frameworks */,
 				E7A30F04E256F2B700000001 /* AWSDynamoDB.framework in Frameworks */,
 				E7A30F04B7CAB6BF00000001 /* AWSCore.framework in Frameworks */,
 				E7A30F044160A51E00000000 /* FBSDKLoginKit.framework in Frameworks */,
@@ -374,6 +379,7 @@
 		B401C979BAD7438500000000 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C42C562F1E6126FA005C6D66 /* ZLSwipeableViewSwift.framework */,
 				1DD70E298BC18EB000000000 /* AWSAPIGateway.framework */,
 				1DD70E29CD2C2CA200000000 /* AWSCognito.framework */,
 				1DD70E29FA5015D600000000 /* AWSCore.framework */,
@@ -482,6 +488,7 @@
 			isa = PBXGroup;
 			children = (
 				C40661B91E5CBC58005D2145 /* MatchViewController.swift */,
+				C42C56321E6127D2005C6D66 /* CardView.swift */,
 			);
 			name = MatchView;
 			sourceTree = "<group>";
@@ -556,6 +563,7 @@
 				8A032D2C0000000000000000 /* Resources */,
 				FAF5FAC90000000000000000 /* Embed Frameworks */,
 				E1F174220000000000000000 /* ShellScript */,
+				C42C56311E612711005C6D66 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -623,6 +631,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		C42C56311E612711005C6D66 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/ZLSwipeableViewSwift.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
 		E1F174220000000000000000 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -698,6 +720,7 @@
 				E7A30F04EF181B5600000000 /* NoSQLModelHelpers.swift in Sources */,
 				E7A30F048E97A0BD00000000 /* APIPathSelectorViewController.swift in Sources */,
 				E7A30F04AFAE825300000000 /* UserIdentityViewController.swift in Sources */,
+				C42C56331E6127D2005C6D66 /* CardView.swift in Sources */,
 				E7A30F0479ACCE1500000000 /* AWSMobileClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -763,6 +786,7 @@
 					"$(PROJECT_DIR)/MySampleApp/Sdk/**",
 					"$(PROJECT_DIR)/MySampleApp/Sdk/Aws",
 					"$(PROJECT_DIR)/MySampleApp/AmazonAws",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/MySampleApp/App/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
@@ -840,6 +864,7 @@
 					"$(PROJECT_DIR)/MySampleApp/Sdk/**",
 					"$(PROJECT_DIR)/MySampleApp/Sdk/Aws",
 					"$(PROJECT_DIR)/MySampleApp/AmazonAws",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/MySampleApp/App/SupportingFiles/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
