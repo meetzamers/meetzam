@@ -74,10 +74,5 @@ class MatchViewController: UIViewController {
         
     }
     
-    @IBAction func toChatButton(_ sender: Any) {
-        
-        
-    }
-    
     
 }

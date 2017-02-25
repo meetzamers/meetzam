@@ -198,7 +198,7 @@
         <!--Contacts-->
         <scene sceneID="DGb-Tr-ERE">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RcN-jF-z05" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RcN-jF-z05" customClass="NaviViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Contacts" image="Contacts" id="hmi-ne-A3u"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="kce-y9-hjy">
@@ -217,7 +217,7 @@
         <!--Chat-->
         <scene sceneID="5IB-L2-wxC">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lgx-AO-AB4" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lgx-AO-AB4" customClass="NaviViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Chat" image="Chat" id="i37-eY-TPF"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="yxh-rP-jz5">
@@ -236,7 +236,7 @@
         <!--Profile-->
         <scene sceneID="4a3-ba-3lT">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wis-jw-d7L" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wis-jw-d7L" customClass="NaviViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Profile" image="Profile" id="pkS-UJ-mds"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="joM-tj-XfO">
@@ -255,7 +255,7 @@
         <!--Match-->
         <scene sceneID="bBq-n2-BUD">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0O2-CG-5wu" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0O2-CG-5wu" customClass="NaviViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Match" image="Match" id="T8d-at-rsD"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="kQk-QR-BUa">

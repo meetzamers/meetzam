@@ -11,11 +11,11 @@
 		C40661BD1E5CBC85005D2145 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40661BC1E5CBC85005D2145 /* ChatViewController.swift */; };
 		C40661C01E5CBCBF005D2145 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40661BF1E5CBCBF005D2145 /* ProfileViewController.swift */; };
 		C40661C21E5CBF52005D2145 /* SegueToptoBottom.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40661C11E5CBF52005D2145 /* SegueToptoBottom.swift */; };
-		C40661C41E5CBF6D005D2145 /* SegueFromRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40661C31E5CBF6D005D2145 /* SegueFromRight.swift */; };
 		C412E6611E5C160C00BE8B61 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C412E6601E5C160C00BE8B61 /* ContactsViewController.swift */; };
 		C42C56301E6126FA005C6D66 /* ZLSwipeableViewSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C42C562F1E6126FA005C6D66 /* ZLSwipeableViewSwift.framework */; };
 		C42C56331E6127D2005C6D66 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C56321E6127D2005C6D66 /* CardView.swift */; };
-		C442019B1E5E02B500731B7E /* CustomPresentAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C442019A1E5E02B500731B7E /* CustomPresentAnimationController.swift */; };
+		C42C56351E612CF3005C6D66 /* SegueFromRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C56341E612CF3005C6D66 /* SegueFromRight.swift */; };
+		C42C56371E612F90005C6D66 /* NaviViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C56361E612F90005C6D66 /* NaviViewController.swift */; };
 		C4BF9C411E5B61A500C73405 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4BF9C401E5B61A500C73405 /* Main.storyboard */; };
 		C4BF9C441E5B643C00C73405 /* TabBarHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF9C431E5B643C00C73405 /* TabBarHomeViewController.swift */; };
 		E7A30F04077D295600000000 /* SignIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1DD70E29F31C638F00000000 /* SignIn.storyboard */; };
@@ -187,11 +187,11 @@
 		C40661BC1E5CBC85005D2145 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatViewController.swift; path = MySampleApp/meetzam/ChatView/ChatViewController.swift; sourceTree = SOURCE_ROOT; };
 		C40661BF1E5CBCBF005D2145 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = MySampleApp/meetzam/ProfileView/ProfileViewController.swift; sourceTree = SOURCE_ROOT; };
 		C40661C11E5CBF52005D2145 /* SegueToptoBottom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegueToptoBottom.swift; path = MySampleApp/meetzam/Animation/SegueToptoBottom.swift; sourceTree = SOURCE_ROOT; };
-		C40661C31E5CBF6D005D2145 /* SegueFromRight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegueFromRight.swift; sourceTree = "<group>"; };
 		C412E6601E5C160C00BE8B61 /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactsViewController.swift; path = MySampleApp/meetzam/ContactsView/ContactsViewController.swift; sourceTree = SOURCE_ROOT; };
 		C42C562F1E6126FA005C6D66 /* ZLSwipeableViewSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZLSwipeableViewSwift.framework; path = Carthage/Build/iOS/ZLSwipeableViewSwift.framework; sourceTree = "<group>"; };
 		C42C56321E6127D2005C6D66 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardView.swift; path = MySampleApp/meetzam/MatchView/CardView.swift; sourceTree = SOURCE_ROOT; };
-		C442019A1E5E02B500731B7E /* CustomPresentAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomPresentAnimationController.swift; path = MySampleApp/meetzam/Animation/CustomPresentAnimationController.swift; sourceTree = SOURCE_ROOT; };
+		C42C56341E612CF3005C6D66 /* SegueFromRight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegueFromRight.swift; path = MySampleApp/meetzam/Animation/SegueFromRight.swift; sourceTree = SOURCE_ROOT; };
+		C42C56361E612F90005C6D66 /* NaviViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NaviViewController.swift; path = MySampleApp/meetzam/Animation/NaviViewController.swift; sourceTree = SOURCE_ROOT; };
 		C4BF9C401E5B61A500C73405 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = MySampleApp/meetzam/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		C4BF9C431E5B643C00C73405 /* TabBarHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarHomeViewController.swift; path = MySampleApp/meetzam/HomeView/TabBarHomeViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -512,9 +512,9 @@
 		C412E65E1E5BF93100BE8B61 /* Animation */ = {
 			isa = PBXGroup;
 			children = (
-				C40661C31E5CBF6D005D2145 /* SegueFromRight.swift */,
+				C42C56341E612CF3005C6D66 /* SegueFromRight.swift */,
 				C40661C11E5CBF52005D2145 /* SegueToptoBottom.swift */,
-				C442019A1E5E02B500731B7E /* CustomPresentAnimationController.swift */,
+				C42C56361E612F90005C6D66 /* NaviViewController.swift */,
 			);
 			name = Animation;
 			sourceTree = "<group>";
@@ -682,12 +682,12 @@
 				C4BF9C441E5B643C00C73405 /* TabBarHomeViewController.swift in Sources */,
 				E7A30F040FC546F300000000 /* PushNotificationViewController.swift in Sources */,
 				C412E6611E5C160C00BE8B61 /* ContactsViewController.swift in Sources */,
+				C42C56371E612F90005C6D66 /* NaviViewController.swift in Sources */,
 				E7A30F047458C05600000000 /* ContentDeliveryViewController.swift in Sources */,
 				E7A30F043CD1B25F00000000 /* CloudLogicAPIInvokeViewController.swift in Sources */,
 				E7A30F0495A1857C00000000 /* UserFilesViewController.swift in Sources */,
 				E7A30F04A21C25E100000000 /* NoSQLTableListViewController.swift in Sources */,
 				E7A30F04BE9D922C00000000 /* ConversationTable.swift in Sources */,
-				C442019B1E5E02B500731B7E /* CustomPresentAnimationController.swift in Sources */,
 				E7A30F0441E4A73C00000000 /* UserProfileTable.swift in Sources */,
 				E7A30F045ABE0B1B00000000 /* NoSQLTableFactory.swift in Sources */,
 				E7A30F0491953CE700000000 /* UserProfile.swift in Sources */,
@@ -711,7 +711,6 @@
 				C40661BA1E5CBC58005D2145 /* MatchViewController.swift in Sources */,
 				E7A30F04A4541E2800000000 /* CloudLogicAPIFactory.swift in Sources */,
 				E7A30F04195B4B7F00000000 /* UserSettingsViewController.swift in Sources */,
-				C40661C41E5CBF6D005D2145 /* SegueFromRight.swift in Sources */,
 				E7A30F0491170EF700000000 /* Conversation.swift in Sources */,
 				E7A30F04460EA60000000000 /* AWSConfiguration.swift in Sources */,
 				E7A30F0486375E6A00000000 /* AWSAPI_ADI48J5BXK_RequestSchema.m in Sources */,
@@ -721,6 +720,7 @@
 				E7A30F048E97A0BD00000000 /* APIPathSelectorViewController.swift in Sources */,
 				E7A30F04AFAE825300000000 /* UserIdentityViewController.swift in Sources */,
 				C42C56331E6127D2005C6D66 /* CardView.swift in Sources */,
+				C42C56351E612CF3005C6D66 /* SegueFromRight.swift in Sources */,
 				E7A30F0479ACCE1500000000 /* AWSMobileClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
