@@ -1,0 +1,14 @@
+{
+  "name": "store_poseter_to_s3",
+  "version": "1.0.0",
+  "description": "fetch image using url; store locally; save to s3",
+  "main": "store_p.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.79.0"
+  }
+}
