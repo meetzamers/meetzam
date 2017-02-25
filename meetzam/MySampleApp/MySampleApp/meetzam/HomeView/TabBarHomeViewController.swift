@@ -153,6 +153,5 @@ class TabBarHomeViewController: UIViewController {
         loginStatusLabel.text = "Signed in with Facebook"
     }
     // Debug functions end here
-    // ============================================
 
 }
