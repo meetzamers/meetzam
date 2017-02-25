@@ -1,0 +1,24 @@
+
+service: getMovieInfoFromTMDB
+
+frameworkVersion: "=1.7.0"
+
+provider:
+  name: aws
+  runtime: nodejs4.3
+  iamRoleStatements:
+    - Effect: Allow
+      Action: "DynamoDB:*"
+      Resource: "arn:aws:dynamodb:us-east-1:397508666882:table/Movie2"
+    - Effect: Allow
+      Action: "lambda:InvokeFunction"
+      Resource: "arn:aws:lambda:*:*:*"
+
+custom: ${file(./credentials.json)}
+
+functions:
+  backendLambda:
+    handler: backendLambda.handler
+    environment:
+      TMDB_API_key: ${self:custom.TMDB_API_key}
+      Gracenote_API_key: ${self:custom.Gracenote_API_key}
