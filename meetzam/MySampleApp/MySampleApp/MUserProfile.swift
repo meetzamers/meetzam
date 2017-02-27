@@ -24,13 +24,15 @@ import Foundation
 import UIKit
 import AWSDynamoDB
 
-class Profile: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
+class MUserProfile: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     
-    var _userId: String?
-    var _bio: String?
-    var _age: String?
-    var _gender: String?
-    var _region: String?
+    var userId: String?
+    var displayName: String?
+    var bio: String?
+    var age: String?
+    var gender: String?
+    var region: String?
+    var email: String?
     
     class func dynamoDBTableName() -> String {
         
@@ -39,25 +41,47 @@ class Profile: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     
     class func hashKeyAttribute() -> String {
         
-        return "_userId"
+        return "userId"
     }
     
     class func rangeKeyAttribute() -> String {
         
-        return "_phone"
+        return "email"
     }
     
-    override class func jsonKeyPathsByPropertyKey() -> [AnyHashable: Any] {
+    /*override class func jsonKeyPathsByPropertyKey() -> [AnyHashable: Any] {
         return [
             "_userId" : "userId",
             "_phone" : "phone",
             "_name" : "name",
             "_pushTargetArn" : "pushTargetArn",
         ]
+    }*/
+
+    func insertSomeItems(_userId: String, _displayName: String, _bio: String, _age: String, _gender: String, _region: String, _email: String) {
+        print("insertSomeItems()")
+        let mapper = AWSDynamoDBObjectMapper.default()
+        
+        var userProfile = MUserProfile()
+        userProfile?.userId  = _userId
+        userProfile?.displayName = _displayName
+        userProfile?.bio = _bio
+        userProfile?.age = _age
+        userProfile?.gender = _gender
+        userProfile?.region = _region
+        userProfile?.email = _email
+        let profile = mapper.save(userProfile!)
+        
+        /*mapper.save(userProfile!).continueWith(block: { (task:AWSTask<AnyObject>!) -> Any? in
+            if let error = task.error as? NSError {
+                print("The request failed. Error: \(error)")
+            } else {
+                // Do something with task.result or perform other operations.
+            }
+        })*/
+        
+        
+        //return BFTask(forCompletionOfAllTasks: [task1, task2, task3])
     }
-    
-    func 
-    let myprofile=Profile()
-    myprofile?._age=3
 
 }

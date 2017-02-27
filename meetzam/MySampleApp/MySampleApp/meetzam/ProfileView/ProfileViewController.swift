@@ -15,5 +15,9 @@ class ProfileViewController: UIViewController {
         
         
     }
+    @IBAction func connect(_ sender: Any) {
+        MUserProfile().insertSomeItems("1", "Mary", "I love movies!", "25", "female", "IN", "mary@gmail.com")
+        
+    }
 
 }
