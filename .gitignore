@@ -41,3 +41,4 @@ Thumbs.db
 .npmignore
 /meetzamLambda/getInTheaterMovieInfo/credentials.json
 /meetzamLambda/getMovieInfoFromTMDB/credentials.json
+/meetzam/MySampleApp/MySampleApp.xcodeproj/project.xcworkspace/xcuserdata/junpufan.xcuserdatad/UserInterfaceState.xcuserstate
