@@ -365,7 +365,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Edit Profile" id="kA1-EL-O2z"/>
+                    <navigationItem key="navigationItem" title="Edit Profile" id="kA1-EL-O2z">
+                        <barButtonItem key="rightBarButtonItem" image="Setting" id="qTC-0B-Izb"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="age" destination="J7a-fH-4WS" id="s7S-Jz-pcd"/>
                         <outlet property="bio" destination="Rq9-0Z-dtQ" id="gxv-9c-BPJ"/>
@@ -446,7 +448,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wqJ-wR-bNF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2554.4000000000001" y="2299.7001499250377"/>
+            <point key="canvasLocation" x="1109" y="2310"/>
         </scene>
         <!--Chat-->
         <scene sceneID="gIl-HV-LyU">
