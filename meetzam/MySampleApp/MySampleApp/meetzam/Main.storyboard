@@ -238,7 +238,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Change Profile Picture"/>
                                 <connections>
-                                    <action selector="editProfilePictureButtonTapped:" destination="wAD-EU-9I9" eventType="touchUpInside" id="QQW-l9-i15"/>
+                                    <action selector="editProfilePictureButtonTapped:" destination="wAD-EU-9I9" eventType="touchUpInside" id="PbQ-0o-bhC"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -253,7 +253,7 @@
                         <outlet property="email" destination="yZy-OB-TN5" id="e1a-pQ-szw"/>
                         <outlet property="gender" destination="yvt-Js-Gfv" id="1CC-KV-KuY"/>
                         <outlet property="name" destination="qP1-pr-mRJ" id="8Ud-M1-yO1"/>
-                        <outlet property="profilePicture" destination="AZE-Na-X5r" id="fJJ-LV-W3c"/>
+                        <outlet property="profilePicture" destination="AZE-Na-X5r" id="Fuy-LB-iLr"/>
                         <outlet property="region" destination="gVp-N2-l4S" id="8Er-Vp-aaK"/>
                     </connections>
                 </viewController>
