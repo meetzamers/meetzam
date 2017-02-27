@@ -48,35 +48,9 @@
                     <view key="view" contentMode="scaleToFill" id="HlV-hH-MNM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="This is Home" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VV6-c2-Ird">
-                                <rect key="frame" x="119" y="318" width="136" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="25"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LoginStatus:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RDs-u1-mto">
-                                <rect key="frame" x="16" y="28" width="96" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="NULL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="93Z-ID-t5K">
-                                <rect key="frame" x="16" y="57" width="337" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" image="Home" id="ryS-cw-Edx"/>
-                    <connections>
-                        <outlet property="loginStatusLabel" destination="93Z-ID-t5K" id="K7G-yk-dib"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hsd-MA-kcx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -151,12 +125,38 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="qCX-L0-MkU">
-                        <barButtonItem key="rightBarButtonItem" image="Setting" id="212-yT-BHb"/>
+                        <barButtonItem key="rightBarButtonItem" image="Setting" id="212-yT-BHb">
+                            <connections>
+                                <action selector="toSettingButton:" destination="m4S-d2-sYW" id="Qk3-Sw-4xo"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="Uk0-eM-Cgj" kind="show" identifier="toSetSegue" id="TOf-wl-dnL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n8g-Y9-yXm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="988" y="1487"/>
+        </scene>
+        <!--Setting View Controller-->
+        <scene sceneID="PqD-n0-Tgh">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="Uk0-eM-Cgj" customClass="SettingViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1at-uq-E1W"/>
+                        <viewControllerLayoutGuide type="bottom" id="3Xy-6X-ysJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="c2x-ss-l4B">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="y3y-MZ-8Ix"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vbj-1x-6Lx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1725.5999999999999" y="1485.6071964017992"/>
         </scene>
         <!--Chat-->
         <scene sceneID="gIl-HV-LyU">
