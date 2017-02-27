@@ -16,13 +16,15 @@ class SettingViewController: UIViewController {
     var new_signinObserver: AnyObject!
     var new_signoutObserver: AnyObject!
     
-    fileprivate let loginStatusButton: UIButton = UIButton(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - 50, width: UIScreen.main.bounds.width, height: 50))
+    fileprivate let loginStatusButton: UIButton = UIButton(frame: CGRect(x: 0, y: UIScreen.main.bounds.height - 65, width: UIScreen.main.bounds.width, height: 50))
     
     // Variable ends here
     // ============================================
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
         
         handleSigninStatus()
         
@@ -76,8 +78,10 @@ class SettingViewController: UIViewController {
     // 1. set login/logout button
     func setloginStatusButton() {
         
+        loginStatusButton.setTitleColor(UIColor.red, for: .normal)
+        
         loginStatusButton.setTitle("NONE", for: .normal)
-        loginStatusButton.backgroundColor = UIColor.brown;
+        loginStatusButton.backgroundColor = UIColor.white
         loginStatusButton.tag = 1
         
         
@@ -100,9 +104,9 @@ class SettingViewController: UIViewController {
                     self.animated_SignInViewController()
             })
         }
-        else {
-            assert(false)
-        }
+//        else {
+//            assert(false)
+//        }
     }
     
     // 3. display sign in view controller

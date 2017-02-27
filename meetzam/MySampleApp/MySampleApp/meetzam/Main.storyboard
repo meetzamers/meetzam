@@ -37,7 +37,7 @@
             </objects>
             <point key="canvasLocation" x="988" y="-564"/>
         </scene>
-        <!--Home-->
+        <!--Tab Bar Home View Controller-->
         <scene sceneID="Ub5-Dd-SXZ">
             <objects>
                 <viewController storyboardIdentifier="HomeView" id="M4r-Ps-iiq" customClass="TabBarHomeViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
@@ -50,16 +50,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Home" image="Home" id="ryS-cw-Edx"/>
+                    <tabBarItem key="tabBarItem" title="" image="Home" id="ryS-cw-Edx">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hsd-MA-kcx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="233" y="-1259"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Main View Controller-->
         <scene sceneID="wJe-e0-wH6">
             <objects>
-                <tabBarController storyboardIdentifier="TabBarFirst" id="kPB-Rz-uBK" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarFirst" id="kPB-Rz-uBK" customClass="MainViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="bfh-fj-Meh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -186,11 +188,13 @@
             </objects>
             <point key="canvasLocation" x="988" y="813"/>
         </scene>
-        <!--Contacts-->
+        <!--Navi View Controller-->
         <scene sceneID="DGb-Tr-ERE">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RcN-jF-z05" customClass="NaviViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Contacts" image="Contacts" id="hmi-ne-A3u"/>
+                    <tabBarItem key="tabBarItem" title="" image="Contacts" id="hmi-ne-A3u">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="kce-y9-hjy">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -205,11 +209,13 @@
             </objects>
             <point key="canvasLocation" x="232.80000000000001" y="-563.56821589205401"/>
         </scene>
-        <!--Chat-->
+        <!--Navi View Controller-->
         <scene sceneID="5IB-L2-wxC">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lgx-AO-AB4" customClass="NaviViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Chat" image="Chat" id="i37-eY-TPF"/>
+                    <tabBarItem key="tabBarItem" title="" image="Chat" id="i37-eY-TPF">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="yxh-rP-jz5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -224,11 +230,13 @@
             </objects>
             <point key="canvasLocation" x="233" y="813"/>
         </scene>
-        <!--Profile-->
+        <!--Navi View Controller-->
         <scene sceneID="4a3-ba-3lT">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wis-jw-d7L" customClass="NaviViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" image="Profile" id="pkS-UJ-mds"/>
+                    <tabBarItem key="tabBarItem" title="" image="Profile" id="pkS-UJ-mds">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="joM-tj-XfO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -243,11 +251,13 @@
             </objects>
             <point key="canvasLocation" x="233" y="1487"/>
         </scene>
-        <!--Match-->
+        <!--Navi View Controller-->
         <scene sceneID="bBq-n2-BUD">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0O2-CG-5wu" customClass="NaviViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Match" image="Match" id="T8d-at-rsD"/>
+                    <tabBarItem key="tabBarItem" title="" image="Match" id="T8d-at-rsD">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="kQk-QR-BUa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
