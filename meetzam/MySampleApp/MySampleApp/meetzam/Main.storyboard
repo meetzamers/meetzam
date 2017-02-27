@@ -150,8 +150,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R5O-f1-4Ry">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="R5O-f1-4Ry">
                                 <rect key="frame" x="68" y="110" width="250" height="250"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="250" id="GBR-p9-Thc"/>
+                                </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Liked Movies:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="keo-Rs-0sd">
                                 <rect key="frame" x="16" y="467" width="116" height="23"/>
@@ -175,9 +178,8 @@
                                     <segue destination="wAD-EU-9I9" kind="show" id="J67-vS-gGd"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xEp-DS-jLb" userLabel="Display Name And Age Field">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xEp-DS-jLb" userLabel="Display Name And Age Field">
                                 <rect key="frame" x="68" y="380" width="250" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -185,17 +187,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="R5O-f1-4Ry" firstAttribute="leading" secondItem="xEp-DS-jLb" secondAttribute="leading" id="8Ht-Bk-jRv"/>
                             <constraint firstItem="R5O-f1-4Ry" firstAttribute="leading" secondItem="dHD-ip-lBT" secondAttribute="leadingMargin" constant="52" id="C7q-di-MCM"/>
+                            <constraint firstItem="R5O-f1-4Ry" firstAttribute="trailing" secondItem="xEp-DS-jLb" secondAttribute="trailing" id="Dvd-Z7-pqs"/>
+                            <constraint firstItem="xEp-DS-jLb" firstAttribute="top" secondItem="R5O-f1-4Ry" secondAttribute="bottom" constant="20" id="Mmj-Ov-OAJ"/>
                             <constraint firstItem="R5O-f1-4Ry" firstAttribute="top" secondItem="8nv-fK-nOp" secondAttribute="bottom" constant="46" id="gbd-ZZ-Xwd"/>
                             <constraint firstAttribute="trailingMargin" secondItem="R5O-f1-4Ry" secondAttribute="trailing" constant="41" id="y6J-Xe-ECs"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="qCX-L0-MkU">
-                        <barButtonItem key="rightBarButtonItem" image="Setting" id="212-yT-BHb">
-                            <connections>
-                                <segue destination="MWI-mv-Z2S" kind="show" id="LJ5-Yh-NEz"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="Setting" id="212-yT-BHb"/>
                     </navigationItem>
                     <connections>
                         <outlet property="displayNameAndAgeField" destination="xEp-DS-jLb" id="0J8-8I-qny"/>
@@ -277,11 +278,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Edit Profile" id="kA1-EL-O2z">
-                        <barButtonItem key="rightBarButtonItem" image="Setting" id="qTC-0B-Izb">
-                            <connections>
-                                <segue destination="MWI-mv-Z2S" kind="show" id="GLU-Cv-UcV"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" image="Setting" id="qTC-0B-Izb"/>
                     </navigationItem>
                     <connections>
                         <outlet property="age" destination="J7a-fH-4WS" id="s7S-Jz-pcd"/>
@@ -324,24 +321,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wes-Fv-MoN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="988" y="813"/>
-        </scene>
-        <!--Setting Scene-->
-        <scene sceneID="yxC-YV-0Pv">
-            <objects>
-                <viewController id="MWI-mv-Z2S" userLabel="Setting Scene" customClass="SettingViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="eS1-ZS-yEQ"/>
-                        <viewControllerLayoutGuide type="bottom" id="jxw-Fa-bSD"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="ILP-IC-4kL">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Yk5-0j-us2" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1425" y="2246"/>
         </scene>
         <!--Contacts-->
         <scene sceneID="DGb-Tr-ERE">
@@ -429,7 +408,4 @@
         <image name="Profile" width="25" height="25"/>
         <image name="Setting" width="25" height="25"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="GLU-Cv-UcV"/>
-    </inferredMetricsTieBreakers>
 </document>
