@@ -17,6 +17,8 @@
 		C42C56331E6127D2005C6D66 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C56321E6127D2005C6D66 /* CardView.swift */; };
 		C42C56351E612CF3005C6D66 /* SegueFromRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C56341E612CF3005C6D66 /* SegueFromRight.swift */; };
 		C42C56371E612F90005C6D66 /* NaviViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C56361E612F90005C6D66 /* NaviViewController.swift */; };
+		C4678C4B1E64E17900CA385F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4678C4A1E64E17900CA385F /* MainViewController.swift */; };
+		C4678C4D1E64E1C800CA385F /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4678C4C1E64E1C800CA385F /* SettingViewController.swift */; };
 		C4BF9C411E5B61A500C73405 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4BF9C401E5B61A500C73405 /* Main.storyboard */; };
 		C4BF9C441E5B643C00C73405 /* TabBarHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF9C431E5B643C00C73405 /* TabBarHomeViewController.swift */; };
 		E7A30F04077D295600000000 /* SignIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1DD70E29F31C638F00000000 /* SignIn.storyboard */; };
@@ -194,6 +196,8 @@
 		C42C56321E6127D2005C6D66 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardView.swift; path = MySampleApp/meetzam/MatchView/CardView.swift; sourceTree = SOURCE_ROOT; };
 		C42C56341E612CF3005C6D66 /* SegueFromRight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegueFromRight.swift; path = MySampleApp/meetzam/Animation/SegueFromRight.swift; sourceTree = SOURCE_ROOT; };
 		C42C56361E612F90005C6D66 /* NaviViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NaviViewController.swift; path = MySampleApp/meetzam/Animation/NaviViewController.swift; sourceTree = SOURCE_ROOT; };
+		C4678C4A1E64E17900CA385F /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = MySampleApp/meetzam/MainViewController.swift; sourceTree = SOURCE_ROOT; };
+		C4678C4C1E64E1C800CA385F /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingViewController.swift; path = MySampleApp/meetzam/ProfileView/SettingViewController.swift; sourceTree = SOURCE_ROOT; };
 		C4BF9C401E5B61A500C73405 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = MySampleApp/meetzam/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		C4BF9C431E5B643C00C73405 /* TabBarHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarHomeViewController.swift; path = MySampleApp/meetzam/HomeView/TabBarHomeViewController.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -203,7 +207,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4055A191E63D6F800633219 /* RAMAnimatedTabBarController.framework in Frameworks */,
 				C42C56301E6126FA005C6D66 /* ZLSwipeableViewSwift.framework in Frameworks */,
 				E7A30F04E256F2B700000001 /* AWSDynamoDB.framework in Frameworks */,
 				E7A30F04B7CAB6BF00000001 /* AWSCore.framework in Frameworks */,
@@ -382,7 +385,6 @@
 		B401C979BAD7438500000000 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C4055A181E63D6F800633219 /* RAMAnimatedTabBarController.framework */,
 				C42C562F1E6126FA005C6D66 /* ZLSwipeableViewSwift.framework */,
 				1DD70E298BC18EB000000000 /* AWSAPIGateway.framework */,
 				1DD70E29CD2C2CA200000000 /* AWSCognito.framework */,
@@ -508,6 +510,7 @@
 		C40661BE1E5CBCA4005D2145 /* ProfileView */ = {
 			isa = PBXGroup;
 			children = (
+				C4678C4C1E64E1C800CA385F /* SettingViewController.swift */,
 				C40661BF1E5CBCBF005D2145 /* ProfileViewController.swift */,
 				8B49E39A1E5E708B0050F8AB /* EditProfileViewController.swift */,
 			);
@@ -535,8 +538,8 @@
 		C4BF9C3F1E5B618900C73405 /* meetzam */ = {
 			isa = PBXGroup;
 			children = (
+				C4678C4A1E64E17900CA385F /* MainViewController.swift */,
 				C4BF9C401E5B61A500C73405 /* Main.storyboard */,
-				C4055A1A1E63D92200633219 /* MainViewController.swift */,
 				C4BF9C421E5B640900C73405 /* HomeView */,
 				C412E65F1E5C15E600BE8B61 /* ContactsView */,
 				C40661B81E5CBC34005D2145 /* MatchView */,
@@ -686,13 +689,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B49E39B1E5E708B0050F8AB /* EditProfileViewController.swift in Sources */,
+				C4678C4B1E64E17900CA385F /* MainViewController.swift in Sources */,
 				E7A30F045B5017B200000000 /* ChatRoom.swift in Sources */,
-				C4055A1B1E63D92200633219 /* MainViewController.swift in Sources */,
 				C4BF9C441E5B643C00C73405 /* TabBarHomeViewController.swift in Sources */,
 				E7A30F040FC546F300000000 /* PushNotificationViewController.swift in Sources */,
 				C412E6611E5C160C00BE8B61 /* ContactsViewController.swift in Sources */,
 				C42C56371E612F90005C6D66 /* NaviViewController.swift in Sources */,
-				C4055A171E63C5D700633219 /* SettingViewController.swift in Sources */,
 				E7A30F047458C05600000000 /* ContentDeliveryViewController.swift in Sources */,
 				E7A30F043CD1B25F00000000 /* CloudLogicAPIInvokeViewController.swift in Sources */,
 				E7A30F0495A1857C00000000 /* UserFilesViewController.swift in Sources */,
@@ -707,6 +709,7 @@
 				E7A30F04EC8865D000000000 /* UserDataStorageViewController.swift in Sources */,
 				E7A30F04D9E365EC00000000 /* DemoFeature.swift in Sources */,
 				E7A30F040C06D8D800000000 /* ColorThemeSettings.swift in Sources */,
+				C4678C4D1E64E1C800CA385F /* SettingViewController.swift in Sources */,
 				C40661BD1E5CBC85005D2145 /* ChatViewController.swift in Sources */,
 				C40661C21E5CBF52005D2145 /* SegueToptoBottom.swift in Sources */,
 				E7A30F0441798FFD00000000 /* NoSQLSampleDataGenerator.swift in Sources */,
