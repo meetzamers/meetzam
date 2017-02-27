@@ -28,10 +28,18 @@
                                     <constraint firstAttribute="height" constant="237" id="LZf-5o-4Yk"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="© 2017 meetzam-dev" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yg8-20-y9L">
+                                <rect key="frame" x="108" y="626" width="158" height="21"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" red="0.20000000000000001" green="0.1803921568627451" blue="0.18823529411764706" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="q4O-NM-FPQ" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="52" id="1s2-Ss-rYh"/>
+                            <constraint firstItem="Yg8-20-y9L" firstAttribute="centerX" secondItem="q4O-NM-FPQ" secondAttribute="centerX" id="LcC-tF-cbK"/>
+                            <constraint firstAttribute="bottom" secondItem="Yg8-20-y9L" secondAttribute="bottom" constant="20" symbolic="YES" id="Uzb-sF-Mw0"/>
                             <constraint firstItem="q4O-NM-FPQ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="W15-V4-V3j"/>
                             <constraint firstItem="q4O-NM-FPQ" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="60" id="j1t-X3-5LU"/>
                         </constraints>
