@@ -123,7 +123,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 profilePicture.image = UIImage(named: "UserIcon")
             }
         }
-        
+    
         // Set this controller as the camera delegate
         imagePicker.delegate = self
         
@@ -164,6 +164,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     // Change profile picture button
     @IBAction func editProfilePictureButtonTapped(_ sender: UIButton) {
+     
         if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
             if (UIImagePickerController.availableCaptureModes(for: .rear) != nil) {
                 imagePicker.allowsEditing = false
