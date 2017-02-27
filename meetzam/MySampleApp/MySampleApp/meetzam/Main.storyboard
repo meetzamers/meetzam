@@ -37,62 +37,29 @@
             </objects>
             <point key="canvasLocation" x="988" y="-564"/>
         </scene>
-        <!--Home-->
-        <scene sceneID="Ub5-Dd-SXZ">
+        <!--Tab Bar Home View Controller-->
+        <scene sceneID="QRX-ic-pJf">
             <objects>
-                <viewController storyboardIdentifier="HomeView" id="M4r-Ps-iiq" customClass="TabBarHomeViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="ynZ-tb-KDp"/>
-                        <viewControllerLayoutGuide type="bottom" id="Bhl-JD-h3F"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="HlV-hH-MNM">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="This is Home" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VV6-c2-Ird">
-                                <rect key="frame" x="119" y="318" width="136" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="25"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LoginStatus:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RDs-u1-mto">
-                                <rect key="frame" x="16" y="28" width="96" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="NULL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="93Z-ID-t5K">
-                                <rect key="frame" x="16" y="57" width="337" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Home" image="Home" id="ryS-cw-Edx"/>
-                    <connections>
-                        <outlet property="loginStatusLabel" destination="93Z-ID-t5K" id="K7G-yk-dib"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Hsd-MA-kcx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="4Ym-gZ-MMN" customClass="TabBarHomeViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="Home" id="NYn-zQ-3KF">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
+                </pageViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xEJ-c2-6rq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="233" y="-1259"/>
+            <point key="canvasLocation" x="233" y="-1258"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Main View Controller-->
         <scene sceneID="wJe-e0-wH6">
             <objects>
-                <tabBarController storyboardIdentifier="TabBarFirst" id="kPB-Rz-uBK" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarFirst" id="kPB-Rz-uBK" customClass="MainViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="bfh-fj-Meh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="M4r-Ps-iiq" kind="relationship" relationship="viewControllers" id="UI2-oI-zhW"/>
+                        <segue destination="4Ym-gZ-MMN" kind="relationship" relationship="viewControllers" id="ztj-BH-auu"/>
                         <segue destination="RcN-jF-z05" kind="relationship" relationship="viewControllers" id="Ura-bJ-DO5"/>
                         <segue destination="0O2-CG-5wu" kind="relationship" relationship="viewControllers" id="h7j-DL-Ce4"/>
                         <segue destination="lgx-AO-AB4" kind="relationship" relationship="viewControllers" id="EOC-He-u2K"/>
@@ -114,15 +81,6 @@
                     <view key="view" contentMode="scaleToFill" id="VUA-J6-Wzl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="This is Match" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w0N-IQ-8ui">
-                                <rect key="frame" x="118" y="318" width="138" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="25"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Match" id="prY-EE-9sR">
@@ -160,12 +118,38 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="qCX-L0-MkU">
-                        <barButtonItem key="rightBarButtonItem" image="Setting" id="212-yT-BHb"/>
+                        <barButtonItem key="rightBarButtonItem" image="Setting" id="212-yT-BHb">
+                            <connections>
+                                <action selector="toSettingButton:" destination="m4S-d2-sYW" id="Qk3-Sw-4xo"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="Uk0-eM-Cgj" kind="show" identifier="toSetSegue" id="TOf-wl-dnL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n8g-Y9-yXm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="988" y="1487"/>
+        </scene>
+        <!--Setting View Controller-->
+        <scene sceneID="PqD-n0-Tgh">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="Uk0-eM-Cgj" customClass="SettingViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1at-uq-E1W"/>
+                        <viewControllerLayoutGuide type="bottom" id="3Xy-6X-ysJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="c2x-ss-l4B">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="y3y-MZ-8Ix"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vbj-1x-6Lx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1725.5999999999999" y="1485.6071964017992"/>
         </scene>
         <!--Chat-->
         <scene sceneID="gIl-HV-LyU">
@@ -195,11 +179,13 @@
             </objects>
             <point key="canvasLocation" x="988" y="813"/>
         </scene>
-        <!--Contacts-->
+        <!--Navi View Controller-->
         <scene sceneID="DGb-Tr-ERE">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RcN-jF-z05" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Contacts" image="Contacts" id="hmi-ne-A3u"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RcN-jF-z05" customClass="NaviViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="Contacts" id="hmi-ne-A3u">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="kce-y9-hjy">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -214,11 +200,13 @@
             </objects>
             <point key="canvasLocation" x="232.80000000000001" y="-563.56821589205401"/>
         </scene>
-        <!--Chat-->
+        <!--Navi View Controller-->
         <scene sceneID="5IB-L2-wxC">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lgx-AO-AB4" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Chat" image="Chat" id="i37-eY-TPF"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lgx-AO-AB4" customClass="NaviViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="Chat" id="i37-eY-TPF">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="yxh-rP-jz5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -233,11 +221,13 @@
             </objects>
             <point key="canvasLocation" x="233" y="813"/>
         </scene>
-        <!--Profile-->
+        <!--Navi View Controller-->
         <scene sceneID="4a3-ba-3lT">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wis-jw-d7L" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" image="Profile" id="pkS-UJ-mds"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wis-jw-d7L" customClass="NaviViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="Profile" id="pkS-UJ-mds">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="joM-tj-XfO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -252,11 +242,13 @@
             </objects>
             <point key="canvasLocation" x="233" y="1487"/>
         </scene>
-        <!--Match-->
+        <!--Navi View Controller-->
         <scene sceneID="bBq-n2-BUD">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0O2-CG-5wu" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Match" image="Match" id="T8d-at-rsD"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0O2-CG-5wu" customClass="NaviViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="Match" id="T8d-at-rsD">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="kQk-QR-BUa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>

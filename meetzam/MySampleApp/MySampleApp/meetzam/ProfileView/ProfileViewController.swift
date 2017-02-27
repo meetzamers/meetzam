@@ -13,7 +13,13 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        view.backgroundColor = UIColor.white
         
+    }
+    
+    // Go to setting page
+    @IBAction func toSettingButton(_ sender: Any) {
+        self.performSegue(withIdentifier: "toSetSegue", sender: self)
     }
 
 }
