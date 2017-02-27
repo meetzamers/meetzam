@@ -113,23 +113,22 @@
                                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jj3-hZ-LfB" userLabel="likedMoviesView">
                                                 <rect key="frame" x="8" y="436" width="394" height="114"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WsX-2E-BNQ">
-                                                        <rect key="frame" x="-8" y="0.0" width="500" height="114"/>
+                                                    <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WsX-2E-BNQ">
+                                                        <rect key="frame" x="-8" y="-1" width="500" height="114"/>
                                                         <subviews>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rOq-bu-Z2g">
-                                                                <rect key="frame" x="8" y="0.0" width="96" height="115"/>
+                                                                <rect key="frame" x="10" y="0.0" width="65" height="115"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             </imageView>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dS8-wa-CS5">
-                                                                <rect key="frame" x="112" y="0.0" width="98" height="114"/>
+                                                                <rect key="frame" x="95" y="0.0" width="65" height="115"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             </imageView>
                                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3YL-6b-9m0">
-                                                                <rect key="frame" x="218" y="0.0" width="95" height="115"/>
+                                                                <rect key="frame" x="180" y="0.0" width="65" height="115"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             </imageView>
                                                         </subviews>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="500" id="vpt-p8-MJD"/>
                                                         </constraints>
@@ -139,16 +138,16 @@
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <state key="normal" title="More"/>
                                                         <connections>
-                                                            <segue destination="CLb-22-Yrc" kind="show" id="Rvl-cT-IDp"/>
+                                                            <action selector="moreButton:" destination="m4S-d2-sYW" eventType="touchUpInside" id="xPf-5t-jEt"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="WsX-2E-BNQ" secondAttribute="trailing" constant="-98" id="2BX-HH-IMc"/>
-                                                    <constraint firstItem="WsX-2E-BNQ" firstAttribute="top" secondItem="jj3-hZ-LfB" secondAttribute="top" id="jPq-SG-GEV"/>
-                                                    <constraint firstItem="WsX-2E-BNQ" firstAttribute="centerY" secondItem="jj3-hZ-LfB" secondAttribute="centerY" id="vDH-H3-aR6"/>
+                                                    <constraint firstItem="WsX-2E-BNQ" firstAttribute="top" secondItem="jj3-hZ-LfB" secondAttribute="top" constant="-1" id="jPq-SG-GEV"/>
+                                                    <constraint firstItem="WsX-2E-BNQ" firstAttribute="centerY" secondItem="jj3-hZ-LfB" secondAttribute="centerY" constant="-1" id="vDH-H3-aR6"/>
                                                     <constraint firstItem="WsX-2E-BNQ" firstAttribute="leading" secondItem="jj3-hZ-LfB" secondAttribute="leading" constant="-8" id="yeY-id-v3B"/>
-                                                    <constraint firstAttribute="bottom" secondItem="WsX-2E-BNQ" secondAttribute="bottom" id="zCI-sS-8RY"/>
+                                                    <constraint firstAttribute="bottom" secondItem="WsX-2E-BNQ" secondAttribute="bottom" constant="1" id="zCI-sS-8RY"/>
                                                 </constraints>
                                             </scrollView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bio" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uaC-dK-Qxw">
@@ -157,7 +156,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="R5O-f1-4Ry">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="R5O-f1-4Ry">
                                                 <rect key="frame" x="77" y="0.0" width="250" height="250"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="250" id="GBR-p9-Thc"/>
@@ -167,11 +166,11 @@
                                                 <rect key="frame" x="337" y="333" width="30" height="30"/>
                                                 <state key="normal" title="Edit"/>
                                                 <connections>
-                                                    <segue destination="wAD-EU-9I9" kind="show" id="J67-vS-gGd"/>
+                                                    <action selector="toEditProfilePage:" destination="m4S-d2-sYW" eventType="touchUpInside" id="mVf-lv-EAw"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Liked Movies:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="keo-Rs-0sd">
-                                                <rect key="frame" x="8" y="393" width="116" height="23"/>
+                                                <rect key="frame" x="8" y="405" width="116" height="23"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -197,8 +196,8 @@
                                             <constraint firstItem="keo-Rs-0sd" firstAttribute="leading" secondItem="1DX-Sx-ngx" secondAttribute="leading" constant="8" id="hRB-cg-m56"/>
                                             <constraint firstItem="R5O-f1-4Ry" firstAttribute="trailing" secondItem="HI6-mc-0bT" secondAttribute="trailing" constant="-40" id="hn9-sa-0q1"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="640" id="kxJ-mX-LfZ"/>
-                                            <constraint firstItem="jj3-hZ-LfB" firstAttribute="top" secondItem="keo-Rs-0sd" secondAttribute="bottom" constant="20" id="mBh-pX-ECl"/>
-                                            <constraint firstItem="keo-Rs-0sd" firstAttribute="top" secondItem="uaC-dK-Qxw" secondAttribute="bottom" constant="57" id="qBZ-xc-R5b"/>
+                                            <constraint firstItem="jj3-hZ-LfB" firstAttribute="top" secondItem="keo-Rs-0sd" secondAttribute="bottom" constant="8" id="mBh-pX-ECl"/>
+                                            <constraint firstItem="keo-Rs-0sd" firstAttribute="top" secondItem="uaC-dK-Qxw" secondAttribute="bottom" constant="69" id="qBZ-xc-R5b"/>
                                             <constraint firstItem="uaC-dK-Qxw" firstAttribute="top" secondItem="xEp-DS-jLb" secondAttribute="bottom" constant="8" id="zwl-8l-Ykd"/>
                                         </constraints>
                                     </view>
@@ -244,6 +243,8 @@
                         <outlet property="userBioField" destination="uaC-dK-Qxw" id="LM7-40-Ds0"/>
                         <outlet property="userPicField" destination="R5O-f1-4Ry" id="ahz-wN-Ghg"/>
                         <segue destination="Uk0-eM-Cgj" kind="show" identifier="toSetSegue" id="6Un-GQ-tOt"/>
+                        <segue destination="CLb-22-Yrc" kind="show" identifier="toDetailedMovies" id="AGK-iD-2cs"/>
+                        <segue destination="wAD-EU-9I9" kind="show" identifier="toEditProfileSegue" id="isF-ND-cz7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n8g-Y9-yXm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -253,7 +254,7 @@
         <!--Edit Profile-->
         <scene sceneID="QIg-hJ-gcc">
             <objects>
-                <viewController id="wAD-EU-9I9" customClass="EditProfileViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="wAD-EU-9I9" customClass="EditProfileViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MBN-BU-kSL"/>
                         <viewControllerLayoutGuide type="bottom" id="vsY-Ld-Szd"/>
@@ -319,9 +320,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Edit Profile" id="kA1-EL-O2z">
-                        <barButtonItem key="rightBarButtonItem" image="Setting" id="qTC-0B-Izb"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Edit Profile" id="kA1-EL-O2z"/>
                     <connections>
                         <outlet property="age" destination="J7a-fH-4WS" id="s7S-Jz-pcd"/>
                         <outlet property="bio" destination="Rq9-0Z-dtQ" id="gxv-9c-BPJ"/>
@@ -340,7 +339,7 @@
         <scene sceneID="FMR-0y-3LT">
             <objects>
                 <collectionViewController id="CLb-22-Yrc" userLabel="LikedMovieAlbum" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="10b-hl-ehb">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="10b-hl-ehb">
                         <rect key="frame" x="0.0" y="0.0" width="400" height="675"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -358,7 +357,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="176" height="213"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iw6-Em-7sH">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="lala" translatesAutoresizingMaskIntoConstraints="NO" id="iw6-Em-7sH">
                                             <rect key="frame" x="0.0" y="0.0" width="176" height="213"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -372,7 +371,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="176" height="213"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7fO-Sx-9yN">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="John" translatesAutoresizingMaskIntoConstraints="NO" id="7fO-Sx-9yN">
                                             <rect key="frame" x="0.0" y="0.0" width="176" height="213"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -386,7 +385,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="176" height="213"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bmj-Yf-Msm">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="loganposter2" translatesAutoresizingMaskIntoConstraints="NO" id="bmj-Yf-Msm">
                                             <rect key="frame" x="0.0" y="0.0" width="176" height="213"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
@@ -532,8 +531,11 @@
         <image name="Chat" width="25" height="25"/>
         <image name="Contacts" width="25" height="25"/>
         <image name="Home" width="25" height="25"/>
+        <image name="John" width="720" height="1080"/>
         <image name="Match" width="25" height="25"/>
         <image name="Profile" width="25" height="25"/>
         <image name="Setting" width="25" height="25"/>
+        <image name="lala" width="478" height="717"/>
+        <image name="loganposter2" width="1200" height="1773"/>
     </resources>
 </document>
