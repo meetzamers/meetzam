@@ -16,6 +16,10 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var userBioField: UILabel!
     @IBOutlet weak var userPicField: UIImageView!
  
+    @IBOutlet weak var firstMovie: UIImageView!
+    @IBOutlet weak var secondMovie: UIImageView!
+
+    @IBOutlet weak var thirdMovie: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,12 +39,17 @@ class ProfileViewController: UIViewController {
             displayNameAndAgeField.text = NSLocalizedString("Guest User", comment: "Placeholder text for the guest user.")
         }
         
+        userBioField.text = "Hello! :)"
+        
         
         
         if let imageURL = identityManager.imageURL {
             let imageData = try! Data(contentsOf: imageURL)
             if let profileImage = UIImage(data: imageData) {
                 userPicField.image = profileImage
+                firstMovie.image = profileImage
+                secondMovie.image = profileImage
+                thirdMovie.image = profileImage
             } else {
                 userPicField.image = UIImage(named: "UserIcon")
             }
