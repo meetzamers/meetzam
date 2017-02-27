@@ -420,7 +420,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vbj-1x-6Lx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2626" y="1402"/>
+            <point key="canvasLocation" x="2010" y="2313"/>
         </scene>
         <!--Chat-->
         <scene sceneID="gIl-HV-LyU">
