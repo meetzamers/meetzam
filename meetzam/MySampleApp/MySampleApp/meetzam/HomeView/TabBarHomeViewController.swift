@@ -126,25 +126,52 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
 // This is each page's view controller
 class FrameViewController: UIViewController {
     
+    // string for the image view
     var imgName: String? {
         didSet {
             imageView.image = UIImage(named: imgName!)
         }
     }
     
+    // image view init
     let imageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-        iv.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 100)
+        iv.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 100)
         return iv
     }()
     
+    // scoll view
+    let movieContent = UIScrollView(frame: CGRect(x: 0, y:22, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 46))
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.view.frame = CGRect(x: 0, y: 20, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 100)
+        // view changes
+        self.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         self.view.backgroundColor = UIColor.clear
         
-        self.view.addSubview(imageView)
+        // add scroll view
+        movieContent.showsVerticalScrollIndicator = true
+        movieContent.isScrollEnabled = true
+        movieContent.isUserInteractionEnabled = true
+        self.view.addSubview(movieContent)
+        movieContent.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*2)
+        
+        // add image view to scroll view
+        movieContent.addSubview(imageView)
+        
+        // add movie content in to the scroll view
+        let movieTitle = UILabel(frame: CGRect(x: 10, y: imageView.frame.height, width: UIScreen.main.bounds.width/2 - 10, height: 30))
+        movieTitle.font = UIFont(name: "HelveticaNeue-Light", size: 23)
+        movieTitle.text = "Logan"
+        //movieTitle.adjustsFontSizeToFitWidth = true
+        movieTitle.textColor = UIColor.black
+        movieContent.addSubview(movieTitle)
+        
+        let movieTitleDetailed = UILabel(frame: CGRect(x: UIScreen.main.bounds.width/2 - 10, y: imageView.frame.height, width: UIScreen.main.bounds.width/2 - 10, height: 30))
+        movieTitleDetailed.font = UIFont(name: "HelveticaNeue-thin", size: 13)
+        movieTitleDetailed.text = "Science fiction film/Drama film | 2h 21m"
+        movieTitleDetailed.textColor = UIColor.black
+        movieContent.addSubview(movieTitleDetailed)
     }
 }
