@@ -538,8 +538,8 @@
 		C4BF9C3F1E5B618900C73405 /* meetzam */ = {
 			isa = PBXGroup;
 			children = (
-				C4678C4A1E64E17900CA385F /* MainViewController.swift */,
 				C4BF9C401E5B61A500C73405 /* Main.storyboard */,
+				C4678C4A1E64E17900CA385F /* MainViewController.swift */,
 				C4BF9C421E5B640900C73405 /* HomeView */,
 				C412E65F1E5C15E600BE8B61 /* ContactsView */,
 				C40661B81E5CBC34005D2145 /* MatchView */,
