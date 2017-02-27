@@ -28,7 +28,7 @@ class ProfileViewController: UIViewController {
         if let identityUserName = identityManager.userName {
             //if let identityAge = identityManager.
             
-            displayNameAndAgeField.text = identityUserName + ","
+            displayNameAndAgeField.text = identityUserName
             
             //displayNameAndAgeField.text = identityUserName
         } else {

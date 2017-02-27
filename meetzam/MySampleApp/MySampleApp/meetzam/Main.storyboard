@@ -191,7 +191,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="qCX-L0-MkU">
-                        <barButtonItem key="rightBarButtonItem" image="Setting" id="212-yT-BHb"/>
+                        <barButtonItem key="rightBarButtonItem" image="Setting" id="212-yT-BHb">
+                            <connections>
+                                <segue destination="MWI-mv-Z2S" kind="show" id="LJ5-Yh-NEz"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="displayNameAndAgeField" destination="xEp-DS-jLb" id="0J8-8I-qny"/>
@@ -273,7 +277,11 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Edit Profile" id="kA1-EL-O2z">
-                        <barButtonItem key="rightBarButtonItem" image="Setting" id="qTC-0B-Izb"/>
+                        <barButtonItem key="rightBarButtonItem" image="Setting" id="qTC-0B-Izb">
+                            <connections>
+                                <segue destination="MWI-mv-Z2S" kind="show" id="GLU-Cv-UcV"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="age" destination="J7a-fH-4WS" id="s7S-Jz-pcd"/>
@@ -316,6 +324,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wes-Fv-MoN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="988" y="813"/>
+        </scene>
+        <!--Setting Scene-->
+        <scene sceneID="yxC-YV-0Pv">
+            <objects>
+                <viewController id="MWI-mv-Z2S" userLabel="Setting Scene" customClass="SettingViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="eS1-ZS-yEQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="jxw-Fa-bSD"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ILP-IC-4kL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Yk5-0j-us2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1425" y="2246"/>
         </scene>
         <!--Contacts-->
         <scene sceneID="DGb-Tr-ERE">
@@ -403,4 +429,7 @@
         <image name="Profile" width="25" height="25"/>
         <image name="Setting" width="25" height="25"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="GLU-Cv-UcV"/>
+    </inferredMetricsTieBreakers>
 </document>
