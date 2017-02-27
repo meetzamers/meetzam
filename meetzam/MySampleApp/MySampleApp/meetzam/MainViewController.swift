@@ -23,6 +23,8 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
         tabFrame.origin.y = self.view.frame.size.height - 46
         self.tabBar.frame = tabFrame
         self.tabBar.tintColor = UIColor.init(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
+        self.tabBar.barTintColor = UIColor.init(red: 176/255, green: 176/255, blue: 176/255, alpha: 1)
+        self.tabBar.unselectedItemTintColor = UIColor.init(red: 104/255, green: 104/255, blue: 104/255, alpha: 1)
     }
     
     // tap match pop up.

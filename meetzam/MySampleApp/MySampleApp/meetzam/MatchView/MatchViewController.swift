@@ -32,8 +32,8 @@ class MatchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
-        view.backgroundColor = UIColor.white
+        view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
+        //view.backgroundColor = UIColor.white
         
         // ========================================
         // Card View implementation
