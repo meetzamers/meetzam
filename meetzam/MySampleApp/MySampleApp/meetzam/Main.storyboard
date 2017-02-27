@@ -243,6 +243,7 @@
                         <outlet property="thirdMovie" destination="3YL-6b-9m0" id="ky0-PB-Byf"/>
                         <outlet property="userBioField" destination="uaC-dK-Qxw" id="LM7-40-Ds0"/>
                         <outlet property="userPicField" destination="R5O-f1-4Ry" id="ahz-wN-Ghg"/>
+                        <segue destination="Uk0-eM-Cgj" kind="show" identifier="toSetSegue" id="6Un-GQ-tOt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n8g-Y9-yXm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -412,7 +413,7 @@
                         <viewControllerLayoutGuide type="bottom" id="3Xy-6X-ysJ"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="c2x-ss-l4B">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="675"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
