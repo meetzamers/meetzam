@@ -18,8 +18,6 @@ Now that you have setup the new branch both locally and remotely. You can workin
 
 When ever you have made some progress with your new feature, such as fixed a bug, or finished writing a piece of working code, you should commit this change to you local repository's stage.
 
-If your change involved new files that you created, you need to on stage these new files. You can do that by typing `git add <file_1> <file_2> ... <file_n>`. Or you can type `git commit --all` to on stage all new files.
-
 If your change involved new files that you created, you need to on **STAGE** these new files. You can do that by typing `git add <file_1> <file_2> ... <file_n>`. Or you can type `git commit --all` to on **STAGE** all new files.
 
 ###### 4. Push your changes to remote branch.
