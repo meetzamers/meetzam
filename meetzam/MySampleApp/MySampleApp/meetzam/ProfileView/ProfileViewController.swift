@@ -54,6 +54,11 @@ class ProfileViewController: UIViewController {
         
     }
     
+    // Go to all movies I liked
+    @IBAction func toAllMovies(_ sender: Any) {
+        self.performSegue(withIdentifier: "toMovies", sender: self)
+        
+    }
     // Go to setting page
     @IBAction func toSettingButton(_ sender: Any) {
         self.performSegue(withIdentifier: "toSetSegue", sender: self)

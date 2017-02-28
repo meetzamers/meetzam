@@ -116,11 +116,11 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WsX-2E-BNQ">
                                                         <rect key="frame" x="-8" y="0.0" width="500" height="174"/>
                                                         <subviews>
-                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="lala" translatesAutoresizingMaskIntoConstraints="NO" id="rOq-bu-Z2g">
+                                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="lala" translatesAutoresizingMaskIntoConstraints="NO" id="rOq-bu-Z2g">
                                                                 <rect key="frame" x="8" y="0.0" width="96" height="154"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             </imageView>
-                                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="loganposter2" translatesAutoresizingMaskIntoConstraints="NO" id="3YL-6b-9m0">
+                                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="loganposter2" translatesAutoresizingMaskIntoConstraints="NO" id="3YL-6b-9m0">
                                                                 <rect key="frame" x="219" y="0.0" width="95" height="154"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             </imageView>
@@ -134,8 +134,11 @@
                                                         <rect key="frame" x="347" y="40" width="36" height="34"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <state key="normal" title="More"/>
+                                                        <connections>
+                                                            <action selector="toAllMovies:" destination="m4S-d2-sYW" eventType="touchUpInside" id="dNT-vM-lY5"/>
+                                                        </connections>
                                                     </button>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="split" translatesAutoresizingMaskIntoConstraints="NO" id="dS8-wa-CS5">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="split" translatesAutoresizingMaskIntoConstraints="NO" id="dS8-wa-CS5">
                                                         <rect key="frame" x="106" y="0.0" width="98" height="154"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     </imageView>
@@ -238,11 +241,82 @@
                         <outlet property="userBioField" destination="uaC-dK-Qxw" id="LM7-40-Ds0"/>
                         <outlet property="userPicField" destination="R5O-f1-4Ry" id="ahz-wN-Ghg"/>
                         <segue destination="Uk0-eM-Cgj" kind="show" identifier="toSetSegue" id="6Un-GQ-tOt"/>
+                        <segue destination="ECs-ta-etq" kind="show" identifier="toMovies" id="ar6-Se-DjB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n8g-Y9-yXm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1108.8" y="1545.8770614692655"/>
+        </scene>
+        <!--allLikedMovies-->
+        <scene sceneID="eja-u2-bVY">
+            <objects>
+                <viewController id="ECs-ta-etq" userLabel="allLikedMovies" customClass="LikedMoviesView" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="AWi-2E-FT5"/>
+                        <viewControllerLayoutGuide type="bottom" id="tG8-6r-nsd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xjl-fD-ZiN">
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="675"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fEO-vF-kbs">
+                                <rect key="frame" x="0.0" y="0.0" width="400" height="626"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="50V-Mm-rT2">
+                                    <size key="itemSize" width="96" height="154"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CustomCell" id="apW-pq-z8E" customClass="MovieCollectionCell" customModule="MySampleApp" customModuleProvider="target">
+                                        <rect key="frame" x="10" y="10" width="96" height="154"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="96" height="154"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="C5X-zT-d6T">
+                                                    <rect key="frame" x="0.0" y="0.0" width="96" height="154"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="154" id="Lxt-Ry-yg0"/>
+                                                        <constraint firstAttribute="width" constant="96" id="Qkv-AA-KJN"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="C5X-zT-d6T" firstAttribute="centerX" secondItem="apW-pq-z8E" secondAttribute="centerX" id="Rrp-3s-84D"/>
+                                            <constraint firstItem="C5X-zT-d6T" firstAttribute="centerY" secondItem="apW-pq-z8E" secondAttribute="centerY" id="lgr-Vu-wqo"/>
+                                        </constraints>
+                                        <size key="customSize" width="96" height="154"/>
+                                        <connections>
+                                            <outlet property="movieImage" destination="C5X-zT-d6T" id="71R-iE-l2Z"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="fEO-vF-kbs" firstAttribute="top" secondItem="AWi-2E-FT5" secondAttribute="bottom" constant="-64" id="4aF-Zn-FNc"/>
+                            <constraint firstAttribute="trailing" secondItem="fEO-vF-kbs" secondAttribute="trailing" id="8re-i8-hOM"/>
+                            <constraint firstItem="fEO-vF-kbs" firstAttribute="top" secondItem="AWi-2E-FT5" secondAttribute="bottom" constant="-64" id="DWg-gs-ciZ"/>
+                            <constraint firstAttribute="trailing" secondItem="fEO-vF-kbs" secondAttribute="trailing" id="UbA-cs-7bD"/>
+                            <constraint firstItem="fEO-vF-kbs" firstAttribute="leading" secondItem="xjl-fD-ZiN" secondAttribute="leading" id="WU7-Pd-YtB"/>
+                            <constraint firstItem="tG8-6r-nsd" firstAttribute="top" secondItem="fEO-vF-kbs" secondAttribute="bottom" id="caD-0X-YNA"/>
+                            <constraint firstItem="tG8-6r-nsd" firstAttribute="top" secondItem="fEO-vF-kbs" secondAttribute="bottom" id="kgT-9j-pC0"/>
+                            <constraint firstItem="fEO-vF-kbs" firstAttribute="leading" secondItem="xjl-fD-ZiN" secondAttribute="leading" id="pYv-Gf-M5J"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="movieCollectionView" destination="fEO-vF-kbs" id="Hhl-bM-YWA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FPC-qP-Ltu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1412.8" y="2339.2803598200903"/>
         </scene>
         <!--Edit Profile-->
         <scene sceneID="QIg-hJ-gcc">
@@ -429,7 +503,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JWv-Bj-X0D" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="383" y="1487"/>
+            <point key="canvasLocation" x="233" y="1496"/>
         </scene>
         <!--Navi View Controller-->
         <scene sceneID="bBq-n2-BUD">
@@ -450,7 +524,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ADM-jy-Vyv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="232.80000000000001" y="115.59220389805098"/>
+            <point key="canvasLocation" x="233" y="116"/>
         </scene>
     </scenes>
     <resources>

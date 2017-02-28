@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5DD94CEB1E66149500B7DD80 /* LikedMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD94CEA1E66149500B7DD80 /* LikedMoviesView.swift */; };
+		5DD94CED1E6614F800B7DD80 /* MovieCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD94CEC1E6614F800B7DD80 /* MovieCollectionCell.swift */; };
 		8B49E39B1E5E708B0050F8AB /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B49E39A1E5E708B0050F8AB /* EditProfileViewController.swift */; };
 		C40661BA1E5CBC58005D2145 /* MatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40661B91E5CBC58005D2145 /* MatchViewController.swift */; };
 		C40661BD1E5CBC85005D2145 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40661BC1E5CBC85005D2145 /* ChatViewController.swift */; };
@@ -186,10 +188,12 @@
 		1DD70E29FC9496CC00000000 /* NoSQLDatabase.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = NoSQLDatabase.storyboard; path = MySampleApp/Demo/NoSQL/NoSQLDatabase.storyboard; sourceTree = SOURCE_ROOT; };
 		1DD70E29FDA0BE4900000000 /* AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.h; path = MySampleApp/AmazonAws/Api/AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.h; sourceTree = SOURCE_ROOT; };
 		1DD70E29FE33984F00000000 /* AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.m; path = MySampleApp/AmazonAws/Api/AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.m; sourceTree = SOURCE_ROOT; };
+		5DD94CEA1E66149500B7DD80 /* LikedMoviesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LikedMoviesView.swift; path = MySampleApp/meetzam/ProfileView/LikedMoviesView.swift; sourceTree = SOURCE_ROOT; };
+		5DD94CEC1E6614F800B7DD80 /* MovieCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MovieCollectionCell.swift; path = MySampleApp/meetzam/ProfileView/MovieCollectionCell.swift; sourceTree = SOURCE_ROOT; };
 		8B49E39A1E5E708B0050F8AB /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditProfileViewController.swift; path = MySampleApp/meetzam/ProfileView/EditProfileViewController.swift; sourceTree = SOURCE_ROOT; };
 		C40661B91E5CBC58005D2145 /* MatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MatchViewController.swift; path = MySampleApp/meetzam/MatchView/MatchViewController.swift; sourceTree = SOURCE_ROOT; };
 		C40661BC1E5CBC85005D2145 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatViewController.swift; path = MySampleApp/meetzam/ChatView/ChatViewController.swift; sourceTree = SOURCE_ROOT; };
-		C40661BF1E5CBCBF005D2145 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = MySampleApp/meetzam/ProfileView/ProfileViewController.swift; sourceTree = SOURCE_ROOT; };
+		C40661BF1E5CBCBF005D2145 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProfileViewController.swift; path = ../MySampleApp/meetzam/ProfileView/ProfileViewController.swift; sourceTree = "<group>"; };
 		C40661C11E5CBF52005D2145 /* SegueToptoBottom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegueToptoBottom.swift; path = MySampleApp/meetzam/Animation/SegueToptoBottom.swift; sourceTree = SOURCE_ROOT; };
 		C412E6601E5C160C00BE8B61 /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactsViewController.swift; path = MySampleApp/meetzam/ContactsView/ContactsViewController.swift; sourceTree = SOURCE_ROOT; };
 		C42C562F1E6126FA005C6D66 /* ZLSwipeableViewSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZLSwipeableViewSwift.framework; path = Carthage/Build/iOS/ZLSwipeableViewSwift.framework; sourceTree = "<group>"; };
@@ -510,8 +514,10 @@
 		C40661BE1E5CBCA4005D2145 /* ProfileView */ = {
 			isa = PBXGroup;
 			children = (
+				5DD94CEC1E6614F800B7DD80 /* MovieCollectionCell.swift */,
 				C4678C4C1E64E1C800CA385F /* SettingViewController.swift */,
 				C40661BF1E5CBCBF005D2145 /* ProfileViewController.swift */,
+				5DD94CEA1E66149500B7DD80 /* LikedMoviesView.swift */,
 				8B49E39A1E5E708B0050F8AB /* EditProfileViewController.swift */,
 			);
 			name = ProfileView;
@@ -695,6 +701,7 @@
 				E7A30F040FC546F300000000 /* PushNotificationViewController.swift in Sources */,
 				C412E6611E5C160C00BE8B61 /* ContactsViewController.swift in Sources */,
 				C42C56371E612F90005C6D66 /* NaviViewController.swift in Sources */,
+				5DD94CEB1E66149500B7DD80 /* LikedMoviesView.swift in Sources */,
 				E7A30F047458C05600000000 /* ContentDeliveryViewController.swift in Sources */,
 				E7A30F043CD1B25F00000000 /* CloudLogicAPIInvokeViewController.swift in Sources */,
 				E7A30F0495A1857C00000000 /* UserFilesViewController.swift in Sources */,
@@ -704,6 +711,7 @@
 				E7A30F045ABE0B1B00000000 /* NoSQLTableFactory.swift in Sources */,
 				E7A30F0491953CE700000000 /* UserProfile.swift in Sources */,
 				E7A30F04677133E600000000 /* AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.m in Sources */,
+				5DD94CED1E6614F800B7DD80 /* MovieCollectionCell.swift in Sources */,
 				E7A30F04879C1BE100000000 /* AppDelegate.swift in Sources */,
 				E7A30F04414FEBE400000000 /* AWSAPI_ADI48J5BXK_ResponseSchema.m in Sources */,
 				E7A30F04EC8865D000000000 /* UserDataStorageViewController.swift in Sources */,
