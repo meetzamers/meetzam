@@ -14,8 +14,20 @@ You only created the branch on your local repository, and you now need to push t
 Then this command will link your local branch of name `<your-branch-name>` with the remote branch of name `origin/<your-branch-name>`. By link them together, when you type the command `git push` at your local branch of name `<your-branch-name>`, your changes will be uploaded to the remote branch `origin/<your-branch-name>`.
 
 ###### 3. Making changes to your local branch.
-Now that you have setup the new branch both locally as well as remotely. You can working on your new feature on the local branch now.
+Now that you have setup the new branch both locally and remotely. You can working on your new feature on the local branch now.
 
 When ever you have made some progress with your new feature, such as fixed a bug, or finished writing a piece of working code, you should commit this change to you local repository's stage.
 
 If your change involved new files that you created, you need to on stage these new files. You can do that by typing `git add <file_1> <file_2> ... <file_n>`. Or you can type `git commit --all` to on stage all new files.
+
+If your change involved new files that you created, you need to on **STAGE** these new files. You can do that by typing `git add <file_1> <file_2> ... <file_n>`. Or you can type `git commit --all` to on **STAGE** all new files.
+
+###### 4. Push your changes to remote branch.
+
+When you finished developing your feature, you have a nicely decorated piece of feature on **STAGE**. And then you can deliver that feature to your remote branch by using `git push` from your local branch.
+
+###### 5. Pull request and celebrate.
+
+You have finished developing your new feature, well done! Go to your remote repository on Github and open a pull request, invite your team members review your code and if everything works fine, someone will merge it for you!
+
+**And celebrate for your hard work!**
