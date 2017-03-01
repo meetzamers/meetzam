@@ -64,6 +64,14 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         self.performSegue(withIdentifier: "toSetSegue", sender: self)
     }
     
+
+    @IBAction func toEditProfileButton(_ sender: Any) {
+        self.performSegue(withIdentifier: "toEditProfile", sender: self)
+    }
+   
+    
+    
+    
     //setting up top three movie collection view
     //conform with UICollectionView protocal
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

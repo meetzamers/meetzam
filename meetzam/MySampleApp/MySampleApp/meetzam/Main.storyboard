@@ -185,19 +185,19 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HI6-mc-0bT">
+                                                <rect key="frame" x="337" y="333" width="30" height="30"/>
+                                                <state key="normal" title="Edit"/>
+                                                <connections>
+                                                    <action selector="toEditProfileButton:" destination="m4S-d2-sYW" eventType="touchUpInside" id="D6P-Cy-iZW"/>
+                                                </connections>
+                                            </button>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="R5O-f1-4Ry">
                                                 <rect key="frame" x="77" y="0.0" width="250" height="250"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="250" id="GBR-p9-Thc"/>
                                                 </constraints>
                                             </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HI6-mc-0bT">
-                                                <rect key="frame" x="337" y="333" width="30" height="30"/>
-                                                <state key="normal" title="Edit"/>
-                                                <connections>
-                                                    <action selector="toEditProfilePage:" destination="m4S-d2-sYW" eventType="touchUpInside" id="mVf-lv-EAw"/>
-                                                </connections>
-                                            </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Liked Movies:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="keo-Rs-0sd">
                                                 <rect key="frame" x="8" y="405" width="116" height="23"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
@@ -271,6 +271,7 @@
                         <outlet property="userPicField" destination="R5O-f1-4Ry" id="ahz-wN-Ghg"/>
                         <segue destination="Uk0-eM-Cgj" kind="show" identifier="toSetSegue" id="6Un-GQ-tOt"/>
                         <segue destination="ECs-ta-etq" kind="show" identifier="toMovies" id="ar6-Se-DjB"/>
+                        <segue destination="wAD-EU-9I9" kind="show" identifier="toEditProfile" id="QvC-cZ-nj8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n8g-Y9-yXm" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -345,7 +346,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FPC-qP-Ltu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1412.8" y="2339.2803598200903"/>
+            <point key="canvasLocation" x="1646" y="2339"/>
         </scene>
         <!--Edit Profile-->
         <scene sceneID="QIg-hJ-gcc">
@@ -429,11 +430,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xOb-0Q-vG6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1909" y="1546"/>
+            <point key="canvasLocation" x="2878" y="1546"/>
         </scene>
         <!--Setting View Controller-->
         <scene sceneID="PqD-n0-Tgh">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vbj-1x-6Lx" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController hidesBottomBarWhenPushed="YES" id="Uk0-eM-Cgj" customClass="SettingViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1at-uq-E1W"/>
@@ -446,9 +448,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="y3y-MZ-8Ix"/>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vbj-1x-6Lx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2688" y="1546"/>
+            <point key="canvasLocation" x="576" y="2339"/>
         </scene>
         <!--Chat-->
         <scene sceneID="gIl-HV-LyU">
@@ -559,11 +560,8 @@
         <image name="Chat" width="25" height="25"/>
         <image name="Contacts" width="25" height="25"/>
         <image name="Home" width="25" height="25"/>
-        <image name="John" width="720" height="1080"/>
         <image name="Match" width="25" height="25"/>
         <image name="Profile" width="25" height="25"/>
         <image name="Setting" width="25" height="25"/>
-        <image name="lala" width="478" height="717"/>
-        <image name="loganposter2" width="1200" height="1773"/>
     </resources>
 </document>
