@@ -48,8 +48,7 @@ class ProfileViewController: UIViewController {
                 userPicField.image = UIImage(named: "UserIcon")
             }
         }
-        
-        
+  
 
         
     }
