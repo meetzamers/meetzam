@@ -75,7 +75,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 }
  */
 
-class EditProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class EditProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate{
     // Profile picture
     @IBOutlet weak var profilePicture: UIImageView!
     
