@@ -368,38 +368,56 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="wAD-EU-9I9" id="kMT-Yh-VaV"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Bio" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Rq9-0Z-dtQ">
                                         <rect key="frame" x="75" y="327" width="250" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="wAD-EU-9I9" id="FSl-SJ-dTM"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Email" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yZy-OB-TN5">
                                         <rect key="frame" x="74" y="365" width="250" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="wAD-EU-9I9" id="wue-o5-S0n"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Age" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="J7a-fH-4WS">
                                         <rect key="frame" x="73" y="403" width="250" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="wAD-EU-9I9" id="lOc-dB-dUq"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Gender" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yvt-Js-Gfv">
                                         <rect key="frame" x="74" y="441" width="250" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="wAD-EU-9I9" id="mO6-Xs-eXi"/>
+                                        </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Region" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gVp-N2-l4S">
                                         <rect key="frame" x="74" y="479" width="250" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="wAD-EU-9I9" id="w7V-zR-PEP"/>
+                                        </connections>
                                     </textField>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EAA-G4-hCf">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EAA-G4-hCf">
                                         <rect key="frame" x="66" y="-30" width="250" height="250"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="250" id="lHJ-6I-hDY"/>
@@ -459,6 +477,7 @@
                         <outlet property="name" destination="qP1-pr-mRJ" id="8Ud-M1-yO1"/>
                         <outlet property="profilePicture" destination="EAA-G4-hCf" id="t4Y-Tg-pih"/>
                         <outlet property="region" destination="gVp-N2-l4S" id="8Er-Vp-aaK"/>
+                        <outlet property="scrollView" destination="AeA-qL-TtX" id="r5K-b0-pq1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xOb-0Q-vG6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -468,7 +487,6 @@
         <!--Setting View Controller-->
         <scene sceneID="PqD-n0-Tgh">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vbj-1x-6Lx" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController hidesBottomBarWhenPushed="YES" id="Uk0-eM-Cgj" customClass="SettingViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1at-uq-E1W"/>
@@ -481,6 +499,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="y3y-MZ-8Ix"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vbj-1x-6Lx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="576" y="2339"/>
         </scene>

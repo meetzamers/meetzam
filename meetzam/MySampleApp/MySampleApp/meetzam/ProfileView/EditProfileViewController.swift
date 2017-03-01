@@ -75,7 +75,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 }
  */
 
-class EditProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate{
+class EditProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate{
     // Profile picture
     @IBOutlet weak var profilePicture: UIImageView!
     
@@ -128,6 +128,36 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         imagePicker.delegate = self
         
     }
+    
+    @IBOutlet weak var scrollView: UIScrollView!
+    //editing text
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true;
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        let screenHeight = UIScreen.main.bounds.height
+        scrollView.setContentOffset(CGPoint(x:0, y:(260-screenHeight+textField.frame.origin.y + textField.frame.height)), animated: true)
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        scrollView.setContentOffset(CGPoint(x:0, y:0), animated: true)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        self.view.endEditing(true)
+        scrollView.setContentOffset(CGPoint(x:0, y:0), animated: true)
+        
+    }
+
+    
+    
+    
+    
+    
+    
     
     
     // didFinishPickingMediaWithInfo
