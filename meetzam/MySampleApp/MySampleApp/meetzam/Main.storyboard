@@ -158,7 +158,6 @@
                                                                 </cells>
                                                             </collectionView>
                                                         </subviews>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="402" id="vpt-p8-MJD"/>
                                                         </constraints>
@@ -196,11 +195,11 @@
                                                 <rect key="frame" x="337" y="333" width="30" height="30"/>
                                                 <state key="normal" title="Edit"/>
                                                 <connections>
-                                                    <segue destination="wAD-EU-9I9" kind="show" id="J67-vS-gGd"/>
+                                                    <action selector="toEditProfilePage:" destination="m4S-d2-sYW" eventType="touchUpInside" id="mVf-lv-EAw"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Liked Movies:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="keo-Rs-0sd">
-                                                <rect key="frame" x="8" y="393" width="116" height="23"/>
+                                                <rect key="frame" x="8" y="405" width="116" height="23"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -226,8 +225,8 @@
                                             <constraint firstItem="keo-Rs-0sd" firstAttribute="leading" secondItem="1DX-Sx-ngx" secondAttribute="leading" constant="8" id="hRB-cg-m56"/>
                                             <constraint firstItem="R5O-f1-4Ry" firstAttribute="trailing" secondItem="HI6-mc-0bT" secondAttribute="trailing" constant="-40" id="hn9-sa-0q1"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="640" id="kxJ-mX-LfZ"/>
-                                            <constraint firstItem="jj3-hZ-LfB" firstAttribute="top" secondItem="keo-Rs-0sd" secondAttribute="bottom" constant="20" id="mBh-pX-ECl"/>
-                                            <constraint firstItem="keo-Rs-0sd" firstAttribute="top" secondItem="uaC-dK-Qxw" secondAttribute="bottom" constant="57" id="qBZ-xc-R5b"/>
+                                            <constraint firstItem="jj3-hZ-LfB" firstAttribute="top" secondItem="keo-Rs-0sd" secondAttribute="bottom" constant="8" id="mBh-pX-ECl"/>
+                                            <constraint firstItem="keo-Rs-0sd" firstAttribute="top" secondItem="uaC-dK-Qxw" secondAttribute="bottom" constant="69" id="qBZ-xc-R5b"/>
                                             <constraint firstItem="uaC-dK-Qxw" firstAttribute="top" secondItem="xEp-DS-jLb" secondAttribute="bottom" constant="8" id="zwl-8l-Ykd"/>
                                         </constraints>
                                     </view>
@@ -351,7 +350,7 @@
         <!--Edit Profile-->
         <scene sceneID="QIg-hJ-gcc">
             <objects>
-                <viewController id="wAD-EU-9I9" customClass="EditProfileViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="wAD-EU-9I9" customClass="EditProfileViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="MBN-BU-kSL"/>
                         <viewControllerLayoutGuide type="bottom" id="vsY-Ld-Szd"/>
@@ -417,9 +416,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Edit Profile" id="kA1-EL-O2z">
-                        <barButtonItem key="rightBarButtonItem" image="Setting" id="qTC-0B-Izb"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Edit Profile" id="kA1-EL-O2z"/>
                     <connections>
                         <outlet property="age" destination="J7a-fH-4WS" id="s7S-Jz-pcd"/>
                         <outlet property="bio" destination="Rq9-0Z-dtQ" id="gxv-9c-BPJ"/>
@@ -562,8 +559,11 @@
         <image name="Chat" width="25" height="25"/>
         <image name="Contacts" width="25" height="25"/>
         <image name="Home" width="25" height="25"/>
+        <image name="John" width="720" height="1080"/>
         <image name="Match" width="25" height="25"/>
         <image name="Profile" width="25" height="25"/>
         <image name="Setting" width="25" height="25"/>
+        <image name="lala" width="478" height="717"/>
+        <image name="loganposter2" width="1200" height="1773"/>
     </resources>
 </document>

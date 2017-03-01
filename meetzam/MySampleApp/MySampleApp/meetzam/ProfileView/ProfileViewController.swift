@@ -27,11 +27,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         AWSIdentityManager.default()
         
         if let identityUserName = identityManager.userName {
-            //if let identityAge = identityManager.
-            
             displayNameAndAgeField.text = identityUserName
             
-            //displayNameAndAgeField.text = identityUserName
         } else {
             displayNameAndAgeField.text = NSLocalizedString("Guest User", comment: "Placeholder text for the guest user.")
         }
