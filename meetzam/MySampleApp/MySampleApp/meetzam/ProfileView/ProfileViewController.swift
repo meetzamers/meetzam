@@ -15,6 +15,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var displayNameAndAgeField: UILabel!
     @IBOutlet weak var userBioField: UILabel!
     @IBOutlet weak var userPicField: UIImageView!
+    @IBOutlet weak var mainScrollView: UIScrollView!
  
 
     
@@ -50,9 +51,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         //show top three movies
         TopThreeMovieCollectionView.delegate = self;
         TopThreeMovieCollectionView.dataSource = self;
-
         
     }
+    
     
     // Go to all movies I liked
     @IBAction func toAllMovies(_ sender: Any) {

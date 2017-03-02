@@ -138,7 +138,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         let screenHeight = UIScreen.main.bounds.height
-        scrollView.setContentOffset(CGPoint(x:0, y:(260-screenHeight+textField.frame.origin.y + textField.frame.height)), animated: true)
+        scrollView.setContentOffset(CGPoint(x:0, y:(270-screenHeight+textField.frame.origin.y + textField.frame.height)), animated: true)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
