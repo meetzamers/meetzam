@@ -44,10 +44,10 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         return "userId"
     }
     
-    class func rangeKeyAttribute() -> String {
+    /*class func rangeKeyAttribute() -> String {
         
         return "email"
-    }
+    }*/
     
     /*override class func jsonKeyPathsByPropertyKey() -> [AnyHashable: Any] {
      return [

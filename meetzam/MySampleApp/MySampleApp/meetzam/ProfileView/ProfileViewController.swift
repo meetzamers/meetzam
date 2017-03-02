@@ -70,11 +70,12 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         self.performSegue(withIdentifier: "toEditProfile", sender: self)
     }
    
-    
+    /*
     @IBAction func getProfile(_ sender: Any) {
         let loadFromDynamoDBTask: AWSTask = UserProfileToDB().getProfile(key: "1", email: "mary@gmail.com")
         
     }
+     */
     
     
     //setting up top three movie collection view

@@ -44,8 +44,24 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     // Change profile picture button
     @IBAction func changeProfilePictureButtonTapped(_ sender: UIButton) {
+        let image = UIImagePickerController()
+        image.delegate = self
+        
+        image.sourceType = UIImagePickerControllerSourceType.photoLibrary
+        
+        image.allowsEditing = true
+        
+        self.present(image, animated: true) {
+            // After it is complete
+        }
         
     }
+    
+    /*
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let image = info[UIImagePickerControllerSour]
+    }
+ */
     
     // Save button
     @IBAction func saveButtonTapped(_ sender: UIButton) {
@@ -56,7 +72,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         dbGender = gender.text
         dbRegion = region.text
         
-        UserProfileDB().insertProfile(dbID, dbName, dbBio, dbEmail, dbAge, dbGender, dbRegion)
+        UserProfileToDB().insertProfile(_userId: dbID, _displayName: dbName, _bio: dbBio, _age: dbAge, _gender: dbGender, _region: dbRegion, _email: dbEmail)
     }
     
     

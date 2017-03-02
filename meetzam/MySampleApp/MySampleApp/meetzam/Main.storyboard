@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kPB-Rz-uBK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kPB-Rz-uBK">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -443,9 +443,8 @@
                                             <action selector="changeProfilePictureButtonTapped:" destination="wAD-EU-9I9" eventType="touchUpInside" id="Ei6-wv-wir"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lqf-x5-KHN">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lqf-x5-KHN">
                                         <rect key="frame" x="174" y="517" width="34" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Save"/>
                                         <connections>
                                             <action selector="saveButtonTapped:" destination="wAD-EU-9I9" eventType="touchUpInside" id="RZt-6a-Z2t"/>
@@ -467,9 +466,12 @@
                                     <constraint firstItem="Rq9-0Z-dtQ" firstAttribute="centerX" secondItem="AeA-qL-TtX" secondAttribute="centerX" id="Lhl-8t-wQw"/>
                                     <constraint firstItem="yZy-OB-TN5" firstAttribute="leading" secondItem="yvt-Js-Gfv" secondAttribute="leading" id="M6G-Gx-IYs"/>
                                     <constraint firstItem="yvt-Js-Gfv" firstAttribute="leading" secondItem="gVp-N2-l4S" secondAttribute="leading" id="Nex-iO-qqc"/>
+                                    <constraint firstItem="lqf-x5-KHN" firstAttribute="leading" secondItem="AeA-qL-TtX" secondAttribute="leading" constant="174" id="POe-jG-71A"/>
                                     <constraint firstItem="J7a-fH-4WS" firstAttribute="top" secondItem="yZy-OB-TN5" secondAttribute="bottom" constant="8" symbolic="YES" id="U5x-jp-Ra0"/>
                                     <constraint firstItem="Rq9-0Z-dtQ" firstAttribute="top" secondItem="qP1-pr-mRJ" secondAttribute="bottom" constant="8" symbolic="YES" id="YGR-Q8-Glm"/>
+                                    <constraint firstAttribute="bottom" secondItem="lqf-x5-KHN" secondAttribute="bottom" constant="64" id="bTT-eX-hVG"/>
                                     <constraint firstItem="gVp-N2-l4S" firstAttribute="top" secondItem="yvt-Js-Gfv" secondAttribute="bottom" constant="8" symbolic="YES" id="bW7-E3-hsb"/>
+                                    <constraint firstAttribute="trailing" secondItem="lqf-x5-KHN" secondAttribute="trailing" constant="192" id="btT-Ja-D5K"/>
                                     <constraint firstItem="yZy-OB-TN5" firstAttribute="trailing" secondItem="yvt-Js-Gfv" secondAttribute="trailing" id="ckR-1o-RmJ"/>
                                     <constraint firstItem="Rq9-0Z-dtQ" firstAttribute="leading" secondItem="AeA-qL-TtX" secondAttribute="leading" constant="75" id="dH7-T4-2eO"/>
                                     <constraint firstAttribute="trailing" secondItem="Rq9-0Z-dtQ" secondAttribute="trailing" constant="75" id="f8p-3T-R7e"/>
