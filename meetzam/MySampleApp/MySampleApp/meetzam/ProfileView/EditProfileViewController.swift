@@ -42,6 +42,8 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var region: UITextField!
     var dbRegion: String!
     
+    var user_profile:UserProfileToDB?
+    
     // Change profile picture button
     @IBAction func changeProfilePictureButtonTapped(_ sender: UIButton) {
         let image = UIImagePickerController()
@@ -78,6 +80,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         dbRegion = region.text
         
         UserProfileToDB().insertProfile(_userId: dbID, _displayName: dbName, _bio: dbBio, _age: dbAge, _gender: dbGender, _region: dbRegion, _email: dbEmail)
+        UserProfileToDB().getProfileForEdit(key: AWSIdentityManager.default().identityId!, user_profile:user_profile, displayname: name, bio: bio, age: age, gender: gender, region: region, email: email)
     }
     
     

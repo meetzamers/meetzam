@@ -5,7 +5,6 @@
 //  Created by Rainy on 2017/2/26.
 //
 //
-
 import AWSDynamoDB
 //
 //  UserProfile.swift
@@ -19,11 +18,9 @@ import AWSDynamoDB
 //
 // Source code generated from template: aws-my-sample-app-ios-swift v0.10
 //
-
 import Foundation
 import UIKit
 import AWSDynamoDB
-
 class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     
     var userId: String?
@@ -45,9 +42,9 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     }
     
     /*class func rangeKeyAttribute() -> String {
-        
-        return "email"
-    }*/
+     
+     return "email"
+     }*/
     
     /*override class func jsonKeyPathsByPropertyKey() -> [AnyHashable: Any] {
      return [
@@ -86,17 +83,56 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         //return BFTask(forCompletionOfAllTasks: [task1, task2, task3])
     }
     
-    func getProfile(key: String, email: String){
+    func getProfileForEdit(key: String, user_profile: UserProfileToDB?, displayname: UITextField!, bio: UITextField!, age: UITextField!, gender: UITextField!, region: UITextField!, email: UITextField!){
+        /*let mapper = AWSDynamoDBObjectMapper.default()
+         return mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: email)*/
         let mapper = AWSDynamoDBObjectMapper.default()
-        return mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: email)
-        /*mapper.load(UserProfileToDB.self, hashKey: key, rangeKey:email).continueWith(block: { (task:AWSTask<AnyObject>!) -> Any? in
+        
+        //tableRow?.UserId --> (tableRow?.UserId)!
+        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as? NSError {
-                print("The request failed. Error: \(error)")
-            } else if let resultProfile = task.result as? UserProfileToDB {
-                // Do something with task.result.
+                print("Error: \(error)")
+            } else if let user_profile = task.result as? UserProfileToDB {
+                displayname.text = user_profile.displayName
+                print(displayname.text)
+                bio.text = user_profile.bio
+                print(bio.text)
+                age.text = user_profile.age
+                print(age.text)
+                gender.text = user_profile.gender
+                print(gender.text)
+                region.text = user_profile.region
+                print(region.text)
+                email.text = user_profile.email
+                print(email.text)
             }
+            
             return nil
-        })*/
+        })
+        
+    }
+    
+    func getProfileForDisplay(key: String, user_profile: UserProfileToDB?, displayname: UILabel!, bio: UILabel!){
+        print("     enter func getProfileForDisplay")
+        /*let mapper = AWSDynamoDBObjectMapper.default()
+         return mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: email)*/
+        let mapper = AWSDynamoDBObjectMapper.default()
+        
+        print("userId is ", user_profile?.userId, separator: " ")
+        //tableRow?.UserId --> (tableRow?.UserId)!
+        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask!) -> AnyObject! in
+            if let error = task.error as? NSError {
+                print("Error: \(error)")
+            } else if let user_profile = task.result as? UserProfileToDB {
+                print("     Getting fields in user_profile")
+                displayname.text = user_profile.displayName
+                print(displayname.text)
+                bio.text = user_profile.bio
+                print(bio.text)
+            }
+            
+            return nil
+        })
         
     }
     

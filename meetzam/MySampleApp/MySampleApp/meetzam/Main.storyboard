@@ -204,6 +204,14 @@
                                                     <constraint firstAttribute="height" constant="250" id="GBR-p9-Thc"/>
                                                 </constraints>
                                             </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p1U-V7-WkD">
+                                                <rect key="frame" x="8" y="93" width="46" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" title="Button"/>
+                                                <connections>
+                                                    <action selector="getP:" destination="m4S-d2-sYW" eventType="touchUpInside" id="T6M-HM-0Gk"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -258,16 +266,6 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Profile" id="qCX-L0-MkU">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="9Ay-U9-qkA">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xkl-vj-pbM">
-                                <rect key="frame" x="20" y="7" width="88" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="get"/>
-                            </button>
-                            <connections>
-                                <action selector="getProfile:" destination="m4S-d2-sYW" id="L1W-b9-5zX"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="Setting" id="212-yT-BHb">
                             <connections>
                                 <action selector="toSettingButton:" destination="m4S-d2-sYW" id="Qk3-Sw-4xo"/>

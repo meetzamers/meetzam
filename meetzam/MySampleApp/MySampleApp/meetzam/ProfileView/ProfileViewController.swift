@@ -17,8 +17,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var userPicField: UIImageView!
     @IBOutlet weak var mainScrollView: UIScrollView!
  
-
+    var user_profile:UserProfileToDB?
     
+    @IBAction func getP(_ sender: Any) {
+        UserProfileToDB().getProfileForDisplay(key: AWSIdentityManager.default().identityId!, user_profile: user_profile, displayname: displayNameAndAgeField, bio: userBioField)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -69,13 +72,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBAction func toEditProfileButton(_ sender: Any) {
         self.performSegue(withIdentifier: "toEditProfile", sender: self)
     }
-   
-    /*
-    @IBAction func getProfile(_ sender: Any) {
-        let loadFromDynamoDBTask: AWSTask = UserProfileToDB().getProfile(key: "1", email: "mary@gmail.com")
-        
-    }
-     */
+
+    
     
     
     //setting up top three movie collection view
