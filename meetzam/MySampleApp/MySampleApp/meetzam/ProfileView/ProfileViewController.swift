@@ -28,43 +28,48 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     //declare bio
     let userBioField = UILabel()
     
+    var user_profile: UserProfileToDB?
     
-    @IBAction func getP(_ sender: Any) {
-        UserProfileToDB().getProfileForDisplay(key: AWSIdentityManager.default().identityId!, user_profile: user_profile, displayname: displayNameAndAgeField, bio: userBioField)
-    }
+    
+//************************** VIEW DID LOAD ********************************************//
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        UserProfileToDB().getProfileForDisplay(key: AWSIdentityManager.default().identityId!, user_profile: user_profile, displayname: displayName, bio: userBioField)
+        
+    //======================== formatting background==========================\\
         self.view.backgroundColor = UIColor.init(red:242/255, green: 242/255, blue: 242/255, alpha: 1)
         self.mainScrollView.backgroundColor = UIColor.init(red:242/255, green: 242/255, blue: 242/255, alpha: 1)
         self.profileMainBodyView.backgroundColor = UIColor.init(red:242/255, green: 242/255, blue: 242/255, alpha: 1)
         
-    //======set size and location of NAME Label=======\\
+    //=========================set size and location of NAME Label==========================\\
         displayName.frame = CGRect(x: 50, y: userPicField.frame.height + 40, width: 200, height: 50)
         displayName.font = UIFont(name:"Helvetica", size: 23)
         
         let identityManager = AWSIdentityManager.default()
         AWSIdentityManager.default()
-        if let identityUserName = identityManager.userName {
-            displayName.text = identityUserName
-            
-        } else {
-            displayName.text = NSLocalizedString("Guest User", comment: "Placeholder text for the guest user.")
+        
+        /* when the user first log in to meetzam, get name from database */
+        if (displayName.text == nil) {
+            if let identityUserName = identityManager.userName {
+                displayName.text = identityUserName
+            } else {
+                displayName.text = NSLocalizedString("Guest User", comment: "Placeholder text for the guest user.")
+            }
         }
         
         displayName.sizeToFit()
         displayName.center = CGPoint(x: UIScreen.main.bounds.width/2, y: userPicField.frame.height + 50)
         self.profileMainBodyView.addSubview(displayName)
         
-    
     //======set size and location of BIO Label=======\\
         userBioField.frame = CGRect(x: 0, y: 0, width: 200, height: 50)
         
-        userBioField.text = "Hello! :)"
-        
         userBioField.font = UIFont(name:"Helvetica", size: 18)
-        
-        userBioField.sizeToFit()
+        if (userBioField.text != nil){
+            userBioField.sizeToFit()
+        }
         userBioField.center = CGPoint(x: UIScreen.main.bounds.width/2, y:userPicField.frame.height + 80)
         self.profileMainBodyView.addSubview(userBioField)
 
@@ -86,6 +91,27 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         TopThreeMovieCollectionView.dataSource = self;
         
     }
+  
+//********************* VIEW DID APPEAR ***********************************************//
+   
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        /* get name and bio from database */
+        UserProfileToDB().getProfileForDisplay(key: AWSIdentityManager.default().identityId!, user_profile: user_profile, displayname: displayName, bio: userBioField)
+        
+        /* format name and bio */
+        displayName.sizeToFit()
+        displayName.center = CGPoint(x: UIScreen.main.bounds.width/2, y: userPicField.frame.height + 50)
+        
+        userBioField.sizeToFit()
+        userBioField.center = CGPoint(x: UIScreen.main.bounds.width/2, y:userPicField.frame.height + 80)
+
+    }
+    
+    
+    
+    
     
     // Go to all movies I liked
     @IBAction func toLikedMovies(_ sender: Any) {
