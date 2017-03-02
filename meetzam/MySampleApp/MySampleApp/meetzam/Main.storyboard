@@ -284,7 +284,7 @@
         <!--allLikedMovies-->
         <scene sceneID="eja-u2-bVY">
             <objects>
-                <viewController id="ECs-ta-etq" userLabel="allLikedMovies" customClass="LikedMoviesView" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="ECs-ta-etq" userLabel="allLikedMovies" customClass="LikedMoviesView" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="AWi-2E-FT5"/>
                         <viewControllerLayoutGuide type="bottom" id="tG8-6r-nsd"/>
