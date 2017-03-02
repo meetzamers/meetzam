@@ -63,15 +63,16 @@ class MovieList {
                     self.tableRows?.append(item)
                     let mirrored_object = Mirror(reflecting: item)
                     
-                    
+                    /*
                     for (index, attr) in mirrored_object.children.enumerated() {
                         if let property_name = attr.label as String! {
                             print("Attr \(index): \(property_name) = \(attr.value)")
                         }
                     }
                     print("")
+                    */
                 }
-                
+ 
                 self.lastEvaluatedKey = paginatedOutput.lastEvaluatedKey
                 if paginatedOutput.lastEvaluatedKey == nil {
                     self.doneLoading = true
