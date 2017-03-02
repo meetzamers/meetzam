@@ -71,6 +71,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         // Initiating name field from Facebook userName
         if let identityUserName = identityManager.userName {
+            dbName=identityUserName
             name.text = identityUserName
         } else {
             name.text = NSLocalizedString("Guest User", comment: "Placeholder text for the guest user.")

@@ -8,6 +8,7 @@
 
 import UIKit
 import AWSMobileHubHelper
+import AWSDynamoDB
 
 //class TabBarHomeViewController: UIViewController {
 class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate{
@@ -68,6 +69,10 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         
         // AWS implementation ends here
         // ============================================
+        
+
+
+
         
     }
     
