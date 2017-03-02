@@ -47,7 +47,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         let image = UIImagePickerController()
         image.delegate = self
         
-        image.sourceType = UIImagePickerControllerSourceType.photoLibrary
+        image.sourceType = UIImagePickerControllerSourceType.camera
         
         image.allowsEditing = true
         
@@ -56,12 +56,16 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         }
         
     }
-    
-    /*
+    // Function used in change profile picture button
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let image = info[UIImagePickerControllerSour]
+        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            profilePicture.image = image
+        } else {
+            // Error message
+        }
+        
+        self.dismiss(animated: true, completion: nil)
     }
- */
     
     // Save button
     @IBAction func saveButtonTapped(_ sender: UIButton) {
