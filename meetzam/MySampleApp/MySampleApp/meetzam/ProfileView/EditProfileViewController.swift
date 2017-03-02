@@ -100,6 +100,21 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     // Profile region
     @IBOutlet weak var region: UITextField!
 
+    // These variables are for DATABASE storage
+    var dbUserid: String!
+    
+    var dbName: String!
+    
+    var dbBio: String!
+    
+    var dbEmail: String!
+    
+    var dbAge: String!
+    
+    var dbGender: String!
+    
+    var dbRegion: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -109,6 +124,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         // Initiating name field from Facebook userName
         if let identityUserName = identityManager.userName {
+            dbName=identityUserName
             name.text = identityUserName
         } else {
             name.text = NSLocalizedString("Guest User", comment: "Placeholder text for the guest user.")
