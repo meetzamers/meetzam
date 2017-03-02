@@ -18,4 +18,7 @@ class ContactsViewController: UIViewController {
         
     }
 
+    @IBAction func test(_ sender: Any) {
+        MovieList().refreshList(true)
+    }
 }

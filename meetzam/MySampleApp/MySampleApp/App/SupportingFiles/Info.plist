@@ -124,6 +124,19 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+    <key>DynamoDBTables</key>
+    <dict>
+        <key>ChatRoom</key>
+        <string>meetzam-mobilehub-1569925313-ChatRoom</string>
+        <key>Conversation</key>
+        <string>meetzam-mobilehub-1569925313-Conversation</string>
+        <key>UserProfile</key>
+        <string>meetzam-mobilehub-1569925313-UserProfile</string>
+        <key>Movie-dev</key>
+        <string>meetzam-mobilehub-1569925313-Movie</string>
+        <key>Movie</key>
+        <string>Movie2</string>
+    </dict>
 	<key>FacebookAppID</key>
 	<string>1158932457552741</string>
 	<key>FacebookDisplayName</key>
