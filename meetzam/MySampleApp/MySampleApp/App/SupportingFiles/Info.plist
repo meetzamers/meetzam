@@ -43,7 +43,7 @@
 				<string>us-east-1</string>
 			</dict>
 		</dict>
-		<key>IdentityManager</key>
+            <key>IdentityManager</key>
 		<dict>
 			<key>Default</key>
 			<dict/>
@@ -124,6 +124,15 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+    <key>DynamoDBTables</key>
+    <dict>
+        <key>ChatRoom</key>
+        <string>meetzam-mobilehub-1569925313-ChatRoom</string>
+        <key>Conversation</key>
+        <string>meetzam-mobilehub-1569925313-Conversation</string>
+        <key>UserProfile</key>
+        <string>meetzam-mobilehub-1569925313-UserProfile</string>
+    </dict>
 	<key>FacebookAppID</key>
 	<string>1158932457552741</string>
 	<key>FacebookDisplayName</key>

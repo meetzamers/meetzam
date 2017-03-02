@@ -1,5 +1,5 @@
 
-service: getMovieInfoFromTMDB
+service: getMovieTMDB
 
 frameworkVersion: "=1.7.0"
 
