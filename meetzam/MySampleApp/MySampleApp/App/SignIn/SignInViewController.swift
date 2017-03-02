@@ -26,6 +26,11 @@ class SignInViewController: UIViewController {
     
     var didSignInObserver: AnyObject!
     
+    // Change status bar type to default.
+    override func viewDidAppear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = .default
+    }
+    
     // MARK: - View lifecycle
     
     override func viewDidLoad() {

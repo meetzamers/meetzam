@@ -33,7 +33,7 @@ class MatchViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
-        
+        //view.backgroundColor = UIColor.white
         
         // ========================================
         // Card View implementation
@@ -70,12 +70,8 @@ class MatchViewController: UIViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "TabBarFirst")
         
+        //self.presentingViewController?.dismiss(animated: true, completion: nil)
         self.present(viewController, animated: false, completion: nil)
-        
-    }
-    
-    @IBAction func toChatButton(_ sender: Any) {
-        
         
     }
     
