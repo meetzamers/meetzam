@@ -430,7 +430,15 @@
                                         <rect key="frame" x="114" y="231" width="154" height="30"/>
                                         <state key="normal" title="Change Profile Picture"/>
                                         <connections>
-                                            <action selector="editProfilePictureButtonTapped:" destination="wAD-EU-9I9" eventType="touchUpInside" id="PbQ-0o-bhC"/>
+                                            <action selector="changeProfilePictureButtonTapped:" destination="wAD-EU-9I9" eventType="touchUpInside" id="Ei6-wv-wir"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lqf-x5-KHN">
+                                        <rect key="frame" x="174" y="517" width="34" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Save"/>
+                                        <connections>
+                                            <action selector="saveButtonTapped:" destination="wAD-EU-9I9" eventType="touchUpInside" id="RZt-6a-Z2t"/>
                                         </connections>
                                     </button>
                                 </subviews>

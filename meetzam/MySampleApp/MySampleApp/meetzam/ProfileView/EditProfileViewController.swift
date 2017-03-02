@@ -10,102 +10,64 @@ import UIKit
 import Foundation
 import AWSMobileHubHelper
 
-/*
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    @IBOutlet weak var currentImage: UIImageView!
-    
-    let imagePicker: UIImagePickerController! = UIImagePickerController();
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // Set this controller as the camera delegate
-        imagePicker.delegate = self
-    }
-    
-    // didFinishPickingMediaWithInfo
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        print("Got an image")
-        if let pickedImage:UIImage = (info[UIImagePickerControllerOriginalImage]) as? UIImage {
-            let selectorToCall = Selector(("imageWasSavedSuccessfully:didFinishSavingWithError:context:"))
-            UIImageWriteToSavedPhotosAlbum(pickedImage, self, selectorToCall, nil)
-        }
-        imagePicker.dismiss(animated: true, completion: {
-            // Anything you want to happen when the user saves an image
-        })
-    }
-    
-    // didUserCancel
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        print("User cancelled image")
-        dismiss(animated: true, completion: {
-            
-        })
-    }
-    
-    // Make sure info was saved method
-    func imageWasSavedSuccessfully(image: UIImage, didFinishSavingWithError error: NSError!,
-                                   context: UnsafeMutableRawPointer) {
-        print("Image saved")
-        if let theError = error {
-            print("An error happened while saving the image = \(theError)")
-        } else {
-            
-        }
-    }
-    
-    // takePicture function to take picture
-    @IBAction func takePicture(sender: UIButton) {
-        if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
-            if (UIImagePickerController.availableCaptureModes(for: .rear) != nil) {
-                imagePicker.allowsEditing = false
-                imagePicker.sourceType = .camera
-                imagePicker.cameraCaptureMode = .photo
-                present(imagePicker, animated: true, completion: {})
-                
-            } else {
-                //postAlert("Rear Camera doesn't exist", message: "Application cannot access the camera.")
-            }
-            
-        } else {
-            //postAlert("Camera inaccesable", message: "Application cannot access the camera.")
-        }
-    }
-}
- */
-
 class EditProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate{
+    
+    // User unique ID
+    var dbID: String!
+    
     // Profile picture
     @IBOutlet weak var profilePicture: UIImageView!
     
-    // Image picker
-    let imagePicker: UIImagePickerController! = UIImagePickerController()
-    
     // Profile name
     @IBOutlet weak var name: UITextField!
+    var dbName: String!
     
     // Profile bio
     @IBOutlet weak var bio: UITextField!
+    var dbBio: String!
     
     // Profile email
     @IBOutlet weak var email: UITextField!
+    var dbEmail: String!
     
     // Profile age
     @IBOutlet weak var age: UITextField!
+    var dbAge: String!
     
     // Profile gender
     @IBOutlet weak var gender: UITextField!
+    var dbGender: String!
     
     // Profile region
     @IBOutlet weak var region: UITextField!
-
+    var dbRegion: String!
+    
+    // Change profile picture button
+    @IBAction func changeProfilePictureButtonTapped(_ sender: UIButton) {
+        
+    }
+    
+    // Save button
+    @IBAction func saveButtonTapped(_ sender: UIButton) {
+        dbName = name.text
+        dbBio = bio.text
+        dbEmail = email.text
+        dbAge = age.text
+        dbGender = gender.text
+        dbRegion = region.text
+        
+        UserProfileDB().insertProfile(dbID, dbName, dbBio, dbEmail, dbAge, dbGender, dbRegion)
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
         let identityManager = AWSIdentityManager.default()
-        
         AWSIdentityManager.default()
+        
+        // Initiating user's unique ID
+        dbID = identityManager.identityId
         
         // Initiating name field from Facebook userName
         if let identityUserName = identityManager.userName {
@@ -123,113 +85,24 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 profilePicture.image = UIImage(named: "UserIcon")
             }
         }
-    
-        // Set this controller as the camera delegate
-        imagePicker.delegate = self
-        
     }
     
+    
+    /* Next four functions are for adjusting of textfield when keyboard shows up */
     @IBOutlet weak var scrollView: UIScrollView!
-    //editing text
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true;
     }
-    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         let screenHeight = UIScreen.main.bounds.height
         scrollView.setContentOffset(CGPoint(x:0, y:(270-screenHeight+textField.frame.origin.y + textField.frame.height)), animated: true)
     }
-    
     func textFieldDidEndEditing(_ textField: UITextField) {
         scrollView.setContentOffset(CGPoint(x:0, y:0), animated: true)
     }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
         self.view.endEditing(true)
         scrollView.setContentOffset(CGPoint(x:0, y:0), animated: true)
-        
     }
-
-    
-    
-    
-    
-    
-    
-    
-    
-    // didFinishPickingMediaWithInfo
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        print("Got an image")
-        if let pickedImage:UIImage = (info[UIImagePickerControllerOriginalImage]) as? UIImage {
-            let selectorToCall = Selector(("imageWasSavedSuccessfully:didFinishSavingWithError:context:"))
-            UIImageWriteToSavedPhotosAlbum(pickedImage, self, selectorToCall, nil)
-        }
-        imagePicker.dismiss(animated: true, completion: {
-            // Anything you want to happen when the user saves an image
-        })
-    }
-    
-    // didUserCancel
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        print("User cancelled image")
-        dismiss(animated: true, completion: {
-            
-        })
-    }
-    
-    // Make sure info was saved method
-    func imageWasSavedSuccessfully(image: UIImage, didFinishSavingWithError error: NSError!,
-                                   context: UnsafeMutableRawPointer) {
-        print("Image saved")
-        if let theError = error {
-            print("An error happened while saving the image = \(theError)")
-        } else {
-            
-        }
-    }
-    
-    
-    // Change profile picture button
-    @IBAction func editProfilePictureButtonTapped(_ sender: UIButton) {
-     
-        if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
-            if (UIImagePickerController.availableCaptureModes(for: .rear) != nil) {
-                imagePicker.allowsEditing = false
-                imagePicker.sourceType = .camera
-                imagePicker.cameraCaptureMode = .photo
-                present(imagePicker, animated: true, completion: {})
-                
-            } else {
-                //postAlert("Rear Camera doesn't exist", message: "Application cannot access the camera.")
-            }
-            
-        } else {
-            //postAlert("Camera inaccesable", message: "Application cannot access the camera.")
-        }
-    }
-    
-    /*
-    // takePicture function to take picture
-    @IBAction func takePicture(sender: UIButton) {
-        if (UIImagePickerController.isSourceTypeAvailable(.camera)) {
-            if (UIImagePickerController.availableCaptureModes(for: .rear) != nil) {
-                imagePicker.allowsEditing = false
-                imagePicker.sourceType = .camera
-                imagePicker.cameraCaptureMode = .photo
-                present(imagePicker, animated: true, completion: {})
-                
-            } else {
-                //postAlert("Rear Camera doesn't exist", message: "Application cannot access the camera.")
-            }
-            
-        } else {
-            //postAlert("Camera inaccesable", message: "Application cannot access the camera.")
-        }
-    }
-    */
-
-    
 }
