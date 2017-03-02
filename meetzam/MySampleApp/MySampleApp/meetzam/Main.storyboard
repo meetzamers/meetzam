@@ -279,7 +279,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n8g-Y9-yXm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="890" y="1499"/>
+            <point key="canvasLocation" x="934" y="1499"/>
         </scene>
         <!--allLikedMovies-->
         <scene sceneID="eja-u2-bVY">
