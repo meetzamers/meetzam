@@ -47,7 +47,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         let image = UIImagePickerController()
         image.delegate = self
         
-        image.sourceType = UIImagePickerControllerSourceType.camera
+        image.sourceType = UIImagePickerControllerSourceType.photoLibrary
         
         image.allowsEditing = true
         
@@ -66,6 +66,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         self.dismiss(animated: true, completion: nil)
     }
+    
     
     // Save button
     @IBAction func saveButtonTapped(_ sender: UIButton) {

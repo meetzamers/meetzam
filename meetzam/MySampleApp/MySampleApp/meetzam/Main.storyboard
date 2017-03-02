@@ -430,12 +430,6 @@
                                             <outlet property="delegate" destination="wAD-EU-9I9" id="w7V-zR-PEP"/>
                                         </connections>
                                     </textField>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EAA-G4-hCf">
-                                        <rect key="frame" x="66" y="-30" width="250" height="250"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="250" id="lHJ-6I-hDY"/>
-                                        </constraints>
-                                    </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ij-BC-EES">
                                         <rect key="frame" x="114" y="231" width="154" height="30"/>
                                         <state key="normal" title="Change Profile Picture"/>
@@ -450,18 +444,25 @@
                                             <action selector="saveButtonTapped:" destination="wAD-EU-9I9" eventType="touchUpInside" id="RZt-6a-Z2t"/>
                                         </connections>
                                     </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EAA-G4-hCf">
+                                        <rect key="frame" x="73" y="-27" width="250" height="250"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="250" id="lmi-u9-VjS"/>
+                                            <constraint firstAttribute="width" constant="250" id="xU9-Ub-QH5"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="EAA-G4-hCf" secondAttribute="trailing" constant="84" id="0b9-vj-jak"/>
+                                    <constraint firstAttribute="trailing" secondItem="EAA-G4-hCf" secondAttribute="trailing" constant="77" id="0b9-vj-jak"/>
                                     <constraint firstItem="yZy-OB-TN5" firstAttribute="top" secondItem="Rq9-0Z-dtQ" secondAttribute="bottom" constant="8" symbolic="YES" id="2tN-lr-2wg"/>
                                     <constraint firstItem="qP1-pr-mRJ" firstAttribute="centerX" secondItem="J7a-fH-4WS" secondAttribute="centerX" id="36w-Cb-xn5"/>
                                     <constraint firstAttribute="trailing" secondItem="yZy-OB-TN5" secondAttribute="trailing" constant="76" id="7A6-PP-kcC"/>
                                     <constraint firstItem="qP1-pr-mRJ" firstAttribute="top" secondItem="7ij-BC-EES" secondAttribute="bottom" constant="28" id="ApI-YB-SvU"/>
                                     <constraint firstItem="qP1-pr-mRJ" firstAttribute="trailing" secondItem="J7a-fH-4WS" secondAttribute="trailing" id="Dlf-GB-sWN"/>
-                                    <constraint firstItem="7ij-BC-EES" firstAttribute="top" secondItem="EAA-G4-hCf" secondAttribute="bottom" constant="11" id="EIE-Cm-ca5"/>
+                                    <constraint firstItem="7ij-BC-EES" firstAttribute="top" secondItem="EAA-G4-hCf" secondAttribute="bottom" constant="8" id="EIE-Cm-ca5"/>
                                     <constraint firstItem="yvt-Js-Gfv" firstAttribute="top" secondItem="J7a-fH-4WS" secondAttribute="bottom" constant="8" symbolic="YES" id="G8W-Rq-ZmE"/>
                                     <constraint firstItem="yvt-Js-Gfv" firstAttribute="trailing" secondItem="gVp-N2-l4S" secondAttribute="trailing" id="Hw2-aT-Q8G"/>
-                                    <constraint firstItem="EAA-G4-hCf" firstAttribute="centerX" secondItem="7ij-BC-EES" secondAttribute="centerX" id="J6c-bY-n7D"/>
+                                    <constraint firstItem="EAA-G4-hCf" firstAttribute="centerX" secondItem="7ij-BC-EES" secondAttribute="centerX" constant="7" id="J6c-bY-n7D"/>
                                     <constraint firstItem="qP1-pr-mRJ" firstAttribute="centerX" secondItem="yZy-OB-TN5" secondAttribute="centerX" id="KMf-1s-Cfb"/>
                                     <constraint firstItem="Rq9-0Z-dtQ" firstAttribute="centerX" secondItem="AeA-qL-TtX" secondAttribute="centerX" id="Lhl-8t-wQw"/>
                                     <constraint firstItem="yZy-OB-TN5" firstAttribute="leading" secondItem="yvt-Js-Gfv" secondAttribute="leading" id="M6G-Gx-IYs"/>
@@ -477,8 +478,7 @@
                                     <constraint firstAttribute="trailing" secondItem="Rq9-0Z-dtQ" secondAttribute="trailing" constant="75" id="f8p-3T-R7e"/>
                                     <constraint firstAttribute="bottom" secondItem="gVp-N2-l4S" secondAttribute="bottom" constant="102" id="lDT-Xx-CTl"/>
                                     <constraint firstItem="J7a-fH-4WS" firstAttribute="leading" secondItem="AeA-qL-TtX" secondAttribute="leading" constant="73" id="pIZ-Fr-u3f"/>
-                                    <constraint firstItem="EAA-G4-hCf" firstAttribute="top" secondItem="AeA-qL-TtX" secondAttribute="top" constant="34" id="s8s-pZ-NXW"/>
-                                    <constraint firstItem="EAA-G4-hCf" firstAttribute="leading" secondItem="AeA-qL-TtX" secondAttribute="leading" constant="66" id="sgg-cN-MY2"/>
+                                    <constraint firstItem="EAA-G4-hCf" firstAttribute="top" secondItem="AeA-qL-TtX" secondAttribute="top" constant="37" id="s8s-pZ-NXW"/>
                                     <constraint firstItem="qP1-pr-mRJ" firstAttribute="leading" secondItem="yZy-OB-TN5" secondAttribute="leading" id="upq-c9-oZZ"/>
                                 </constraints>
                             </scrollView>
