@@ -520,13 +520,13 @@
 		C40661BE1E5CBCA4005D2145 /* ProfileView */ = {
 			isa = PBXGroup;
 			children = (
+				C40661BF1E5CBCBF005D2145 /* ProfileViewController.swift */,
+				8B49E39A1E5E708B0050F8AB /* EditProfileViewController.swift */,
+				C4678C4C1E64E1C800CA385F /* SettingViewController.swift */,
+				8B84DB6A1E6904A600C2941F /* UserProfileToDB.swift */,
 				5DD94CEE1E67288F00B7DD80 /* TopThreeMovieCell.swift */,
 				5DD94CEC1E6614F800B7DD80 /* MovieCollectionCell.swift */,
-				C4678C4C1E64E1C800CA385F /* SettingViewController.swift */,
-				C40661BF1E5CBCBF005D2145 /* ProfileViewController.swift */,
 				5DD94CEA1E66149500B7DD80 /* LikedMoviesView.swift */,
-				8B84DB6A1E6904A600C2941F /* UserProfileToDB.swift */,
-				8B49E39A1E5E708B0050F8AB /* EditProfileViewController.swift */,
 			);
 			name = ProfileView;
 			sourceTree = "<group>";

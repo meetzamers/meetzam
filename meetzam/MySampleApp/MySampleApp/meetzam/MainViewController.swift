@@ -37,6 +37,12 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
         if (toIndex == 2) {
             animateToTab(toIndex: toIndex)
         }
+        
+        if (toIndex == 4) {
+            //viewController.viewWillAppear(false)
+            print("view controller 4")
+        }
+        
         return true
     }
     
@@ -73,39 +79,5 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
             self.view.isUserInteractionEnabled = true
         })
     }
-    
-//    // animation dismiss
-//    func animateDismiss(toIndex: Int) {
-//        let tabViewControllers = viewControllers!
-//        let fromView = selectedViewController!.view
-//        let toView = tabViewControllers[toIndex].view
-//        let fromIndex = tabViewControllers.index(of: selectedViewController!)
-//        
-//        guard fromIndex != toIndex else {return}
-//        
-//        // Add the toView to the tab bar view
-//        fromView?.superview!.addSubview(toView!)
-//        
-//        // Position toView off screen (to the left/right of fromView)
-//        let screenHeight = UIScreen.main.bounds.size.height;
-//        let offset = screenHeight
-//        
-//        toView?.center = CGPoint(x: (fromView?.center.x)!, y: (toView?.center.y)! + offset)
-//        
-//        // Disable interaction during animation
-//        view.isUserInteractionEnabled = false
-//        
-//        UIView.animate(withDuration: 0.2, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
-//            // Slide the views by -offset
-//            fromView?.center = CGPoint(x: (fromView?.center.x)!, y: (fromView?.center.y)! + offset);
-//            toView?.center   = CGPoint(x: (toView?.center.x)!, y: (toView?.center.y)! + offset);
-//            
-//        }, completion: { finished in
-//            // Remove the old view from the tabbar view.
-//            fromView?.removeFromSuperview()
-//            self.selectedIndex = toIndex
-//            self.view.isUserInteractionEnabled = true
-//        })
-//    }
     
 }

@@ -17,31 +17,24 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     // Profile picture
     @IBOutlet weak var profilePicture: UIImageView!
-    
     // Profile name
     @IBOutlet weak var name: UITextField!
     var dbName: String!
-    
     // Profile bio
     @IBOutlet weak var bio: UITextField!
     var dbBio: String!
-    
     // Profile email
     @IBOutlet weak var email: UITextField!
     var dbEmail: String!
-    
     // Profile age
     @IBOutlet weak var age: UITextField!
     var dbAge: String!
-    
     // Profile gender
     @IBOutlet weak var gender: UITextField!
     var dbGender: String!
-    
     // Profile region
     @IBOutlet weak var region: UITextField!
     var dbRegion: String!
-    
     // User profile (for database use)
     var user_profile: UserProfileToDB?
     
@@ -58,6 +51,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             // After it is complete
         }
     }
+    
     // Function used in change profile picture button
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -68,7 +62,6 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         self.dismiss(animated: true, completion: nil)
     }
-    
     
     // Save button
     @IBAction func saveButtonTapped(_ sender: UIButton) {
@@ -81,11 +74,66 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         UserProfileToDB().insertProfile(_userId: dbID, _displayName: dbName, _bio: dbBio, _age: dbAge, _gender: dbGender, _region: dbRegion, _email: dbEmail)
         UserProfileToDB().getProfileForEdit(key: AWSIdentityManager.default().identityId!, user_profile:user_profile, displayname: name, bio: bio, age: age, gender: gender, region: region, email: email)
+        
+        _ = navigationController?.popViewController(animated: true)
+        
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
+        
+        // Ryan: padding left space to the text
+        let paddingView1 = UIImageView(frame: CGRect(x: 10, y: 0, width: 40, height: 20))
+        paddingView1.image = UIImage(named: "NameIcon")
+        paddingView1.contentMode = .scaleAspectFit
+        paddingView1.isOpaque = false
+        paddingView1.alpha = 0.7
+        name.leftView = paddingView1
+        name.leftViewMode = .always
+        
+        let paddingView2 = UIImageView(frame: CGRect(x: 10, y: 0, width: 40, height: 20))
+        paddingView2.image = UIImage(named: "BioIcon")
+        paddingView2.contentMode = .scaleAspectFit
+        paddingView2.isOpaque = false
+        paddingView2.alpha = 0.7
+        bio.leftView = paddingView2
+        bio.leftViewMode = .always
+        
+        let paddingView3 = UIImageView(frame: CGRect(x: 10, y: 0, width: 40, height: 17))
+        paddingView3.image = UIImage(named: "EmailIcon")
+        paddingView3.contentMode = .scaleAspectFit
+        paddingView3.isOpaque = false
+        paddingView3.alpha = 0.7
+        email.leftView = paddingView3
+        email.leftViewMode = .always
+        
+        let paddingView4 = UIImageView(frame: CGRect(x: 10, y: 0, width: 40, height: 17))
+        paddingView4.image = UIImage(named: "AgeIcon")
+        paddingView4.contentMode = .scaleAspectFit
+        paddingView4.isOpaque = false
+        paddingView4.alpha = 0.7
+        age.leftView = paddingView4
+        age.leftViewMode = .always
+        
+        let paddingView5 = UIImageView(frame: CGRect(x: 10, y: 0, width: 40, height: 20))
+        paddingView5.image = UIImage(named: "GenderIcon")
+        paddingView5.contentMode = .scaleAspectFit
+        paddingView5.isOpaque = false
+        paddingView5.alpha = 0.7
+        gender.leftView = paddingView5
+        gender.leftViewMode = .always
+        
+        let paddingView6 = UIImageView(frame: CGRect(x: 10, y: 0, width: 40, height: 17))
+        paddingView6.image = UIImage(named: "RegionIcon")
+        paddingView6.contentMode = .scaleAspectFit
+        paddingView6.isOpaque = false
+        paddingView6.alpha = 0.7
+        region.leftView = paddingView6
+        region.leftViewMode = .always
+        // Ryan: padding left space to the text END
+        
         
         let identityManager = AWSIdentityManager.default()
         AWSIdentityManager.default()
@@ -121,6 +169,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         // Function to disable keyboard upon touching anywhere else
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        
         //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
@@ -142,14 +191,13 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         let screenHeight = UIScreen.main.bounds.height
-        scrollView.setContentOffset(CGPoint(x:0, y:(610 - screenHeight+textField.frame.origin.y + textField.frame.height)), animated: true)
+        scrollView.setContentOffset(CGPoint(x:0, y:(750 - screenHeight+textField.frame.origin.y + textField.frame.height)), animated: true)
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
         scrollView.setContentOffset(CGPoint(x:0, y:0), animated: true)
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        print("touches began!!")
         scrollView.setContentOffset(CGPoint(x:0, y:0), animated: true)
     }
 }

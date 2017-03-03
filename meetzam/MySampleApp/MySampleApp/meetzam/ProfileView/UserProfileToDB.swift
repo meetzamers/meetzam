@@ -41,24 +41,10 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         return "userId"
     }
     
-    /*class func rangeKeyAttribute() -> String {
-     
-     return "email"
-     }*/
-    
-    /*override class func jsonKeyPathsByPropertyKey() -> [AnyHashable: Any] {
-     return [
-     "_userId" : "userId",
-     "_phone" : "phone",
-     "_name" : "name",
-     "_pushTargetArn" : "pushTargetArn",
-     ]
-     }*/
-    
     // function to add/update user info into database
     // argument: dbName...
     func insertProfile(_userId: String, _displayName: String, _bio: String, _age: String, _gender: String, _region: String, _email: String) {
-        print("insertSomeItems()")
+        //print("insertSomeItems()")
         let mapper = AWSDynamoDBObjectMapper.default()
         
         var userProfile = UserProfileToDB()
@@ -94,17 +80,17 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 print("Error: \(error)")
             } else if let user_profile = task.result as? UserProfileToDB {
                 displayname.text = user_profile.displayName
-                print(displayname.text)
+                //print(displayname.text)
                 bio.text = user_profile.bio
-                print(bio.text)
+                //print(bio.text)
                 age.text = user_profile.age
-                print(age.text)
+                //print(age.text)
                 gender.text = user_profile.gender
-                print(gender.text)
+                //print(gender.text)
                 region.text = user_profile.region
-                print(region.text)
+                //print(region.text)
                 email.text = user_profile.email
-                print(email.text)
+                //print(email.text)
             }
             
             return nil
@@ -113,22 +99,22 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     }
     
     func getProfileForDisplay(key: String, user_profile: UserProfileToDB?, displayname: UILabel!, bio: UILabel!){
-        print("     enter func getProfileForDisplay")
+        //print("     enter func getProfileForDisplay")
         /*let mapper = AWSDynamoDBObjectMapper.default()
          return mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: email)*/
         let mapper = AWSDynamoDBObjectMapper.default()
         
-        print("userId is ", user_profile?.userId, separator: " ")
+        //print("userId is ", user_profile?.userId, separator: " ")
         //tableRow?.UserId --> (tableRow?.UserId)!
         mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as? NSError {
-                print("Error: \(error)")
+                //print("Error: \(error)")
             } else if let user_profile = task.result as? UserProfileToDB {
-                print("     Getting fields in user_profile")
+                //print("     Getting fields in user_profile")
                 displayname.text = user_profile.displayName
-                print(displayname.text)
+                //print(displayname.text)
                 bio.text = user_profile.bio
-                print(bio.text)
+                //print(bio.text)
             }
             
             return nil
