@@ -14,12 +14,7 @@ class ContactsViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
-        
-        
+    
     }
-/*
-    @IBAction func test(_ sender: Any) {
-        MovieList().refreshList(true)
-    }
- */
+    
 }

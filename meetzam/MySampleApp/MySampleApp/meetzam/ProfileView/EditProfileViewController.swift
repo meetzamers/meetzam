@@ -149,7 +149,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        print("touches began!!")
+        //print("touches began!!")
         scrollView.setContentOffset(CGPoint(x:0, y:0), animated: true)
     }
 }

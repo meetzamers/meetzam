@@ -31,11 +31,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 1. Light orange
         //navigationBarAppearace.barTintColor = UIColor.init(red: 253/255, green: 115/255, blue: 24/255, alpha: 1)
-        // 2. Dark orange 1
-        //navigationBarAppearace.barTintColor = UIColor.init(red: 244/255, green: 75/255, blue: 42/255, alpha: 1)
         // 3. Dark orange 2
-        navigationBarAppearace.barTintColor = UIColor.init(red: 254/255, green: 84/255, blue: 48/255, alpha: 1)
-        //navigationBarAppearace.barTintColor = UIColor.init(red: 232/255, green: 66/255, blue: 28/255, alpha: 1)
+        //navigationBarAppearace.barTintColor = UIColor.init(red: 254/255, green: 84/255, blue: 48/255, alpha: 1)
+        // 4. Gulf orange
+        navigationBarAppearace.barTintColor = UIColor.init(red: 242/255, green: 92/255, blue: 0/255, alpha: 1)
         
         // change bar to translucent
         navigationBarAppearace.isTranslucent = true

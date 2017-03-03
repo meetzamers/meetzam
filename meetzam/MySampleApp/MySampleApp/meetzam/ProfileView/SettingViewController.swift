@@ -104,9 +104,6 @@ class SettingViewController: UIViewController {
                     self.animated_SignInViewController()
             })
         }
-//        else {
-//            assert(false)
-//        }
     }
     
     // 3. display sign in view controller
