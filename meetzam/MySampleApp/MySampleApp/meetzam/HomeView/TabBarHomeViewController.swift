@@ -14,7 +14,6 @@ import AWSDynamoDB
 import AWSMobileHubHelper
 import AWSDynamoDB
 
-//class TabBarHomeViewController: UIViewController {
 class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate{
     
     // ============================================
@@ -22,9 +21,6 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     var new_signinObserver: AnyObject!
     var new_signoutObserver: AnyObject!
     
-   // var movieView = [FrameViewController]()
-    //var page_num = 0
-
     // Variable ends here
     // ============================================
     // Change status bar type to default.
@@ -42,10 +38,10 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         self.dataSource = self
         
         // change background color to grey
-        view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
+        //view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
+        view.backgroundColor = UIColor.init(red: 223/255, green: 223/255, blue: 223/255, alpha: 1)
         
         let frameVC = FrameViewController()
-        
         frameVC.imagekey = imagekeys.first
         
         let viewControllers = [frameVC]
@@ -78,10 +74,6 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         
         // AWS implementation ends here
         // ============================================
-        
-
-
-
         
     }
     
@@ -142,29 +134,26 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
 
 // This is each page's view controller
 class FrameViewController: UIViewController {
+    
     let movieTitle = UILabel()
-    let movieTitleDetailed = UILabel()
+    //let movieDetailedInfo = UILabel()
+    let movieDetailedInfo = UITextView()
     
     var imagekey: String?
+    
     var movie_info: SingleMovie?
-    // string for the image view
-    /*
-    var imgName: URL? {
-        didSet {
-            imageView.image = UIImage(data: try! Data(contentsOf: imgName!))
-        }
-    }
-    */
+    
     // image view init
     var imageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-        iv.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 100)
+        //iv.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 100)
+        iv.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 110)
         return iv
     }()
     
     // scoll view
-    let movieContent = UIScrollView(frame: CGRect(x: 0, y:22, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 46))
+    let movieContent = UIScrollView(frame: CGRect(x: 0, y: 22, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 46))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -172,34 +161,35 @@ class FrameViewController: UIViewController {
         self.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         self.view.backgroundColor = UIColor.clear
         
-        SingleMovie().getMovieForDisplay(key: imagekey!, movie_data: movie_info, movieTitle: movieTitle, movieTitleDetailed: movieTitleDetailed, imageView: imageView)
-        print("hahahah")
-        
+        SingleMovie().getMovieForDisplay(key: imagekey!, movie_data: movie_info, movieTitle: movieTitle, movieTitleDetailed: movieDetailedInfo, imageView: imageView)
+    
         // add scroll view
         movieContent.showsVerticalScrollIndicator = true
         movieContent.isScrollEnabled = true
         movieContent.isUserInteractionEnabled = true
+        movieContent.backgroundColor = UIColor.clear
         self.view.addSubview(movieContent)
         movieContent.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*2)
         
-    
         // add image view to scroll view
         movieContent.addSubview(imageView)
         
         // add movie content in to the scroll view
-        movieTitle.frame = CGRect(x: 10, y: imageView.frame.height, width: UIScreen.main.bounds.width/2 - 10, height: 30)
+        movieTitle.frame = CGRect(x: 10, y: imageView.frame.height + 5, width: UIScreen.main.bounds.width - 20, height: 30)
         movieTitle.font = UIFont(name: "HelveticaNeue-Light", size: 23)
-        //movieTitle.text = "asasdfg"
-        //movieTitle.adjustsFontSizeToFitWidth = true
         movieTitle.textColor = UIColor.black
         movieContent.addSubview(movieTitle)
         
-        movieTitleDetailed.frame = CGRect(x: UIScreen.main.bounds.width/2 - 10, y: imageView.frame.height, width: UIScreen.main.bounds.width/2 - 10, height: 30)
-        movieTitleDetailed.font = UIFont(name: "HelveticaNeue-thin", size: 13)
-        //movieTitleDetailed.text = "wewrwetwetew"
-        movieTitleDetailed.textColor = UIColor.black
-        movieContent.addSubview(movieTitleDetailed)
+        movieDetailedInfo.frame = CGRect(x: 5, y: imageView.frame.height + 32, width: UIScreen.main.bounds.width - 15, height: 200)
+        movieDetailedInfo.font = UIFont(name: "HelveticaNeue-thin", size: 15)
+        movieDetailedInfo.textColor = UIColor.black
+        movieDetailedInfo.backgroundColor = UIColor.clear
+        movieContent.addSubview(movieDetailedInfo)
+        
+        //movieDetailedInfo.numberOfLines = 10
+        //movieDetailedInfo.font = UIFont(name: "HelveticaNeue-thin", size: 13)
+        //movieDetailedInfo.textColor = UIColor.black
+        //movieContent.addSubview(movieDetailedInfo)
     }
-    
 
 }

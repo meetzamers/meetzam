@@ -17,31 +17,24 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     // Profile picture
     @IBOutlet weak var profilePicture: UIImageView!
-    
     // Profile name
     @IBOutlet weak var name: UITextField!
     var dbName: String!
-    
     // Profile bio
     @IBOutlet weak var bio: UITextField!
     var dbBio: String!
-    
     // Profile email
     @IBOutlet weak var email: UITextField!
     var dbEmail: String!
-    
     // Profile age
     @IBOutlet weak var age: UITextField!
     var dbAge: String!
-    
     // Profile gender
     @IBOutlet weak var gender: UITextField!
     var dbGender: String!
-    
     // Profile region
     @IBOutlet weak var region: UITextField!
     var dbRegion: String!
-    
     // User profile (for database use)
     var user_profile: UserProfileToDB?
     
@@ -58,6 +51,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             // After it is complete
         }
     }
+    
     // Function used in change profile picture button
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
@@ -68,7 +62,6 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         self.dismiss(animated: true, completion: nil)
     }
-    
     
     // Save button
     @IBAction func saveButtonTapped(_ sender: UIButton) {
@@ -81,11 +74,15 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         UserProfileToDB().insertProfile(_userId: dbID, _displayName: dbName, _bio: dbBio, _age: dbAge, _gender: dbGender, _region: dbRegion, _email: dbEmail)
         UserProfileToDB().getProfileForEdit(key: AWSIdentityManager.default().identityId!, user_profile:user_profile, displayname: name, bio: bio, age: age, gender: gender, region: region, email: email)
+        
+        _ = navigationController?.popViewController(animated: true)
+        
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = UIColor.init(red: 223/255, green: 223/255, blue: 223/255, alpha: 1)
         
         let identityManager = AWSIdentityManager.default()
         AWSIdentityManager.default()
@@ -121,6 +118,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         // Function to disable keyboard upon touching anywhere else
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        
         //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
@@ -149,7 +147,6 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        //print("touches began!!")
         scrollView.setContentOffset(CGPoint(x:0, y:0), animated: true)
     }
 }

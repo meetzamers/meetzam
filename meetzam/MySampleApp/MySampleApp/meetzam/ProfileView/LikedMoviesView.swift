@@ -13,6 +13,8 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = UIColor.init(red: 223/255, green: 223/255, blue: 223/255, alpha: 1)
+        
         movieCollectionView.delegate = self
         movieCollectionView.dataSource = self
 
