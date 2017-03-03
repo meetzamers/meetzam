@@ -111,7 +111,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="140" id="E5M-uR-Aai"/>
                                                 </constraints>
-                                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="2" id="CEN-W4-6HO">
+                                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="2" id="CEN-W4-6HO">
                                                     <size key="itemSize" width="89" height="138"/>
                                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>

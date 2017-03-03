@@ -39,7 +39,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         
         // change background color to grey
         //view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
-        view.backgroundColor = UIColor.init(red: 223/255, green: 223/255, blue: 223/255, alpha: 1)
+        view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
         
         let frameVC = FrameViewController()
         frameVC.imagekey = imagekeys.first
@@ -169,7 +169,7 @@ class FrameViewController: UIViewController {
         movieContent.isUserInteractionEnabled = true
         movieContent.backgroundColor = UIColor.clear
         self.view.addSubview(movieContent)
-        movieContent.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*2)
+        movieContent.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*1.3)
         
         // add image view to scroll view
         movieContent.addSubview(imageView)

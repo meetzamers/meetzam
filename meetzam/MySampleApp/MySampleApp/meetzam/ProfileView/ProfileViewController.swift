@@ -38,7 +38,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         UserProfileToDB().getProfileForDisplay(key: AWSIdentityManager.default().identityId!, user_profile: user_profile, displayname: displayName, bio: userBioField)
         
         //======================== formatting background==========================\\
-        self.view.backgroundColor = UIColor.init(red: 223/255, green: 223/255, blue: 223/255, alpha: 1)
+        self.view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
         self.mainScrollView.backgroundColor = UIColor.clear
         self.profileMainBodyView.backgroundColor = UIColor.clear
         
