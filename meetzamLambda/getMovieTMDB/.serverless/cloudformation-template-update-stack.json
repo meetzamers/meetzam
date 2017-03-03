@@ -8,7 +8,7 @@
     "BackendLambdaLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/getMovieInfoFromTMDB-production-backendLambda"
+        "LogGroupName": "/aws/lambda/getMovieInfoFromTMDB-dev-backendLambda"
       }
     },
     "IamRoleLambdaExecution": {
@@ -36,7 +36,7 @@
             "-",
             [
               "getMovieInfoFromTMDB",
-              "production",
+              "dev",
               "us-east-1",
               "lambdaRole"
             ]
@@ -54,7 +54,7 @@
           "Fn::Join": [
             "-",
             [
-              "production",
+              "dev",
               "getMovieInfoFromTMDB",
               "lambda"
             ]
@@ -112,9 +112,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/getMovieInfoFromTMDB/production/1488058086504-2017-02-25T21:28:06.504Z/getMovieInfoFromTMDB.zip"
+          "S3Key": "serverless/getMovieInfoFromTMDB/dev/1488161614584-2017-02-27T02:13:34.584Z/getMovieInfoFromTMDB.zip"
         },
-        "FunctionName": "getMovieInfoFromTMDB-production-backendLambda",
+        "FunctionName": "getMovieInfoFromTMDB-dev-backendLambda",
         "Handler": "backendLambda.handler",
         "MemorySize": 1024,
         "Role": {
@@ -137,14 +137,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "BackendLambdaLambdaVersionHI1xlhWkkQs7dNLYbR1khUHELfHRetaPyrahRxhBx8": {
+    "BackendLambdaLambdaVersionDZ15v60WUOeOsnMyvmmFeYImC7PJnWb4GIkAExUQI": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "BackendLambdaLambdaFunction"
         },
-        "CodeSha256": "H+I1xlhWkkQs7dNLYbR1khUHELfHRetaPyrahRxhBx8="
+        "CodeSha256": "DZ15v60WUOe/OsnMyvmm/FeYImC7PJnWb4GIkAExUQI="
       }
     }
   },
@@ -157,7 +157,7 @@
     "BackendLambdaLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "BackendLambdaLambdaVersionHI1xlhWkkQs7dNLYbR1khUHELfHRetaPyrahRxhBx8"
+        "Ref": "BackendLambdaLambdaVersionDZ15v60WUOeOsnMyvmmFeYImC7PJnWb4GIkAExUQI"
       }
     }
   }

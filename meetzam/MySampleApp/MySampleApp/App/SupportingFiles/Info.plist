@@ -43,7 +43,7 @@
 				<string>us-east-1</string>
 			</dict>
 		</dict>
-		<key>IdentityManager</key>
+            <key>IdentityManager</key>
 		<dict>
 			<key>Default</key>
 			<dict/>

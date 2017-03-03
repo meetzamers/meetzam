@@ -52,7 +52,7 @@ class UserProfileTable: NSObject, Table {
     }
     
     /**
-     * Converts the attribute name from data object format to table format.
+     * Converts the attributte name from data object format to table format.
      *
      * - parameter dataObjectAttributeName: data object attribute name
      * - returns: table attribute name
