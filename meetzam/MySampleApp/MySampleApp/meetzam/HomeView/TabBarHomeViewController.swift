@@ -21,6 +21,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     var new_signinObserver: AnyObject!
     var new_signoutObserver: AnyObject!
     
+    var isFirstMovieView = false
     // Variable ends here
     // ============================================
     // Change status bar type to default.
@@ -40,6 +41,11 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         // change background color to grey
         //view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
         view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
+        
+        // This is the first movie
+        if (!AWSIdentityManager.default().isLoggedIn) {
+            self.isFirstMovieView = true
+        }
         
         let frameVC = FrameViewController()
         frameVC.imagekey = imagekeys.first
@@ -107,6 +113,9 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
             let frameVC = FrameViewController()
             frameVC.imagekey = imagekeys[currentIndex! + 1]
             
+            // turn off isFirstMovieView
+            self.isFirstMovieView = false
+            
             return frameVC
         }
  
@@ -121,12 +130,21 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
             let frameVC = FrameViewController()
             frameVC.imagekey = imagekeys[currentIndex! - 1]
             
+            // turn off isFirstMovieView
+            self.isFirstMovieView = false
+            
             return frameVC
         }
         
         return nil
     }
- 
+    
+    // current viewcontroller
+    override func viewWillAppear(_ animated: Bool) {
+        if (isFirstMovieView && AWSIdentityManager.default().isLoggedIn) {
+            viewDidLoad()
+        }
+    }
     
     // Page view functions end here
     // ============================================
@@ -186,10 +204,6 @@ class FrameViewController: UIViewController {
         movieDetailedInfo.backgroundColor = UIColor.clear
         movieContent.addSubview(movieDetailedInfo)
         
-        //movieDetailedInfo.numberOfLines = 10
-        //movieDetailedInfo.font = UIFont(name: "HelveticaNeue-thin", size: 13)
-        //movieDetailedInfo.textColor = UIColor.black
-        //movieContent.addSubview(movieDetailedInfo)
     }
-
+    
 }
