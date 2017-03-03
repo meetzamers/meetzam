@@ -202,6 +202,7 @@ class FrameViewController: UIViewController {
         movieDetailedInfo.font = UIFont(name: "HelveticaNeue-thin", size: 15)
         movieDetailedInfo.textColor = UIColor.black
         movieDetailedInfo.backgroundColor = UIColor.clear
+        movieDetailedInfo.isEditable = false
         movieContent.addSubview(movieDetailedInfo)
         
     }
