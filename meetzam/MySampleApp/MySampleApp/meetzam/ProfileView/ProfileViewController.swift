@@ -20,7 +20,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     var topThreeImages = ["split","loganposter2","lala"]
     
     //declare profile picture field
-    let userPicField = UIImageView(frame: CGRect(x: UIScreen.main.bounds.width*0.15, y: 30, width: UIScreen.main.bounds.width*0.7, height: UIScreen.main.bounds.width*0.7))
+    //let userPicField = UIImageView(frame: CGRect(x: UIScreen.main.bounds.width*0.15, y: 30, width: UIScreen.main.bounds.width*0.7, height: UIScreen.main.bounds.width*0.7))
+    let userPicField = UIImageView(frame: CGRect(x: UIScreen.main.bounds.width*0.1, y: 15, width: UIScreen.main.bounds.width*0.8, height: UIScreen.main.bounds.width*0.8))
     
     //declare displayName
     let displayName = UILabel()
@@ -48,9 +49,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         //=========================set size and location of NAME Label==========================\\
         // new frame:
-        displayName.frame = CGRect(x: 0, y: userPicField.frame.height + 30, width: UIScreen.main.bounds.width, height: 50)
-        displayName.font = UIFont(name: "HelveticaNeue-Light", size: 23)
-        //UIFont(name: "HelveticaNeue-Light", size: 23)
+        displayName.frame = CGRect(x: 0, y: userPicField.frame.height + 20, width: UIScreen.main.bounds.width, height: 35)
+        displayName.font = UIFont(name: "HelveticaNeue-Light", size: 30)
         
         /* when the user first log in to meetzam, get name from database */
         if (displayName.text == nil) {
@@ -67,8 +67,13 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         //======set size and location of BIO Label=======\\
         // new frame:
-        userBioField.frame = CGRect(x: 0, y: userPicField.frame.height + 60, width: UIScreen.main.bounds.width, height: 50)
-        userBioField.font = UIFont(name: "HelveticaNeue-Light", size: 18)
+        userBioField.frame = CGRect(x: 0, y: userPicField.frame.height + 60, width: UIScreen.main.bounds.width, height: 25)
+        userBioField.font = UIFont(name: "HelveticaNeue-Thin", size: 18)
+        
+        // delete it:
+        print("This is the frame:")
+        print(userPicField.frame.width)
+        print(userPicField.frame.height)
         
         // new center:
         userBioField.textAlignment = .center
@@ -95,7 +100,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         //show top three movies
         TopThreeMovieCollectionView.delegate = self;
         TopThreeMovieCollectionView.dataSource = self;
-        TopThreeMovieCollectionView.backgroundColor = UIColor.clear
+        TopThreeMovieCollectionView.backgroundColor = UIColor.init(red: 173/255, green: 173/255, blue: 173/255, alpha: 1)
         
     }
   
