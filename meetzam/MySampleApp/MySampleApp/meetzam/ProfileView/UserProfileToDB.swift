@@ -76,6 +76,9 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         
         //tableRow?.UserId --> (tableRow?.UserId)!
         mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask!) -> AnyObject! in
+            
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+            
             if let error = task.error as? NSError {
                 print("Error: \(error)")
             } else if let user_profile = task.result as? UserProfileToDB {
@@ -93,6 +96,8 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 //print(email.text)
             }
             
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            
             return nil
         })
         
@@ -107,6 +112,9 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         //print("userId is ", user_profile?.userId, separator: " ")
         //tableRow?.UserId --> (tableRow?.UserId)!
         mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask!) -> AnyObject! in
+            
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+            
             if let error = task.error as? NSError {
                 //print("Error: \(error)")
             } else if let user_profile = task.result as? UserProfileToDB {
@@ -116,6 +124,8 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 bio.text = user_profile.bio
                 //print(bio.text)
             }
+            
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
             
             return nil
         })
