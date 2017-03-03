@@ -70,15 +70,10 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     }
     
     func getProfileForEdit(key: String, user_profile: UserProfileToDB?, displayname: UITextField!, bio: UITextField!, age: UITextField!, gender: UITextField!, region: UITextField!, email: UITextField!){
-        /*let mapper = AWSDynamoDBObjectMapper.default()
-         return mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: email)*/
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         let mapper = AWSDynamoDBObjectMapper.default()
         
-        //tableRow?.UserId --> (tableRow?.UserId)!
         mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask!) -> AnyObject! in
-            
-            UIApplication.shared.isNetworkActivityIndicatorVisible = true
-            
             if let error = task.error as? NSError {
                 print("Error: \(error)")
             } else if let user_profile = task.result as? UserProfileToDB {
@@ -97,24 +92,16 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             }
             
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            
             return nil
         })
         
     }
     
     func getProfileForDisplay(key: String, user_profile: UserProfileToDB?, displayname: UILabel!, bio: UILabel!){
-        //print("     enter func getProfileForDisplay")
-        /*let mapper = AWSDynamoDBObjectMapper.default()
-         return mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: email)*/
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         let mapper = AWSDynamoDBObjectMapper.default()
         
-        //print("userId is ", user_profile?.userId, separator: " ")
-        //tableRow?.UserId --> (tableRow?.UserId)!
         mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask!) -> AnyObject! in
-            
-            UIApplication.shared.isNetworkActivityIndicatorVisible = true
-            
             if let error = task.error as? NSError {
                 //print("Error: \(error)")
             } else if let user_profile = task.result as? UserProfileToDB {
@@ -126,7 +113,6 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             }
             
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            
             return nil
         })
         

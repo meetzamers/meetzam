@@ -92,13 +92,19 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     
     // display sign in view controller
     func popSignInViewController() {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
         if (!AWSIdentityManager.default().isLoggedIn) {
             let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
             let viewController = storyboard.instantiateViewController(withIdentifier: "SignIn")
 
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            
             self.present(viewController, animated: false, completion: nil)
 
         }
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
     // AWS support functions end here
@@ -166,7 +172,6 @@ class FrameViewController: UIViewController {
     var imageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-        //iv.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 100)
         iv.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 110)
         return iv
     }()
@@ -177,6 +182,7 @@ class FrameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // view changes
+    
         self.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         self.view.backgroundColor = UIColor.clear
         
@@ -213,9 +219,7 @@ class FrameViewController: UIViewController {
         movieDetailedInfo.backgroundColor = UIColor.clear
         movieDetailedInfo.isEditable = false
         movieContent.addSubview(movieDetailedInfo)
-        
-
-        
+    
     }
     
 }
