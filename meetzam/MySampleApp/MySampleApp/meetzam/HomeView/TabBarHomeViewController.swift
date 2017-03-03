@@ -21,6 +21,9 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     var new_signinObserver: AnyObject!
     var new_signoutObserver: AnyObject!
     
+    var currentIndex = 0
+    var movielist = MovieList()
+    var movieView = FrameViewController()
     // Variable ends here
     // ============================================
     // Change status bar type to default.
@@ -36,15 +39,18 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         // Let self be the delegate and dataSource
         self.delegate = self
         self.dataSource = self
+        SingleMovie().refreshList(movie_list: movielist, view: movieView)
         
         // change background color to grey
         //view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
         view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
         
-        let frameVC = FrameViewController()
-        frameVC.imagekey = imagekeys.first
+        //let frameVC = FrameViewController()
+        //frameVC.imagekey = imagekeys.first
         
-        let viewControllers = [frameVC]
+        //let viewControllers = [frameVC]
+        
+        let viewControllers = [movieView]
         setViewControllers(viewControllers, direction: .forward, animated: true, completion: nil)
         
         // ============================================
@@ -100,6 +106,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     // Page view functions start here
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        /*
         let currentImageName = (viewController as! FrameViewController).imagekey
         let currentIndex = imagekeys.index(of: currentImageName!)
         
@@ -111,9 +118,19 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         }
  
         return nil
+        */
+        if currentIndex + 1 < movielist.tableRows.count {
+            currentIndex += 1
+            let frameVC = FrameViewController()
+            frameVC.setVC(content: movielist.tableRows[currentIndex])
+            return frameVC
+        }
+        
+        return nil
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        /*
         let currentImagekey = (viewController as! FrameViewController).imagekey
         let currentIndex = imagekeys.index(of: currentImagekey!)
         
@@ -125,6 +142,15 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         }
         
         return nil
+        */
+        if currentIndex - 1 < 0 {
+            currentIndex -= 1
+            let frameVC = FrameViewController()
+            frameVC.setVC(content: movielist.tableRows[currentIndex])
+            return frameVC
+        }
+        return nil
+        
     }
  
     
@@ -141,7 +167,7 @@ class FrameViewController: UIViewController {
     
     var imagekey: String?
     
-    var movie_info: SingleMovie?
+    //var movie_info: SingleMovie?
     
     // image view init
     var imageView: UIImageView = {
@@ -161,7 +187,7 @@ class FrameViewController: UIViewController {
         self.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         self.view.backgroundColor = UIColor.clear
         
-        SingleMovie().getMovieForDisplay(key: imagekey!, movie_data: movie_info, movieTitle: movieTitle, movieTitleDetailed: movieDetailedInfo, imageView: imageView)
+        //SingleMovie().getMovieForDisplay(key: imagekey!, movie_data: movie_info, movieTitle: movieTitle, movieTitleDetailed: movieDetailedInfo, imageView: imageView)
     
         // add scroll view
         movieContent.showsVerticalScrollIndicator = true
@@ -190,6 +216,14 @@ class FrameViewController: UIViewController {
         //movieDetailedInfo.font = UIFont(name: "HelveticaNeue-thin", size: 13)
         //movieDetailedInfo.textColor = UIColor.black
         //movieContent.addSubview(movieDetailedInfo)
+    }
+    func setVC(content: SingleMovie) {
+        movieTitle.text = content.Title
+        movieDetailedInfo.text = content.overview
+        let path = "https://image.tmdb.org/t/p/w500/" + (content.poster_path)!
+        let imageURL = URL(string: path)
+        let imageData = try! Data(contentsOf: imageURL!)
+        imageView.image = UIImage(data: imageData)
     }
 
 }

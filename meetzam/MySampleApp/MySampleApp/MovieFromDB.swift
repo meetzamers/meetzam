@@ -30,12 +30,8 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
     
     func getMovieForDisplay(key: String, movie_data: SingleMovie?, movieTitle: UILabel!, movieTitleDetailed: UITextView!, imageView: UIImageView!){
         print("     enter func getmovieForDisplay")
-        /*let mapper = AWSDynamoDBObjectMapper.default()
-         return mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: email)*/
         let mapper = AWSDynamoDBObjectMapper.default()
-        
-        //print("userId is ", user_profile?.userId, separator: " ")
-        //tableRow?.UserId --> (tableRow?.UserId)!
+
         mapper.load(SingleMovie.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as? NSError {
                 print("Error: \(error)")
@@ -56,4 +52,67 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             return nil
         })
     }
+    func refreshList(movie_list: MovieList, view: FrameViewController)  {
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
+        let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.default()
+        let queryExpression = AWSDynamoDBScanExpression()
+        // queryExpression.exclusiveStartKey = self.lastEvaluatedKey
+        //queryExpression.limit = 5
+        
+        dynamoDBObjectMapper.scan(SingleMovie.self, expression: queryExpression).continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask!) -> AnyObject! in
+            var c = 0
+            var i = 0
+            if let paginatedOutput = task.result {
+                //let count = paginatedOutput.count as Int
+                for item in paginatedOutput.items as! [SingleMovie] {
+                /*while i < paginatedOutput.items.count {
+                    var item = SingleMovie()
+                    
+                    item = paginatedOutput.items[i].copy() as! SingleMovie
+                    i += 1
+                    */
+                    if item.TMDB_movie_id == nil || item.Title == nil {
+                        continue
+                    }
+
+                    movie_list.tableRows.append(item)
+                    if c == 0 {
+                        view.movieTitle.text = item.Title
+                        view.movieDetailedInfo.text = item.overview
+                        let path = "https://image.tmdb.org/t/p/w500/" + (item.poster_path)!
+                        let imageURL = URL(string: path)
+                        let imageData = try! Data(contentsOf: imageURL!)
+                        view.imageView.image = UIImage(data: imageData)
+                    }
+                    
+                    print(movie_list.tableRows.count)
+                    print(movie_list.tableRows[c].Title)
+                    if c > 0 {
+                        print(movie_list.tableRows[c - 1].Title)
+                    }
+                    c = c + 1
+                    
+                }
+
+            }
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            //self.tableView.reloadData()
+            if let error = task.error as? NSError {
+                print("Error: \(error)")
+            }
+            print("number of all movies \(c)")
+            
+            return nil
+        })
+        
+    }
+    
+}
+
+class MovieList {
+    var tableRows:Array = [SingleMovie]()
+
+
 }
