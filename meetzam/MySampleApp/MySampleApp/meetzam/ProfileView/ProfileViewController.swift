@@ -72,9 +72,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         // new center:
         userBioField.textAlignment = .center
         
+        // if this user's profile is empty, set teh default bio
         if (userBioField.text != nil) {
-            userBioField.text = "Add your first Bio!"
-            userBioField.textColor = UIColor.lightGray
+            userBioField.text = "(System) Add your first Bio!"
+            //userBioField.textColor = UIColor.lightGray
         }
         
         self.profileMainBodyView.addSubview(userBioField)
