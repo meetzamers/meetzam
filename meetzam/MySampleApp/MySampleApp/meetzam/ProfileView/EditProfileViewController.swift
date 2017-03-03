@@ -42,7 +42,8 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     @IBOutlet weak var region: UITextField!
     var dbRegion: String!
     
-    var user_profile:UserProfileToDB?
+    // User profile (for database use)
+    var user_profile: UserProfileToDB?
     
     // Change profile picture button
     @IBAction func changeProfilePictureButtonTapped(_ sender: UIButton) {
@@ -92,12 +93,11 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         // Initiating user's unique ID
         dbID = identityManager.identityId
         
-        /* mm: get all the info from database, if nil, get from fb  */
+        /* Get all the info from database, if nil, get from fb  */
         UserProfileToDB().getProfileForEdit(key: AWSIdentityManager.default().identityId!, user_profile:user_profile, displayname: name, bio: bio, age: age, gender: gender, region: region, email: email)
         
-        /* mm: add a if statement -- only get from facebook when user name is nil */
-        if (name.text == nil){
-        /* ^^ THATS ALL I ADDED mm*/
+        /* Added an if statement -- only get from facebook when username is nil */
+        if (name.text == nil) {
             
             // Initiating name field from Facebook userName
             if let identityUserName = identityManager.userName {
@@ -119,14 +119,14 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         }
         
         
-        // m: to disable keyboard when touching anywhere else
+        // Function to disable keyboard upon touching anywhere else
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
         //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }
     
-    //m: the function to disable keyboard (called in viewDidLoad())
+    // Function to disable keyboard (called in viewDidLoad())
     func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
