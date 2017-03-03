@@ -148,16 +148,6 @@
                                                     </collectionViewCell>
                                                 </cells>
                                             </collectionView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HI6-mc-0bT">
-                                                <rect key="frame" x="364" y="394" width="30" height="30"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="30" id="81K-KK-ZNN"/>
-                                                </constraints>
-                                                <state key="normal" title="Edit"/>
-                                                <connections>
-                                                    <action selector="toEditProfileButton:" destination="m4S-d2-sYW" eventType="touchUpInside" id="D6P-Cy-iZW"/>
-                                                </connections>
-                                            </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c07-jd-Ndj">
                                                 <rect key="frame" x="369" y="524" width="25" height="34"/>
                                                 <constraints>
@@ -169,11 +159,23 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Liked Movies:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="keo-Rs-0sd">
-                                                <rect key="frame" x="15" y="443" width="100.5" height="20"/>
+                                                <rect key="frame" x="15" y="443" width="101" height="20"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HI6-mc-0bT">
+                                                <rect key="frame" x="355" y="368" width="39" height="34"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="39" id="81K-KK-ZNN"/>
+                                                </constraints>
+                                                <state key="normal" title="Edit">
+                                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="toEditProfileButton:" destination="m4S-d2-sYW" eventType="touchUpInside" id="D6P-Cy-iZW"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -181,7 +183,7 @@
                                             <constraint firstItem="c07-jd-Ndj" firstAttribute="trailing" secondItem="HI6-mc-0bT" secondAttribute="trailing" id="DjH-kk-xIw"/>
                                             <constraint firstAttribute="height" constant="675" id="FML-Ad-NIF"/>
                                             <constraint firstAttribute="bottom" secondItem="keo-Rs-0sd" secondAttribute="bottom" constant="212" id="H2p-CO-AAy"/>
-                                            <constraint firstAttribute="bottom" secondItem="HI6-mc-0bT" secondAttribute="bottom" constant="251" id="bIo-Kz-cEI"/>
+                                            <constraint firstAttribute="bottom" secondItem="HI6-mc-0bT" secondAttribute="bottom" constant="273" id="bIo-Kz-cEI"/>
                                             <constraint firstItem="keo-Rs-0sd" firstAttribute="leading" secondItem="I4T-Sg-NUe" secondAttribute="leading" constant="15" id="blB-Bi-w7L"/>
                                             <constraint firstItem="I4T-Sg-NUe" firstAttribute="centerY" secondItem="c07-jd-Ndj" secondAttribute="centerY" id="ecs-xz-hEj"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="640" id="kxJ-mX-LfZ"/>
@@ -328,13 +330,13 @@
                                         <rect key="frame" x="0.0" y="-64" width="400" height="675"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="2yS-nJ-GQA">
-                                                <rect key="frame" x="34.5" y="15" width="331" height="641"/>
+                                                <rect key="frame" x="34.5" y="15" width="331" height="640"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="W2v-yj-4QE">
-                                                        <rect key="frame" x="0.0" y="0.0" width="331" height="591"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="W2v-yj-4QE">
+                                                        <rect key="frame" x="0.0" y="0.0" width="331" height="590"/>
                                                         <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ZC7-xn-JBC">
-                                                                <rect key="frame" x="0.0" y="0.0" width="331" height="366"/>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="ZC7-xn-JBC">
+                                                                <rect key="frame" x="0.0" y="0.0" width="331" height="367"/>
                                                                 <subviews>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EAA-G4-hCf">
                                                                         <rect key="frame" x="0.0" y="0.0" width="331" height="331"/>
@@ -344,7 +346,8 @@
                                                                         </constraints>
                                                                     </imageView>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ij-BC-EES">
-                                                                        <rect key="frame" x="88.5" y="336" width="154" height="30"/>
+                                                                        <rect key="frame" x="80.5" y="335" width="170" height="32"/>
+                                                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                                                         <state key="normal" title="Change Profile Picture"/>
                                                                         <connections>
                                                                             <action selector="changeProfilePictureButtonTapped:" destination="wAD-EU-9I9" eventType="touchUpInside" id="Ei6-wv-wir"/>
@@ -353,7 +356,7 @@
                                                                 </subviews>
                                                             </stackView>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="LLE-mN-cLO">
-                                                                <rect key="frame" x="0.0" y="376" width="331" height="215"/>
+                                                                <rect key="frame" x="0.0" y="375" width="331" height="215"/>
                                                                 <subviews>
                                                                     <textField opaque="NO" clipsSubviews="YES" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qP1-pr-mRJ">
                                                                         <rect key="frame" x="0.0" y="0.0" width="331" height="35"/>
@@ -424,7 +427,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lqf-x5-KHN">
-                                                        <rect key="frame" x="0.0" y="601" width="331" height="40"/>
+                                                        <rect key="frame" x="0.0" y="600" width="331" height="40"/>
                                                         <color key="backgroundColor" red="0.99215686270000003" green="0.49019607840000001" blue="0.1333333333" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="331" id="kcn-XC-N1m"/>
