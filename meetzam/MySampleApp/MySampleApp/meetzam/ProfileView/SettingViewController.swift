@@ -24,7 +24,7 @@ class SettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
+        self.view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
         
         handleSigninStatus()
         
@@ -104,9 +104,6 @@ class SettingViewController: UIViewController {
                     self.animated_SignInViewController()
             })
         }
-//        else {
-//            assert(false)
-//        }
     }
     
     // 3. display sign in view controller

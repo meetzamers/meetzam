@@ -28,27 +28,29 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     //declare bio
     let userBioField = UILabel()
     
+    //declare AWS DB var
     var user_profile: UserProfileToDB?
     
-    
-//************************** VIEW DID LOAD ********************************************//
-    
+    //************************** VIEW DID LOAD ********************************************//
     override func viewDidLoad() {
         super.viewDidLoad()
         
         UserProfileToDB().getProfileForDisplay(key: AWSIdentityManager.default().identityId!, user_profile: user_profile, displayname: displayName, bio: userBioField)
         
-    //======================== formatting background==========================\\
-        self.view.backgroundColor = UIColor.init(red:242/255, green: 242/255, blue: 242/255, alpha: 1)
-        self.mainScrollView.backgroundColor = UIColor.init(red:242/255, green: 242/255, blue: 242/255, alpha: 1)
-        self.profileMainBodyView.backgroundColor = UIColor.init(red:242/255, green: 242/255, blue: 242/255, alpha: 1)
+        //======================== formatting background==========================\\
+        self.view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
+        self.mainScrollView.backgroundColor = UIColor.clear
+        self.profileMainBodyView.backgroundColor = UIColor.clear
         
-    //=========================set size and location of NAME Label==========================\\
-        displayName.frame = CGRect(x: 50, y: userPicField.frame.height + 40, width: 200, height: 50)
-        displayName.font = UIFont(name:"Helvetica", size: 23)
-        
+        //=========================call AWS identity manager==========================\\
         let identityManager = AWSIdentityManager.default()
         AWSIdentityManager.default()
+        
+        //=========================set size and location of NAME Label==========================\\
+        // new frame:
+        displayName.frame = CGRect(x: 0, y: userPicField.frame.height + 30, width: UIScreen.main.bounds.width, height: 50)
+        displayName.font = UIFont(name: "HelveticaNeue-Light", size: 23)
+        //UIFont(name: "HelveticaNeue-Light", size: 23)
         
         /* when the user first log in to meetzam, get name from database */
         if (displayName.text == nil) {
@@ -59,23 +61,27 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             }
         }
         
-        displayName.sizeToFit()
-        displayName.center = CGPoint(x: UIScreen.main.bounds.width/2, y: userPicField.frame.height + 50)
+        // new center:
+        displayName.textAlignment = .center
         self.profileMainBodyView.addSubview(displayName)
         
-    //======set size and location of BIO Label=======\\
-        userBioField.frame = CGRect(x: 0, y: 0, width: 200, height: 50)
+        //======set size and location of BIO Label=======\\
+        // new frame:
+        userBioField.frame = CGRect(x: 0, y: userPicField.frame.height + 60, width: UIScreen.main.bounds.width, height: 50)
+        userBioField.font = UIFont(name: "HelveticaNeue-Light", size: 18)
         
-        userBioField.font = UIFont(name:"Helvetica", size: 18)
-        if (userBioField.text != nil){
-            userBioField.sizeToFit()
+        // new center:
+        userBioField.textAlignment = .center
+        
+        // if this user's profile is empty, set teh default bio
+        if (userBioField.text != nil) {
+            userBioField.text = "(System) Add your first Bio!"
+            //userBioField.textColor = UIColor.lightGray
         }
-        userBioField.center = CGPoint(x: UIScreen.main.bounds.width/2, y:userPicField.frame.height + 80)
+        
         self.profileMainBodyView.addSubview(userBioField)
-
         
-        
-    //============set Profile Picture ==============\\
+        //============set Profile Picture ==============\\
         self.profileMainBodyView.addSubview(userPicField)
         if let imageURL = identityManager.imageURL {
             let imageData = try! Data(contentsOf: imageURL)
@@ -89,29 +95,24 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         //show top three movies
         TopThreeMovieCollectionView.delegate = self;
         TopThreeMovieCollectionView.dataSource = self;
+        TopThreeMovieCollectionView.backgroundColor = UIColor.clear
         
     }
   
-//********************* VIEW DID APPEAR ***********************************************//
-   
+    //********************* VIEW DID APPEAR ***********************************************//
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         /* get name and bio from database */
         UserProfileToDB().getProfileForDisplay(key: AWSIdentityManager.default().identityId!, user_profile: user_profile, displayname: displayName, bio: userBioField)
         
         /* format name and bio */
-        displayName.sizeToFit()
-        displayName.center = CGPoint(x: UIScreen.main.bounds.width/2, y: userPicField.frame.height + 50)
+        displayName.textAlignment = .center
+        userBioField.textAlignment = .center
         
-        userBioField.sizeToFit()
-        userBioField.center = CGPoint(x: UIScreen.main.bounds.width/2, y:userPicField.frame.height + 80)
-
+        self.profileMainBodyView.addSubview(displayName)
+        self.profileMainBodyView.addSubview(userBioField)
+        
     }
-    
-    
-    
-    
     
     // Go to all movies I liked
     @IBAction func toLikedMovies(_ sender: Any) {
@@ -128,8 +129,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         self.performSegue(withIdentifier: "toEditProfile", sender: self)
     }
 
-    
-
     //setting up top three movie collection view
     //conform with UICollectionView protocal
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -138,13 +137,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = TopThreeMovieCollectionView.dequeueReusableCell(withReuseIdentifier: "topThreeCell", for: indexPath) as! TopThreeMovieCell
-        
         cell.Top3MovieImage.image = UIImage(named: topThreeImages[indexPath.row])
+        
         return cell
     }
     
-    
-    
-    
-
 }
