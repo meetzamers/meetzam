@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		13E490AE1E67B69B008800E4 /* MovieFromDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13E490AD1E67B69B008800E4 /* MovieFromDB.swift */; };
 		5DD94CEB1E66149500B7DD80 /* LikedMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD94CEA1E66149500B7DD80 /* LikedMoviesView.swift */; };
 		5DD94CED1E6614F800B7DD80 /* MovieCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD94CEC1E6614F800B7DD80 /* MovieCollectionCell.swift */; };
 		5DD94CEF1E67288F00B7DD80 /* TopThreeMovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD94CEE1E67288F00B7DD80 /* TopThreeMovieCell.swift */; };
@@ -118,6 +119,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		13E490AD1E67B69B008800E4 /* MovieFromDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieFromDB.swift; sourceTree = "<group>"; };
 		1DD70E29008FEFA700000000 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignInViewController.swift; path = MySampleApp/App/SignIn/SignInViewController.swift; sourceTree = SOURCE_ROOT; };
 		1DD70E2902E65C3B00000000 /* PushNotification.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = PushNotification.storyboard; path = MySampleApp/Demo/Push/PushNotification.storyboard; sourceTree = SOURCE_ROOT; };
 		1DD70E29081A119000000000 /* ContentDeliveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentDeliveryViewController.swift; path = MySampleApp/Demo/ContentDelivery/ContentDeliveryViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -550,6 +552,7 @@
 		C4BF9C3F1E5B618900C73405 /* meetzam */ = {
 			isa = PBXGroup;
 			children = (
+				13E490AD1E67B69B008800E4 /* MovieFromDB.swift */,
 				C4BF9C401E5B61A500C73405 /* Main.storyboard */,
 				C4678C4A1E64E17900CA385F /* MainViewController.swift */,
 				C4BF9C421E5B640900C73405 /* HomeView */,
@@ -749,6 +752,7 @@
 				E7A30F048E97A0BD00000000 /* APIPathSelectorViewController.swift in Sources */,
 				E7A30F04AFAE825300000000 /* UserIdentityViewController.swift in Sources */,
 				C42C56331E6127D2005C6D66 /* CardView.swift in Sources */,
+				13E490AE1E67B69B008800E4 /* MovieFromDB.swift in Sources */,
 				C42C56351E612CF3005C6D66 /* SegueFromRight.swift in Sources */,
 				E7A30F0479ACCE1500000000 /* AWSMobileClient.swift in Sources */,
 			);
