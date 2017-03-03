@@ -85,19 +85,27 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         let identityManager = AWSIdentityManager.default()
         AWSIdentityManager.default()
         
         // Initiating user's unique ID
         dbID = identityManager.identityId
         
-        // Initiating name field from Facebook userName
-        if let identityUserName = identityManager.userName {
+        /* mm: get all the info from database, if nil, get from fb  */
+        UserProfileToDB().getProfileForEdit(key: AWSIdentityManager.default().identityId!, user_profile:user_profile, displayname: name, bio: bio, age: age, gender: gender, region: region, email: email)
+        
+        /* mm: add a if statement -- only get from facebook when user name is nil */
+        if (name.text == nil){
+        /* ^^ THATS ALL I ADDED mm*/
+            
+            // Initiating name field from Facebook userName
+            if let identityUserName = identityManager.userName {
             dbName=identityUserName
             name.text = identityUserName
-        } else {
+            } else {
             name.text = NSLocalizedString("Guest User", comment: "Placeholder text for the guest user.")
+            }
         }
         
         // Initiating profilePicture UIImageView from Facebook profile picture
@@ -109,6 +117,19 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 profilePicture.image = UIImage(named: "UserIcon")
             }
         }
+        
+        
+        // m: to disable keyboard when touching anywhere else
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        //Uncomment the line below if you want the tap not not interfere and cancel other interactions.
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    //m: the function to disable keyboard (called in viewDidLoad())
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        view.endEditing(true)
     }
     
     
@@ -118,15 +139,17 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         textField.resignFirstResponder()
         return true;
     }
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         let screenHeight = UIScreen.main.bounds.height
-        scrollView.setContentOffset(CGPoint(x:0, y:(270-screenHeight+textField.frame.origin.y + textField.frame.height)), animated: true)
+        scrollView.setContentOffset(CGPoint(x:0, y:(610 - screenHeight+textField.frame.origin.y + textField.frame.height)), animated: true)
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
         scrollView.setContentOffset(CGPoint(x:0, y:0), animated: true)
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
+        super.touchesBegan(touches, with: event)
+        print("touches began!!")
         scrollView.setContentOffset(CGPoint(x:0, y:0), animated: true)
     }
 }
