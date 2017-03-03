@@ -28,7 +28,7 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
     }
     
     
-    func getMovieForDisplay(key: String, movie_data: SingleMovie?, movieTitle: UILabel!, movieTitleDetailed: UITextView!, imageView: UIImageView!){
+    func getMovieForDisplay(key: String, movie_data: SingleMovie?, movieTitle: UILabel!, movieTitleDetailed: UITextView!, imageView: UIImageView!, moviePopInfo: UILabel!){
         print("     enter func getmovieForDisplay")
         /*let mapper = AWSDynamoDBObjectMapper.default()
          return mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: email)*/
@@ -50,6 +50,8 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                 let imageURL = URL(string: path)
                 let imageData = try! Data(contentsOf: imageURL!)
                 imageView.image = UIImage(data: imageData)
+                
+                moviePopInfo.text = "Popularity: " + movie_data.TMDB_popularity!
                 
             }
             

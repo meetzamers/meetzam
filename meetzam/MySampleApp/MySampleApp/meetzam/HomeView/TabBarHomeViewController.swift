@@ -153,9 +153,10 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
 // This is each page's view controller
 class FrameViewController: UIViewController {
     
+    // UI var
     let movieTitle = UILabel()
-    //let movieDetailedInfo = UILabel()
     let movieDetailedInfo = UITextView()
+    let moviePopInfo = UILabel()
     
     var imagekey: String?
     
@@ -179,7 +180,7 @@ class FrameViewController: UIViewController {
         self.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         self.view.backgroundColor = UIColor.clear
         
-        SingleMovie().getMovieForDisplay(key: imagekey!, movie_data: movie_info, movieTitle: movieTitle, movieTitleDetailed: movieDetailedInfo, imageView: imageView)
+        SingleMovie().getMovieForDisplay(key: imagekey!, movie_data: movie_info, movieTitle: movieTitle, movieTitleDetailed: movieDetailedInfo, imageView: imageView, moviePopInfo: moviePopInfo)
     
         // add scroll view
         movieContent.showsVerticalScrollIndicator = true
@@ -192,18 +193,28 @@ class FrameViewController: UIViewController {
         // add image view to scroll view
         movieContent.addSubview(imageView)
         
-        // add movie content in to the scroll view
+        // add movie title in to the scroll view
         movieTitle.frame = CGRect(x: 10, y: imageView.frame.height + 5, width: UIScreen.main.bounds.width - 20, height: 30)
         movieTitle.font = UIFont(name: "HelveticaNeue-Light", size: 23)
         movieTitle.textColor = UIColor.black
         movieContent.addSubview(movieTitle)
         
-        movieDetailedInfo.frame = CGRect(x: 5, y: imageView.frame.height + 32, width: UIScreen.main.bounds.width - 15, height: 200)
+        // add movie popularity in to the scroll view
+        moviePopInfo.frame = CGRect(x: 5, y: imageView.frame.height + 40, width: UIScreen.main.bounds.width - 15, height: 30)
+        moviePopInfo.font = UIFont(name: "HelveticaNeue-Light", size: 15)
+        moviePopInfo.textColor = UIColor.black
+        moviePopInfo.textAlignment = .right
+        movieContent.addSubview(moviePopInfo)
+        
+        // add movie info in to the scroll view
+        movieDetailedInfo.frame = CGRect(x: 5, y: imageView.frame.height + 70, width: UIScreen.main.bounds.width - 15, height: 200)
         movieDetailedInfo.font = UIFont(name: "HelveticaNeue-thin", size: 15)
         movieDetailedInfo.textColor = UIColor.black
         movieDetailedInfo.backgroundColor = UIColor.clear
         movieDetailedInfo.isEditable = false
         movieContent.addSubview(movieDetailedInfo)
+        
+
         
     }
     
