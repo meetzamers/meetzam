@@ -32,14 +32,19 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         print("     enter func getmovieForDisplay")
         /*let mapper = AWSDynamoDBObjectMapper.default()
          return mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: email)*/
+        
         let mapper = AWSDynamoDBObjectMapper.default()
         
         //print("userId is ", user_profile?.userId, separator: " ")
         //tableRow?.UserId --> (tableRow?.UserId)!
         mapper.load(SingleMovie.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask!) -> AnyObject! in
+            
             if let error = task.error as? NSError {
                 print("Error: \(error)")
             } else if let movie_data = task.result as? SingleMovie {
+                
+                UIApplication.shared.isNetworkActivityIndicatorVisible = true
+                
                 print("     Getting fields")
                 movieTitle.text = movie_data.Title
                 print(movieTitle.text)
@@ -54,6 +59,8 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                 moviePopInfo.text = "Popularity: " + movie_data.TMDB_popularity!
                 
             }
+            
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
             
             return nil
         })

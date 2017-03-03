@@ -200,7 +200,7 @@ class FrameViewController: UIViewController {
         movieContent.addSubview(movieTitle)
         
         // add movie popularity in to the scroll view
-        moviePopInfo.frame = CGRect(x: 5, y: imageView.frame.height + 40, width: UIScreen.main.bounds.width - 15, height: 30)
+        moviePopInfo.frame = CGRect(x: 10, y: imageView.frame.height + 40, width: UIScreen.main.bounds.width - 20, height: 30)
         moviePopInfo.font = UIFont(name: "HelveticaNeue-Light", size: 15)
         moviePopInfo.textColor = UIColor.black
         moviePopInfo.textAlignment = .right
