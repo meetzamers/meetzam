@@ -56,7 +56,6 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         self.present(image, animated: true) {
             // After it is complete
         }
-        
     }
     // Function used in change profile picture button
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
