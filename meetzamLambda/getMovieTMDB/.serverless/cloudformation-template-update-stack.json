@@ -8,7 +8,7 @@
     "BackendLambdaLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/getMovieInfoFromTMDB-dev-backendLambda"
+        "LogGroupName": "/aws/lambda/getMovieTMDB-dev-backendLambda"
       }
     },
     "IamRoleLambdaExecution": {
@@ -35,7 +35,7 @@
           "Fn::Join": [
             "-",
             [
-              "getMovieInfoFromTMDB",
+              "getMovieTMDB",
               "dev",
               "us-east-1",
               "lambdaRole"
@@ -55,7 +55,7 @@
             "-",
             [
               "dev",
-              "getMovieInfoFromTMDB",
+              "getMovieTMDB",
               "lambda"
             ]
           ]
@@ -112,9 +112,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/getMovieInfoFromTMDB/dev/1488161614584-2017-02-27T02:13:34.584Z/getMovieInfoFromTMDB.zip"
+          "S3Key": "serverless/getMovieTMDB/dev/1488662723839-2017-03-04T21:25:23.839Z/getMovieTMDB.zip"
         },
-        "FunctionName": "getMovieInfoFromTMDB-dev-backendLambda",
+        "FunctionName": "getMovieTMDB-dev-backendLambda",
         "Handler": "backendLambda.handler",
         "MemorySize": 1024,
         "Role": {
@@ -137,14 +137,14 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "BackendLambdaLambdaVersionDZ15v60WUOeOsnMyvmmFeYImC7PJnWb4GIkAExUQI": {
+    "BackendLambdaLambdaVersionA7vpa9iTiQECZLYIRGtEb58pmTR1Vv95H8GbOYy7Uc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "BackendLambdaLambdaFunction"
         },
-        "CodeSha256": "DZ15v60WUOe/OsnMyvmm/FeYImC7PJnWb4GIkAExUQI="
+        "CodeSha256": "A7vpa9iTiQECZLY+IRGtEb58pmTR1Vv95H8GbOYy7Uc="
       }
     }
   },
@@ -157,7 +157,7 @@
     "BackendLambdaLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "BackendLambdaLambdaVersionDZ15v60WUOeOsnMyvmmFeYImC7PJnWb4GIkAExUQI"
+        "Ref": "BackendLambdaLambdaVersionA7vpa9iTiQECZLYIRGtEb58pmTR1Vv95H8GbOYy7Uc"
       }
     }
   }
