@@ -23,12 +23,10 @@ module.exports.handler = (event, context, callback) => {
         });
         response.on('end', function() {
             let parsedData = JSON.parse(rawData);
-            //console.log("Fetched JSON is: " + JSON.stringify(parsedData));
             putMoviesToDBTable(parsedData);
             callback(null, "success");
         });
     });
-
     request.on('error', function(error) {
         console.error('HTTP error' + error.message);
     callback(error, null);
@@ -44,18 +42,21 @@ function putMoviesToDBTable(parsedData)
      for (var i=0;i<len;i++)
      {
          let TMDB_id = results[i]["id"];
-         console.log("TMDB_id is "+TMDB_id);
+         //console.log("TMDB_id is "+TMDB_id);
          let title = results[i]["title"];
-         console.log("title is "+title);
+         //console.log("title is "+title);
          let popularity = results[i]["popularity"];
-         console.log("popularity is "+popularity);
+         //console.log("popularity is "+popularity);
          let release_date = results[i]["release_date"];
-         console.log("release_date is "+release_date);
+         //console.log("release_date is "+release_date);
          let poster_path = results[i]["poster_path"];
-         console.log("poster_path is "+poster_path);
+         //console.log("poster_path is "+poster_path);
+         let overview = results[i]["overview"];
+
+         // invoke labmda function to download poster images
          let payload = {"poster_url" : poster_path};
          let lambda_para = {
-          FunctionName: "arn:aws:lambda:us-east-1:397508666882:function:storePosterToS3-production-backendLambda",
+          FunctionName: "arn:aws:lambda:us-east-1:397508666882:function:getPosters-dev",
           InvocationType:"Event",
           Payload: JSON.stringify(payload)
         };
@@ -67,32 +68,45 @@ function putMoviesToDBTable(parsedData)
             console.log("succeed ");
           }
         });
-          var params = {
+
+        // update dynamoDB table
+        var params = {
+            Key: {
+                "TMDB_movie_id": {
+                    S: TMDB_id.toString()
+                }
+            },
             ExpressionAttributeNames: {
-             "#popularity": "TMDB_popularity",
-             "#poster_path": "poster_path"
+                "#Title": "Title",
+                "#overview": "overview",
+                "#popularity": "TMDB_popularity",
+                "#poster_path": "poster_path",
+                "#release_date": "release_date"
             },
             ExpressionAttributeValues: {
-             ":popularity": {
-                S: popularity.toString()
-              },
-              ":poster_path": {
-                S: poster_path
-              }
-            },
-            Key: {
-             "TMDB_movie_id": {
-               S: TMDB_id.toString()
-              }
+                ":Title": {
+                    S: title
+                },
+                ":overview": {
+                    S: overview
+                },
+                ":release_date": {
+                    S: release_date
+                },
+                ":popularity": {
+                    S: popularity.toString()
+                },
+                ":poster_path": {
+                    S: poster_path
+                }
             },
             ReturnValues: "ALL_NEW",
             TableName: "Movie2",
-            UpdateExpression: "SET #popularity = :popularity, #poster_path = :poster_path"
-           };
-           dynamoDB.updateItem(params, function(err, data) {
-             if (err) console.log(err, err.stack); // an error occurred
-             else     console.log(data);           // successful response
-
-           });
+            UpdateExpression: "SET #popularity = :popularity, #poster_path = :poster_path, #Title = :Title, #release_date = :release_date, #overview = :overview"
+        };
+        dynamoDB.updateItem(params, function(err, data) {
+            if (err) console.log(err, err.stack); // an error occurred
+            else     console.log(data);           // successful response
+        });
      }
 }

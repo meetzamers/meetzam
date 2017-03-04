@@ -8,7 +8,7 @@
     "BackendLambdaLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/storePosterToS3-production-backendLambda"
+        "LogGroupName": "/aws/lambda/getPosters-dev"
       }
     },
     "IamRoleLambdaExecution": {
@@ -36,7 +36,7 @@
             "-",
             [
               "storePosterToS3",
-              "production",
+              "dev",
               "us-east-1",
               "lambdaRole"
             ]
@@ -54,7 +54,7 @@
           "Fn::Join": [
             "-",
             [
-              "production",
+              "dev",
               "storePosterToS3",
               "lambda"
             ]
@@ -107,11 +107,11 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/storePosterToS3/production/1488057498297-2017-02-25T21:18:18.297Z/storePosterToS3.zip"
+          "S3Key": "serverless/storePosterToS3/dev/1488666391845-2017-03-04T22:26:31.845Z/storePosterToS3.zip"
         },
-        "FunctionName": "storePosterToS3-production-backendLambda",
+        "FunctionName": "getPosters-dev",
         "Handler": "backendLambda.handler",
-        "MemorySize": 1024,
+        "MemorySize": 128,
         "Role": {
           "Fn::GetAtt": [
             "IamRoleLambdaExecution",
@@ -119,21 +119,22 @@
           ]
         },
         "Runtime": "nodejs4.3",
-        "Timeout": 6
+        "Timeout": 6,
+        "Description": "get image from url and store the image in S3"
       },
       "DependsOn": [
         "IamPolicyLambdaExecution",
         "IamRoleLambdaExecution"
       ]
     },
-    "BackendLambdaLambdaVersionNynC2Mf1d5nsE9kflCh84b7V6rgnKTXGltLEy6YsxRs": {
+    "BackendLambdaLambdaVersionqLYP6Gw1bMVYPDVxAorrki2aIxHdwHPMZmxqcK4": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "BackendLambdaLambdaFunction"
         },
-        "CodeSha256": "NynC2Mf1d5nsE9kflCh84b7V6rgnKTXGltLEy6YsxRs="
+        "CodeSha256": "qLYP6Gw1/bMVYPDV/xAorrki2aIxHdwHPM/Zmxq+cK4="
       }
     }
   },
@@ -146,7 +147,7 @@
     "BackendLambdaLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "BackendLambdaLambdaVersionNynC2Mf1d5nsE9kflCh84b7V6rgnKTXGltLEy6YsxRs"
+        "Ref": "BackendLambdaLambdaVersionqLYP6Gw1bMVYPDVxAorrki2aIxHdwHPMZmxqcK4"
       }
     }
   }

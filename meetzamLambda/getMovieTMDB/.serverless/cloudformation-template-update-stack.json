@@ -8,7 +8,7 @@
     "BackendLambdaLogGroup": {
       "Type": "AWS::Logs::LogGroup",
       "Properties": {
-        "LogGroupName": "/aws/lambda/getMovieTMDB-dev-backendLambda"
+        "LogGroupName": "/aws/lambda/getMovieDataTMDB-dev"
       }
     },
     "IamRoleLambdaExecution": {
@@ -112,11 +112,11 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/getMovieTMDB/dev/1488662723839-2017-03-04T21:25:23.839Z/getMovieTMDB.zip"
+          "S3Key": "serverless/getMovieTMDB/dev/1488667132788-2017-03-04T22:38:52.788Z/getMovieTMDB.zip"
         },
-        "FunctionName": "getMovieTMDB-dev-backendLambda",
+        "FunctionName": "getMovieDataTMDB-dev",
         "Handler": "backendLambda.handler",
-        "MemorySize": 1024,
+        "MemorySize": 128,
         "Role": {
           "Fn::GetAtt": [
             "IamRoleLambdaExecution",
@@ -125,6 +125,7 @@
         },
         "Runtime": "nodejs4.3",
         "Timeout": 6,
+        "Description": "fetch data from TMDB movie api",
         "Environment": {
           "Variables": {
             "TMDB_API_key": "c0ed8b998275014fcf48784f97113281",
@@ -137,14 +138,51 @@
         "IamRoleLambdaExecution"
       ]
     },
-    "BackendLambdaLambdaVersionA7vpa9iTiQECZLYIRGtEb58pmTR1Vv95H8GbOYy7Uc": {
+    "BackendLambdaLambdaVersionHX2DtfNU1HWPGrPLfmWxCwsFddtNkWymX0FG4LVPrJc": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "BackendLambdaLambdaFunction"
         },
-        "CodeSha256": "A7vpa9iTiQECZLY+IRGtEb58pmTR1Vv95H8GbOYy7Uc="
+        "CodeSha256": "HX2DtfNU1HWPGrPLfmWxCwsFddtNkWymX0FG4LVPrJc="
+      }
+    },
+    "BackendLambdaEventsRuleSchedule1": {
+      "Type": "AWS::Events::Rule",
+      "Properties": {
+        "ScheduleExpression": "cron(0 10 * * ? *)",
+        "State": "ENABLED",
+        "Targets": [
+          {
+            "Arn": {
+              "Fn::GetAtt": [
+                "BackendLambdaLambdaFunction",
+                "Arn"
+              ]
+            },
+            "Id": "backendLambdaSchedule"
+          }
+        ]
+      }
+    },
+    "BackendLambdaLambdaPermissionEventsRuleSchedule1": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "BackendLambdaLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "events.amazonaws.com",
+        "SourceArn": {
+          "Fn::GetAtt": [
+            "BackendLambdaEventsRuleSchedule1",
+            "Arn"
+          ]
+        }
       }
     }
   },
@@ -157,7 +195,7 @@
     "BackendLambdaLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "BackendLambdaLambdaVersionA7vpa9iTiQECZLYIRGtEb58pmTR1Vv95H8GbOYy7Uc"
+        "Ref": "BackendLambdaLambdaVersionHX2DtfNU1HWPGrPLfmWxCwsFddtNkWymX0FG4LVPrJc"
       }
     }
   }

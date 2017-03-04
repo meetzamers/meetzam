@@ -15,3 +15,8 @@ provider:
 functions:
   backendLambda:
     handler: backendLambda.handler
+    name: getPosters-${self:provider.stage}
+    description: get image from url and store the image in S3
+    runtime: nodejs4.3
+    memorySize: 128
+    timeout: 6
