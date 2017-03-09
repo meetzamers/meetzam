@@ -1,0 +1,295 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "The AWS CloudFormation template for this Serverless application",
+  "Resources": {
+    "ServerlessDeploymentBucket": {
+      "Type": "AWS::S3::Bucket"
+    },
+    "GetDataTMSLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/getDataTMS-dev"
+      }
+    },
+    "GetDataTMDBLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/getDataTMDB-dev"
+      }
+    },
+    "ParseDataLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/parseData-dev"
+      }
+    },
+    "IamRoleLambdaExecution": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Path": "/",
+        "RoleName": {
+          "Fn::Join": [
+            "-",
+            [
+              "dataFetching",
+              "dev",
+              "us-east-1",
+              "lambdaRole"
+            ]
+          ]
+        }
+      }
+    },
+    "IamPolicyLambdaExecution": {
+      "Type": "AWS::IAM::Policy",
+      "DependsOn": [
+        "IamRoleLambdaExecution"
+      ],
+      "Properties": {
+        "PolicyName": {
+          "Fn::Join": [
+            "-",
+            [
+              "dev",
+              "dataFetching",
+              "lambda"
+            ]
+          ]
+        },
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    ":",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "GetDataTMSLogGroup",
+                          "Arn"
+                        ]
+                      },
+                      "*"
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    ":",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "GetDataTMDBLogGroup",
+                          "Arn"
+                        ]
+                      },
+                      "*"
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    ":",
+                    [
+                      {
+                        "Fn::GetAtt": [
+                          "ParseDataLogGroup",
+                          "Arn"
+                        ]
+                      },
+                      "*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": "DynamoDB:*",
+              "Resource": "arn:aws:dynamodb:us-east-1:397508666882:table/movie_table"
+            },
+            {
+              "Effect": "Allow",
+              "Action": "lambda:InvokeFunction",
+              "Resource": "arn:aws:lambda:*:*:*"
+            }
+          ]
+        },
+        "Roles": [
+          {
+            "Ref": "IamRoleLambdaExecution"
+          }
+        ]
+      }
+    },
+    "GetDataTMSLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/dataFetching/dev/1488991166997-2017-03-08T16:39:26.997Z/dataFetching.zip"
+        },
+        "FunctionName": "getDataTMS-dev",
+        "Handler": "getter.getDataTMS",
+        "MemorySize": 128,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs4.3",
+        "Timeout": 6,
+        "Description": "get data from tms and return",
+        "Environment": {
+          "Variables": {
+            "Gracenote_API_key": "apch5z42htx9dhtutf8bd6wq"
+          }
+        }
+      },
+      "DependsOn": [
+        "IamPolicyLambdaExecution",
+        "IamRoleLambdaExecution"
+      ]
+    },
+    "GetDataTMSLambdaVersionJQ5ABY72Oi4ATjpp8WUmEHdX92IpoECOjbJR74": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "GetDataTMSLambdaFunction"
+        },
+        "CodeSha256": "JQ5ABY72Oi/4ATjpp8W+UmEHd/X92Ipo/ECOjbJR/74="
+      }
+    },
+    "GetDataTMDBLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/dataFetching/dev/1488991166997-2017-03-08T16:39:26.997Z/dataFetching.zip"
+        },
+        "FunctionName": "getDataTMDB-dev",
+        "Handler": "getter.getDataTMDB",
+        "MemorySize": 128,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs4.3",
+        "Timeout": 6,
+        "Description": "get data from TMDB and return",
+        "Environment": {
+          "Variables": {
+            "TMDB_API_key": "c0ed8b998275014fcf48784f97113281"
+          }
+        }
+      },
+      "DependsOn": [
+        "IamPolicyLambdaExecution",
+        "IamRoleLambdaExecution"
+      ]
+    },
+    "GetDataTMDBLambdaVersionJQ5ABY72Oi4ATjpp8WUmEHdX92IpoECOjbJR74": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "GetDataTMDBLambdaFunction"
+        },
+        "CodeSha256": "JQ5ABY72Oi/4ATjpp8W+UmEHd/X92Ipo/ECOjbJR/74="
+      }
+    },
+    "ParseDataLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/dataFetching/dev/1488991166997-2017-03-08T16:39:26.997Z/dataFetching.zip"
+        },
+        "FunctionName": "parseData-dev",
+        "Handler": "parser.parseData",
+        "MemorySize": 128,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs4.3",
+        "Timeout": 6,
+        "Description": "parse incoming data from tmd and tmdb"
+      },
+      "DependsOn": [
+        "IamPolicyLambdaExecution",
+        "IamRoleLambdaExecution"
+      ]
+    },
+    "ParseDataLambdaVersionJQ5ABY72Oi4ATjpp8WUmEHdX92IpoECOjbJR74": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "ParseDataLambdaFunction"
+        },
+        "CodeSha256": "JQ5ABY72Oi/4ATjpp8W+UmEHd/X92Ipo/ECOjbJR/74="
+      }
+    }
+  },
+  "Outputs": {
+    "ServerlessDeploymentBucketName": {
+      "Value": {
+        "Ref": "ServerlessDeploymentBucket"
+      }
+    },
+    "GetDataTMSLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "GetDataTMSLambdaVersionJQ5ABY72Oi4ATjpp8WUmEHdX92IpoECOjbJR74"
+      }
+    },
+    "GetDataTMDBLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "GetDataTMDBLambdaVersionJQ5ABY72Oi4ATjpp8WUmEHdX92IpoECOjbJR74"
+      }
+    },
+    "ParseDataLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "ParseDataLambdaVersionJQ5ABY72Oi4ATjpp8WUmEHdX92IpoECOjbJR74"
+      }
+    }
+  }
+}

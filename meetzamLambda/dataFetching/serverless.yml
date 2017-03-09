@@ -1,0 +1,49 @@
+
+service: dataFetching
+
+frameworkVersion: "=1.7.0"
+
+provider:
+  name: aws
+  runtime: nodejs4.3
+  iamRoleStatements:
+    - Effect: Allow
+      Action: "DynamoDB:*"
+      Resource: "arn:aws:dynamodb:us-east-1:397508666882:table/movie_table"
+    - Effect: Allow
+      Action: "lambda:InvokeFunction"
+      Resource: "arn:aws:lambda:*:*:*"
+
+custom: ${file(./credentials.json)}
+
+functions:
+  getDataTMS:
+    handler: getter.getDataTMS
+    name: getDataTMS-${self:provider.stage}
+    description: get data from tms and return
+    runtime: nodejs4.3
+    memorySize: 128
+    timeout: 6
+    environment:
+      Gracenote_API_key: ${self:custom.Gracenote_API_key}
+
+  getDataTMDB:
+    handler: getter.getDataTMDB
+    name: getDataTMDB-${self:provider.stage}
+    description: get data from TMDB and return
+    runtime: nodejs4.3
+    memorySize: 128
+    timeout: 6
+    environment:
+      TMDB_API_key: ${self:custom.TMDB_API_key}
+
+  parseData:
+    handler: parser.parseData
+    name: parseData-${self:provider.stage}
+    description: parse incoming data from tmd and tmdb
+    runtime: nodejs4.3
+    memorySize: 128
+    timeout: 6
+
+
+
