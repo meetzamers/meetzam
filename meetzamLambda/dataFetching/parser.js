@@ -3,62 +3,55 @@ const AWS = require('aws-sdk');
 const lambda = new AWS.Lambda({apiVersion: '2015-03-31'});
 const dynamoDB = new AWS.DynamoDB({apiVersion: '2012-08-10'});
 
-var movieTitles = new Map();
+// map title to releaseYear
+var titleToReleaseYear = new Map();
 
-module.exports.parseData = (event, context, callback) => {
-	parse_start(() => {
-		parse_tmdb(() => {
-			callback(null ,"success!");
+module.exports.updateMovieTable = (event, context, callback) => {
+	getLocalMovies(() => {
+		thenGetTMDBMovies(() => {
+			callback(null, "seccess");
 		});
 	});
 };
 
-
-function parse_start(callback) {
+function getLocalMovies(callback) {
 	let tms_params = {
-		FunctionName: "arn:aws:lambda:us-east-1:397508666882:function:getDataTMS-dev",
+		FunctionName: "arn:aws:lambda:us-east-1:397508666882:function:getLocalMovies-dev",
 		InvocationType: "RequestResponse"
 	};
-
 	//invoke function to get tms data
-	lambda.invoke(tms_params, (err, data) => {
+	lambda.invoke(tms_params, function localMovieResponse(err, data) {
 		if (err) 
 			console.error(err, null);
 		else  {
-			updateMovieTableForTMS(JSON.parse(data.Payload), () => {
+			console.log("----- get TMS data, about to updateLocalMovieInfo()");
+			//console.log(data.Payload);
+			updateLocalMovieInfo(JSON.parse(data.Payload), () => {
+				console.log("----- getLocalMovies is about to callback!!");
 				callback();
 			});
 		}   		
 	});
 }
 
-function updateMovieTableForTMS(Payload, callback) {
+
+function updateLocalMovieInfo(Payload, callback) {
 	var length = Payload.length;
 	for (var i = 0; i < length; i++) {
+
+		if (Payload[i].subType != "Feature Film")
+			continue;
+
 		var title = Payload[i].title;
-		//console.log("title is "+ title);
-
 		var shortDescription = Payload[i].shortDescription;
-		//console.log("shortDescription is "+ shortDescription);
-
 		var longDescription = Payload[i].longDescription;
-		//console.log("longDescription is "+ longDescription);
-
-		//var releaseDate = Payload[i].releaseDate;
-		//console.log("releaseDate is "+ releaseDate);
-
-		//var tmsId = Payload[i].tmsId;
-		//console.log("tmsId is "+ tmsId);
-
-		//var rootId = Payload[i].rootId;
-		//console.log("rootId is "+ rootId);
-
 		var releaseYear = Payload[i].releaseYear.toString();
 		var genres = Payload[i].genres;
 		var topCast = Payload[i].topCast;
 		var directors = Payload[i].directors;
 
-		movieTitles.set(title, releaseYear);
+		titleToReleaseYear.set(title, releaseYear);
+
 		console.log("added <" + title + "> to Map");
 
 		var params = {
@@ -84,7 +77,7 @@ function updateMovieTableForTMS(Payload, callback) {
                     S: longDescription
                 },
                 ":releaseYear": {
-                	S: releaseYear	
+                	S: releaseYear
                 },
                 ":genres": {
                 	SS: genres
@@ -102,33 +95,92 @@ function updateMovieTableForTMS(Payload, callback) {
 		};
 		dynamoDB.updateItem(params, function(err, data) {
             if (err) console.log(err, err.stack); // an error occurred
-            else     console.log(data);           // successful response
+            else
+            	console.log("updateLocalMovieInfo success"); 
         });
 	}
 	callback();
 }
 
 
-
-function parse_tmdb(callback) {
-	movieTitles.forEach(prepareGet);
+function thenGetTMDBMovies(callback) {
+	titleToReleaseYear.forEach(invokeMovieGetter);
+	console.log("----- thenGetTMDBMovies is about to callback!!");
 	callback();
 }
 
-function prepareGet(value, key, map) {
+function invokeMovieGetter(value, key, map) {
 	var title = key.replace(/\ /g, "%20");
 	var year = value.toString();
-	getOneMovieTMDB(title, year, () => {});	
-} 
-
-function getOneMovieTMDB(title, year, callback) {
-	console.log("fetch movie info for: " + title);
+	console.log("invokeMovieGetter: " + title);
 	let payload = {
 		"title": title,
 		"year": year
 	};
 	let tmdb_params = {
-		FunctionName: "arn:aws:lambda:us-east-1:397508666882:function:getDataTMDB-dev",
+		FunctionName: "arn:aws:lambda:us-east-1:397508666882:function:getOneMovie-dev",
+		InvocationType: "RequestResponse",
+		Payload: JSON.stringify(payload)
+	};
+	//invoke function to get tmdb data
+	lambda.invoke(tmdb_params, (err, data) => {
+		if (err) {
+			console.error(err, null);
+		}
+		else {	
+			//console.log("payload = " + data.Payload);
+			updateOneMovieInMovieTable(title.replace(/\%20/g, " "), JSON.parse(data.Payload));
+		}     
+	});
+} 
+
+function updateOneMovieInMovieTable(title, Payload) {
+	var total = Payload.total_results;
+	var results = Payload.results;
+	if (total > 0) {
+		var tmdb_id = results[0].id.toString();
+		var poster_path = results[0].poster_path;
+
+		invokeTrailerGetter(title, tmdb_id);
+
+		var params = {
+			Key: {
+            	"title": {
+                	S: title
+            	}
+        	},
+        	ExpressionAttributeNames: {
+                "#tmdb_id": "tmdb_id",
+                "#poster_path": "poster_path"
+        	},
+        	ExpressionAttributeValues: {
+                ":tmdb_id": {
+                	S: tmdb_id
+                },
+                ":poster_path": {
+                	S: poster_path
+                }
+        	},
+        	ReturnValues: "ALL_NEW",
+        	TableName: "movie_table",
+      	 	UpdateExpression: "SET #tmdb_id = :tmdb_id, #poster_path = :poster_path" 
+		};
+		dynamoDB.updateItem(params, function(err, data) {
+            if (err) console.log(err, err.stack); // an error occurred
+            else   
+            	console.log("updateOneMovieInMovieTable success"); 
+    	});
+	}
+}
+
+
+function invokeTrailerGetter(title, id) {
+	console.log("==== Trailer: " + id);
+	let payload = {
+		"id": id
+	};
+	let tmdb_params = {
+		FunctionName: "arn:aws:lambda:us-east-1:397508666882:function:getTrailer-dev",
 		InvocationType: "RequestResponse",
 		Payload: JSON.stringify(payload)
 	};
@@ -137,22 +189,22 @@ function getOneMovieTMDB(title, year, callback) {
 		if (err) 
 			console.error(err, null);
 		else {
-			console.log("payload = " + data.Payload);
-			updateMovieTalbeTMDB(title.replace(/\%20/g, " "), JSON.parse(data.Payload), () => {});
+			console.log(data.Payload);
+			//update function call
+			updateOneTrailer(title, JSON.parse(data.Payload));
 		}     
 	});
-	callback();
 }
 
+function updateOneTrailer(title, Payload) {
 
-function updateMovieTalbeTMDB(title, Payload, callback) {
-	var total = Payload.total_results;
 	var results = Payload.results;
-	var length = results.length;
-	if (total > 0) {
-		for (var i = 0; i < 1; i++) {
-			var tmdb_id = results[i].id;
-			var poster_path = results[i].poster_path;
+	var len = results.length;
+
+	for (var i = 0; i < len; i++) {
+		if (results[i].type == "Trailer" && results[i].site == "YouTube") {
+			var trailer_key = results[i].key;
+
 			var params = {
 				Key: {
 	            	"title": {
@@ -160,27 +212,64 @@ function updateMovieTalbeTMDB(title, Payload, callback) {
 	            	}
 	        	},
 	        	ExpressionAttributeNames: {
-	                "#tmdb_id": "tmdb_id",
-	                "#poster_path": "poster_path"
+	                "#trailer_key": "trailer_key"
 	        	},
 	        	ExpressionAttributeValues: {
-	                ":tmdb_id": {
-	                	S: tmdb_id.toString()
-	                },
-	                ":poster_path": {
-	                	S: poster_path
+	                ":trailer_key": {
+	                	S: trailer_key
 	                }
 	        	},
 	        	ReturnValues: "ALL_NEW",
 	        	TableName: "movie_table",
-	      	 	UpdateExpression: "SET #tmdb_id = :tmdb_id, #poster_path = :poster_path" 
+	      	 	UpdateExpression: "SET #trailer_key = :trailer_key" 
 			};
-			console.log("updateMovieTalbeTMDB!");
 			dynamoDB.updateItem(params, function(err, data) {
 	            if (err) console.log(err, err.stack); // an error occurred
-	            else     console.log(data);           // successful response
-	    	});
+	            else   
+	            	console.log("updateOneTrailer success"); 
+    		});
+    		break;
 		}
 	}
-	callback();
+	deleteNoId();
 }
+
+
+function deleteNoId() {
+	// scan options for DynamoDB table
+    let params = {
+        TableName: 'movie_table',
+        ReturnConsumedCapacity: 'TOTAL',
+        FilterExpression: 'attribute_not_exists (tmdb_id)'
+    };
+
+    dynamoDB.scan(params, function(error, data) {
+        if (error)
+            console.error(error.stack);
+        else {
+            data.Items.forEach(function(item) {
+            	console.log("Idless movie: " + item.title.S);
+            	if (!item.tmdb_id) {
+            		var params_d = {
+						Key: {
+							"title": {
+						    	S: item.title.S
+						    } 
+						}, 
+						TableName: "movie_table"
+					};
+					dynamoDB.deleteItem(params_d, function(err, data) {
+						if (err) console.log(err, err.stack); // an error occurred
+					    else     console.log(data);           // successful response
+					});
+            	}
+            });
+        }
+    });
+
+
+}
+
+
+
+

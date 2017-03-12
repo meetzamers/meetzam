@@ -1,7 +1,7 @@
 
 service: dataFetching
 
-frameworkVersion: "=1.7.0"
+frameworkVersion: "=1.8.0"
 
 provider:
   name: aws
@@ -9,7 +9,8 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action: "DynamoDB:*"
-      Resource: "arn:aws:dynamodb:us-east-1:397508666882:table/movie_table"
+      Resource: "arn:aws:dynamodb:us-east-1:397508666882:table/movie_table" 
+
     - Effect: Allow
       Action: "lambda:InvokeFunction"
       Resource: "arn:aws:lambda:*:*:*"
@@ -17,33 +18,46 @@ provider:
 custom: ${file(./credentials.json)}
 
 functions:
-  getDataTMS:
-    handler: getter.getDataTMS
-    name: getDataTMS-${self:provider.stage}
-    description: get data from tms and return
+
+  getLocalMovies:
+    handler: getter.getLocalMovies
+    name: getLocalMovies-${self:provider.stage}
+    description: this function calls TMS api movie playing in local theatra, pass zipcode and current date as parameters and fetch general data about movie that currentlly playing in local theaters, including showtime information.
     runtime: nodejs4.3
     memorySize: 128
     timeout: 6
     environment:
       Gracenote_API_key: ${self:custom.Gracenote_API_key}
 
-  getDataTMDB:
-    handler: getter.getDataTMDB
-    name: getDataTMDB-${self:provider.stage}
-    description: get data from TMDB and return
+  getOneMovie:
+    handler: getter.getOneMovie
+    name: getOneMovie-${self:provider.stage}
+    description: this function calls TMDB api search/movie pass movie title and release year as parameters and fetch general data about the movie.
     runtime: nodejs4.3
     memorySize: 128
     timeout: 6
     environment:
       TMDB_API_key: ${self:custom.TMDB_API_key}
 
-  parseData:
-    handler: parser.parseData
-    name: parseData-${self:provider.stage}
-    description: parse incoming data from tmd and tmdb
+  getTrailer:   
+    handler: getter.getTrailer
+    name: getTrailer-${self:provider.stage}
+    description: this function calls TMDB api movie/video pass imdb_id as parameter and fetch movie trailer data about movie.
     runtime: nodejs4.3
     memorySize: 128
     timeout: 6
+    environment:
+      TMDB_API_key: ${self:custom.TMDB_API_key} 
+
+  updateMovieTable:
+    handler: parser.updateMovieTable
+    name: updateMovieTable-${self:provider.stage}
+    description: parse incoming data from tmd and tmdb
+    runtime: nodejs4.3
+    memorySize: 128
+    timeout: 12
+
+
 
 
 
