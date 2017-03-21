@@ -36,9 +36,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("fuck id")
-        print(AWSIdentityManager.default().identityId)
-        
         UserProfileToDB().getProfileForDisplay(key: AWSIdentityManager.default().identityId!, user_profile: user_profile, displayname: displayName, bio: userBioField)
         
         //======================== formatting background==========================\\
