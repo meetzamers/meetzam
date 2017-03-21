@@ -1,0 +1,381 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "The AWS CloudFormation template for this Serverless application",
+  "Resources": {
+    "ServerlessDeploymentBucket": {
+      "Type": "AWS::S3::Bucket"
+    },
+    "GetLocalMoviesLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/getLocalMovies-dev"
+      }
+    },
+    "GetOneMovieLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/getOneMovie-dev"
+      }
+    },
+    "GetTrailerLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/getTrailer-dev"
+      }
+    },
+    "UpdateMovieTableLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/updateMovieTable-dev"
+      }
+    },
+    "IamRoleLambdaExecution": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": {
+              "Fn::Join": [
+                "-",
+                [
+                  "dev",
+                  "dataFetching",
+                  "lambda"
+                ]
+              ]
+            },
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogStream"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::GetAtt": [
+                        "GetLocalMoviesLogGroup",
+                        "Arn"
+                      ]
+                    },
+                    {
+                      "Fn::GetAtt": [
+                        "GetOneMovieLogGroup",
+                        "Arn"
+                      ]
+                    },
+                    {
+                      "Fn::GetAtt": [
+                        "GetTrailerLogGroup",
+                        "Arn"
+                      ]
+                    },
+                    {
+                      "Fn::GetAtt": [
+                        "UpdateMovieTableLogGroup",
+                        "Arn"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::Join": [
+                        ":",
+                        [
+                          {
+                            "Fn::GetAtt": [
+                              "GetLocalMoviesLogGroup",
+                              "Arn"
+                            ]
+                          },
+                          "*"
+                        ]
+                      ]
+                    },
+                    {
+                      "Fn::Join": [
+                        ":",
+                        [
+                          {
+                            "Fn::GetAtt": [
+                              "GetOneMovieLogGroup",
+                              "Arn"
+                            ]
+                          },
+                          "*"
+                        ]
+                      ]
+                    },
+                    {
+                      "Fn::Join": [
+                        ":",
+                        [
+                          {
+                            "Fn::GetAtt": [
+                              "GetTrailerLogGroup",
+                              "Arn"
+                            ]
+                          },
+                          "*"
+                        ]
+                      ]
+                    },
+                    {
+                      "Fn::Join": [
+                        ":",
+                        [
+                          {
+                            "Fn::GetAtt": [
+                              "UpdateMovieTableLogGroup",
+                              "Arn"
+                            ]
+                          },
+                          "*"
+                        ]
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "DynamoDB:*",
+                  "Resource": "arn:aws:dynamodb:us-east-1:397508666882:table/movie_table"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "lambda:InvokeFunction",
+                  "Resource": "arn:aws:lambda:*:*:*"
+                }
+              ]
+            }
+          }
+        ],
+        "Path": "/",
+        "RoleName": {
+          "Fn::Join": [
+            "-",
+            [
+              "dataFetching",
+              "dev",
+              "us-east-1",
+              "lambdaRole"
+            ]
+          ]
+        }
+      }
+    },
+    "GetLocalMoviesLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/dataFetching/dev/1489278160020-2017-03-12T00:22:40.020Z/dataFetching.zip"
+        },
+        "FunctionName": "getLocalMovies-dev",
+        "Handler": "getter.getLocalMovies",
+        "MemorySize": 128,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs4.3",
+        "Timeout": 6,
+        "Description": "this function calls TMS api movie playing in local theatra, pass zipcode and current date as parameters and fetch general data about movie that currentlly playing in local theaters, including showtime information.",
+        "Environment": {
+          "Variables": {
+            "Gracenote_API_key": "apch5z42htx9dhtutf8bd6wq"
+          }
+        }
+      },
+      "DependsOn": [
+        "IamRoleLambdaExecution"
+      ]
+    },
+    "GetLocalMoviesLambdaVersionWjBDIF6Z7uoxSZx1GidUjuurkFvcpXzTONqzTkn5pag": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "GetLocalMoviesLambdaFunction"
+        },
+        "CodeSha256": "WjBDIF6Z7uoxSZx1GidUjuurkFvcpXzTONqzTkn5pag="
+      }
+    },
+    "GetOneMovieLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/dataFetching/dev/1489278160020-2017-03-12T00:22:40.020Z/dataFetching.zip"
+        },
+        "FunctionName": "getOneMovie-dev",
+        "Handler": "getter.getOneMovie",
+        "MemorySize": 128,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs4.3",
+        "Timeout": 6,
+        "Description": "this function calls TMDB api search/movie pass movie title and release year as parameters and fetch general data about the movie.",
+        "Environment": {
+          "Variables": {
+            "TMDB_API_key": "c0ed8b998275014fcf48784f97113281"
+          }
+        }
+      },
+      "DependsOn": [
+        "IamRoleLambdaExecution"
+      ]
+    },
+    "GetOneMovieLambdaVersionWjBDIF6Z7uoxSZx1GidUjuurkFvcpXzTONqzTkn5pag": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "GetOneMovieLambdaFunction"
+        },
+        "CodeSha256": "WjBDIF6Z7uoxSZx1GidUjuurkFvcpXzTONqzTkn5pag="
+      }
+    },
+    "GetTrailerLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/dataFetching/dev/1489278160020-2017-03-12T00:22:40.020Z/dataFetching.zip"
+        },
+        "FunctionName": "getTrailer-dev",
+        "Handler": "getter.getTrailer",
+        "MemorySize": 128,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs4.3",
+        "Timeout": 6,
+        "Description": "this function calls TMDB api movie/video pass imdb_id as parameter and fetch movie trailer data about movie.",
+        "Environment": {
+          "Variables": {
+            "TMDB_API_key": "c0ed8b998275014fcf48784f97113281"
+          }
+        }
+      },
+      "DependsOn": [
+        "IamRoleLambdaExecution"
+      ]
+    },
+    "GetTrailerLambdaVersionWjBDIF6Z7uoxSZx1GidUjuurkFvcpXzTONqzTkn5pag": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "GetTrailerLambdaFunction"
+        },
+        "CodeSha256": "WjBDIF6Z7uoxSZx1GidUjuurkFvcpXzTONqzTkn5pag="
+      }
+    },
+    "UpdateMovieTableLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/dataFetching/dev/1489278160020-2017-03-12T00:22:40.020Z/dataFetching.zip"
+        },
+        "FunctionName": "updateMovieTable-dev",
+        "Handler": "parser.updateMovieTable",
+        "MemorySize": 128,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs4.3",
+        "Timeout": 12,
+        "Description": "parse incoming data from tmd and tmdb"
+      },
+      "DependsOn": [
+        "IamRoleLambdaExecution"
+      ]
+    },
+    "UpdateMovieTableLambdaVersionWjBDIF6Z7uoxSZx1GidUjuurkFvcpXzTONqzTkn5pag": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "UpdateMovieTableLambdaFunction"
+        },
+        "CodeSha256": "WjBDIF6Z7uoxSZx1GidUjuurkFvcpXzTONqzTkn5pag="
+      }
+    }
+  },
+  "Outputs": {
+    "ServerlessDeploymentBucketName": {
+      "Value": {
+        "Ref": "ServerlessDeploymentBucket"
+      }
+    },
+    "GetLocalMoviesLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "GetLocalMoviesLambdaVersionWjBDIF6Z7uoxSZx1GidUjuurkFvcpXzTONqzTkn5pag"
+      }
+    },
+    "GetOneMovieLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "GetOneMovieLambdaVersionWjBDIF6Z7uoxSZx1GidUjuurkFvcpXzTONqzTkn5pag"
+      }
+    },
+    "GetTrailerLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "GetTrailerLambdaVersionWjBDIF6Z7uoxSZx1GidUjuurkFvcpXzTONqzTkn5pag"
+      }
+    },
+    "UpdateMovieTableLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "UpdateMovieTableLambdaVersionWjBDIF6Z7uoxSZx1GidUjuurkFvcpXzTONqzTkn5pag"
+      }
+    }
+  }
+}

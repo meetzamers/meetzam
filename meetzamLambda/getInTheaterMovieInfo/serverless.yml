@@ -16,6 +16,11 @@ custom: ${file(./credentials.json)}
 functions:
   backendLambda:
     handler: backendLambda.handler
+    name: ${self:provider.stage}-lambdaName
+    description: fetch data from TMDB movie api
+    runtime: nodejs4.3
+    memorySize: 128 
+    timeout: 6
     events:
       - schedule: cron(0 10 * * ? *)
     environment:

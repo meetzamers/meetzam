@@ -12,9 +12,11 @@ module.exports.handler = (event, context, callback) => {
   // request data need to be a variable
   // currently using fixed constant data
   // research javascript doc
+  var d = new Date();
+  var today = d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
   let param = {
     hostname : "data.tmsapi.com",
-    path : "/v1.1/movies/showings?startDate=2017-02-21&zip=47904&api_key=" + Gracenote_API_key
+    path : "/v1.1/movies/showings?startDate=" + today + "&zip=47904&api_key=" + Gracenote_API_key
   };
 
   // http request
@@ -33,6 +35,7 @@ module.exports.handler = (event, context, callback) => {
 
     response.on('end', function() {
       let parsedData = JSON.parse(rawData);
+      callback(null, parsedData);
       console.log("Fetched JSON is: " + JSON.stringify(parsedData));
     });
 
@@ -40,7 +43,7 @@ module.exports.handler = (event, context, callback) => {
 
   request.on('error', function(error) {
     console.error('HTTP error' + error.message);
-    callback(error);
+    callback(error, null);
   });
 
 
