@@ -18,7 +18,6 @@ class MatchViewController: UIViewController {
     
     // Because I set the labelcount here, it will set to 0 whenever this page appears.
     var lablecount = 0
-    
     // ========================================
     
     // functions:
@@ -63,16 +62,15 @@ class MatchViewController: UIViewController {
         return cardView
     }
     
-    // ========================================
+    // ========================================    
     // buttons:
     @IBAction func backHomeButton(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "TabBarFirst")
+        //let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        //let viewController = storyboard.instantiateViewController(withIdentifier: "TabBarFirst")
+        //self.present(viewController, animated: false, completion: nil)
         
-        //self.presentingViewController?.dismiss(animated: true, completion: nil)
-        self.present(viewController, animated: false, completion: nil)
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
         
     }
-    
     
 }

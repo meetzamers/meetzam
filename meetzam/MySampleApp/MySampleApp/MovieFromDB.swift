@@ -28,27 +28,32 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
     }
     
     
-    func getMovieForDisplay(key: String, movie_data: SingleMovie?, movieTitle: UILabel!, movieTitleDetailed: UITextView!, imageView: UIImageView!){
+    func getMovieForDisplay(key: String, movie_data: SingleMovie?, movieTitle: UILabel!, movieTitleDetailed: UITextView!, imageView: UIImageView!, moviePopInfo: UILabel!){
         print("     enter func getmovieForDisplay")
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
         let mapper = AWSDynamoDBObjectMapper.default()
-
         mapper.load(SingleMovie.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as? NSError {
                 print("Error: \(error)")
-            } else if let movie_data = task.result as? SingleMovie {
-                print("     Getting fields")
+            }
+            else if let movie_data = task.result as? SingleMovie {
+                //print("     Getting fields")
                 movieTitle.text = movie_data.Title
-                print(movieTitle.text)
+                //print(movieTitle.text)
                 movieTitleDetailed.text = movie_data.overview
-                print(movieTitleDetailed.text)
+                //print(movieTitleDetailed.text)
                 //imgName = URL("https://image.tmdb.org/t/p/w500/" + movie_data.poster_path)
                 let path = "https://image.tmdb.org/t/p/w500/" + movie_data.poster_path!
                 let imageURL = URL(string: path)
                 let imageData = try! Data(contentsOf: imageURL!)
                 imageView.image = UIImage(data: imageData)
                 
+                moviePopInfo.text = "Popularity: " + movie_data.TMDB_popularity!
+                
             }
             
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
     }

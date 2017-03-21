@@ -53,7 +53,7 @@
                     <connections>
                         <segue destination="4Ym-gZ-MMN" kind="relationship" relationship="viewControllers" id="ztj-BH-auu"/>
                         <segue destination="RcN-jF-z05" kind="relationship" relationship="viewControllers" id="Ura-bJ-DO5"/>
-                        <segue destination="0O2-CG-5wu" kind="relationship" relationship="viewControllers" id="h7j-DL-Ce4"/>
+                        <segue destination="8ly-1U-kk9" kind="relationship" relationship="viewControllers" id="Onb-6y-gzr"/>
                         <segue destination="lgx-AO-AB4" kind="relationship" relationship="viewControllers" id="EOC-He-u2K"/>
                         <segue destination="wis-jw-d7L" kind="relationship" relationship="viewControllers" id="1rm-lY-ICN"/>
                     </connections>
@@ -85,7 +85,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xmY-2f-fSy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="988" y="116"/>
+            <point key="canvasLocation" x="1722" y="116"/>
         </scene>
         <!--Profile-->
         <scene sceneID="flR-GG-ScD">
@@ -589,7 +589,7 @@
         <!--Navi View Controller-->
         <scene sceneID="bBq-n2-BUD">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0O2-CG-5wu" customClass="NaviViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="matchNavia" automaticallyAdjustsScrollViewInsets="NO" id="0O2-CG-5wu" customClass="NaviViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="Match" id="T8d-at-rsD">
                         <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
                     </tabBarItem>
@@ -605,7 +605,25 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ADM-jy-Vyv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="233" y="116"/>
+            <point key="canvasLocation" x="988" y="116"/>
+        </scene>
+        <!--Navi View Controller-->
+        <scene sceneID="59x-iV-ymM">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8ly-1U-kk9" customClass="NaviViewController" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="Match" id="SSP-r0-tui">
+                        <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="mYd-fN-efX">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="o4z-R7-UDv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="232.80000000000001" y="115.59220389805098"/>
         </scene>
     </scenes>
     <resources>

@@ -21,9 +21,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     var new_signinObserver: AnyObject!
     var new_signoutObserver: AnyObject!
     
-    var currentIndex = 0
-    var movielist = MovieList()
-    var movieView = FrameViewController()
+    var isFirstMovieView = false
     // Variable ends here
     // ============================================
     // Change status bar type to default.
@@ -39,18 +37,23 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         // Let self be the delegate and dataSource
         self.delegate = self
         self.dataSource = self
-        SingleMovie().refreshList(movie_list: movielist, view: movieView)
+//        SingleMovie().refreshList(movie_list: movielist, view: movieView)
         
         // change background color to grey
         //view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
         view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
         
-        //let frameVC = FrameViewController()
-        //frameVC.imagekey = imagekeys.first
+        // This is the first movie
+        if (!AWSIdentityManager.default().isLoggedIn) {
+            self.isFirstMovieView = true
+        }
         
-        //let viewControllers = [frameVC]
+        let frameVC = FrameViewController()
+        frameVC.imagekey = imagekeys.first
         
-        let viewControllers = [movieView]
+        let viewControllers = [frameVC]
+        
+//        let viewControllers = [movieView]
         setViewControllers(viewControllers, direction: .forward, animated: true, completion: nil)
         
         // ============================================
@@ -92,13 +95,19 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     
     // display sign in view controller
     func popSignInViewController() {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
         if (!AWSIdentityManager.default().isLoggedIn) {
             let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
             let viewController = storyboard.instantiateViewController(withIdentifier: "SignIn")
 
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            
             self.present(viewController, animated: false, completion: nil)
 
         }
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
     // AWS support functions end here
@@ -106,7 +115,6 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     // Page view functions start here
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        /*
         let currentImageName = (viewController as! FrameViewController).imagekey
         let currentIndex = imagekeys.index(of: currentImageName!)
         
@@ -114,23 +122,27 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
             let frameVC = FrameViewController()
             frameVC.imagekey = imagekeys[currentIndex! + 1]
             
+            // turn off isFirstMovieView
+            self.isFirstMovieView = false
+            
             return frameVC
         }
  
         return nil
-        */
-        if currentIndex + 1 < movielist.tableRows.count {
-            currentIndex += 1
-            let frameVC = FrameViewController()
-            frameVC.setVC(content: movielist.tableRows[currentIndex])
-            return frameVC
-        }
         
-        return nil
+        // Mogu's new stuff
+        
+//        if currentIndex + 1 < movielist.tableRows.count {
+//            currentIndex += 1
+//            let frameVC = FrameViewController()
+//            frameVC.setVC(content: movielist.tableRows[currentIndex])
+//            return frameVC
+//        }
+//        
+//        return nil
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        /*
         let currentImagekey = (viewController as! FrameViewController).imagekey
         let currentIndex = imagekeys.index(of: currentImagekey!)
         
@@ -138,21 +150,31 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
             let frameVC = FrameViewController()
             frameVC.imagekey = imagekeys[currentIndex! - 1]
             
+            // turn off isFirstMovieView
+            self.isFirstMovieView = false
+            
             return frameVC
         }
         
         return nil
-        */
-        if currentIndex - 1 < 0 {
-            currentIndex -= 1
-            let frameVC = FrameViewController()
-            frameVC.setVC(content: movielist.tableRows[currentIndex])
-            return frameVC
-        }
-        return nil
         
+        // Mogu's new stuff
+        
+//        if currentIndex - 1 < 0 {
+//            currentIndex -= 1
+//            let frameVC = FrameViewController()
+//            frameVC.setVC(content: movielist.tableRows[currentIndex])
+//            return frameVC
+//        }
+//        return nil
     }
- 
+    
+    // current viewcontroller
+    override func viewWillAppear(_ animated: Bool) {
+        if (isFirstMovieView && AWSIdentityManager.default().isLoggedIn) {
+            viewDidLoad()
+        }
+    }
     
     // Page view functions end here
     // ============================================
@@ -161,19 +183,19 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
 // This is each page's view controller
 class FrameViewController: UIViewController {
     
+    // UI var
     let movieTitle = UILabel()
-    //let movieDetailedInfo = UILabel()
     let movieDetailedInfo = UITextView()
+    let moviePopInfo = UILabel()
     
     var imagekey: String?
     
-    //var movie_info: SingleMovie?
+    var movie_info: SingleMovie?
     
     // image view init
     var imageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-        //iv.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 100)
         iv.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 110)
         return iv
     }()
@@ -184,11 +206,12 @@ class FrameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // view changes
+        
         self.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         self.view.backgroundColor = UIColor.clear
         
-        //SingleMovie().getMovieForDisplay(key: imagekey!, movie_data: movie_info, movieTitle: movieTitle, movieTitleDetailed: movieDetailedInfo, imageView: imageView)
-    
+        SingleMovie().getMovieForDisplay(key: imagekey!, movie_data: movie_info, movieTitle: movieTitle, movieTitleDetailed: movieDetailedInfo, imageView: imageView, moviePopInfo: moviePopInfo)
+        
         // add scroll view
         movieContent.showsVerticalScrollIndicator = true
         movieContent.isScrollEnabled = true
@@ -200,30 +223,26 @@ class FrameViewController: UIViewController {
         // add image view to scroll view
         movieContent.addSubview(imageView)
         
-        // add movie content in to the scroll view
+        // add movie title in to the scroll view
         movieTitle.frame = CGRect(x: 10, y: imageView.frame.height + 5, width: UIScreen.main.bounds.width - 20, height: 30)
         movieTitle.font = UIFont(name: "HelveticaNeue-Light", size: 23)
         movieTitle.textColor = UIColor.black
         movieContent.addSubview(movieTitle)
         
-        movieDetailedInfo.frame = CGRect(x: 5, y: imageView.frame.height + 32, width: UIScreen.main.bounds.width - 15, height: 200)
+        // add movie popularity in to the scroll view
+        moviePopInfo.frame = CGRect(x: 10, y: imageView.frame.height + 40, width: UIScreen.main.bounds.width - 20, height: 30)
+        moviePopInfo.font = UIFont(name: "HelveticaNeue-Light", size: 15)
+        moviePopInfo.textColor = UIColor.black
+        moviePopInfo.textAlignment = .right
+        movieContent.addSubview(moviePopInfo)
+        
+        // add movie info in to the scroll view
+        movieDetailedInfo.frame = CGRect(x: 5, y: imageView.frame.height + 70, width: UIScreen.main.bounds.width - 15, height: 200)
         movieDetailedInfo.font = UIFont(name: "HelveticaNeue-thin", size: 15)
         movieDetailedInfo.textColor = UIColor.black
         movieDetailedInfo.backgroundColor = UIColor.clear
+        movieDetailedInfo.isEditable = false
         movieContent.addSubview(movieDetailedInfo)
-        
-        //movieDetailedInfo.numberOfLines = 10
-        //movieDetailedInfo.font = UIFont(name: "HelveticaNeue-thin", size: 13)
-        //movieDetailedInfo.textColor = UIColor.black
-        //movieContent.addSubview(movieDetailedInfo)
     }
-    func setVC(content: SingleMovie) {
-        movieTitle.text = content.Title
-        movieDetailedInfo.text = content.overview
-        let path = "https://image.tmdb.org/t/p/w500/" + (content.poster_path)!
-        let imageURL = URL(string: path)
-        let imageData = try! Data(contentsOf: imageURL!)
-        imageView.image = UIImage(data: imageData)
-    }
-
+    
 }
