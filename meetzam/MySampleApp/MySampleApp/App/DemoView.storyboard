@@ -53,7 +53,7 @@
                             <outlet property="delegate" destination="HKv-yk-r7M" id="fud-wm-l1m"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="meetzam" id="tnJ-fz-jtg"/>
+                    <navigationItem key="navigationItem" id="tnJ-fz-jtg"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0lx-xM-3gj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

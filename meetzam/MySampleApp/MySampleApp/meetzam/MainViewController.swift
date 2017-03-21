@@ -9,7 +9,7 @@
 import UIKit
 
 class MainViewController: UITabBarController, UITabBarControllerDelegate {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
@@ -33,14 +33,14 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
         guard let toIndex = tabBarControllers.index(of: viewController) else {
             return false
         }
-        
+
         if (toIndex == 2) {
-            animateToTab(toIndex: toIndex)
-        }
-        
-        if (toIndex == 4) {
-            //viewController.viewWillAppear(false)
-            print("view controller 4")
+            //animateToTab(toIndex: toIndex)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let viewController = storyboard.instantiateViewController(withIdentifier: "matchNavia")
+            self.present(viewController, animated: true, completion: nil)
+            
+            return false
         }
         
         return true

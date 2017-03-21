@@ -56,7 +56,10 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         // ============================================
         // AWS implementation starts here
         // 1. first attempt to pop sign in view controller
+        /*
+        // no network
         perform(#selector(popSignInViewController), with: nil, afterDelay: 0)
+        */
         
         // 2. signinObserver: need to figure it out.
         new_signinObserver = NotificationCenter.default.addObserver(
