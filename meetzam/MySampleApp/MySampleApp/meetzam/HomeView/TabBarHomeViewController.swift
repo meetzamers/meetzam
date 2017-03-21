@@ -37,6 +37,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         // Let self be the delegate and dataSource
         self.delegate = self
         self.dataSource = self
+        SingleMovie().refreshList(movie_list: movielist, view: movieView)
         
         // change background color to grey
         //view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
@@ -50,7 +51,9 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         let frameVC = FrameViewController()
         frameVC.imagekey = imagekeys.first
         
-        let viewControllers = [frameVC]
+        //let viewControllers = [frameVC]
+        
+        let viewControllers = [movieView]
         setViewControllers(viewControllers, direction: .forward, animated: true, completion: nil)
         
         // ============================================
@@ -115,6 +118,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     // Page view functions start here
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        /*
         let currentImageName = (viewController as! FrameViewController).imagekey
         let currentIndex = imagekeys.index(of: currentImageName!)
         
@@ -129,9 +133,19 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         }
  
         return nil
+        */
+        if currentIndex + 1 < movielist.tableRows.count {
+            currentIndex += 1
+            let frameVC = FrameViewController()
+            frameVC.setVC(content: movielist.tableRows[currentIndex])
+            return frameVC
+        }
+        
+        return nil
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        /*
         let currentImagekey = (viewController as! FrameViewController).imagekey
         let currentIndex = imagekeys.index(of: currentImagekey!)
         
@@ -146,6 +160,15 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         }
         
         return nil
+        */
+        if currentIndex - 1 < 0 {
+            currentIndex -= 1
+            let frameVC = FrameViewController()
+            frameVC.setVC(content: movielist.tableRows[currentIndex])
+            return frameVC
+        }
+        return nil
+        
     }
     
     // current viewcontroller
@@ -169,7 +192,7 @@ class FrameViewController: UIViewController {
     
     var imagekey: String?
     
-    var movie_info: SingleMovie?
+    //var movie_info: SingleMovie?
     
     // image view init
     var imageView: UIImageView = {
