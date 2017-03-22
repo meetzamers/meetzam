@@ -11,13 +11,15 @@ import AWSDynamoDB
 
 let AWSDynamoDBTableName = "Movie2"//"arn:aws:dynamodb:us-east-1:397508666882:table/Movie2"
 class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
-    var movie_id: Int?
+    //var movie_id: Int?
     var TMDB_movie_id: String?
     var Title: String?
     var TMDB_popularity: String?
     var release_date: String?
     var poster_path: String?
     var overview: String?
+    var image: UIImage?
+    var pop: String?
     
     class func dynamoDBTableName() -> String {
         return AWSDynamoDBTableName
@@ -68,28 +70,31 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         
         dynamoDBObjectMapper.scan(SingleMovie.self, expression: queryExpression).continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask!) -> AnyObject! in
             var c = 0
-            var i = 0
+            
             if let paginatedOutput = task.result {
                 //let count = paginatedOutput.count as Int
                 for item in paginatedOutput.items as! [SingleMovie] {
-                /*while i < paginatedOutput.items.count {
-                    var item = SingleMovie()
                     
-                    item = paginatedOutput.items[i].copy() as! SingleMovie
-                    i += 1
-                    */
                     if item.TMDB_movie_id == nil || item.Title == nil {
                         continue
                     }
-
+                    let path = "https://image.tmdb.org/t/p/w500/" + (item.poster_path)!
+                    let imageURL = URL(string: path)
+                    let imageData = try! Data(contentsOf: imageURL!)
+                    item.image = UIImage(data: imageData)
+                    item.pop = "Popularity: " + item.TMDB_popularity!
                     movie_list.tableRows.append(item)
+                    
                     if c == 0 {
+                        
                         view.movieTitle.text = item.Title
                         view.movieDetailedInfo.text = item.overview
                         let path = "https://image.tmdb.org/t/p/w500/" + (item.poster_path)!
                         let imageURL = URL(string: path)
                         let imageData = try! Data(contentsOf: imageURL!)
                         view.imageView.image = UIImage(data: imageData)
+                        
+                        view.movie_info = item;
                     }
                     
                     print(movie_list.tableRows.count)
@@ -100,7 +105,7 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                     c = c + 1
                     
                 }
-
+                
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             //self.tableView.reloadData()
@@ -118,6 +123,6 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
 
 class MovieList {
     var tableRows:Array = [SingleMovie]()
-
-
+    
+    
 }
