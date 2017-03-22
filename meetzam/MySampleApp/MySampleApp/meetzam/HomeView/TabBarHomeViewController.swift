@@ -4,7 +4,7 @@
 //
 //  Created by ZuYuan Fan on 2/20/17.
 //
-//  Mushroom05: 
+//  Mushroom05:
 //      adding global movie array in variables section
 //      adding handler function
 //      import AWS dynamodb
@@ -22,6 +22,10 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     var new_signoutObserver: AnyObject!
     
     var isFirstMovieView = false
+    //mush
+    var movielist = MovieList()
+    var movieView = FrameViewController()
+    
     // Variable ends here
     // ============================================
     // Change status bar type to default.
@@ -37,7 +41,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         // Let self be the delegate and dataSource
         self.delegate = self
         self.dataSource = self
-//        SingleMovie().refreshList(movie_list: movielist, view: movieView)
+        SingleMovie().refreshList(movie_list: movielist, view: movieView)
         
         // change background color to grey
         //view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
@@ -47,13 +51,17 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         if (!AWSIdentityManager.default().isLoggedIn) {
             self.isFirstMovieView = true
         }
-        
-        let frameVC = FrameViewController()
-        frameVC.imagekey = imagekeys.first
+        let frameVC = movieView
+        //mush
+        //let frameVC = FrameViewController()
+        //frameVC.imagekey = imagekeys.first
+        frameVC.movie_info = movielist.tableRows.first
+        print("herer\n")
+        print(movielist.tableRows.count)
         
         let viewControllers = [frameVC]
         
-//        let viewControllers = [movieView]
+        //        let viewControllers = [movieView]
         setViewControllers(viewControllers, direction: .forward, animated: true, completion: nil)
         
         // ============================================
@@ -69,7 +77,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
             using: { [weak self] (note: Notification) -> Void in
                 guard let strongSelf = self else { return }
                 print("Sign in observer observed sign in.")
-            })
+        })
         
         // 3. signoutObserver: need to figure it out.
         new_signoutObserver = NotificationCenter.default.addObserver(
@@ -100,11 +108,11 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         if (!AWSIdentityManager.default().isLoggedIn) {
             let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
             let viewController = storyboard.instantiateViewController(withIdentifier: "SignIn")
-
+            
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             
             self.present(viewController, animated: false, completion: nil)
-
+            
         }
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
@@ -115,40 +123,82 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     // Page view functions start here
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        let currentImageName = (viewController as! FrameViewController).imagekey
-        let currentIndex = imagekeys.index(of: currentImageName!)
+        /*
+         let currentImageName = (viewController as! FrameViewController).imagekey
+         let currentIndex = imagekeys.index(of: currentImageName!)
+         
+         if (currentIndex! < imagekeys.count - 1) {
+         let frameVC = FrameViewController()
+         frameVC.imagekey = imagekeys[currentIndex! + 1]
+         
+         // turn off isFirstMovieView
+         self.isFirstMovieView = false
+         
+         return frameVC
+         }
+         
+         return nil
+         */
         
-        if (currentIndex! < imagekeys.count - 1) {
+        // Mogu's new stuff
+        
+        //        if currentIndex + 1 < movielist.tableRows.count {
+        //            currentIndex += 1
+        //            let frameVC = FrameViewController()
+        //            frameVC.setVC(content: movielist.tableRows[currentIndex])
+        //            return frameVC
+        //        }
+        //
+        //        return nil
+        let currentMovie = (viewController as! FrameViewController).movie_info
+        print(movielist.tableRows.count)
+        let currentIndex = movielist.tableRows.index(of: currentMovie!)
+        
+        if (currentIndex! < (movielist.tableRows.count) - 1) {
             let frameVC = FrameViewController()
-            frameVC.imagekey = imagekeys[currentIndex! + 1]
+            frameVC.movie_info = movielist.tableRows[currentIndex! + 1]
             
             // turn off isFirstMovieView
             self.isFirstMovieView = false
             
             return frameVC
         }
- 
+        
         return nil
-        
-        // Mogu's new stuff
-        
-//        if currentIndex + 1 < movielist.tableRows.count {
-//            currentIndex += 1
-//            let frameVC = FrameViewController()
-//            frameVC.setVC(content: movielist.tableRows[currentIndex])
-//            return frameVC
-//        }
-//        
-//        return nil
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        let currentImagekey = (viewController as! FrameViewController).imagekey
-        let currentIndex = imagekeys.index(of: currentImagekey!)
+        /*
+         let currentImagekey = (viewController as! FrameViewController).imagekey
+         let currentIndex = imagekeys.index(of: currentImagekey!)
+         
+         if (currentIndex! > 0) {
+         let frameVC = FrameViewController()
+         frameVC.imagekey = imagekeys[currentIndex! - 1]
+         
+         // turn off isFirstMovieView
+         self.isFirstMovieView = false
+         
+         return frameVC
+         }
+         
+         return nil
+         */
+        // Mogu's new stuff
+        
+        //        if currentIndex - 1 < 0 {
+        //            currentIndex -= 1
+        //            let frameVC = FrameViewController()
+        //            frameVC.setVC(content: movielist.tableRows[currentIndex])
+        //            return frameVC
+        //        }
+        //        return nil
+        let currentMovie = (viewController as! FrameViewController).movie_info
+        let currentIndex = movielist.tableRows.index(of: currentMovie!)
         
         if (currentIndex! > 0) {
             let frameVC = FrameViewController()
-            frameVC.imagekey = imagekeys[currentIndex! - 1]
+            frameVC.movie_info = movielist.tableRows[currentIndex! - 1]
             
             // turn off isFirstMovieView
             self.isFirstMovieView = false
@@ -158,15 +208,6 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         
         return nil
         
-        // Mogu's new stuff
-        
-//        if currentIndex - 1 < 0 {
-//            currentIndex -= 1
-//            let frameVC = FrameViewController()
-//            frameVC.setVC(content: movielist.tableRows[currentIndex])
-//            return frameVC
-//        }
-//        return nil
     }
     
     // current viewcontroller
@@ -190,7 +231,7 @@ class FrameViewController: UIViewController {
     
     var imagekey: String?
     
-    var movie_info: SingleMovie?
+    var movie_info = SingleMovie()
     
     // image view init
     var imageView: UIImageView = {
@@ -209,8 +250,13 @@ class FrameViewController: UIViewController {
         
         self.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         self.view.backgroundColor = UIColor.clear
+        //mush
+        //SingleMovie().getMovieForDisplay(key: imagekey!, movie_data: movie_info, movieTitle: movieTitle, movieTitleDetailed: movieDetailedInfo, imageView: imageView, moviePopInfo: moviePopInfo)
+        movieTitle.text = movie_info?.Title
+        movieDetailedInfo.text = movie_info?.overview
         
-        SingleMovie().getMovieForDisplay(key: imagekey!, movie_data: movie_info, movieTitle: movieTitle, movieTitleDetailed: movieDetailedInfo, imageView: imageView, moviePopInfo: moviePopInfo)
+        imageView.image = movie_info?.image
+        moviePopInfo.text = movie_info?.pop
         
         // add scroll view
         movieContent.showsVerticalScrollIndicator = true
