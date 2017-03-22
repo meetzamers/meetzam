@@ -252,8 +252,8 @@ class FrameViewController: UIViewController {
         self.view.backgroundColor = UIColor.clear
         //mush
         //SingleMovie().getMovieForDisplay(key: imagekey!, movie_data: movie_info, movieTitle: movieTitle, movieTitleDetailed: movieDetailedInfo, imageView: imageView, moviePopInfo: moviePopInfo)
-        movieTitle.text = movie_info?.Title
-        movieDetailedInfo.text = movie_info?.overview
+        movieTitle.text = movie_info?.title
+        movieDetailedInfo.text = movie_info?.longDescription
         
         imageView.image = movie_info?.image
         moviePopInfo.text = movie_info?.pop

@@ -136,8 +136,8 @@
         <string>meetzam-mobilehub-1569925313-Movie</string>
         <key>Movie2</key>
         <string>Movie2</string>
-        <key>Movie_info</key>
-        <string>Movie_info</string>
+        <key>movie_table</key>
+        <string>movie_table</string>
     </dict>
 	<key>FacebookAppID</key>
 	<string>1158932457552741</string>
