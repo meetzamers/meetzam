@@ -200,9 +200,19 @@ class FrameViewController: UIViewController {
         return iv
     }()
     
+    // Big Heart image
     let likeImage: UIImageView = {
         let iv = UIImageView()
         iv.image = UIImage(named: "Liked")
+        iv.contentMode = .scaleAspectFill
+        
+        return iv
+    }()
+    
+    // Small Do Heart image
+    let doHeart: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(named: "DoHeart")
         iv.contentMode = .scaleAspectFill
         
         return iv
@@ -216,10 +226,9 @@ class FrameViewController: UIViewController {
         likeImage.frame = CGRect(x: newX * 0.4, y: newY * 0.4, width: newX * 0.2, height: newY * 0.2)
         likeImage.alpha = 0.98
         imageView.addSubview(likeImage)
-
-        likeImage.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
         
         // pop up
+        likeImage.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
         UIView.animate(withDuration: 0.2 / 1.5, animations: {() -> Void in
             self.likeImage.transform = CGAffineTransform.identity.scaledBy(x: 1.1, y: 1.1)
         }, completion: {(_ finished: Bool) -> Void in
@@ -236,13 +245,31 @@ class FrameViewController: UIViewController {
                 })
             })
         })
+        
+        // do heart
+        doHeart.frame = CGRect(x: 10 + movieTitle.frame.width, y: imageView.frame.height + 10, width: 25, height: 25)
+        doHeart.alpha = 0.98
+        imageView.addSubview(doHeart)
+        
+        // pop up do heart
+        doHeart.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
+        UIView.animate(withDuration: 0.1 / 1.5, animations: {() -> Void in
+            self.doHeart.transform = CGAffineTransform.identity.scaledBy(x: 1.1, y: 1.1)
+        }, completion: {(_ finished: Bool) -> Void in
+            UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
+                self.doHeart.transform = CGAffineTransform.identity.scaledBy(x: 0.9, y: 0.9)
+            }, completion: {(_ finished: Bool) -> Void in
+                UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
+                    self.doHeart.transform = CGAffineTransform.identity
+                }, completion: nil)
+            })
+        })
+        
     }
     
     // Scroll down action
     func scrollUpAction() {
         print("scrolled down")
-//        movieContent.contentOffset = CGPoint(x: 0, y: UIScreen.main.bounds.height - 68 - 35)
-//        movieContent.isScrollEnabled = true
     }
     
     
@@ -274,20 +301,20 @@ class FrameViewController: UIViewController {
         imageView.addGestureRecognizer(doubletap)
         
         // add scroll down to view the detailed stuff
-        let scrolldown = UISwipeGestureRecognizer()
-        scrolldown.direction = .up
-        scrolldown.addTarget(self, action: #selector(FrameViewController.scrollUpAction))
-        imageView.addGestureRecognizer(scrolldown)
+//        let scrolldown = UISwipeGestureRecognizer()
+//        scrolldown.direction = .up
+//        scrolldown.addTarget(self, action: #selector(FrameViewController.scrollUpAction))
+//        imageView.addGestureRecognizer(scrolldown)
         
         movieContent.addSubview(imageView)
         
         // add movie title in to the scroll view
-        movieTitle.frame = CGRect(x: 10, y: imageView.frame.height + 5, width: UIScreen.main.bounds.width - 20, height: 30)
+        movieTitle.frame = CGRect(x: 10, y: imageView.frame.height + 5, width: UIScreen.main.bounds.width - 50, height: 30)
         movieTitle.font = UIFont(name: "HelveticaNeue-Light", size: 23)
         movieTitle.textColor = UIColor.black
         movieContent.addSubview(movieTitle)
         
-//        // add movie popularity in to the scroll view
+        // add movie popularity in to the scroll view
 //        moviePopInfo.frame = CGRect(x: 10, y: imageView.frame.height + 40, width: UIScreen.main.bounds.width - 20, height: 30)
 //        moviePopInfo.font = UIFont(name: "HelveticaNeue-Light", size: 15)
 //        moviePopInfo.textColor = UIColor.black
