@@ -9,7 +9,7 @@
 import Foundation
 import AWSDynamoDB
 
-let AWSDynamoDBTableName = "Movie2"//"meetzam-mobilehub-1569925313-Movie"
+let AWSDynamoDBTableName = "Movie2"//"arn:aws:dynamodb:us-east-1:397508666882:table/Movie2"
 class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
     var movie_id: Int?
     var TMDB_movie_id: String?
