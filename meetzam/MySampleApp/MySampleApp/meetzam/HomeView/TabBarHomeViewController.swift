@@ -176,7 +176,7 @@ class FrameViewController: UIViewController {
     let moviePopInfo = UILabel()
     
     var imagekey: String?
-    
+
     var movie_info = SingleMovie()
     
     // image view init
@@ -184,8 +184,82 @@ class FrameViewController: UIViewController {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 110)
+        
         return iv
     }()
+    
+    // Big Heart image
+    let likeImage: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(named: "Liked")
+        iv.contentMode = .scaleAspectFill
+        
+        return iv
+    }()
+    
+    // Small Do Heart image
+    let doHeart: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(named: "DoHeart")
+        iv.contentMode = .scaleAspectFill
+        
+        return iv
+    }()
+    
+    // Double Tap action
+    func doubleTapAction() {
+        print("liked")
+        let newX = imageView.bounds.width
+        let newY = imageView.bounds.height
+        likeImage.frame = CGRect(x: newX * 0.4, y: newY * 0.4, width: newX * 0.2, height: newY * 0.2)
+        likeImage.alpha = 0.98
+        imageView.addSubview(likeImage)
+        
+        // pop up
+        likeImage.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
+        UIView.animate(withDuration: 0.2 / 1.5, animations: {() -> Void in
+            self.likeImage.transform = CGAffineTransform.identity.scaledBy(x: 1.1, y: 1.1)
+        }, completion: {(_ finished: Bool) -> Void in
+            UIView.animate(withDuration: 0.2 / 2, animations: {() -> Void in
+                self.likeImage.transform = CGAffineTransform.identity.scaledBy(x: 0.9, y: 0.9)
+            }, completion: {(_ finished: Bool) -> Void in
+                UIView.animate(withDuration: 0.2 / 2, animations: {() -> Void in
+                    self.likeImage.transform = CGAffineTransform.identity
+                }, completion: {(finished: Bool) in
+                    // fade out
+                    UIView.animate(withDuration: 0.2, delay: 0.3, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                        self.likeImage.alpha = 0
+                    }, completion: {(finished: Bool) in self.likeImage.removeFromSuperview()})
+                })
+            })
+        })
+        
+        // do heart
+        doHeart.frame = CGRect(x: 10 + movieTitle.frame.width, y: imageView.frame.height + 10, width: 25, height: 25)
+        doHeart.alpha = 0.98
+        imageView.addSubview(doHeart)
+        
+        // pop up do heart
+        doHeart.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
+        UIView.animate(withDuration: 0.1 / 1.5, animations: {() -> Void in
+            self.doHeart.transform = CGAffineTransform.identity.scaledBy(x: 1.1, y: 1.1)
+        }, completion: {(_ finished: Bool) -> Void in
+            UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
+                self.doHeart.transform = CGAffineTransform.identity.scaledBy(x: 0.9, y: 0.9)
+            }, completion: {(_ finished: Bool) -> Void in
+                UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
+                    self.doHeart.transform = CGAffineTransform.identity
+                }, completion: nil)
+            })
+        })
+        
+    }
+    
+    // Scroll down action
+    func scrollUpAction() {
+        print("scrolled down")
+    }
+    
     
     // scoll view
     let movieContent = UIScrollView(frame: CGRect(x: 0, y: 22, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 46))
@@ -210,31 +284,45 @@ class FrameViewController: UIViewController {
         movieContent.isUserInteractionEnabled = true
         movieContent.backgroundColor = UIColor.clear
         self.view.addSubview(movieContent)
-        movieContent.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*1.3)
+        movieContent.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*1.775)
         
         // add image view to scroll view
+        imageView.isUserInteractionEnabled = true
+        let doubletap = UITapGestureRecognizer()
+        doubletap.numberOfTapsRequired = 2;
+        doubletap.addTarget(self, action: #selector(FrameViewController.doubleTapAction))
+        imageView.addGestureRecognizer(doubletap)
+        
+        // add scroll down to view the detailed stuff
+//        let scrolldown = UISwipeGestureRecognizer()
+//        scrolldown.direction = .up
+//        scrolldown.addTarget(self, action: #selector(FrameViewController.scrollUpAction))
+//        imageView.addGestureRecognizer(scrolldown)
+        
         movieContent.addSubview(imageView)
         
         // add movie title in to the scroll view
-        movieTitle.frame = CGRect(x: 10, y: imageView.frame.height + 5, width: UIScreen.main.bounds.width - 20, height: 30)
+        movieTitle.frame = CGRect(x: 10, y: imageView.frame.height + 5, width: UIScreen.main.bounds.width - 50, height: 30)
         movieTitle.font = UIFont(name: "HelveticaNeue-Light", size: 23)
         movieTitle.textColor = UIColor.black
         movieContent.addSubview(movieTitle)
         
         // add movie popularity in to the scroll view
-        moviePopInfo.frame = CGRect(x: 10, y: imageView.frame.height + 40, width: UIScreen.main.bounds.width - 20, height: 30)
-        moviePopInfo.font = UIFont(name: "HelveticaNeue-Light", size: 15)
-        moviePopInfo.textColor = UIColor.black
-        moviePopInfo.textAlignment = .right
-        movieContent.addSubview(moviePopInfo)
+//        moviePopInfo.frame = CGRect(x: 10, y: imageView.frame.height + 40, width: UIScreen.main.bounds.width - 20, height: 30)
+//        moviePopInfo.font = UIFont(name: "HelveticaNeue-Light", size: 15)
+//        moviePopInfo.textColor = UIColor.black
+//        moviePopInfo.textAlignment = .right
+//        movieContent.addSubview(moviePopInfo)
         
         // add movie info in to the scroll view
-        movieDetailedInfo.frame = CGRect(x: 5, y: imageView.frame.height + 70, width: UIScreen.main.bounds.width - 15, height: 200)
+        movieDetailedInfo.frame = CGRect(x: 6, y: imageView.frame.height + movieTitle.frame.height + 5, width: UIScreen.main.bounds.width - 15, height: 200)
         movieDetailedInfo.font = UIFont(name: "HelveticaNeue-thin", size: 15)
         movieDetailedInfo.textColor = UIColor.black
         movieDetailedInfo.backgroundColor = UIColor.clear
         movieDetailedInfo.isEditable = false
         movieContent.addSubview(movieDetailedInfo)
+        
+        
     }
     
 }
