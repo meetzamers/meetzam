@@ -9,12 +9,13 @@
 
 import Foundation
 import AWSDynamoDB
+import AWSMobileHubHelper
 
 let AWSDynamoDBTableName = "movie_table"//"meetzam-mobilehub-1569925313-Movie"
 class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
     //var movie_id: Int?
     
-    var title: String?
+    var title = String()
     var directors = Set<String>()
     var genres = Set<String>()
     var longDescription: String?
@@ -69,7 +70,7 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         })
     }
  */
-    func refreshList(movie_list: MovieList, view: FrameViewController)  {
+    func refreshList(movie_list: MovieList, view: FrameViewController, user_profile: UserProfileToDB)  {
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
@@ -92,7 +93,15 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                     movie_list.tableRows.append(item)
                     
                     if c == 0 {
-                        
+                        print("LALALA")
+                        if (user_profile.currentLikedMovie.contains(item.title)) {
+                            print("scan:FOUND THE MOVIE IN LIKED LIST")
+                            view.like = true
+                        }
+                        else {
+                            print("scan:NOT LIKED")
+                        }
+ 
                         view.movieTitle.text = item.title
                         view.movieDetailedInfo.text = item.longDescription
                         let path = "https://image.tmdb.org/t/p/w500/" + (item.poster_path)!
