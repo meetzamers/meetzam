@@ -30,7 +30,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     var gender: String?
     var region: String?
     var email: String?
-    var currentLiked = Set<String>()
+    var currentLikedMovie = Set<String>()
     
     class func dynamoDBTableName() -> String {
         
@@ -56,7 +56,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         userProfile?.gender = _gender
         userProfile?.region = _region
         userProfile?.email = _email
-        let profile = mapper.save(userProfile!)
+        mapper.save(userProfile!)
         
         /*mapper.save(userProfile!).continueWith(block: { (task:AWSTask<AnyObject>!) -> Any? in
          if let error = task.error as? NSError {
@@ -118,5 +118,93 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         })
         
     }
+    
+    func insertToCurrentLikedMovie(key: String, movieTitle: String)
+    {
+        print("     insertToCurrentLikedMovie!!")
+        /*let dynamoDB = AWSDynamoDB.default()
+        let updateInput = AWSDynamoDBUpdateItemInput()
+        
+        let hashKeyValue = AWSDynamoDBAttributeValue()
+        hashKeyValue?.s = key
+        updateInput?.tableName = "meetzam-mobilehub-1569925313-UserProfile"
+        updateInput?.key = ["userId": hashKeyValue!]
+        let valueUpdate = AWSDynamoDBAttributeValueUpdate()
+        let newTitle = AWSDynamoDBAttributeValue()
+        newTitle?.ss?.append(movieTitle)
+        valueUpdate?.value = newTitle
+        valueUpdate?.action = .put
+        updateInput?.attributeUpdates = ["currentLikedMovie": valueUpdate!]
+        dynamoDB.updateItem(updateInput!).continueWith { (task:AWSTask<AWSDynamoDBUpdateItemOutput>) -> Any? in
+            if let error = task.error as? NSError {
+                print("The request failed. Error: \(error)")
+                return nil
+            }
+            return nil
+        }*/
+        let mapper = AWSDynamoDBObjectMapper.default()
+        
+        var userProfile = UserProfileToDB()
+
+        print("     before load!!")
+        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            if let error = task.error as? NSError {
+                print("InsertError: \(error)")
+            } else if let user_profile_addTo = task.result as? UserProfileToDB {
+                userProfile?.userId=key
+                print("     key is \(key)")
+                userProfile?.displayName = user_profile_addTo.displayName
+                print("displayname is \(userProfile?.displayName)")
+                userProfile?.bio = user_profile_addTo.bio
+                print("bio is \(userProfile?.bio)")
+                userProfile?.age = user_profile_addTo.age
+                print("age is \(userProfile?.age)")
+                userProfile?.gender = user_profile_addTo.gender
+                print("gender is \(userProfile?.gender)")
+                userProfile?.region = user_profile_addTo.region
+                print("region is \(userProfile?.region)")
+                userProfile?.email = user_profile_addTo.email
+                print("email is \(userProfile?.email)")
+                userProfile?.currentLikedMovie=user_profile_addTo.currentLikedMovie
+                for movie in (userProfile?.currentLikedMovie)! {
+                    print("\(movie)")
+                }
+                print("     all put")
+            }
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            return nil
+        })
+        while(userProfile?.displayName==nil)
+        {
+            print("waiting")
+        }
+        print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
+        userProfile?.currentLikedMovie.insert(movieTitle)
+        for movie in (userProfile?.currentLikedMovie)! {
+            print("\(movie)")
+        }
+        mapper.save(userProfile!)
+    }
+    
+    func returnUser(key: String) -> UserProfileToDB
+    {
+        print("     returnUser!!")
+        let mapper = AWSDynamoDBObjectMapper.default()
+        var getuserProfile = UserProfileToDB()
+        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask!) -> AnyObject! in
+            if let error = task.error as? NSError {
+                //print("Error: \(error)")
+            } else if let user_profile = task.result as? UserProfileToDB {
+                getuserProfile=user_profile
+            }
+            
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            return nil
+        })
+        print("     display name is \(getuserProfile?.displayName)")
+        return getuserProfile!
+    }
+    
+        
     
 }
