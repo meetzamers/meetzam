@@ -223,7 +223,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         print("     display name is \(getuserProfile?.displayName)")
         return getuserProfile!
     }*/
-}
+
 
     func getLikedMovies(userId: String, user_profile: UserProfileToDB) {
         let mapper = AWSDynamoDBObjectMapper.default()
@@ -241,4 +241,4 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         })
     }
     
-}//continueWith(executor: AWSExecutor.thread(), block: { (task:AWSTask!) -> AnyObject! in
+}
