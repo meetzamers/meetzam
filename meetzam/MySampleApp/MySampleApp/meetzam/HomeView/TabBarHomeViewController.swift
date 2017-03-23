@@ -231,6 +231,7 @@ class FrameViewController: UIViewController {
     // Double Tap action
     func doubleTapAction() {
         print("liked")
+        UserProfileToDB().insertToCurrentLikedMovie(key: AWSIdentityManager.default().identityId!, movieTitle: movieTitle.text!)
         let newX = imageView.bounds.width
         let newY = imageView.bounds.height
         likeImage.frame = CGRect(x: newX * 0.4, y: newY * 0.4, width: newX * 0.2, height: newY * 0.2)
