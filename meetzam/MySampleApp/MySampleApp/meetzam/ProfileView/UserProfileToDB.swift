@@ -45,10 +45,25 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     // function to add/update user info into database
     // argument: dbName...
     func insertProfile(_userId: String, _displayName: String, _bio: String, _age: String, _gender: String, _region: String, _email: String) {
-        //print("insertSomeItems()")
+        print("     insertProfile")
         let mapper = AWSDynamoDBObjectMapper.default()
-        
         var userProfile = UserProfileToDB()
+        
+        mapper.load(UserProfileToDB.self, hashKey: _userId, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            if let error = task.error as? NSError {
+                print("InsertError: \(error)")
+            } else if let user_profile_addTo = task.result as? UserProfileToDB {
+                userProfile?.currentLikedMovie=user_profile_addTo.currentLikedMovie
+                userProfile?.userId=user_profile_addTo.userId
+            }
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            return nil
+        })
+        while(userProfile?.userId==nil)
+        {
+            print("waiting")
+        }
+        
         userProfile?.userId  = _userId
         userProfile?.displayName = _displayName
         userProfile?.bio = _bio
@@ -174,19 +189,22 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
-        while(userProfile?.displayName==nil)
+        while(userProfile?.email==nil)
         {
             print("waiting")
         }
         print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
-        userProfile?.currentLikedMovie.insert(movieTitle)
+        if (!((userProfile?.currentLikedMovie.contains(movieTitle))!))
+        {
+            userProfile?.currentLikedMovie.insert(movieTitle)
+        }
         for movie in (userProfile?.currentLikedMovie)! {
             print("\(movie)")
         }
         mapper.save(userProfile!)
     }
     
-    func returnUser(key: String) -> UserProfileToDB
+    /*func returnUser(key: String) -> UserProfileToDB
     {
         print("     returnUser!!")
         let mapper = AWSDynamoDBObjectMapper.default()
@@ -203,8 +221,5 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         })
         print("     display name is \(getuserProfile?.displayName)")
         return getuserProfile!
-    }
-    
-        
-    
+    }*/
 }
