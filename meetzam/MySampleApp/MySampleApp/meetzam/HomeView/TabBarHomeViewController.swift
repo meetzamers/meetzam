@@ -33,9 +33,6 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         UIApplication.shared.statusBarStyle = .default
     }
     
-    // Image Data Source names:
-    let imagekeys = ["376866", "136799", "324849", "293167", "313369", "14564", "381288", "346672", "376867", "180863", "334543", "334541", "381284", "356305", "68730", "345920", "340666", "47971"]
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Let self be the delegate and dataSource
@@ -55,9 +52,8 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         //mush
         //let frameVC = FrameViewController()
         //frameVC.imagekey = imagekeys.first
-        frameVC.movie_info = movielist.tableRows.first
-        print("herer\n")
-        print(movielist.tableRows.count)
+        //frameVC.movie_info = movielist.tableRows.first
+
         
         let viewControllers = [frameVC]
         
@@ -123,33 +119,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     // Page view functions start here
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        /*
-         let currentImageName = (viewController as! FrameViewController).imagekey
-         let currentIndex = imagekeys.index(of: currentImageName!)
-         
-         if (currentIndex! < imagekeys.count - 1) {
-         let frameVC = FrameViewController()
-         frameVC.imagekey = imagekeys[currentIndex! + 1]
-         
-         // turn off isFirstMovieView
-         self.isFirstMovieView = false
-         
-         return frameVC
-         }
-         
-         return nil
-         */
-        
-        // Mogu's new stuff
-        
-        //        if currentIndex + 1 < movielist.tableRows.count {
-        //            currentIndex += 1
-        //            let frameVC = FrameViewController()
-        //            frameVC.setVC(content: movielist.tableRows[currentIndex])
-        //            return frameVC
-        //        }
-        //
-        //        return nil
+
         let currentMovie = (viewController as! FrameViewController).movie_info
         print(movielist.tableRows.count)
         let currentIndex = movielist.tableRows.index(of: currentMovie!)
@@ -168,31 +138,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        /*
-         let currentImagekey = (viewController as! FrameViewController).imagekey
-         let currentIndex = imagekeys.index(of: currentImagekey!)
-         
-         if (currentIndex! > 0) {
-         let frameVC = FrameViewController()
-         frameVC.imagekey = imagekeys[currentIndex! - 1]
-         
-         // turn off isFirstMovieView
-         self.isFirstMovieView = false
-         
-         return frameVC
-         }
-         
-         return nil
-         */
-        // Mogu's new stuff
-        
-        //        if currentIndex - 1 < 0 {
-        //            currentIndex -= 1
-        //            let frameVC = FrameViewController()
-        //            frameVC.setVC(content: movielist.tableRows[currentIndex])
-        //            return frameVC
-        //        }
-        //        return nil
+
         let currentMovie = (viewController as! FrameViewController).movie_info
         let currentIndex = movielist.tableRows.index(of: currentMovie!)
         
@@ -326,8 +272,8 @@ class FrameViewController: UIViewController {
         self.view.backgroundColor = UIColor.clear
         //mush
         //SingleMovie().getMovieForDisplay(key: imagekey!, movie_data: movie_info, movieTitle: movieTitle, movieTitleDetailed: movieDetailedInfo, imageView: imageView, moviePopInfo: moviePopInfo)
-        movieTitle.text = movie_info?.Title
-        movieDetailedInfo.text = movie_info?.overview
+        movieTitle.text = movie_info?.title
+        movieDetailedInfo.text = movie_info?.longDescription
         
         imageView.image = movie_info?.image
         moviePopInfo.text = movie_info?.pop
