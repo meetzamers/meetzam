@@ -30,6 +30,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     var gender: String?
     var region: String?
     var email: String?
+    var currentLiked = Set<String>()
     
     class func dynamoDBTableName() -> String {
         
