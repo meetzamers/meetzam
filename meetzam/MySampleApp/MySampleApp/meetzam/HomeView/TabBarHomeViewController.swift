@@ -131,8 +131,10 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         if (currentIndex! < (movielist.tableRows.count) - 1) {
             let frameVC = FrameViewController()
             frameVC.movie_info = movielist.tableRows[currentIndex! + 1]
+            print ("liked movies are " + (user_p?.currentLikedMovie.description)!)
+            print("next movie is" + (frameVC.movie_info?.title)!)
             //mush: like
-            if (user_p?.currentLikedMovie.contains((currentMovie?.title)!))! {
+            if (user_p?.currentLikedMovie.contains((frameVC.movie_info?.title)!))! {
                 print("swipe left:FOUND THE MOVIE IN LIKED LIST")
                 frameVC.like = true
             }
@@ -142,6 +144,9 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
             
             // turn off isFirstMovieView
             self.isFirstMovieView = false
+            
+            user_p?.currentLikedMovie.removeAll()
+            UserProfileToDB().getLikedMovies(userId: AWSIdentityManager.default().identityId!, user_profile: user_p!)
             
             return frameVC
         }
@@ -158,17 +163,23 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
             let frameVC = FrameViewController()
             frameVC.movie_info = movielist.tableRows[currentIndex! - 1]
             
+            print ("liked movies are " + (user_p?.currentLikedMovie.description)!)
+            print("next movie is" + (frameVC.movie_info?.title)!)
             //mush: like
-            if (user_p?.currentLikedMovie.contains((currentMovie?.title)!))! {
+            if (user_p?.currentLikedMovie.contains((frameVC.movie_info?.title)!))! {
                 print("swipe right:FOUND THE MOVIE IN LIKED LIST")
                 frameVC.like = true
             }
             else {
                 print("swipe right:NOT LIKED")
             }
-            
+
+
             // turn off isFirstMovieView
             self.isFirstMovieView = false
+            
+            user_p?.currentLikedMovie.removeAll()
+            UserProfileToDB().getLikedMovies(userId: AWSIdentityManager.default().identityId!, user_profile: user_p!)
             
             return frameVC
         }
