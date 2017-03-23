@@ -119,7 +119,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         
         mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as? NSError {
-                //print("Error: \(error)")
+                print("Error: \(error)")
             } else if let user_profile = task.result as? UserProfileToDB {
                 //print("     Getting fields in user_profile")
                 displayname.text = user_profile.displayName
@@ -134,6 +134,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         
     }
     
+
     func insertToCurrentLikedMovie(key: String, movieTitle: String)
     {
         print("     insertToCurrentLikedMovie!!")
@@ -223,3 +224,21 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         return getuserProfile!
     }*/
 }
+
+    func getLikedMovies(userId: String, user_profile: UserProfileToDB) {
+        let mapper = AWSDynamoDBObjectMapper.default()
+        mapper.load(UserProfileToDB.self, hashKey: userId, rangeKey: nil).continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask!) -> AnyObject! in
+            if let error = task.error as? NSError {
+                print("Error: \(error)")
+            } else if let user_profile_temp = task.result as? UserProfileToDB {
+                print("get: HERE ARE THE LIKED MOVIES")
+                user_profile.currentLikedMovie = user_profile_temp.currentLikedMovie
+                print(user_profile.currentLikedMovie.description)
+            }
+            
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            return nil
+        })
+    }
+    
+}//continueWith(executor: AWSExecutor.thread(), block: { (task:AWSTask!) -> AnyObject! in

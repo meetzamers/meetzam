@@ -12,7 +12,7 @@
 import UIKit
 import AWSDynamoDB
 import AWSMobileHubHelper
-import AWSDynamoDB
+//import AWSDynamoDB
 
 class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate{
     
@@ -25,6 +25,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     //mush
     var movielist = MovieList()
     var movieView = FrameViewController()
+    var user_p = UserProfileToDB()
     
     // Variable ends here
     // ============================================
@@ -38,8 +39,15 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         // Let self be the delegate and dataSource
         self.delegate = self
         self.dataSource = self
-        SingleMovie().refreshList(movie_list: movielist, view: movieView)
         
+        //get user liked movies initially
+        UserProfileToDB().getLikedMovies(userId: AWSIdentityManager.default().identityId!, user_profile: user_p!)
+        //get homescreen movie list
+        //actually if we discard the executor; mainThread(), 
+        //we might be able to discard the movieView thingy
+        //since without that the method will run asynchronizedly and return immediately
+        SingleMovie().refreshList(movie_list: movielist, view: movieView, user_profile: user_p!)
+
         // change background color to grey
         //view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
         view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
@@ -48,11 +56,8 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         if (!AWSIdentityManager.default().isLoggedIn) {
             self.isFirstMovieView = true
         }
+
         let frameVC = movieView
-        //mush
-        //let frameVC = FrameViewController()
-        //frameVC.imagekey = imagekeys.first
-        //frameVC.movie_info = movielist.tableRows.first
 
         
         let viewControllers = [frameVC]
@@ -121,12 +126,19 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
 
         let currentMovie = (viewController as! FrameViewController).movie_info
-        print(movielist.tableRows.count)
         let currentIndex = movielist.tableRows.index(of: currentMovie!)
         
         if (currentIndex! < (movielist.tableRows.count) - 1) {
             let frameVC = FrameViewController()
             frameVC.movie_info = movielist.tableRows[currentIndex! + 1]
+            //mush: like
+            if (user_p?.currentLikedMovie.contains((currentMovie?.title)!))! {
+                print("swipe left:FOUND THE MOVIE IN LIKED LIST")
+                frameVC.like = true
+            }
+            else {
+                print("swipe left:NOT LIKED")
+            }
             
             // turn off isFirstMovieView
             self.isFirstMovieView = false
@@ -145,6 +157,15 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         if (currentIndex! > 0) {
             let frameVC = FrameViewController()
             frameVC.movie_info = movielist.tableRows[currentIndex! - 1]
+            
+            //mush: like
+            if (user_p?.currentLikedMovie.contains((currentMovie?.title)!))! {
+                print("swipe right:FOUND THE MOVIE IN LIKED LIST")
+                frameVC.like = true
+            }
+            else {
+                print("swipe right:NOT LIKED")
+            }
             
             // turn off isFirstMovieView
             self.isFirstMovieView = false
@@ -175,7 +196,8 @@ class FrameViewController: UIViewController {
     let movieDetailedInfo = UITextView()
     let moviePopInfo = UILabel()
     
-    var imagekey: String?
+    var user_p = UserProfileToDB()
+    var like = false
 
     var movie_info = SingleMovie()
     
@@ -272,13 +294,16 @@ class FrameViewController: UIViewController {
         self.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         self.view.backgroundColor = UIColor.clear
         //mush
+
         //SingleMovie().getMovieForDisplay(key: imagekey!, movie_data: movie_info, movieTitle: movieTitle, movieTitleDetailed: movieDetailedInfo, imageView: imageView, moviePopInfo: moviePopInfo)
         movieTitle.text = movie_info?.title
         movieDetailedInfo.text = movie_info?.longDescription
         
         imageView.image = movie_info?.image
-        moviePopInfo.text = movie_info?.pop
-        
+        //moviePopInfo.text = movie_info?.pop
+        //if like
+        //function: do small heart in corner
+
         // add scroll view
         movieContent.showsVerticalScrollIndicator = true
         movieContent.isScrollEnabled = true
