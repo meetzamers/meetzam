@@ -139,6 +139,52 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         
     }
     
+    func getLikedMoviePosters(key: String) -> [String]
+    {
+        print("     getLikedMoviePosters")
+        let mapper = AWSDynamoDBObjectMapper.default()
+        var currentLikedMovie = Set<String>()
+        var userProfile = UserProfileToDB()
+        
+        print("     before load!!")
+        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            if let error = task.error as? NSError {
+                print("InsertError: \(error)")
+            } else if let user_profile_addTo = task.result as? UserProfileToDB {
+                currentLikedMovie=user_profile_addTo.currentLikedMovie
+                userProfile?.displayName=user_profile_addTo.displayName
+            }
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            return nil
+        })
+        
+        
+        while (userProfile?.displayName==nil)
+        {
+            //print("waiting")
+        }
+        
+        var MoviesPosterURL:Array = [String]()
+        for movie in (currentLikedMovie) {
+            print("You Liked \(movie)")
+            mapper.load(SingleMovie.self, hashKey: movie, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+                if let error = task.error as? NSError {
+                    print("InsertError: \(error)")
+                } else if let single_movie = task.result as? SingleMovie {
+                    MoviesPosterURL.append(single_movie.poster_path!)
+                }
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                return nil
+            })
+        }
+        
+        while ((MoviesPosterURL.count) != (currentLikedMovie.count))
+        {
+            //print("waiting")
+        }
+        return MoviesPosterURL
+    }
+    
 }
 
 class MovieList {
