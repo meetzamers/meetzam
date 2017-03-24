@@ -663,6 +663,7 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/ZLSwipeableViewSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RAMAnimatedTabBarController.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Lottie.framework",
 			);
 			outputPaths = (
 			);

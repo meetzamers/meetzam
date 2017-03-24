@@ -12,7 +12,6 @@
 import UIKit
 import AWSDynamoDB
 import AWSMobileHubHelper
-//import AWSDynamoDB
 
 class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate{
     
@@ -58,11 +57,9 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         }
         
         let frameVC = movieView
-        
-        
         let viewControllers = [frameVC]
         
-        //        let viewControllers = [movieView]
+        // let viewControllers = [movieView]
         setViewControllers(viewControllers, direction: .forward, animated: true, completion: nil)
         
         // ============================================
@@ -122,7 +119,6 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     // AWS support functions end here
     // ============================================
     // Page view functions start here
-    
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         
         let currentMovie = (viewController as! FrameViewController).movie_info
@@ -199,6 +195,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     // ============================================
 }
 
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This is each page's view controller
 class FrameViewController: UIViewController {
     
@@ -368,6 +365,8 @@ class FrameViewController: UIViewController {
         }
     }
 }
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// Might need it..?
 
 //    let moviePopInfo = UILabel()
 
