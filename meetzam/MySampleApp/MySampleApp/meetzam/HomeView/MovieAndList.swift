@@ -89,6 +89,10 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                     let imageURL = URL(string: path)
                     let imageData = try! Data(contentsOf: imageURL!)
                     item.image = UIImage(data: imageData)
+                    
+                    print("++++++++++++++++++++++++++++++++++++++++++")
+                    print()
+                    
                     //item.pop = "Popularity: " + item.TMDB_popularity!
                     movie_list.tableRows.append(item)
                     
@@ -115,10 +119,12 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                         let imageData = try! Data(contentsOf: imageURL!)
                         view.imageView.image = UIImage(data: imageData)
                         
+                        
+                        view.videoURL = "https://www.youtube.com/embed/" + item.trailer_key!
                         // add movie trailer
                         let htmlStyle = "<style> iframe { margin: 0px !important; padding: 0px !important; border: 0px !important; } html, body { margin: 0px !important; padding: 0px !important; border: 0px !important; width: 100%; height: 100%; } </style>"
                         view.videoView.frame = CGRect(x: 6, y: view.imageView.frame.height + view.movieTitle.frame.height + view.movieDetailedInfo.frame.height + 5, width: UIScreen.main.bounds.width - 15, height: (UIScreen.main.bounds.width - 15)/1.85)
-                        view.videoView.loadHTMLString("<html><head><style>\(htmlStyle)</style></head><body><iframe width='100%' height='100%' src='\("https://www.youtube.com/embed/" + item.trailer_key!)?&playsinline=1' frameborder='0' allowfullscreen></iframe></body></html>", baseURL: nil)
+                        view.videoView.loadHTMLString("<html><head><style>\(htmlStyle)</style></head><body><iframe width='100%' height='100%' src='\(view.videoURL)?&playsinline=1' frameborder='0' allowfullscreen></iframe></body></html>", baseURL: nil)
                         view.movieContent.addSubview(view.videoView)
                         
                         view.movie_info = item;

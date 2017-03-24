@@ -216,6 +216,7 @@ class FrameViewController: UIViewController {
         
         return vd
     }()
+    var videoURL = ""
     
     // scoll view
     let movieContent = UIScrollView(frame: CGRect(x: 0, y: 22, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 46))
@@ -364,6 +365,13 @@ class FrameViewController: UIViewController {
         movieDetailedInfo.backgroundColor = UIColor.clear
         movieDetailedInfo.isEditable = false
         movieContent.addSubview(movieDetailedInfo)
+        
+        // add movie trailer
+        videoURL = "https://www.youtube.com/embed/" + (movie_info?.trailer_key!)!
+        let htmlStyle = "<style> iframe { margin: 0px !important; padding: 0px !important; border: 0px !important; } html, body { margin: 0px !important; padding: 0px !important; border: 0px !important; width: 100%; height: 100%; } </style>"
+        videoView.frame = CGRect(x: 6, y: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + 5, width: UIScreen.main.bounds.width - 15, height: (UIScreen.main.bounds.width - 15)/1.85)
+        videoView.loadHTMLString("<html><head><style>\(htmlStyle)</style></head><body><iframe width='100%' height='100%' src='\(videoURL)?&playsinline=1' frameborder='0' allowfullscreen></iframe></body></html>", baseURL: nil)
+        movieContent.addSubview(videoView)
         
         // add small heart
         if (like) {
