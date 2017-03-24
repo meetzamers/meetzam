@@ -276,6 +276,9 @@ class FrameViewController: UIViewController {
     func doubleTapAction() {
         //add movie to user's liked movie list
         UserProfileToDB().insertToCurrentLikedMovie(key: AWSIdentityManager.default().identityId!, movieTitle: movieTitle.text!)
+        //add user to movie's liked user list
+        SingleMovie().insertToCurrentLikedUser(key: movieTitle.text!, userid: AWSIdentityManager.default().identityId!)
+        
 //        imageView.isUserInteractionEnabled = false // in case if the user trying to do multiple double tap in a short time
         let newX = imageView.bounds.width
         let newY = imageView.bounds.height
@@ -345,6 +348,7 @@ class FrameViewController: UIViewController {
             let imageURL = URL(string: path)
             let imageData = try! Data(contentsOf: imageURL!)
             imageView.image = UIImage(data: imageData)
+            videoURL = "https://www.youtube.com/embed/" + (movie_info?.trailer_key!)!
         }
         // add scroll view
         movieContent.showsVerticalScrollIndicator = true
@@ -377,7 +381,6 @@ class FrameViewController: UIViewController {
         movieContent.addSubview(movieDetailedInfo)
         
         // add movie trailer
-        videoURL = "https://www.youtube.com/embed/" + (movie_info?.trailer_key!)!
         let htmlStyle = "<style> iframe { margin: 0px !important; padding: 0px !important; border: 0px !important; } html, body { margin: 0px !important; padding: 0px !important; border: 0px !important; width: 100%; height: 100%; } </style>"
         videoView.frame = CGRect(x: 6, y: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + 5, width: UIScreen.main.bounds.width - 15, height: (UIScreen.main.bounds.width - 15)/1.85)
         videoView.loadHTMLString("<html><head><style>\(htmlStyle)</style></head><body><iframe width='100%' height='100%' src='\(videoURL)?&playsinline=1' frameborder='0' allowfullscreen></iframe></body></html>", baseURL: nil)
