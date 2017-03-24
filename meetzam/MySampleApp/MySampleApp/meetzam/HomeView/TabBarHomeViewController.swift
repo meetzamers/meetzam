@@ -270,7 +270,7 @@ class FrameViewController: UIViewController {
     // Double Tap action
     func doubleTapAction() {
         UserProfileToDB().insertToCurrentLikedMovie(key: AWSIdentityManager.default().identityId!, movieTitle: movieTitle.text!)
-        imageView.isUserInteractionEnabled = false // in case if the user trying to do multiple double tap in a short time
+//        imageView.isUserInteractionEnabled = false // in case if the user trying to do multiple double tap in a short time
         let newX = imageView.bounds.width
         let newY = imageView.bounds.height
         likeImage.frame = CGRect(x: newX * 0.4, y: newY * 0.4, width: newX * 0.2, height: newY * 0.2)
@@ -293,7 +293,7 @@ class FrameViewController: UIViewController {
                         self.likeImage.alpha = 0
                     }, completion: {(finished: Bool) in
                         self.likeImage.removeFromSuperview()
-                        self.imageView.isUserInteractionEnabled = true // reenable the double tap
+//                        self.imageView.isUserInteractionEnabled = true // reenable the double tap
                     })
                 })
             })
