@@ -251,7 +251,10 @@ class FrameViewController: UIViewController {
     // Small heart button action (cancel like)
     func cancelLike() {
         print("unliked!!!!!!!")
-        
+        //remove user from movie's liked list
+        SingleMovie().deleteFromCurrentLikedUser(key: movieTitle.text!, userid: AWSIdentityManager.default().identityId!)
+        //remove movie from user's liked list
+        UserProfileToDB().deleteFromCurrentLikedMovie(key: AWSIdentityManager.default().identityId!, movieTitle: movieTitle.text!)
         // unlike animation
         UIView.animate(withDuration: 0.1 / 1.5, animations: {() -> Void in
             self.doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 1.1, y: 1.1)
