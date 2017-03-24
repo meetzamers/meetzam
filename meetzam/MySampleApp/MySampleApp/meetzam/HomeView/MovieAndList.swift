@@ -166,12 +166,14 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             return nil
         })
         
-        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         while (userProfile?.displayName==nil)
         {
             print("waiting")
         }
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         var MoviesPosterURL:Array = [String]()
         for movie in (currentLikedMovie) {
             print("You Liked \(movie)")
@@ -186,10 +188,13 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             })
         }
         
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         while ((MoviesPosterURL.count) != (currentLikedMovie.count))
         {
             print("waiting")
         }
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        
         return MoviesPosterURL
     }
     
