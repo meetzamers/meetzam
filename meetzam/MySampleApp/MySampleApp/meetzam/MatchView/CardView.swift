@@ -37,12 +37,12 @@ class CardView: UIView, UICollectionViewDelegate, UICollectionViewDataSource {
         self.addSubview(userPicField)
         
         // user name
-        displayName.frame = CGRect(x: 30, y: userPicField.frame.height + 10, width: UIScreen.main.bounds.width-30, height: 30)
+        displayName.frame = CGRect(x: 25, y: userPicField.frame.height + 10, width: UIScreen.main.bounds.width-30, height: 30)
         displayName.font = UIFont(name: "HelveticaNeue-Light", size: 25)
         self.addSubview(displayName)
         
         // user bio
-        userBioField.frame = CGRect(x: 30, y: userPicField.frame.height + 40, width: UIScreen.main.bounds.width-30, height: 20)
+        userBioField.frame = CGRect(x: 25, y: userPicField.frame.height + 40, width: UIScreen.main.bounds.width-30, height: 20)
         userBioField.font = UIFont(name: "HelveticaNeue-Thin", size: 15)
         userBioField.textColor = UIColor.gray
         self.addSubview(userBioField)
@@ -50,7 +50,7 @@ class CardView: UIView, UICollectionViewDelegate, UICollectionViewDataSource {
         // also liked
         let alsoLiked = UILabel()
         alsoLiked.text = "Also liked"
-        alsoLiked.frame = CGRect(x: 30, y: userPicField.frame.height + 70, width: UIScreen.main.bounds.width-30, height: 20)
+        alsoLiked.frame = CGRect(x: 25, y: userPicField.frame.height + 70, width: UIScreen.main.bounds.width-30, height: 20)
         alsoLiked.font = UIFont(name: "HelveticaNeue-Thin", size: 18)
         alsoLiked.textColor = UIColor.darkGray
         self.addSubview(alsoLiked)

@@ -45,6 +45,13 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         for url in imagesURLs {
             print("This is url \(url)")
         }
+        
+        cell.movieTitleLabel.text = images[indexPath.row]
+        
+        
+        cell.movieTitleLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 18)
+
+        
         return cell
     }
 
