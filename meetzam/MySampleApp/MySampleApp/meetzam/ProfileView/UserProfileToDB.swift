@@ -179,12 +179,12 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 print("gender is \(userProfile?.gender)")
                 userProfile?.region = user_profile_addTo.region
                 print("region is \(userProfile?.region)")
-                userProfile?.email = user_profile_addTo.email
-                print("email is \(userProfile?.email)")
                 userProfile?.currentLikedMovie=user_profile_addTo.currentLikedMovie
                 for movie in (userProfile?.currentLikedMovie)! {
                     print("\(movie)")
                 }
+                userProfile?.email = user_profile_addTo.email
+                print("email is \(userProfile?.email)")
                 print("     all put")
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false

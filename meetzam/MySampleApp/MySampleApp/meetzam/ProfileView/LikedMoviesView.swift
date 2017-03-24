@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AWSMobileHubHelper
 
 class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
@@ -38,6 +39,12 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         
         
         cell.movieImage.image = UIImage(named: images[indexPath.row])
+        var imagesURLs = SingleMovie().getLikedMoviePosters(key: AWSIdentityManager.default().identityId!)
+        print("     put into imagesURLs")
+        print("-------------------------------------------------")
+        for url in imagesURLs {
+            print("This is url \(url)")
+        }
         return cell
     }
 
