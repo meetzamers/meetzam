@@ -202,15 +202,17 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
 // This is each page's view controller
 class FrameViewController: UIViewController {
     
+    // DB related var
+    var user_p = UserProfileToDB()
+    var like = false
+    var movie_info = SingleMovie()
+    
     // UI var
     let movieTitle = UILabel()
     let movieDetailedInfo = UITextView()
-    //    let moviePopInfo = UILabel()
     
-    var user_p = UserProfileToDB()
-    var like = false
-    
-    var movie_info = SingleMovie()
+    // scoll view
+    let movieContent = UIScrollView(frame: CGRect(x: 0, y: 22, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 46))
     
     // image view init
     var imageView: UIImageView = {
@@ -230,18 +232,46 @@ class FrameViewController: UIViewController {
         return iv
     }()
     
-    // Small Do Heart image
-    let doHeart: UIImageView = {
-        let iv = UIImageView()
-        iv.image = UIImage(named: "DoHeart")
-        iv.contentMode = .scaleAspectFill
+    // Small Do Heart image + button
+//    let doHeart: UIImageView = {
+//        let iv = UIImageView()
+//        iv.image = UIImage(named: "DoHeart")
+//        iv.contentMode = .scaleAspectFill
+//        
+//        return iv
+//    }()
+    let doHeartButton: UIButton = {
+        let bt = UIButton()
+        bt.setImage(UIImage(named: "DoHeart"), for: .normal)
+        bt.addTarget(self, action: #selector(FrameViewController.cancelLike), for: .touchUpInside)
         
-        return iv
+        return bt
     }()
+    
+    // Small heart button action (cancel like)
+    func cancelLike() {
+        print("unliked!!!!!!!")
+        
+        // unlike animation
+        UIView.animate(withDuration: 0.1 / 1.5, animations: {() -> Void in
+            self.doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 1.1, y: 1.1)
+        }, completion: {(_ finished: Bool) -> Void in
+            UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
+                self.doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 0.9, y: 0.9)
+            }, completion: {(_ finished: Bool) -> Void in
+                UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
+                    self.doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
+                }, completion: {(finished: Bool) in
+                    self.doHeartButton.alpha = 0
+                    self.doHeartButton.transform = CGAffineTransform.identity
+                    self.doHeartButton.removeFromSuperview()
+                })
+            })
+        })
+    }
     
     // Double Tap action
     func doubleTapAction() {
-        print("liked")
         UserProfileToDB().insertToCurrentLikedMovie(key: AWSIdentityManager.default().identityId!, movieTitle: movieTitle.text!)
         let newX = imageView.bounds.width
         let newY = imageView.bounds.height
@@ -268,29 +298,27 @@ class FrameViewController: UIViewController {
             })
         })
         
-        // do heart
-        doHeart.frame = CGRect(x: 10 + movieTitle.frame.width, y: imageView.frame.height + 10, width: 25, height: 25)
-        doHeart.alpha = 0.98
-        imageView.addSubview(doHeart)
+        // add something
+        // do heart button create
+        self.doHeartButton.alpha = 1
+        doHeartButton.frame = CGRect(x: 10 + movieTitle.frame.width, y: imageView.frame.height + 10, width: 25, height: 25)
+        movieContent.addSubview(doHeartButton)
         
-        // pop up do heart
-        doHeart.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
-        UIView.animate(withDuration: 0.1 / 1.5, animations: {() -> Void in
-            self.doHeart.transform = CGAffineTransform.identity.scaledBy(x: 1.1, y: 1.1)
+        // do heart button animation
+        doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
+        UIView.animate(withDuration: 0.2 / 1.5, animations: {() -> Void in
+            self.doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 1.1, y: 1.1)
         }, completion: {(_ finished: Bool) -> Void in
-            UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
-                self.doHeart.transform = CGAffineTransform.identity.scaledBy(x: 0.9, y: 0.9)
+            UIView.animate(withDuration: 0.2 / 2, animations: {() -> Void in
+                self.doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 0.9, y: 0.9)
             }, completion: {(_ finished: Bool) -> Void in
-                UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
-                    self.doHeart.transform = CGAffineTransform.identity
+                UIView.animate(withDuration: 0.2 / 2, animations: {() -> Void in
+                    self.doHeartButton.transform = CGAffineTransform.identity
                 }, completion: nil)
             })
         })
-        
+
     }
-    
-    // scoll view
-    let movieContent = UIScrollView(frame: CGRect(x: 0, y: 22, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 46))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -338,15 +366,39 @@ class FrameViewController: UIViewController {
         
         // add small heart
         if (like) {
-            // do heart
-            doHeart.frame = CGRect(x: 10 + movieTitle.frame.width, y: imageView.frame.height + 10, width: 25, height: 25)
-            doHeart.alpha = 0.98
-            imageView.addSubview(doHeart)
+            // do heart button create
+            self.doHeartButton.alpha = 1
+            doHeartButton.frame = CGRect(x: 10 + movieTitle.frame.width, y: imageView.frame.height + 10, width: 25, height: 25)
+            movieContent.addSubview(doHeartButton)
         }
-        
     }
-    
 }
+
+//    let moviePopInfo = UILabel()
+
+//            doHeart.frame = CGRect(x: 10 + movieTitle.frame.width, y: imageView.frame.height + 10, width: 25, height: 25)
+//            doHeart.alpha = 0.98
+//            imageView.addSubview(doHeart)
+
+//        // do heart
+//        doHeart.frame = CGRect(x: 10 + movieTitle.frame.width, y: imageView.frame.height + 10, width: 25, height: 25)
+//        doHeart.alpha = 0.98
+//        imageView.addSubview(doHeart)
+
+// pop up do heart
+//        doHeart.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
+//        UIView.animate(withDuration: 0.1 / 1.5, animations: {() -> Void in
+//            self.doHeart.transform = CGAffineTransform.identity.scaledBy(x: 1.1, y: 1.1)
+//        }, completion: {(_ finished: Bool) -> Void in
+//            UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
+//                self.doHeart.transform = CGAffineTransform.identity.scaledBy(x: 0.9, y: 0.9)
+//            }, completion: {(_ finished: Bool) -> Void in
+//                UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
+//                    self.doHeart.transform = CGAffineTransform.identity
+//                }, completion: nil)
+//            })
+//        })
+
 
 // Scroll down action
 //    func scrollUpAction() {
