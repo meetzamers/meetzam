@@ -43,11 +43,11 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         //get user liked movies initially
         UserProfileToDB().getLikedMovies(userId: AWSIdentityManager.default().identityId!, user_profile: user_p!)
         //get homescreen movie list
-        //actually if we discard the executor; mainThread(), 
+        //actually if we discard the executor; mainThread(),
         //we might be able to discard the movieView thingy
         //since without that the method will run asynchronizedly and return immediately
         SingleMovie().refreshList(movie_list: movielist, view: movieView, user_profile: user_p!)
-
+        
         // change background color to grey
         //view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
         view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
@@ -56,9 +56,9 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         if (!AWSIdentityManager.default().isLoggedIn) {
             self.isFirstMovieView = true
         }
-
+        
         let frameVC = movieView
-
+        
         
         let viewControllers = [frameVC]
         
@@ -124,7 +124,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     // Page view functions start here
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-
+        
         let currentMovie = (viewController as! FrameViewController).movie_info
         let currentIndex = movielist.tableRows.index(of: currentMovie!)
         
@@ -155,7 +155,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-
+        
         let currentMovie = (viewController as! FrameViewController).movie_info
         let currentIndex = movielist.tableRows.index(of: currentMovie!)
         
@@ -173,8 +173,8 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
             else {
                 print("swipe right:NOT LIKED")
             }
-
-
+            
+            
             // turn off isFirstMovieView
             self.isFirstMovieView = false
             
@@ -205,11 +205,11 @@ class FrameViewController: UIViewController {
     // UI var
     let movieTitle = UILabel()
     let movieDetailedInfo = UITextView()
-    let moviePopInfo = UILabel()
+    //    let moviePopInfo = UILabel()
     
     var user_p = UserProfileToDB()
     var like = false
-
+    
     var movie_info = SingleMovie()
     
     // image view init
@@ -289,32 +289,23 @@ class FrameViewController: UIViewController {
         
     }
     
-    // Scroll down action
-    func scrollUpAction() {
-        print("scrolled down")
-    }
-    
-    
     // scoll view
     let movieContent = UIScrollView(frame: CGRect(x: 0, y: 22, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 46))
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // view changes
         
+        // view changes
         self.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         self.view.backgroundColor = UIColor.clear
         //mush
-
         //SingleMovie().getMovieForDisplay(key: imagekey!, movie_data: movie_info, movieTitle: movieTitle, movieTitleDetailed: movieDetailedInfo, imageView: imageView, moviePopInfo: moviePopInfo)
         movieTitle.text = movie_info?.title
         movieDetailedInfo.text = movie_info?.longDescription
         
         imageView.image = movie_info?.image
         //moviePopInfo.text = movie_info?.pop
-        //if like
-        //function: do small heart in corner
-
+        
         // add scroll view
         movieContent.showsVerticalScrollIndicator = true
         movieContent.isScrollEnabled = true
@@ -329,13 +320,6 @@ class FrameViewController: UIViewController {
         doubletap.numberOfTapsRequired = 2;
         doubletap.addTarget(self, action: #selector(FrameViewController.doubleTapAction))
         imageView.addGestureRecognizer(doubletap)
-        
-        // add scroll down to view the detailed stuff
-//        let scrolldown = UISwipeGestureRecognizer()
-//        scrolldown.direction = .up
-//        scrolldown.addTarget(self, action: #selector(FrameViewController.scrollUpAction))
-//        imageView.addGestureRecognizer(scrolldown)
-        
         movieContent.addSubview(imageView)
         
         // add movie title in to the scroll view
@@ -343,13 +327,6 @@ class FrameViewController: UIViewController {
         movieTitle.font = UIFont(name: "HelveticaNeue-Light", size: 23)
         movieTitle.textColor = UIColor.black
         movieContent.addSubview(movieTitle)
-        
-        // add movie popularity in to the scroll view
-//        moviePopInfo.frame = CGRect(x: 10, y: imageView.frame.height + 40, width: UIScreen.main.bounds.width - 20, height: 30)
-//        moviePopInfo.font = UIFont(name: "HelveticaNeue-Light", size: 15)
-//        moviePopInfo.textColor = UIColor.black
-//        moviePopInfo.textAlignment = .right
-//        movieContent.addSubview(moviePopInfo)
         
         // add movie info in to the scroll view
         movieDetailedInfo.frame = CGRect(x: 6, y: imageView.frame.height + movieTitle.frame.height + 5, width: UIScreen.main.bounds.width - 15, height: 200)
@@ -359,7 +336,25 @@ class FrameViewController: UIViewController {
         movieDetailedInfo.isEditable = false
         movieContent.addSubview(movieDetailedInfo)
         
+        // add small heart
+        if (like) {
+            // do heart
+            doHeart.frame = CGRect(x: 10 + movieTitle.frame.width, y: imageView.frame.height + 10, width: 25, height: 25)
+            doHeart.alpha = 0.98
+            imageView.addSubview(doHeart)
+        }
         
     }
     
 }
+
+// Scroll down action
+//    func scrollUpAction() {
+//        print("scrolled down")
+//    }
+
+// add scroll down to view the detailed stuff
+//        let scrolldown = UISwipeGestureRecognizer()
+//        scrolldown.direction = .up
+//        scrolldown.addTarget(self, action: #selector(FrameViewController.scrollUpAction))
+//        imageView.addGestureRecognizer(scrolldown)
