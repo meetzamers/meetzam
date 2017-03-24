@@ -212,6 +212,7 @@ class FrameViewController: UIViewController {
         vd.backgroundColor = UIColor.clear
         vd.scrollView.isScrollEnabled = false
         vd.scrollView.bounces = false
+        vd.allowsInlineMediaPlayback = true
         
         return vd
     }()
