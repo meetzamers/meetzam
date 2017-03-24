@@ -296,7 +296,7 @@ class FrameViewController: UIViewController {
                         self.likeImage.alpha = 0
                     }, completion: {(finished: Bool) in
                         self.likeImage.removeFromSuperview()
-                        self.imageView.isUserInteractionEnabled = true // reenable the double tap 
+                        self.imageView.isUserInteractionEnabled = true // reenable the double tap
                     })
                 })
             })
