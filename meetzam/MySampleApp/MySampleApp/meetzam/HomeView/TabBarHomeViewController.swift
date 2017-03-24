@@ -273,6 +273,7 @@ class FrameViewController: UIViewController {
     // Double Tap action
     func doubleTapAction() {
         UserProfileToDB().insertToCurrentLikedMovie(key: AWSIdentityManager.default().identityId!, movieTitle: movieTitle.text!)
+        imageView.isUserInteractionEnabled = false // in case if the user trying to do multiple double tap in a short time
         let newX = imageView.bounds.width
         let newY = imageView.bounds.height
         likeImage.frame = CGRect(x: newX * 0.4, y: newY * 0.4, width: newX * 0.2, height: newY * 0.2)
@@ -293,12 +294,14 @@ class FrameViewController: UIViewController {
                     // fade out
                     UIView.animate(withDuration: 0.2, delay: 0.3, options: UIViewAnimationOptions.curveEaseOut, animations: {
                         self.likeImage.alpha = 0
-                    }, completion: {(finished: Bool) in self.likeImage.removeFromSuperview()})
+                    }, completion: {(finished: Bool) in
+                        self.likeImage.removeFromSuperview()
+                        self.imageView.isUserInteractionEnabled = true // reenable the double tap
+                    })
                 })
             })
         })
         
-        // add something
         // do heart button create
         self.doHeartButton.alpha = 1
         doHeartButton.frame = CGRect(x: 10 + movieTitle.frame.width, y: imageView.frame.height + 10, width: 25, height: 25)
