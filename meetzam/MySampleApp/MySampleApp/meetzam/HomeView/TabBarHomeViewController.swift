@@ -250,7 +250,10 @@ class FrameViewController: UIViewController {
     // Small heart button action (cancel like)
     func cancelLike() {
         print("unliked!!!!!!!")
-        
+        //remove user from movie's liked list
+        SingleMovie().deleteFromCurrentLikedUser(key: movieTitle.text!, userid: AWSIdentityManager.default().identityId!)
+        //remove movie from user's liked list
+        UserProfileToDB().deleteFromCurrentLikedMovie(key: AWSIdentityManager.default().identityId!, movieTitle: movieTitle.text!)
         // unlike animation
         UIView.animate(withDuration: 0.1 / 1.5, animations: {() -> Void in
             self.doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 1, y: 1)
@@ -271,6 +274,7 @@ class FrameViewController: UIViewController {
     
     // Double Tap action
     func doubleTapAction() {
+        //add movie to user's liked movie list
         UserProfileToDB().insertToCurrentLikedMovie(key: AWSIdentityManager.default().identityId!, movieTitle: movieTitle.text!)
 //        imageView.isUserInteractionEnabled = false // in case if the user trying to do multiple double tap in a short time
         let newX = imageView.bounds.width
@@ -333,9 +337,15 @@ class FrameViewController: UIViewController {
         movieTitle.text = movie_info?.title
         movieDetailedInfo.text = movie_info?.longDescription
         
-        imageView.image = movie_info?.image
+        //mush
+        //imageView.image = movie_info?.image
         //moviePopInfo.text = movie_info?.pop
-        
+        if (movie_info?.poster_path != nil) {
+            let path = "https://image.tmdb.org/t/p/w500/" + (movie_info?.poster_path)!
+            let imageURL = URL(string: path)
+            let imageData = try! Data(contentsOf: imageURL!)
+            imageView.image = UIImage(data: imageData)
+        }
         // add scroll view
         movieContent.showsVerticalScrollIndicator = true
         movieContent.isScrollEnabled = true
