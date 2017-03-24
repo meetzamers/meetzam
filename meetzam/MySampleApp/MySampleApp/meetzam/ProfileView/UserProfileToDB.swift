@@ -61,7 +61,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         })
         while(userProfile?.userId==nil)
         {
-            print("waiting")
+//            print("waiting")
         }
         
         userProfile?.userId  = _userId
@@ -192,7 +192,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         })
         while(userProfile?.email==nil)
         {
-            print("waiting")
+//            print("waiting")
         }
         print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
         if (!((userProfile?.currentLikedMovie.contains(movieTitle))!))

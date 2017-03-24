@@ -43,11 +43,11 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         //get user liked movies initially
         UserProfileToDB().getLikedMovies(userId: AWSIdentityManager.default().identityId!, user_profile: user_p!)
         //get homescreen movie list
-        //actually if we discard the executor; mainThread(), 
+        //actually if we discard the executor; mainThread(),
         //we might be able to discard the movieView thingy
         //since without that the method will run asynchronizedly and return immediately
         SingleMovie().refreshList(movie_list: movielist, view: movieView, user_profile: user_p!)
-
+        
         // change background color to grey
         //view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
         view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
@@ -56,9 +56,9 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         if (!AWSIdentityManager.default().isLoggedIn) {
             self.isFirstMovieView = true
         }
-
+        
         let frameVC = movieView
-
+        
         
         let viewControllers = [frameVC]
         
@@ -124,7 +124,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     // Page view functions start here
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-
+        
         let currentMovie = (viewController as! FrameViewController).movie_info
         let currentIndex = movielist.tableRows.index(of: currentMovie!)
         
@@ -155,7 +155,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-
+        
         let currentMovie = (viewController as! FrameViewController).movie_info
         let currentIndex = movielist.tableRows.index(of: currentMovie!)
         
@@ -173,8 +173,8 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
             else {
                 print("swipe right:NOT LIKED")
             }
-
-
+            
+            
             // turn off isFirstMovieView
             self.isFirstMovieView = false
             
@@ -202,15 +202,17 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
 // This is each page's view controller
 class FrameViewController: UIViewController {
     
+    // DB related var
+    var user_p = UserProfileToDB()
+    var like = false
+    var movie_info = SingleMovie()
+    
     // UI var
     let movieTitle = UILabel()
     let movieDetailedInfo = UITextView()
-    let moviePopInfo = UILabel()
     
-    var user_p = UserProfileToDB()
-    var like = false
-
-    var movie_info = SingleMovie()
+    // scoll view
+    let movieContent = UIScrollView(frame: CGRect(x: 0, y: 22, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 46))
     
     // image view init
     var imageView: UIImageView = {
@@ -230,18 +232,46 @@ class FrameViewController: UIViewController {
         return iv
     }()
     
-    // Small Do Heart image
-    let doHeart: UIImageView = {
-        let iv = UIImageView()
-        iv.image = UIImage(named: "DoHeart")
-        iv.contentMode = .scaleAspectFill
+    // Small Do Heart image + button
+//    let doHeart: UIImageView = {
+//        let iv = UIImageView()
+//        iv.image = UIImage(named: "DoHeart")
+//        iv.contentMode = .scaleAspectFill
+//        
+//        return iv
+//    }()
+    let doHeartButton: UIButton = {
+        let bt = UIButton()
+        bt.setImage(UIImage(named: "DoHeart"), for: .normal)
+        bt.addTarget(self, action: #selector(FrameViewController.cancelLike), for: .touchUpInside)
         
-        return iv
+        return bt
     }()
+    
+    // Small heart button action (cancel like)
+    func cancelLike() {
+        print("unliked!!!!!!!")
+        
+        // unlike animation
+        UIView.animate(withDuration: 0.1 / 1.5, animations: {() -> Void in
+            self.doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 1.1, y: 1.1)
+        }, completion: {(_ finished: Bool) -> Void in
+            UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
+                self.doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 0.9, y: 0.9)
+            }, completion: {(_ finished: Bool) -> Void in
+                UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
+                    self.doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
+                }, completion: {(finished: Bool) in
+                    self.doHeartButton.alpha = 0
+                    self.doHeartButton.transform = CGAffineTransform.identity
+                    self.doHeartButton.removeFromSuperview()
+                })
+            })
+        })
+    }
     
     // Double Tap action
     func doubleTapAction() {
-        print("liked")
         UserProfileToDB().insertToCurrentLikedMovie(key: AWSIdentityManager.default().identityId!, movieTitle: movieTitle.text!)
         let newX = imageView.bounds.width
         let newY = imageView.bounds.height
@@ -268,53 +298,42 @@ class FrameViewController: UIViewController {
             })
         })
         
-        // do heart
-        doHeart.frame = CGRect(x: 10 + movieTitle.frame.width, y: imageView.frame.height + 10, width: 25, height: 25)
-        doHeart.alpha = 0.98
-        imageView.addSubview(doHeart)
+        // add something
+        // do heart button create
+        self.doHeartButton.alpha = 1
+        doHeartButton.frame = CGRect(x: 10 + movieTitle.frame.width, y: imageView.frame.height + 10, width: 25, height: 25)
+        movieContent.addSubview(doHeartButton)
         
-        // pop up do heart
-        doHeart.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
-        UIView.animate(withDuration: 0.1 / 1.5, animations: {() -> Void in
-            self.doHeart.transform = CGAffineTransform.identity.scaledBy(x: 1.1, y: 1.1)
+        // do heart button animation
+        doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
+        UIView.animate(withDuration: 0.2 / 1.5, animations: {() -> Void in
+            self.doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 1.1, y: 1.1)
         }, completion: {(_ finished: Bool) -> Void in
-            UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
-                self.doHeart.transform = CGAffineTransform.identity.scaledBy(x: 0.9, y: 0.9)
+            UIView.animate(withDuration: 0.2 / 2, animations: {() -> Void in
+                self.doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 0.9, y: 0.9)
             }, completion: {(_ finished: Bool) -> Void in
-                UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
-                    self.doHeart.transform = CGAffineTransform.identity
+                UIView.animate(withDuration: 0.2 / 2, animations: {() -> Void in
+                    self.doHeartButton.transform = CGAffineTransform.identity
                 }, completion: nil)
             })
         })
-        
+
     }
-    
-    // Scroll down action
-    func scrollUpAction() {
-        print("scrolled down")
-    }
-    
-    
-    // scoll view
-    let movieContent = UIScrollView(frame: CGRect(x: 0, y: 22, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 46))
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // view changes
         
+        // view changes
         self.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         self.view.backgroundColor = UIColor.clear
         //mush
-
         //SingleMovie().getMovieForDisplay(key: imagekey!, movie_data: movie_info, movieTitle: movieTitle, movieTitleDetailed: movieDetailedInfo, imageView: imageView, moviePopInfo: moviePopInfo)
         movieTitle.text = movie_info?.title
         movieDetailedInfo.text = movie_info?.longDescription
         
         imageView.image = movie_info?.image
         //moviePopInfo.text = movie_info?.pop
-        //if like
-        //function: do small heart in corner
-
+        
         // add scroll view
         movieContent.showsVerticalScrollIndicator = true
         movieContent.isScrollEnabled = true
@@ -329,13 +348,6 @@ class FrameViewController: UIViewController {
         doubletap.numberOfTapsRequired = 2;
         doubletap.addTarget(self, action: #selector(FrameViewController.doubleTapAction))
         imageView.addGestureRecognizer(doubletap)
-        
-        // add scroll down to view the detailed stuff
-//        let scrolldown = UISwipeGestureRecognizer()
-//        scrolldown.direction = .up
-//        scrolldown.addTarget(self, action: #selector(FrameViewController.scrollUpAction))
-//        imageView.addGestureRecognizer(scrolldown)
-        
         movieContent.addSubview(imageView)
         
         // add movie title in to the scroll view
@@ -343,13 +355,6 @@ class FrameViewController: UIViewController {
         movieTitle.font = UIFont(name: "HelveticaNeue-Light", size: 23)
         movieTitle.textColor = UIColor.black
         movieContent.addSubview(movieTitle)
-        
-        // add movie popularity in to the scroll view
-//        moviePopInfo.frame = CGRect(x: 10, y: imageView.frame.height + 40, width: UIScreen.main.bounds.width - 20, height: 30)
-//        moviePopInfo.font = UIFont(name: "HelveticaNeue-Light", size: 15)
-//        moviePopInfo.textColor = UIColor.black
-//        moviePopInfo.textAlignment = .right
-//        movieContent.addSubview(moviePopInfo)
         
         // add movie info in to the scroll view
         movieDetailedInfo.frame = CGRect(x: 6, y: imageView.frame.height + movieTitle.frame.height + 5, width: UIScreen.main.bounds.width - 15, height: 200)
@@ -359,7 +364,49 @@ class FrameViewController: UIViewController {
         movieDetailedInfo.isEditable = false
         movieContent.addSubview(movieDetailedInfo)
         
-        
+        // add small heart
+        if (like) {
+            // do heart button create
+            self.doHeartButton.alpha = 1
+            doHeartButton.frame = CGRect(x: 10 + movieTitle.frame.width, y: imageView.frame.height + 10, width: 25, height: 25)
+            movieContent.addSubview(doHeartButton)
+        }
     }
-    
 }
+
+//    let moviePopInfo = UILabel()
+
+//            doHeart.frame = CGRect(x: 10 + movieTitle.frame.width, y: imageView.frame.height + 10, width: 25, height: 25)
+//            doHeart.alpha = 0.98
+//            imageView.addSubview(doHeart)
+
+//        // do heart
+//        doHeart.frame = CGRect(x: 10 + movieTitle.frame.width, y: imageView.frame.height + 10, width: 25, height: 25)
+//        doHeart.alpha = 0.98
+//        imageView.addSubview(doHeart)
+
+// pop up do heart
+//        doHeart.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
+//        UIView.animate(withDuration: 0.1 / 1.5, animations: {() -> Void in
+//            self.doHeart.transform = CGAffineTransform.identity.scaledBy(x: 1.1, y: 1.1)
+//        }, completion: {(_ finished: Bool) -> Void in
+//            UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
+//                self.doHeart.transform = CGAffineTransform.identity.scaledBy(x: 0.9, y: 0.9)
+//            }, completion: {(_ finished: Bool) -> Void in
+//                UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
+//                    self.doHeart.transform = CGAffineTransform.identity
+//                }, completion: nil)
+//            })
+//        })
+
+
+// Scroll down action
+//    func scrollUpAction() {
+//        print("scrolled down")
+//    }
+
+// add scroll down to view the detailed stuff
+//        let scrolldown = UISwipeGestureRecognizer()
+//        scrolldown.direction = .up
+//        scrolldown.addTarget(self, action: #selector(FrameViewController.scrollUpAction))
+//        imageView.addGestureRecognizer(scrolldown)
