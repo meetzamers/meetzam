@@ -26,10 +26,11 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
     var topCast = Set<String>()
     //var TMDB_popularity: String?
     var trailer_key: String?
+    var currentLikedUser = Set<String>()
     
 
-    var image: UIImage?
-    var pop: String?
+    //var image: UIImage?
+    //var pop: String?
     
     class func dynamoDBTableName() -> String {
         return AWSDynamoDBTableName
@@ -84,12 +85,13 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             
             if let paginatedOutput = task.result {
                 for item in paginatedOutput.items as! [SingleMovie] {
-
+                    /*
                     let path = "https://image.tmdb.org/t/p/w500/" + (item.poster_path)!
                     let imageURL = URL(string: path)
                     let imageData = try! Data(contentsOf: imageURL!)
                     item.image = UIImage(data: imageData)
                     //item.pop = "Popularity: " + item.TMDB_popularity!
+                    */
                     movie_list.tableRows.append(item)
                     
                     if c == 0 {
@@ -113,7 +115,8 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                         let imageData = try! Data(contentsOf: imageURL!)
                         view.imageView.image = UIImage(data: imageData)
                         
-                        view.movie_info = item;
+                        view.movie_info = item
+                        //view.override = true
                     }
                     
                     print(movie_list.tableRows.count)
@@ -144,7 +147,7 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         print("     getLikedMoviePosters")
         let mapper = AWSDynamoDBObjectMapper.default()
         var currentLikedMovie = Set<String>()
-        var userProfile = UserProfileToDB()
+        let userProfile = UserProfileToDB()
         
         print("     before load!!")
         mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
@@ -183,6 +186,70 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             //print("waiting")
         }
         return MoviesPosterURL
+    }
+    
+    func insertToCurrentLikedUser(key: String, userid: String)
+    {
+        print("     ADD USER TO MOVIE")
+        
+        let mapper = AWSDynamoDBObjectMapper.default()
+        
+        let movie = SingleMovie()
+        
+        mapper.load(SingleMovie.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            if let error = task.error as? NSError {
+                print("InsertError: \(error)")
+            } else if let movie_addTo = task.result as? SingleMovie {
+                
+                movie?.title=key
+                print("     key:title is \(key)")
+                
+                movie?.directors = movie_addTo.directors
+                print("directors are \(movie?.directors.description)")
+                
+                movie?.genres = movie_addTo.genres
+                print("genres are \(movie?.genres.description)")
+                
+                movie?.longDescription = movie_addTo.longDescription
+                print("longDescription is \(movie?.longDescription)")
+                
+                movie?.poster_path = movie_addTo.poster_path
+                print("poster_path is \(movie?.poster_path)")
+                
+                movie?.releaseYear = movie_addTo.releaseYear
+                print("releaseYear is \(movie?.releaseYear)")
+                
+                movie?.shortDescriptiontle = movie_addTo.shortDescriptiontle
+                print("shortDescriptiontle is \(movie?.shortDescriptiontle)")
+                
+                movie?.tmdb_id = movie_addTo.tmdb_id
+                print("tmdb_id is \(movie?.tmdb_id)")
+                
+                movie?.topCast = movie_addTo.topCast
+                print("topCast are \(movie?.topCast.description)")
+                
+                movie?.currentLikedUser = movie_addTo.currentLikedUser
+                print("BEFORE INSERTING: currentLikedUser are \(movie?.currentLikedUser.description)")
+                
+                movie?.trailer_key = movie_addTo.trailer_key
+                print("trailer_key is \(movie?.trailer_key)")
+                
+                print("     all put")
+            }
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            return nil
+        })
+        while(movie?.trailer_key==nil)
+        {
+            print("waiting")
+        }
+        print("SHOULD BE AFTER LOAD: title and id are \(movie?.title) and \(movie?.tmdb_id)")
+        if (!((movie?.currentLikedUser.contains(userid))!))
+        {
+            movie?.currentLikedUser.insert(userid)
+        }
+        print("AFTER INSERTING: currentLikedUser are \(movie?.currentLikedUser.description)")
+        mapper.save(movie!)
     }
     
 }

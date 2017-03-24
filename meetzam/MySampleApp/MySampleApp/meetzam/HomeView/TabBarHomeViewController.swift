@@ -272,7 +272,11 @@ class FrameViewController: UIViewController {
     
     // Double Tap action
     func doubleTapAction() {
+        //add movie to user's liked movie list
         UserProfileToDB().insertToCurrentLikedMovie(key: AWSIdentityManager.default().identityId!, movieTitle: movieTitle.text!)
+        //add user to movie's liked user list
+        SingleMovie().insertToCurrentLikedUser(key: movieTitle.text!, userid: AWSIdentityManager.default().identityId!)
+        
         imageView.isUserInteractionEnabled = false // in case if the user trying to do multiple double tap in a short time
         let newX = imageView.bounds.width
         let newY = imageView.bounds.height
@@ -334,9 +338,15 @@ class FrameViewController: UIViewController {
         movieTitle.text = movie_info?.title
         movieDetailedInfo.text = movie_info?.longDescription
         
-        imageView.image = movie_info?.image
+        //mush
+        //imageView.image = movie_info?.image
         //moviePopInfo.text = movie_info?.pop
-        
+        if (movie_info?.poster_path != nil) {
+            let path = "https://image.tmdb.org/t/p/w500/" + (movie_info?.poster_path)!
+            let imageURL = URL(string: path)
+            let imageData = try! Data(contentsOf: imageURL!)
+            imageView.image = UIImage(data: imageData)
+        }
         // add scroll view
         movieContent.showsVerticalScrollIndicator = true
         movieContent.isScrollEnabled = true
