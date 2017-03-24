@@ -302,7 +302,6 @@ class FrameViewController: UIViewController {
             })
         })
         
-        // add something
         // do heart button create
         self.doHeartButton.alpha = 1
         doHeartButton.frame = CGRect(x: 10 + movieTitle.frame.width, y: imageView.frame.height + 10, width: 25, height: 25)
