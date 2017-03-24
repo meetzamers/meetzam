@@ -97,6 +97,10 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                         if (user_profile.currentLikedMovie.contains(item.title)) {
                             print("scan:FOUND THE MOVIE IN LIKED LIST")
                             view.like = true
+                            // do heart button create
+                            view.doHeartButton.alpha = 1
+                            view.doHeartButton.frame = CGRect(x: 10 + view.movieTitle.frame.width, y: view.imageView.frame.height + 10, width: 25, height: 25)
+                            view.movieContent.addSubview(view.doHeartButton)
                         }
                         else {
                             print("scan:NOT LIKED")
@@ -142,4 +146,3 @@ class MovieList {
     
     
 }
-
