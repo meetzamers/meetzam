@@ -207,6 +207,14 @@ class FrameViewController: UIViewController {
     // UI var
     let movieTitle = UILabel()
     let movieDetailedInfo = UITextView()
+    let videoView : UIWebView = {
+       let vd = UIWebView()
+        vd.backgroundColor = UIColor.clear
+        vd.scrollView.isScrollEnabled = false
+        vd.scrollView.bounces = false
+        
+        return vd
+    }()
     
     // scoll view
     let movieContent = UIScrollView(frame: CGRect(x: 0, y: 22, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 46))

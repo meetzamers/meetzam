@@ -113,6 +113,12 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                         let imageData = try! Data(contentsOf: imageURL!)
                         view.imageView.image = UIImage(data: imageData)
                         
+                        // add movie trailer
+                        let htmlStyle = "<style> iframe { margin: 0px !important; padding: 0px !important; border: 0px !important; } html, body { margin: 0px !important; padding: 0px !important; border: 0px !important; width: 100%; height: 100%; } </style>"
+                        view.videoView.frame = CGRect(x: 6, y: view.imageView.frame.height + view.movieTitle.frame.height + view.movieDetailedInfo.frame.height + 5, width: UIScreen.main.bounds.width - 15, height: 200)
+                        view.videoView.loadHTMLString("<html><head><style>\(htmlStyle)</style></head><body><iframe width='100%' height='100%' src='\("https://www.youtube.com/embed/" + item.trailer_key!)?&playsinline=1' frameborder='0' allowfullscreen></iframe></body></html>", baseURL: nil)
+                        view.movieContent.addSubview(view.videoView)
+                        
                         view.movie_info = item;
                     }
                     
