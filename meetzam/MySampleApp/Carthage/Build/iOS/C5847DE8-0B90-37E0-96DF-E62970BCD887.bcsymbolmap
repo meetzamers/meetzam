@@ -1,0 +1,904 @@
+BCSymbolMap Version: 2.0
++[LOTShapeTransform transformIdentityWithCompBounds:]
+-[LOTShapeTransform initWithJSON:frameRate:compBounds:]
+-[LOTShapeTransform _mapFromJSON:frameRate:compBounds:]
+___55-[LOTShapeTransform _mapFromJSON:frameRate:compBounds:]_block_invoke
+-[LOTShapeTransform description]
+-[LOTShapeTransform compBounds]
+-[LOTShapeTransform position]
+-[LOTShapeTransform anchor]
+-[LOTShapeTransform scale]
+-[LOTShapeTransform rotation]
+-[LOTShapeTransform opacity]
+-[LOTShapeTransform .cxx_destruct]
+_OBJC_IVAR_$_LOTShapeTransform._compBounds
+_OBJC_IVAR_$_LOTShapeTransform._position
+_OBJC_IVAR_$_LOTShapeTransform._anchor
+_OBJC_IVAR_$_LOTShapeTransform._scale
+_OBJC_IVAR_$_LOTShapeTransform._rotation
+___block_descriptor_tmp
+___block_literal_global
+_OBJC_IVAR_$_LOTShapeTransform._opacity
+Apple LLVM version 8.0.0 (clang-800.0.42.1)
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTShapeTransform.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTShapeTransform.h
+__55-[LOTShapeTransform _mapFromJSON:frameRate:compBounds:]_block_invoke
+-[LOTLayerGroup initWithLayerJSON:withBounds:withFramerate:withAssetGroup:]
+-[LOTLayerGroup _mapFromJSON:withAssetGroup:]
+-[LOTLayerGroup layerModelForID:]
+-[LOTLayerGroup layerForReferenceID:]
+-[LOTLayerGroup layers]
+-[LOTLayerGroup .cxx_destruct]
+_OBJC_IVAR_$_LOTLayerGroup._framerate
+_OBJC_IVAR_$_LOTLayerGroup._bounds
+_OBJC_IVAR_$_LOTLayerGroup._referenceIDMap
+_OBJC_IVAR_$_LOTLayerGroup._modelMap
+_OBJC_IVAR_$_LOTLayerGroup._layers
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTLayerGroup.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTLayerGroup.h
+-[LOTMaskLayer initWithMasks:inLayer:]
+-[LOTMaskLayer _setupViewFromModel]
+-[LOTMaskLayer masks]
+-[LOTMaskLayer .cxx_destruct]
+_OBJC_IVAR_$_LOTMaskLayer._masks
+_OBJC_IVAR_$_LOTMaskLayer._layer
+_OBJC_IVAR_$_LOTMaskLayer._maskLayers
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableLayers/LOTMaskLayer.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableLayers/LOTMaskLayer.h
++[CAAnimationGroup(LOTAnimatableGroup) LOT_animationGroupForAnimatablePropertiesWithKeyPaths:]
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Extensions/CAAnimationGroup+LOTAnimatableGroup.m
+-[LOTAnimatableNumberValue initWithNumberValues:frameRate:]
+-[LOTAnimatableNumberValue _buildAnimationForKeyframes:]
+-[LOTAnimatableNumberValue _numberValueFromObject:]
+-[LOTAnimatableNumberValue _pointFromValueDict:]
+-[LOTAnimatableNumberValue remapValuesFromMin:fromMax:toMin:toMax:]
+___67-[LOTAnimatableNumberValue remapValuesFromMin:fromMax:toMin:toMax:]_block_invoke
+___copy_helper_block_
+___destroy_helper_block_
+-[LOTAnimatableNumberValue remapValueWithBlock:]
+-[LOTAnimatableNumberValue hasAnimation]
+-[LOTAnimatableNumberValue animationForKeyPath:]
+-[LOTAnimatableNumberValue description]
+-[LOTAnimatableNumberValue initialValue]
+-[LOTAnimatableNumberValue valueKeyframes]
+-[LOTAnimatableNumberValue keyTimes]
+-[LOTAnimatableNumberValue timingFunctions]
+-[LOTAnimatableNumberValue delay]
+-[LOTAnimatableNumberValue duration]
+-[LOTAnimatableNumberValue startFrame]
+-[LOTAnimatableNumberValue durationFrames]
+-[LOTAnimatableNumberValue frameRate]
+-[LOTAnimatableNumberValue .cxx_destruct]
+_OBJC_IVAR_$_LOTAnimatableNumberValue._frameRate
+_OBJC_IVAR_$_LOTAnimatableNumberValue._initialValue
+_OBJC_IVAR_$_LOTAnimatableNumberValue._startFrame
+_OBJC_IVAR_$_LOTAnimatableNumberValue._durationFrames
+_OBJC_IVAR_$_LOTAnimatableNumberValue._duration
+_OBJC_IVAR_$_LOTAnimatableNumberValue._delay
+_OBJC_IVAR_$_LOTAnimatableNumberValue._valueKeyframes
+_OBJC_IVAR_$_LOTAnimatableNumberValue._keyTimes
+_OBJC_IVAR_$_LOTAnimatableNumberValue._timingFunctions
+l_OBJC_PROTOCOL_$_NSObject
+l_OBJC_LABEL_PROTOCOL_$_NSObject
+l_OBJC_PROTOCOL_$_LOTAnimatableValue
+l_OBJC_LABEL_PROTOCOL_$_LOTAnimatableValue
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableProperties/LOTAnimatableNumberValue.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableProperties/LOTAnimatableNumberValue.h
+__destroy_helper_block_
+__copy_helper_block_
+__67-[LOTAnimatableNumberValue remapValuesFromMin:fromMax:toMin:toMax:]_block_invoke
++[LOTAnimationCache sharedCache]
+___32+[LOTAnimationCache sharedCache]_block_invoke
+-[LOTAnimationCache init]
+-[LOTAnimationCache addAnimation:forKey:]
+-[LOTAnimationCache animationForKey:]
+-[LOTAnimationCache .cxx_destruct]
+_sharedCache.sharedCache
+_sharedCache.onceToken
+_OBJC_IVAR_$_LOTAnimationCache.animationsCache_
+_OBJC_IVAR_$_LOTAnimationCache.lruOrderArray_
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimationCache/LOTAnimationCache.m
+__32+[LOTAnimationCache sharedCache]_block_invoke
+_dispatch_once
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk/usr/include/dispatch/once.h
+-[LOTCustomChild childView]
+-[LOTCustomChild setChildView:]
+-[LOTCustomChild layer]
+-[LOTCustomChild setLayer:]
+-[LOTCustomChild constraint]
+-[LOTCustomChild setConstraint:]
+-[LOTCustomChild .cxx_destruct]
+-[LOTCompositionLayer initWithLayerGroup:withAssetGroup:withBounds:]
+-[LOTCompositionLayer _setupWithLayerGroup:withAssetGroup:withBounds:]
+-[LOTCompositionLayer layoutCustomChildLayers]
+-[LOTCompositionLayer addSublayer:toLayerNamed:]
+-[LOTCompositionLayer .cxx_destruct]
+_OBJC_IVAR_$_LOTCustomChild._childView
+_OBJC_IVAR_$_LOTCustomChild._layer
+_OBJC_IVAR_$_LOTCustomChild._constraint
+_OBJC_IVAR_$_LOTCompositionLayer._customLayers
+_OBJC_IVAR_$_LOTCompositionLayer._layerMap
+_OBJC_IVAR_$_LOTCompositionLayer._layerNameMap
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableLayers/LOTCompositionLayer.m
+-[UIColor(UIColor_Expanded) colorSpaceModel]
+-[UIColor(UIColor_Expanded) LOT_colorSpaceString]
+-[UIColor(UIColor_Expanded) canProvideRGBComponents]
+-[UIColor(UIColor_Expanded) LOT_arrayFromRGBAComponents]
+-[UIColor(UIColor_Expanded) LOT_red:green:blue:alpha:]
+-[UIColor(UIColor_Expanded) red]
+-[UIColor(UIColor_Expanded) green]
+-[UIColor(UIColor_Expanded) blue]
+-[UIColor(UIColor_Expanded) white]
+-[UIColor(UIColor_Expanded) alpha]
+-[UIColor(UIColor_Expanded) rgbHex]
+-[UIColor(UIColor_Expanded) LOT_colorByLuminanceMapping]
+-[UIColor(UIColor_Expanded) LOT_colorByMultiplyingByRed:green:blue:alpha:]
+-[UIColor(UIColor_Expanded) LOT_colorByAddingRed:green:blue:alpha:]
+-[UIColor(UIColor_Expanded) LOT_colorByLighteningToRed:green:blue:alpha:]
+-[UIColor(UIColor_Expanded) LOT_colorByDarkeningToRed:green:blue:alpha:]
+-[UIColor(UIColor_Expanded) LOT_colorByMultiplyingBy:]
+-[UIColor(UIColor_Expanded) LOT_colorByAdding:]
+-[UIColor(UIColor_Expanded) LOT_colorByLighteningTo:]
+-[UIColor(UIColor_Expanded) LOT_colorByDarkeningTo:]
+-[UIColor(UIColor_Expanded) LOT_colorByMultiplyingByColor:]
+-[UIColor(UIColor_Expanded) LOT_colorByAddingColor:]
+-[UIColor(UIColor_Expanded) LOT_colorByLighteningToColor:]
+-[UIColor(UIColor_Expanded) LOT_colorByDarkeningToColor:]
+-[UIColor(UIColor_Expanded) LOT_stringFromColor]
+-[UIColor(UIColor_Expanded) LOT_hexStringValue]
++[UIColor(UIColor_Expanded) LOT_colorWithString:]
++[UIColor(UIColor_Expanded) LOT_randomColor]
++[UIColor(UIColor_Expanded) LOT_colorWithRGBHex:]
++[UIColor(UIColor_Expanded) LOT_colorWithHexString:]
++[UIColor(UIColor_Expanded) LOT_colorWithName:]
++[UIColor(UIColor_Expanded) LOT_colorByLerpingFromColor:toColor:amount:]
++[UIColor(UIColor_Expanded) load]
++[UIColor(UIColor_Expanded_Support) searchForColorByName:]
+_colorNameCache
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Extensions/UIColor+Expanded.m
+-[LOTComposition initWithJSON:]
+-[LOTComposition _mapFromJSON:]
+-[LOTComposition compBounds]
+-[LOTComposition startFrame]
+-[LOTComposition endFrame]
+-[LOTComposition framerate]
+-[LOTComposition timeDuration]
+-[LOTComposition layerGroup]
+-[LOTComposition assetGroup]
+-[LOTComposition .cxx_destruct]
+_OBJC_IVAR_$_LOTComposition._compBounds
+_OBJC_IVAR_$_LOTComposition._startFrame
+_OBJC_IVAR_$_LOTComposition._endFrame
+_OBJC_IVAR_$_LOTComposition._framerate
+_OBJC_IVAR_$_LOTComposition._timeDuration
+_OBJC_IVAR_$_LOTComposition._assetGroup
+_OBJC_IVAR_$_LOTComposition._layerGroup
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTComposition.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTComposition.h
+-[LOTAnimatableColorValue initWithColorValues:frameRate:]
+-[LOTAnimatableColorValue _buildAnimationForKeyframes:]
+-[LOTAnimatableColorValue _colorValueFromArray:]
+-[LOTAnimatableColorValue _pointFromValueDict:]
+-[LOTAnimatableColorValue hasAnimation]
+-[LOTAnimatableColorValue animationForKeyPath:]
+-[LOTAnimatableColorValue description]
+-[LOTAnimatableColorValue initialColor]
+-[LOTAnimatableColorValue colorKeyframes]
+-[LOTAnimatableColorValue keyTimes]
+-[LOTAnimatableColorValue timingFunctions]
+-[LOTAnimatableColorValue delay]
+-[LOTAnimatableColorValue duration]
+-[LOTAnimatableColorValue startFrame]
+-[LOTAnimatableColorValue durationFrames]
+-[LOTAnimatableColorValue frameRate]
+-[LOTAnimatableColorValue .cxx_destruct]
+_OBJC_IVAR_$_LOTAnimatableColorValue._frameRate
+_OBJC_IVAR_$_LOTAnimatableColorValue._initialColor
+_OBJC_IVAR_$_LOTAnimatableColorValue._startFrame
+_OBJC_IVAR_$_LOTAnimatableColorValue._durationFrames
+_OBJC_IVAR_$_LOTAnimatableColorValue._duration
+_OBJC_IVAR_$_LOTAnimatableColorValue._delay
+_OBJC_IVAR_$_LOTAnimatableColorValue._colorKeyframes
+_OBJC_IVAR_$_LOTAnimatableColorValue._keyTimes
+_OBJC_IVAR_$_LOTAnimatableColorValue._timingFunctions
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableProperties/LOTAnimatableColorValue.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableProperties/LOTAnimatableColorValue.h
+-[LOTGroupLayerView initWithShapeGroup:transform:fill:stroke:trimPath:withLayerDuration:]
+-[LOTGroupLayerView _setupShapeGroupWithFill:stroke:trimPath:]
+-[LOTGroupLayerView _buildAnimation]
+-[LOTGroupLayerView setDebugModeOn:]
+-[LOTGroupLayerView shapeGroup]
+-[LOTGroupLayerView shapeTransform]
+-[LOTGroupLayerView debugModeOn]
+-[LOTGroupLayerView .cxx_destruct]
+_OBJC_IVAR_$_LOTGroupLayerView._shapeGroup
+_OBJC_IVAR_$_LOTGroupLayerView._shapeTransform
+_OBJC_IVAR_$_LOTGroupLayerView._groupLayers
+_OBJC_IVAR_$_LOTGroupLayerView._shapeLayers
+_OBJC_IVAR_$_LOTGroupLayerView._animation
+_OBJC_IVAR_$_LOTGroupLayerView._debugModeOn
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableLayers/LOTGroupLayerView.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableLayers/LOTGroupLayerView.h
+-[LOTShapeFill initWithJSON:frameRate:]
+-[LOTShapeFill _mapFromJSON:frameRate:]
+-[LOTShapeFill fillEnabled]
+-[LOTShapeFill color]
+-[LOTShapeFill opacity]
+-[LOTShapeFill .cxx_destruct]
+_OBJC_IVAR_$_LOTShapeFill._color
+_OBJC_IVAR_$_LOTShapeFill._opacity
+_OBJC_IVAR_$_LOTShapeFill._fillEnabled
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTShapeFill.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTShapeFill.h
+-[LOTParentLayer initWithParentModel:]
+-[LOTParentLayer _setupLayerFromModel]
+-[LOTParentLayer _buildAnimations]
+-[LOTParentLayer .cxx_destruct]
+-[LOTLayerView initWithModel:inLayerGroup:]
+-[LOTLayerView _setupViewFromModelWithLayerGroup:]
+-[LOTLayerView _buildAnimations]
+-[LOTLayerView LOT_addChildLayer:]
+-[LOTLayerView setDebugModeOn:]
+-[LOTLayerView description]
+-[LOTLayerView _setImageForAsset]
+-[LOTLayerView _createChildSolid]
+-[LOTLayerView _setSolidLayerBackground]
+-[LOTLayerView layerModel]
+-[LOTLayerView debugModeOn]
+-[LOTLayerView .cxx_destruct]
+_OBJC_IVAR_$_LOTParentLayer._parentModel
+_OBJC_IVAR_$_LOTParentLayer._animation
+_OBJC_IVAR_$_LOTLayerView._layerModel
+_OBJC_IVAR_$_LOTLayerView._childContainerLayer
+_OBJC_IVAR_$_LOTLayerView._parentLayers
+_OBJC_IVAR_$_LOTLayerView._shapeLayers
+_OBJC_IVAR_$_LOTLayerView._maskLayer
+_OBJC_IVAR_$_LOTLayerView._animation
+_OBJC_IVAR_$_LOTLayerView._inOutAnimation
+_OBJC_IVAR_$_LOTLayerView._debugModeOn
+_OBJC_IVAR_$_LOTLayerView._childSolid
+_OBJC_IVAR_$_LOTLayerView._rotationLayer
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableLayers/LOTLayerView.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableLayers/LOTLayerView.h
+-[LOTStrokeShapeLayer init]
+-[LOTStrokeShapeLayer initWithLayer:]
+-[LOTStrokeShapeLayer _commonInit]
++[LOTStrokeShapeLayer needsDisplayForKey:]
+-[LOTStrokeShapeLayer display]
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableLayers/LOTStrokeShapeLayer.m
+-[LOTShapeRectangle initWithJSON:frameRate:]
+-[LOTShapeRectangle _mapFromJSON:frameRate:]
+-[LOTShapeRectangle position]
+-[LOTShapeRectangle size]
+-[LOTShapeRectangle cornerRadius]
+-[LOTShapeRectangle .cxx_destruct]
+_OBJC_IVAR_$_LOTShapeRectangle._position
+_OBJC_IVAR_$_LOTShapeRectangle._cornerRadius
+_OBJC_IVAR_$_LOTShapeRectangle._size
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTShapeRectangle.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTShapeRectangle.h
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Private/LOTAnimationTransitionController.m
+-[LOTShapeStroke initWithJSON:frameRate:]
+-[LOTShapeStroke _mapFromJSON:frameRate:]
+-[LOTShapeStroke fillEnabled]
+-[LOTShapeStroke color]
+-[LOTShapeStroke opacity]
+-[LOTShapeStroke width]
+-[LOTShapeStroke capType]
+-[LOTShapeStroke joinType]
+-[LOTShapeStroke lineDashPattern]
+-[LOTShapeStroke .cxx_destruct]
+_OBJC_IVAR_$_LOTShapeStroke._color
+_OBJC_IVAR_$_LOTShapeStroke._width
+_OBJC_IVAR_$_LOTShapeStroke._opacity
+_OBJC_IVAR_$_LOTShapeStroke._capType
+_OBJC_IVAR_$_LOTShapeStroke._joinType
+_OBJC_IVAR_$_LOTShapeStroke._fillEnabled
+_OBJC_IVAR_$_LOTShapeStroke._lineDashPattern
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTShapeStroke.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTShapeStroke.h
+-[LOTLayer initWithJSON:withCompBounds:withFramerate:withAssetGroup:]
+-[LOTLayer _mapFromJSON:withCompBounds:withFramerate:withAssetGroup:]
+___69-[LOTLayer _mapFromJSON:withCompBounds:withFramerate:withAssetGroup:]_block_invoke
+-[LOTLayer description]
+-[LOTLayer layerName]
+-[LOTLayer referenceID]
+-[LOTLayer layerID]
+-[LOTLayer layerType]
+-[LOTLayer parentID]
+-[LOTLayer inFrame]
+-[LOTLayer outFrame]
+-[LOTLayer layerBounds]
+-[LOTLayer parentCompBounds]
+-[LOTLayer framerate]
+-[LOTLayer shapes]
+-[LOTLayer masks]
+-[LOTLayer layerWidth]
+-[LOTLayer layerHeight]
+-[LOTLayer solidColor]
+-[LOTLayer imageAsset]
+-[LOTLayer opacity]
+-[LOTLayer rotation]
+-[LOTLayer position]
+-[LOTLayer positionX]
+-[LOTLayer positionY]
+-[LOTLayer anchor]
+-[LOTLayer scale]
+-[LOTLayer hasInAnimation]
+-[LOTLayer inOutKeyframes]
+-[LOTLayer inOutKeyTimes]
+-[LOTLayer layerDuration]
+-[LOTLayer matteType]
+-[LOTLayer .cxx_destruct]
+_OBJC_IVAR_$_LOTLayer._parentCompBounds
+_OBJC_IVAR_$_LOTLayer._layerName
+_OBJC_IVAR_$_LOTLayer._layerID
+_OBJC_IVAR_$_LOTLayer._layerType
+_OBJC_IVAR_$_LOTLayer._referenceID
+_OBJC_IVAR_$_LOTLayer._parentID
+_OBJC_IVAR_$_LOTLayer._inFrame
+_OBJC_IVAR_$_LOTLayer._outFrame
+_OBJC_IVAR_$_LOTLayer._framerate
+_OBJC_IVAR_$_LOTLayer._layerHeight
+_OBJC_IVAR_$_LOTLayer._layerWidth
+_OBJC_IVAR_$_LOTLayer._imageAsset
+_OBJC_IVAR_$_LOTLayer._solidColor
+_OBJC_IVAR_$_LOTLayer._layerBounds
+_OBJC_IVAR_$_LOTLayer._opacity
+_OBJC_IVAR_$_LOTLayer._rotation
+_OBJC_IVAR_$_LOTLayer._positionX
+_OBJC_IVAR_$_LOTLayer._positionY
+_OBJC_IVAR_$_LOTLayer._position
+_OBJC_IVAR_$_LOTLayer._anchor
+_OBJC_IVAR_$_LOTLayer._scale
+_OBJC_IVAR_$_LOTLayer._matteType
+_OBJC_IVAR_$_LOTLayer._masks
+_OBJC_IVAR_$_LOTLayer._shapes
+_OBJC_IVAR_$_LOTLayer._hasInAnimation
+_OBJC_IVAR_$_LOTLayer._layerDuration
+_OBJC_IVAR_$_LOTLayer._inOutKeyTimes
+_OBJC_IVAR_$_LOTLayer._inOutKeyframes
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTLayer.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTLayer.h
+__69-[LOTLayer _mapFromJSON:withCompBounds:withFramerate:withAssetGroup:]_block_invoke
+-[LOTShapeTrimPath initWithJSON:frameRate:]
+-[LOTShapeTrimPath _mapFromJSON:frameRate:]
+-[LOTShapeTrimPath start]
+-[LOTShapeTrimPath end]
+-[LOTShapeTrimPath offset]
+-[LOTShapeTrimPath .cxx_destruct]
+_OBJC_IVAR_$_LOTShapeTrimPath._start
+_OBJC_IVAR_$_LOTShapeTrimPath._end
+_OBJC_IVAR_$_LOTShapeTrimPath._offset
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTShapeTrimPath.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTShapeTrimPath.h
+-[LOTAnimatableLayer initWithLayerDuration:]
+-[LOTAnimatableLayer layerDuration]
+_OBJC_IVAR_$_LOTAnimatableLayer._layerDuration
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableLayers/LOTAnimatableLayer.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableLayers/LOTAnimatableLayer.h
+-[LOTShapeGroup initWithJSON:frameRate:compBounds:]
+-[LOTShapeGroup _mapFromJSON:frameRate:compBounds:]
++[LOTShapeGroup shapeItemWithJSON:frameRate:compBounds:]
+-[LOTShapeGroup description]
+-[LOTShapeGroup items]
+-[LOTShapeGroup .cxx_destruct]
+_OBJC_IVAR_$_LOTShapeGroup._items
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTShapeGroup.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTShapeGroup.h
+-[LOTMask initWithJSON:frameRate:]
+-[LOTMask _mapFromJSON:frameRate:]
+-[LOTMask closed]
+-[LOTMask inverted]
+-[LOTMask maskMode]
+-[LOTMask maskPath]
+-[LOTMask opacity]
+-[LOTMask .cxx_destruct]
+_OBJC_IVAR_$_LOTMask._closed
+_OBJC_IVAR_$_LOTMask._inverted
+_OBJC_IVAR_$_LOTMask._maskMode
+_OBJC_IVAR_$_LOTMask._maskPath
+_OBJC_IVAR_$_LOTMask._opacity
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTMask.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTMask.h
+-[LOTAsset initWithJSON:withBounds:withFramerate:withAssetGroup:]
+-[LOTAsset _mapFromJSON:withBounds:withFramerate:withAssetGroup:]
+-[LOTAsset referenceID]
+-[LOTAsset assetWidth]
+-[LOTAsset assetHeight]
+-[LOTAsset imageName]
+-[LOTAsset imageDirectory]
+-[LOTAsset layerGroup]
+-[LOTAsset .cxx_destruct]
+_OBJC_IVAR_$_LOTAsset._referenceID
+_OBJC_IVAR_$_LOTAsset._assetWidth
+_OBJC_IVAR_$_LOTAsset._assetHeight
+_OBJC_IVAR_$_LOTAsset._imageDirectory
+_OBJC_IVAR_$_LOTAsset._imageName
+_OBJC_IVAR_$_LOTAsset._layerGroup
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTAsset.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTAsset.h
+-[LOTAnimatableShapeValue initWithShapeValues:frameRate:closed:]
+-[LOTAnimatableShapeValue _buildAnimationForKeyframes:closed:]
+-[LOTAnimatableShapeValue _bezierShapeFromValue:closed:]
+-[LOTAnimatableShapeValue _vertexAtIndex:inArray:]
+-[LOTAnimatableShapeValue _numberValueFromObject:]
+-[LOTAnimatableShapeValue _pointFromValueDict:]
+-[LOTAnimatableShapeValue hasAnimation]
+-[LOTAnimatableShapeValue animationForKeyPath:]
+-[LOTAnimatableShapeValue description]
+-[LOTAnimatableShapeValue initialShape]
+-[LOTAnimatableShapeValue shapeKeyframes]
+-[LOTAnimatableShapeValue keyTimes]
+-[LOTAnimatableShapeValue timingFunctions]
+-[LOTAnimatableShapeValue delay]
+-[LOTAnimatableShapeValue duration]
+-[LOTAnimatableShapeValue startFrame]
+-[LOTAnimatableShapeValue durationFrames]
+-[LOTAnimatableShapeValue frameRate]
+-[LOTAnimatableShapeValue .cxx_destruct]
+_OBJC_IVAR_$_LOTAnimatableShapeValue._frameRate
+_OBJC_IVAR_$_LOTAnimatableShapeValue._initialShape
+_OBJC_IVAR_$_LOTAnimatableShapeValue._startFrame
+_OBJC_IVAR_$_LOTAnimatableShapeValue._durationFrames
+_OBJC_IVAR_$_LOTAnimatableShapeValue._duration
+_OBJC_IVAR_$_LOTAnimatableShapeValue._delay
+_OBJC_IVAR_$_LOTAnimatableShapeValue._shapeKeyframes
+_OBJC_IVAR_$_LOTAnimatableShapeValue._keyTimes
+_OBJC_IVAR_$_LOTAnimatableShapeValue._timingFunctions
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableProperties/LOTAnimatableShapeValue.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableProperties/LOTAnimatableShapeValue.h
+__CGPointEqualToPoint
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CGGeometry.h
+-[LOTShapeCircle initWithJSON:frameRate:]
+-[LOTShapeCircle _mapFromJSON:frameRate:]
+-[LOTShapeCircle position]
+-[LOTShapeCircle size]
+-[LOTShapeCircle .cxx_destruct]
+_OBJC_IVAR_$_LOTShapeCircle._position
+_OBJC_IVAR_$_LOTShapeCircle._size
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTShapeCircle.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTShapeCircle.h
+-[LOTRoundRectLayer initWithLayer:]
++[LOTRoundRectLayer needsDisplayForKey:]
+-[LOTRoundRectLayer actionForKey:]
+-[LOTRoundRectLayer _setPath]
+-[LOTRoundRectLayer display]
+-[LOTRectShapeLayer initWithRectShape:fill:stroke:trim:transform:withLayerDuration:]
+-[LOTRectShapeLayer _buildAnimation]
+-[LOTRectShapeLayer .cxx_destruct]
+_OBJC_IVAR_$_LOTRectShapeLayer._rectangle
+_OBJC_IVAR_$_LOTRectShapeLayer._stroke
+_OBJC_IVAR_$_LOTRectShapeLayer._fill
+_OBJC_IVAR_$_LOTRectShapeLayer._transform
+_OBJC_IVAR_$_LOTRectShapeLayer._trim
+_OBJC_IVAR_$_LOTRectShapeLayer._fillLayer
+_OBJC_IVAR_$_LOTRectShapeLayer._strokeLayer
+_OBJC_IVAR_$_LOTRectShapeLayer._animation
+_OBJC_IVAR_$_LOTRectShapeLayer._strokeAnimation
+_OBJC_IVAR_$_LOTRectShapeLayer._fillAnimation
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableLayers/LOTRectShapeLayer.m
+-[LOTShapeLayerView initWithShape:fill:stroke:trim:transform:withLayerDuration:]
+-[LOTShapeLayerView _buildAnimation]
+-[LOTShapeLayerView .cxx_destruct]
+_OBJC_IVAR_$_LOTShapeLayerView._path
+_OBJC_IVAR_$_LOTShapeLayerView._stroke
+_OBJC_IVAR_$_LOTShapeLayerView._fill
+_OBJC_IVAR_$_LOTShapeLayerView._transform
+_OBJC_IVAR_$_LOTShapeLayerView._trim
+_OBJC_IVAR_$_LOTShapeLayerView._fillLayer
+_OBJC_IVAR_$_LOTShapeLayerView._strokeLayer
+_OBJC_IVAR_$_LOTShapeLayerView._animation
+_OBJC_IVAR_$_LOTShapeLayerView._strokeAnimation
+_OBJC_IVAR_$_LOTShapeLayerView._fillAnimation
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableLayers/LOTShapeLayerView.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Extensions/CGGeometry+LOTAdditions.m
+LOT_PointByLerpingPoints
+LOT_PointAddedToPoint
+LOT_RemapValue
+__tg_fabs
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../lib/clang/8.0.0/include/tgmath.h
+LOT_PointDistanceFromPoint
+__tg_sqrt
+LOT_CATransform3DSlerpToTransform
+GLKMatrix4MakeWithQuaternion
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKMatrix4.h
+GLKQuaternionNormalize
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKQuaternion.h
+GLKQuaternionLength
+GLKVector4Lerp
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.sdk/System/Library/Frameworks/GLKit.framework/Headers/GLKVector4.h
+LOT_GLKMatrix4FromCATransform
+LOT_CATransform3DFromGLKMatrix4
+GLKMatrix4Make
+LOT_DegreesToRadians
+LOT_RectSetHeight
+LOT_RectBounded
+LOT_RectAddSize
+LOT_RectAddPoint
+LOT_RectAddRect
+LOT_RectDividedSection
+LOT_RectAttachedBottomRightToRect
+LOT_RectAttachedBottomLeftToRect
+LOT_RectAttachedBottomToRect
+LOT_RectAttachedTopRightToRect
+LOT_RectAttachedTopLeftToRect
+LOT_RectAttachedTopToRect
+LOT_RectAttachedRightToRect
+LOT_RectAttachedLeftToRect
+LOT_RectFramedBottomRightInRect
+LOT_RectFramedBottomLeftInRect
+LOT_RectFramedTopRightInRect
+LOT_RectFramedTopLeftInRect
+LOT_RectFramedBottomInRect
+LOT_RectFramedTopInRect
+LOT_RectFramedRightInRect
+LOT_RectFramedLeftInRect
+LOT_RectFramedCenteredInRect
+LOT_RectInsetAll
+LOT_RectInsetVertical
+LOT_RectInsetHorizontal
+LOT_RectInsetBottom
+LOT_RectInsetTop
+LOT_RectInsetRight
+LOT_RectInsetLeft
+LOT_RectGetCenterPoint
+LOT_RectCenteredAtPoint
+LOT_RectIntegral
+__tg_ceil
+-[LOTShapePath initWithJSON:frameRate:]
+-[LOTShapePath _mapFromJSON:frameRate:]
+-[LOTShapePath closed]
+-[LOTShapePath index]
+-[LOTShapePath shapePath]
+-[LOTShapePath .cxx_destruct]
+_OBJC_IVAR_$_LOTShapePath._index
+_OBJC_IVAR_$_LOTShapePath._closed
+_OBJC_IVAR_$_LOTShapePath._shapePath
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTShapePath.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTShapePath.h
+-[LOTCircleShapeLayer initWithLayer:]
++[LOTCircleShapeLayer needsDisplayForKey:]
+-[LOTCircleShapeLayer actionForKey:]
+-[LOTCircleShapeLayer _setPath]
+-[LOTCircleShapeLayer display]
+-[LOTEllipseShapeLayer initWithEllipseShape:fill:stroke:trim:transform:withLayerDuration:]
+-[LOTEllipseShapeLayer _buildAnimation]
+-[LOTEllipseShapeLayer .cxx_destruct]
+_OBJC_IVAR_$_LOTEllipseShapeLayer._circle
+_OBJC_IVAR_$_LOTEllipseShapeLayer._stroke
+_OBJC_IVAR_$_LOTEllipseShapeLayer._fill
+_OBJC_IVAR_$_LOTEllipseShapeLayer._transform
+_OBJC_IVAR_$_LOTEllipseShapeLayer._trim
+_OBJC_IVAR_$_LOTEllipseShapeLayer._fillLayer
+_OBJC_IVAR_$_LOTEllipseShapeLayer._strokeLayer
+_OBJC_IVAR_$_LOTEllipseShapeLayer._animation
+_OBJC_IVAR_$_LOTEllipseShapeLayer._strokeAnimation
+_OBJC_IVAR_$_LOTEllipseShapeLayer._fillAnimation
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableLayers/LOTEllipseShapeLayer.m
+-[LOTAnimatablePointValue initWithPointValues:frameRate:]
+-[LOTAnimatablePointValue _buildAnimationForKeyframes:]
+-[LOTAnimatablePointValue remapPointsFromBounds:toBounds:]
+-[LOTAnimatablePointValue _pointFromValueArray:]
+-[LOTAnimatablePointValue _pointFromValueDict:]
+-[LOTAnimatablePointValue hasAnimation]
+-[LOTAnimatablePointValue animationForKeyPath:]
+-[LOTAnimatablePointValue description]
+-[LOTAnimatablePointValue initialPoint]
+-[LOTAnimatablePointValue usePathAnimation]
+-[LOTAnimatablePointValue setUsePathAnimation:]
+-[LOTAnimatablePointValue animationPath]
+-[LOTAnimatablePointValue pointKeyframes]
+-[LOTAnimatablePointValue keyTimes]
+-[LOTAnimatablePointValue timingFunctions]
+-[LOTAnimatablePointValue delay]
+-[LOTAnimatablePointValue duration]
+-[LOTAnimatablePointValue startFrame]
+-[LOTAnimatablePointValue durationFrames]
+-[LOTAnimatablePointValue frameRate]
+-[LOTAnimatablePointValue .cxx_destruct]
+_OBJC_IVAR_$_LOTAnimatablePointValue._usePathAnimation
+_OBJC_IVAR_$_LOTAnimatablePointValue._frameRate
+_OBJC_IVAR_$_LOTAnimatablePointValue._initialPoint
+_OBJC_IVAR_$_LOTAnimatablePointValue._startFrame
+_OBJC_IVAR_$_LOTAnimatablePointValue._durationFrames
+_OBJC_IVAR_$_LOTAnimatablePointValue._duration
+_OBJC_IVAR_$_LOTAnimatablePointValue._delay
+_OBJC_IVAR_$_LOTAnimatablePointValue._animationPath
+_OBJC_IVAR_$_LOTAnimatablePointValue._keyTimes
+_OBJC_IVAR_$_LOTAnimatablePointValue._timingFunctions
+_OBJC_IVAR_$_LOTAnimatablePointValue._pointKeyframes
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableProperties/LOTAnimatablePointValue.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableProperties/LOTAnimatablePointValue.h
+-[LOTAssetGroup initWithJSON:]
+-[LOTAssetGroup buildAssetNamed:withBounds:andFramerate:]
+-[LOTAssetGroup finalizeInitialization]
+-[LOTAssetGroup assetModelForID:]
+-[LOTAssetGroup .cxx_destruct]
+_OBJC_IVAR_$_LOTAssetGroup._assetMap
+_OBJC_IVAR_$_LOTAssetGroup._assetJSONMap
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Models/LOTAssetGroup.m
+-[LOTAnimatableBoundsValue initWithSizeValues:frameRate:]
+-[LOTAnimatableBoundsValue _buildAnimationForKeyframes:]
+-[LOTAnimatableBoundsValue _boundsRectFromValueArray:]
+-[LOTAnimatableBoundsValue _pointFromValueDict:]
+-[LOTAnimatableBoundsValue hasAnimation]
+-[LOTAnimatableBoundsValue animationForKeyPath:]
+-[LOTAnimatableBoundsValue description]
+-[LOTAnimatableBoundsValue initialBounds]
+-[LOTAnimatableBoundsValue boundsKeyframes]
+-[LOTAnimatableBoundsValue keyTimes]
+-[LOTAnimatableBoundsValue timingFunctions]
+-[LOTAnimatableBoundsValue delay]
+-[LOTAnimatableBoundsValue duration]
+-[LOTAnimatableBoundsValue startFrame]
+-[LOTAnimatableBoundsValue durationFrames]
+-[LOTAnimatableBoundsValue frameRate]
+-[LOTAnimatableBoundsValue .cxx_destruct]
+_OBJC_IVAR_$_LOTAnimatableBoundsValue._frameRate
+_OBJC_IVAR_$_LOTAnimatableBoundsValue._initialBounds
+_OBJC_IVAR_$_LOTAnimatableBoundsValue._startFrame
+_OBJC_IVAR_$_LOTAnimatableBoundsValue._durationFrames
+_OBJC_IVAR_$_LOTAnimatableBoundsValue._duration
+_OBJC_IVAR_$_LOTAnimatableBoundsValue._delay
+_OBJC_IVAR_$_LOTAnimatableBoundsValue._keyTimes
+_OBJC_IVAR_$_LOTAnimatableBoundsValue._timingFunctions
+_OBJC_IVAR_$_LOTAnimatableBoundsValue._boundsKeyframes
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableProperties/LOTAnimatableBoundsValue.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableProperties/LOTAnimatableBoundsValue.h
+-[LOTAnimationState initWithDuration:layer:frameRate:]
+-[LOTAnimationState updateAnimationLayerWithTimeOffset:]
+-[LOTAnimationState setNeedsAnimationUpdate]
+___44-[LOTAnimationState setNeedsAnimationUpdate]_block_invoke
+-[LOTAnimationState setAnimationDoesLoop:]
+-[LOTAnimationState setAnimationIsPlaying:]
+-[LOTAnimationState setAnimatedProgress:]
+-[LOTAnimationState setAnimationSpeed:]
+-[LOTAnimationState animatedProgress]
+-[LOTAnimationState animationIsPlaying]
+-[LOTAnimationState logStats:]
+-[LOTAnimationState loopAnimation]
+-[LOTAnimationState animationDuration]
+-[LOTAnimationState animationSpeed]
+-[LOTAnimationState layer]
+-[LOTAnimationState .cxx_destruct]
++[LOTAnimationView animationNamed:]
++[LOTAnimationView animationNamed:inBundle:]
++[LOTAnimationView animationFromJSON:]
+-[LOTAnimationView initWithContentsOfURL:]
+___42-[LOTAnimationView initWithContentsOfURL:]_block_invoke
+___42-[LOTAnimationView initWithContentsOfURL:]_block_invoke_2
+___copy_helper_block_.141
+___destroy_helper_block_.142
+___copy_helper_block_.144
+___destroy_helper_block_.145
+-[LOTAnimationView initWithModel:]
+-[LOTAnimationView _initializeAnimationContainer]
+-[LOTAnimationView _setupWithSceneModel:restoreAnimationState:]
+-[LOTAnimationView _buildSubviewsFromModel]
+-[LOTAnimationView play]
+-[LOTAnimationView playWithCompletion:]
+-[LOTAnimationView pause]
+-[LOTAnimationView addSubview:toLayerNamed:]
+-[LOTAnimationView startDisplayLink]
+-[LOTAnimationView stopDisplayLink]
+-[LOTAnimationView checkAnimationState]
+-[LOTAnimationView _callCompletionIfNecesarry]
+-[LOTAnimationView setAnimationProgress:]
+-[LOTAnimationView animationProgress]
+-[LOTAnimationView setLoopAnimation:]
+-[LOTAnimationView loopAnimation]
+-[LOTAnimationView setAnimationSpeed:]
+-[LOTAnimationView animationSpeed]
+-[LOTAnimationView isAnimationPlaying]
+-[LOTAnimationView animationDuration]
+-[LOTAnimationView didMoveToWindow]
+-[LOTAnimationView didMoveToSuperview]
+-[LOTAnimationView removeFromSuperview]
+-[LOTAnimationView setContentMode:]
+-[LOTAnimationView layoutSubviews]
+-[LOTAnimationView intrinsicContentSize]
+-[LOTAnimationView _layout]
+-[LOTAnimationView sceneModel]
+-[LOTAnimationView animationState]
+-[LOTAnimationView setAnimationState:]
+-[LOTAnimationView completionBlock]
+-[LOTAnimationView setCompletionBlock:]
+-[LOTAnimationView .cxx_destruct]
+_OBJC_IVAR_$_LOTAnimationState._framerate
+_OBJC_IVAR_$_LOTAnimationState._layer
+_OBJC_IVAR_$_LOTAnimationState._needsAnimationUpdate
+_OBJC_IVAR_$_LOTAnimationState._animationIsPlaying
+_OBJC_IVAR_$_LOTAnimationState._loopAnimation
+_OBJC_IVAR_$_LOTAnimationState._animationDuration
+_OBJC_IVAR_$_LOTAnimationState._animatedProgress
+_OBJC_IVAR_$_LOTAnimationState._animationSpeed
+_OBJC_IVAR_$_LOTAnimationState._previousLocalTime
+_OBJC_IVAR_$_LOTAnimationState._playFromBeginning
+_OBJC_IVAR_$_LOTAnimationView._animationState
+___block_descriptor_tmp.143
+___block_descriptor_tmp.146
+_OBJC_IVAR_$_LOTAnimationView._timingLayer
+_OBJC_IVAR_$_LOTAnimationView._sceneModel
+_OBJC_IVAR_$_LOTAnimationView.hasFullyInitialized_
+_OBJC_IVAR_$_LOTAnimationView._compLayer
+_OBJC_IVAR_$_LOTAnimationView._completionDisplayLink
+_OBJC_IVAR_$_LOTAnimationView._completionBlock
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Private/LOTAnimationView.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/Private/LOTAnimationView_Internal.h
+__42-[LOTAnimationView initWithContentsOfURL:]_block_invoke_2
+__42-[LOTAnimationView initWithContentsOfURL:]_block_invoke
+__tg_fmod
+__44-[LOTAnimationState setNeedsAnimationUpdate]_block_invoke
+-[LOTAnimatableScaleValue initWithScaleValues:frameRate:]
+-[LOTAnimatableScaleValue _buildAnimationForKeyframes:]
+-[LOTAnimatableScaleValue _xformForValueArray:]
+-[LOTAnimatableScaleValue _pointFromValueDict:]
+-[LOTAnimatableScaleValue hasAnimation]
+-[LOTAnimatableScaleValue animationForKeyPath:]
+-[LOTAnimatableScaleValue initialScale]
+-[LOTAnimatableScaleValue scaleKeyframes]
+-[LOTAnimatableScaleValue keyTimes]
+-[LOTAnimatableScaleValue timingFunctions]
+-[LOTAnimatableScaleValue delay]
+-[LOTAnimatableScaleValue duration]
+-[LOTAnimatableScaleValue startFrame]
+-[LOTAnimatableScaleValue durationFrames]
+-[LOTAnimatableScaleValue frameRate]
+-[LOTAnimatableScaleValue .cxx_destruct]
+_OBJC_IVAR_$_LOTAnimatableScaleValue._frameRate
+_OBJC_IVAR_$_LOTAnimatableScaleValue._initialScale
+_OBJC_IVAR_$_LOTAnimatableScaleValue._startFrame
+_OBJC_IVAR_$_LOTAnimatableScaleValue._durationFrames
+_OBJC_IVAR_$_LOTAnimatableScaleValue._duration
+_OBJC_IVAR_$_LOTAnimatableScaleValue._delay
+_OBJC_IVAR_$_LOTAnimatableScaleValue._scaleKeyframes
+_OBJC_IVAR_$_LOTAnimatableScaleValue._keyTimes
+_OBJC_IVAR_$_LOTAnimatableScaleValue._timingFunctions
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableProperties/LOTAnimatableScaleValue.m
+/Users/fanzuyuan/Desktop/dev/meetzam_git/meetzam/meetzam/MySampleApp/Carthage/Checkouts/lottie-ios/lottie-ios/Classes/AnimatableProperties/LOTAnimatableScaleValue.h
+/Users/fanzuyuan/Library/Developer/Xcode/DerivedData/Lottie-aecxzaikyfsyrzdflliwdphdyxkc/Build/Intermediates/Lottie.build/Release-iphoneos/Lottie_iOS.build/DerivedSources/Lottie_vers.c
+__ZL15__ARCLite__loadv
+__ZL58__arclite_NSMutableDictionary__setObject_forKeyedSubscriptP19NSMutableDictionaryP13objc_selectorP11objc_objectS4_
+__ZL22add_image_hook_swiftV1PK11mach_headerl
+__ZL42__arclite_NSUndoManagerProxy_isKindOfClassP11objc_objectP13objc_selectorP10objc_class
+__ZL13replaceMethodP10objc_classP13objc_selectorPFP11objc_objectS4_S2_zEPS6_
+__ZL30__arclite_NSManagedObject_initP11objc_objectP13objc_selector
+__ZL41__arclite_NSManagedObject_allocWithEntityP11objc_objectP13objc_selectorS0_
+__ZL36__arclite_NSManagedObject_allocBatchP11objc_objectP13objc_selectorPS0_S0_j
+__ZL37__arclite_NSKKMS_fastIndexForKnownKeyP11objc_objectP13objc_selectorS0_
+__ZL28__arclite_NSKKMS_indexForKeyP11objc_objectP13objc_selectorS0_
+__ZL29__arclite_NSKKsD_objectForKeyP11objc_objectP13objc_selectorS0_
+__ZL35__arclite_NSKKsD_removeObjectForKeyP11objc_objectP13objc_selectorS0_
+__ZL33__arclite_NSKKsD_setObject_forKeyP11objc_objectP13objc_selectorS0_S0_
+__ZL41__arclite_NSKKsD_addEntriesFromDictionaryP11objc_objectP13objc_selectorP12NSDictionary
+__ZL28__arclite_objc_readClassPairP10objc_classPK15objc_image_info
+__ZL32__arclite_objc_allocateClassPairP10objc_classPKcm
+__ZL32__arclite_object_getIndexedIvarsP11objc_object
+__ZL23__arclite_objc_getClassPKc
+__ZL27__arclite_objc_getMetaClassPKc
+__ZL31__arclite_objc_getRequiredClassPKc
+__ZL26__arclite_objc_lookUpClassPKc
+__ZL26__arclite_objc_getProtocolPKc
+__ZL23__arclite_class_getNameP10objc_class
+__ZL26__arclite_protocol_getNameP8Protocol
+__ZL37__arclite_objc_copyClassNamesForImagePKcPj
+__ZL17transcribeMethodsP10objc_classP15glue_class_ro_t
+__ZL19transcribeProtocolsP10objc_classP15glue_class_ro_t
+__ZL20transcribePropertiesP10objc_classP15glue_class_ro_t
+__ZL14initialize_impP11objc_objectP13objc_selector
+__ZL18allocateMaybeSwiftP18glue_swift_class_tm
+__ZL22copySwiftV1MangledNamePKcb
+__ZL13demangledNamePKcb
+__ZL16scanMangledFieldRPKcS0_S1_Ri
+__ZL30arclite_uninitialized_functionv
+__ZL12cxxConstructP11objc_object
+__ZL20fixStringForCoreDataP11objc_object
+_OBJC_METACLASS_$___ARCLite__
+__ZL24OBJC_CLASS_$___ARCLite__
+__ZL31OBJC_METACLASS_RO_$___ARCLite__
+__non_lazy_classes
+__ZL27OBJC_CLASS_RO_$___ARCLite__
+__ZL11_class_name
+__ZL32OBJC_$_CLASS_METHODS___ARCLite__
+__ZL17_load_method_name
+__ZL17_load_method_type
+l_OBJC_PROTOCOL_$___ARCLiteKeyedSubscripting__
+l_OBJC_LABEL_PROTOCOL_$___ARCLiteKeyedSubscripting__
+l_OBJC_PROTOCOL_REFERENCE_$___ARCLiteKeyedSubscripting__
+__ZL30NSUndoManagerProxy_targetClass
+__ZL29original_NSManagedObject_init
+__ZL40original_NSManagedObject_allocWithEntity
+__ZL35original_NSManagedObject_allocBatch
+__ZL25NSMutableDictionary_class
+__ZL22NSConstantString_class
+__ZL14NSString_class
+__ZL36original_NSKKMS_fastIndexForKnownKey
+__ZL27original_NSKKMS_indexForKey
+__ZL28original_NSKKsD_objectForKey
+__ZL34original_NSKKsD_removeObjectForKey
+__ZL32original_NSKKsD_setObject_forKey
+__ZL40original_NSKKsD_addEntriesFromDictionary
+__ZZL22add_image_hook_swiftV1PK11mach_headerlE7patches
+__ZGVZL22add_image_hook_swiftV1PK11mach_headerlE7patches
+__ZL31original_objc_allocateClassPair
+__ZL31original_object_getIndexedIvars
+__ZL22original_objc_getClass
+__ZL26original_objc_getMetaClass
+__ZL30original_objc_getRequiredClass
+__ZL25original_objc_lookUpClass
+__ZL25original_objc_getProtocol
+__ZL22original_class_getName
+__ZL25original_protocol_getName
+__ZL36original_objc_copyClassNamesForImage
+__ZL12demangleLock
+__ZL9Demangled
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c++ -arch arm64 -fmessage-length=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -std=c++11 -Wno-trigraphs -fno-exceptions -fno-rtti -mpascal-strings -Os -Wno-missing-field-initializers -Wmissing-prototypes -Wno-implicit-atomic-properties -Wno-arc-repeated-use-of-weak -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-bool-conversion -Wno-enum-conversion -Wshorten-64-to-32 -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -Wno-c++11-extensions -D NDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.Internal.sdk -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -Winvalid-offsetof -miphoneos-version-min=4.3 -g -fno-threadsafe-statics -Wno-sign-conversion -Wno-infinite-recursion -Wno-move -fembed-bitcode -iquote /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/arclite_iOS-65~1093/TempContent/Objects/arclite.build/arclite_iOS.build/arclite_iphoneos-generated-files.hmap -I /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/arclite_iOS-65~1093/TempContent/Objects/arclite.build/arclite_iOS.build/arclite_iphoneos-own-target-headers.hmap -I /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/arclite_iOS-65~1093/TempContent/Objects/arclite.build/arclite_iOS.build/arclite_iphoneos-all-target-headers.hmap -iquote /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/arclite_iOS-65~1093/TempContent/Objects/arclite.build/arclite_iOS.build/arclite_iphoneos-project-headers.hmap -I /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/arclite_iOS-65~1093/Symbols/BuiltProducts/include -I /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/arclite_iOS-65~1093/TempContent/Objects/arclite.build/arclite_iOS.build/DerivedSources/arm64 -I /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/arclite_iOS-65~1093/TempContent/Objects/arclite.build/arclite_iOS.build/DerivedSources -F/Library/Caches/com.apple.xbs/Binaries/arclite_iOS/arclite_iOS-65~1093/Symbols/BuiltProducts -F/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.Internal.sdk/System/Library/PrivateFrameworks -Wall -Wextra -Wno-gcc-compat -fgnu-inline-asm -Wno-error=incomplete-umbrella -Wno-error=incomplete-umbrella -MMD -MT dependencies -MF /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/arclite_iOS-65~1093/TempContent/Objects/arclite.build/arclite_iOS.build/Objects-normal/arm64/arclite.d --serialize-diagnostics /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/arclite_iOS-65~1093/TempContent/Objects/arclite.build/arclite_iOS.build/Objects-normal/arm64/arclite.dia -c /Library/Caches/com.apple.xbs/Sources/arclite_iOS/arclite-65/source/arclite.mm -o /Library/Caches/com.apple.xbs/Binaries/arclite_iOS/arclite_iOS-65~1093/TempContent/Objects/arclite.build/arclite_iOS.build/Objects-normal/arm64/arclite.o -mlinker-version=274.2
+/Library/Caches/com.apple.xbs/Sources/arclite_iOS/arclite-65/source/arclite.mm
+/Library/Caches/com.apple.xbs/Sources/arclite_iOS/arclite-65
+fixStringForCoreData
+cxxConstruct
+arclite_uninitialized_function
+scanMangledField
+isdigit
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.2.Internal.sdk/usr/include/ctype.h
+__isctype
+demangledName
+copySwiftV1DemangledName
+copySwiftV1MangledName
+allocateMaybeSwift
+word_align
+isSwift
+initialize_imp
+transcribeProperties
+property_list_nth
+transcribeProtocols
+transcribeMethods
+data
+method_list_nth
+__arclite_objc_copyClassNamesForImage
+__arclite_protocol_getName
+__arclite_class_getName
+__arclite_objc_getProtocol
+__arclite_objc_lookUpClass
+__arclite_objc_getRequiredClass
+__arclite_objc_getMetaClass
+__arclite_objc_getClass
+__arclite_object_getIndexedIvars
+__arclite_objc_allocateClassPair
+metaclass
+__arclite_objc_readClassPair
+transcribeIvars
+ivar_list_nth
+max
+alignment
+ro
+fastFlags
+__arclite_NSKKsD_addEntriesFromDictionary
+__arclite_NSKKsD_setObject_forKey
+__arclite_NSKKsD_removeObjectForKey
+__arclite_NSKKsD_objectForKey
+__arclite_NSKKMS_indexForKey
+__arclite_NSKKMS_fastIndexForKnownKey
+__arclite_NSManagedObject_allocBatch
+__arclite_NSManagedObject_allocWithEntity
+__arclite_NSManagedObject_init
+replaceMethod
+__arclite_NSUndoManagerProxy_isKindOfClass
+add_image_hook_swiftV1
+patch_lazy_pointers
+patch_t<const char **(const char *, unsigned int *)>
+patch_t<const char *(Protocol *)>
+patch_t<const char *(Class)>
+patch_t<Protocol *(const char *)>
+patch_t<Class (const char *)>
+patch_t<void *(id)>
+patch_t<Class (Class, const char *, unsigned long)>
+patch_t<Class (Class, const objc_image_info *)>
+__arclite_NSMutableDictionary__setObject_forKeyedSubscript
+__ARCLite__load
+install_swiftV1
+install_dict_nil_value
+addOrReplaceMethod
+keyedGetter

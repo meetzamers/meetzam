@@ -232,14 +232,6 @@ class FrameViewController: UIViewController {
         return iv
     }()
     
-    // Small Do Heart image + button
-//    let doHeart: UIImageView = {
-//        let iv = UIImageView()
-//        iv.image = UIImage(named: "DoHeart")
-//        iv.contentMode = .scaleAspectFill
-//        
-//        return iv
-//    }()
     let doHeartButton: UIButton = {
         let bt = UIButton()
         bt.setImage(UIImage(named: "DoHeart"), for: .normal)
@@ -254,10 +246,10 @@ class FrameViewController: UIViewController {
         
         // unlike animation
         UIView.animate(withDuration: 0.1 / 1.5, animations: {() -> Void in
-            self.doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 1.1, y: 1.1)
+            self.doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 1, y: 1)
         }, completion: {(_ finished: Bool) -> Void in
             UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
-                self.doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 0.9, y: 0.9)
+                self.doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 0.8, y: 0.8)
             }, completion: {(_ finished: Bool) -> Void in
                 UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
                     self.doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
@@ -320,7 +312,7 @@ class FrameViewController: UIViewController {
                 }, completion: nil)
             })
         })
-
+        
     }
     
     override func viewDidLoad() {
