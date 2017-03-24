@@ -161,7 +161,7 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         
         while (userProfile?.displayName==nil)
         {
-            //print("waiting")
+            print("waiting")
         }
         
         var MoviesPosterURL:Array = [String]()
@@ -180,7 +180,7 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         
         while ((MoviesPosterURL.count) != (currentLikedMovie.count))
         {
-            //print("waiting")
+            print("waiting")
         }
         return MoviesPosterURL
     }
