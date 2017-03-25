@@ -94,7 +94,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         localURL = URL(fileURLWithPath: localPath)
         
         //getting actual image
-        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+        //let image = info[UIImagePickerControllerOriginalImage] as! UIImage
         let data = UIImagePNGRepresentation(image)
         try! data?.write(to: localURL!)
         
