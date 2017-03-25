@@ -9,6 +9,7 @@
 import UIKit
 import Foundation
 import AWSMobileHubHelper
+import FBSDKCoreKit
 
 class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
@@ -67,11 +68,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         userBioField.frame = CGRect(x: 0, y: userPicField.frame.height + 50, width: UIScreen.main.bounds.width, height: 25)
         userBioField.font = UIFont(name: "HelveticaNeue-Thin", size: 18)
         
-        // delete it:
-        print("This is the frame:")
-        print(userPicField.frame.width)
-        print(userPicField.frame.height)
-        
         // new center:
         userBioField.textAlignment = .center
         
@@ -85,7 +81,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         //============set Profile Picture ==============\\
         self.profileMainBodyView.addSubview(userPicField)
-        if let imageURL = identityManager.imageURL {
+        let fbid = FBSDKAccessToken.current().userID
+        let largeImageURL = "https://graph.facebook.com/" + fbid! + "/picture?type=large&redirect=true&width=720&height=720"
+        
+        //if let imageURL = identityManager.imageURL {
+        if let imageURL = URL(string: largeImageURL) {
             let imageData = try! Data(contentsOf: imageURL)
             if let profileImage = UIImage(data: imageData) {
                 userPicField.image = profileImage
@@ -93,7 +93,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                 userPicField.image = UIImage(named: "UserIcon")
             }
         }
-  
+        
         //show top three movies
         TopThreeMovieCollectionView.delegate = self;
         TopThreeMovieCollectionView.dataSource = self;

@@ -221,6 +221,8 @@ class FrameViewController: UIViewController {
         
         return vd
     }()
+    let movieRelease = UILabel()
+    let movieDirector = UILabel()
     let movieContent = UIScrollView(frame: CGRect(x: 0, y: 22, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 46))
     
     // image view init
@@ -333,6 +335,7 @@ class FrameViewController: UIViewController {
         
     }
     
+    // ====================================================================================================================================
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -399,6 +402,25 @@ class FrameViewController: UIViewController {
         videoView.loadHTMLString("<html><head><style>\(htmlStyle)</style></head><body><iframe width='100%' height='100%' src='\(videoURL)' frameborder='0' allowfullscreen></iframe></body></html>", baseURL: nil)
         movieContent.addSubview(videoView)
         
+        // add movie release year in to the scroll view
+        movieRelease.frame = CGRect(x: 10, y: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + videoView.frame.height + 10, width: UIScreen.main.bounds.width - 15, height: 23)
+        movieRelease.font = UIFont(name: "HelveticaNeue-thin", size: 15)
+        movieRelease.textColor = UIColor.black
+        if (movie_info?.releaseYear != nil) {
+            movieRelease.text = "Release Year: " + (movie_info?.releaseYear)!
+        }
+        movieContent.addSubview(movieRelease)
+        
+        // add movie director in to the scrool view
+        movieDirector.frame = CGRect(x: 10, y: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + videoView.frame.height + movieRelease.frame.height + 10, width: UIScreen.main.bounds.width - 15, height: 23)
+        movieDirector.font = UIFont(name: "HelveticaNeue-thin", size: 15)
+        movieDirector.textColor = UIColor.black
+        if (movie_info?.directors != nil) {
+            let realDirector = movie_info?.directors.joined(separator: ", ")
+            movieDirector.text = "Director: " + realDirector!
+        }
+        movieContent.addSubview(movieDirector)
+        
         // add small heart
         if (like) {
             // do heart button create
@@ -408,16 +430,3 @@ class FrameViewController: UIViewController {
         }
     }
 }
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-// Might need it..?
-
-// Scroll down action
-//    func scrollUpAction() {
-//        print("scrolled down")
-//    }
-
-// add scroll down to view the detailed stuff
-//        let scrolldown = UISwipeGestureRecognizer()
-//        scrolldown.direction = .up
-//        scrolldown.addTarget(self, action: #selector(FrameViewController.scrollUpAction))
-//        imageView.addGestureRecognizer(scrolldown)

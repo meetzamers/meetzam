@@ -133,6 +133,8 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                         view.videoView.loadHTMLString("<html><head><style>\(htmlStyle)</style></head><body><iframe width='100%' height='100%' src='\(view.videoURL)' frameborder='0' allowfullscreen></iframe></body></html>", baseURL: nil)
                         view.movieContent.addSubview(view.videoView)
                         
+                        view.movieRelease.text = "Release Year: " + item.releaseYear!
+                        
                         view.movie_info = item;
                     }
                     
