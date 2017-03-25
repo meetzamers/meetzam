@@ -12,6 +12,7 @@
 import UIKit
 import AWSDynamoDB
 import AWSMobileHubHelper
+import NVActivityIndicatorView
 
 class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate{
     
