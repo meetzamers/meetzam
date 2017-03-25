@@ -200,10 +200,14 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
 // This is each page's view controller
 class FrameViewController: UIViewController {
     
+    // Loading Indicator
+    let loadingIndicatorView = NVActivityIndicatorView(frame: CGRect(x: UIScreen.main.bounds.width/2 - 30, y: UIScreen.main.bounds.height/2 - 30, width: 60, height: 60), type: .ballRotateChase, color: UIColor.darkGray, padding: CGFloat(0))
+    
     // DB related var
     var user_p = UserProfileToDB()
     var like = false
     var movie_info = SingleMovie()
+    var videoURL = ""
     
     // UI var
     let movieTitle = UILabel()
@@ -217,9 +221,6 @@ class FrameViewController: UIViewController {
         
         return vd
     }()
-    var videoURL = ""
-    
-    // scoll view
     let movieContent = UIScrollView(frame: CGRect(x: 0, y: 22, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 46))
     
     // image view init
@@ -240,6 +241,7 @@ class FrameViewController: UIViewController {
         return iv
     }()
     
+    // Small Heart button
     let doHeartButton: UIButton = {
         let bt = UIButton()
         bt.setImage(UIImage(named: "DoHeart"), for: .normal)
@@ -248,6 +250,7 @@ class FrameViewController: UIViewController {
         return bt
     }()
     
+    // ACTIONS:
     // Small heart button action (cancel like)
     func cancelLike() {
         print("unliked!!!!!!!")
@@ -333,6 +336,9 @@ class FrameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Loading animation
+        self.view.addSubview(loadingIndicatorView)
+        
         // view changes
         self.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         self.view.backgroundColor = UIColor.clear
@@ -398,32 +404,6 @@ class FrameViewController: UIViewController {
 }
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // Might need it..?
-
-//    let moviePopInfo = UILabel()
-
-//            doHeart.frame = CGRect(x: 10 + movieTitle.frame.width, y: imageView.frame.height + 10, width: 25, height: 25)
-//            doHeart.alpha = 0.98
-//            imageView.addSubview(doHeart)
-
-//        // do heart
-//        doHeart.frame = CGRect(x: 10 + movieTitle.frame.width, y: imageView.frame.height + 10, width: 25, height: 25)
-//        doHeart.alpha = 0.98
-//        imageView.addSubview(doHeart)
-
-// pop up do heart
-//        doHeart.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
-//        UIView.animate(withDuration: 0.1 / 1.5, animations: {() -> Void in
-//            self.doHeart.transform = CGAffineTransform.identity.scaledBy(x: 1.1, y: 1.1)
-//        }, completion: {(_ finished: Bool) -> Void in
-//            UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
-//                self.doHeart.transform = CGAffineTransform.identity.scaledBy(x: 0.9, y: 0.9)
-//            }, completion: {(_ finished: Bool) -> Void in
-//                UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
-//                    self.doHeart.transform = CGAffineTransform.identity
-//                }, completion: nil)
-//            })
-//        })
-
 
 // Scroll down action
 //    func scrollUpAction() {

@@ -74,7 +74,9 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
  */
     func refreshList(movie_list: MovieList, view: FrameViewController, user_profile: UserProfileToDB)  {
         
+        // Loading Animations
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        view.loadingIndicatorView.startAnimating()
         
         let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.default()
         let queryExpression = AWSDynamoDBScanExpression()
@@ -150,6 +152,10 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                 print("Error: \(error)")
             }
             print("number of all movies \(c)")
+            
+            // Stop loading animation
+            view.loadingIndicatorView.stopAnimating()
+            view.loadingIndicatorView.removeFromSuperview()
             
             return nil
         })
