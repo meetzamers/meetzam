@@ -160,7 +160,6 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             UIView.animate(withDuration: 0.5, animations: { () -> Void in
                 view.view.backgroundColor = UIColor.clear
             })
-            
             return nil
         })
         
