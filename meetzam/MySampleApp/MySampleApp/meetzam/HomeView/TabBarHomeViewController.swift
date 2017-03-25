@@ -355,8 +355,9 @@ class FrameViewController: UIViewController {
             let imageURL = URL(string: path)
             let imageData = try! Data(contentsOf: imageURL!)
             imageView.image = UIImage(data: imageData)
-            videoURL = "https://www.youtube.com/embed/" + (movie_info?.trailer_key!)!
+            videoURL = "https://www.youtube.com/embed/" + (movie_info?.trailer_key!)! + "?rel=0&version=3&controls=0&showinfo=0"
         }
+        
         // add scroll view
         movieContent.showsVerticalScrollIndicator = true
         movieContent.isScrollEnabled = true
@@ -387,10 +388,15 @@ class FrameViewController: UIViewController {
         movieDetailedInfo.isEditable = false
         movieContent.addSubview(movieDetailedInfo)
         
+        // resize the detailed info
+        if (movie_info?.longDescription != nil) {
+            movieDetailedInfo.frame = CGRect(x: 6, y: imageView.frame.height + movieTitle.frame.height + 5, width: UIScreen.main.bounds.width - 15, height: movieDetailedInfo.contentSize.height)
+        }
+        
         // add movie trailer
         let htmlStyle = "<style> iframe { margin: 0px !important; padding: 0px !important; border: 0px !important; } html, body { margin: 0px !important; padding: 0px !important; border: 0px !important; width: 100%; height: 100%; } </style>"
         videoView.frame = CGRect(x: 6, y: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + 5, width: UIScreen.main.bounds.width - 15, height: (UIScreen.main.bounds.width - 15)/1.85)
-        videoView.loadHTMLString("<html><head><style>\(htmlStyle)</style></head><body><iframe width='100%' height='100%' src='\(videoURL)?&playsinline=1' frameborder='0' allowfullscreen></iframe></body></html>", baseURL: nil)
+        videoView.loadHTMLString("<html><head><style>\(htmlStyle)</style></head><body><iframe width='100%' height='100%' src='\(videoURL)' frameborder='0' allowfullscreen></iframe></body></html>", baseURL: nil)
         movieContent.addSubview(videoView)
         
         // add small heart

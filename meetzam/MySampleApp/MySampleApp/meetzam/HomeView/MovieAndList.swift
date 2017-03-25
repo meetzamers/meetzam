@@ -77,6 +77,7 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         // Loading Animations
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         view.loadingIndicatorView.startAnimating()
+        view.view.backgroundColor = UIColor.white
         
         let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.default()
         let queryExpression = AWSDynamoDBScanExpression()
@@ -125,11 +126,11 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                         view.imageView.image = UIImage(data: imageData)
                         
                         
-                        view.videoURL = "https://www.youtube.com/embed/" + item.trailer_key!
+                        view.videoURL = "https://www.youtube.com/embed/" + item.trailer_key! + "?rel=0&version=3&controls=0&showinfo=0"
                         // add movie trailer
                         let htmlStyle = "<style> iframe { margin: 0px !important; padding: 0px !important; border: 0px !important; } html, body { margin: 0px !important; padding: 0px !important; border: 0px !important; width: 100%; height: 100%; } </style>"
                         view.videoView.frame = CGRect(x: 6, y: view.imageView.frame.height + view.movieTitle.frame.height + view.movieDetailedInfo.frame.height + 5, width: UIScreen.main.bounds.width - 15, height: (UIScreen.main.bounds.width - 15)/1.85)
-                        view.videoView.loadHTMLString("<html><head><style>\(htmlStyle)</style></head><body><iframe width='100%' height='100%' src='\(view.videoURL)?&playsinline=1' frameborder='0' allowfullscreen></iframe></body></html>", baseURL: nil)
+                        view.videoView.loadHTMLString("<html><head><style>\(htmlStyle)</style></head><body><iframe width='100%' height='100%' src='\(view.videoURL)' frameborder='0' allowfullscreen></iframe></body></html>", baseURL: nil)
                         view.movieContent.addSubview(view.videoView)
                         
                         view.movie_info = item;
@@ -156,6 +157,9 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             // Stop loading animation
             view.loadingIndicatorView.stopAnimating()
             view.loadingIndicatorView.removeFromSuperview()
+            UIView.animate(withDuration: 0.5, animations: { () -> Void in
+                view.view.backgroundColor = UIColor.clear
+            })
             
             return nil
         })

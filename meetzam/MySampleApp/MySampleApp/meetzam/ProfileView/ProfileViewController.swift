@@ -16,17 +16,14 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var TopThreeMovieCollectionView: UICollectionView!
     @IBOutlet weak var profileMainBodyView: UIView!
     
-    
     var topThreeImages = ["split","loganposter2","lala"]
     
     //declare profile picture field
     let userPicField = UIImageView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width))
 //    let userPicField = UIImageView(frame: CGRect(x: UIScreen.main.bounds.width*0.1, y: 15, width: UIScreen.main.bounds.width*0.8, height: UIScreen.main.bounds.width*0.8))
     
-    //declare displayName
+    //declare UI var
     let displayName = UILabel()
-    
-    //declare bio
     let userBioField = UILabel()
     
     //declare AWS DB var

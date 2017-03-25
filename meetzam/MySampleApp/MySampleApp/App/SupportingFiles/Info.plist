@@ -43,7 +43,7 @@
 				<string>us-east-1</string>
 			</dict>
 		</dict>
-            <key>IdentityManager</key>
+		<key>IdentityManager</key>
 		<dict>
 			<key>Default</key>
 			<dict/>
@@ -124,21 +124,21 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
-    <key>DynamoDBTables</key>
-    <dict>
-        <key>ChatRoom</key>
-        <string>meetzam-mobilehub-1569925313-ChatRoom</string>
-        <key>Conversation</key>
-        <string>meetzam-mobilehub-1569925313-Conversation</string>
-        <key>UserProfile</key>
-        <string>meetzam-mobilehub-1569925313-UserProfile</string>
-        <key>Movie-dev</key>
-        <string>meetzam-mobilehub-1569925313-Movie</string>
-        <key>Movie2</key>
-        <string>Movie2</string>
-        <key>movie_table</key>
-        <string>movie_table</string>
-    </dict>
+	<key>DynamoDBTables</key>
+	<dict>
+		<key>ChatRoom</key>
+		<string>meetzam-mobilehub-1569925313-ChatRoom</string>
+		<key>Conversation</key>
+		<string>meetzam-mobilehub-1569925313-Conversation</string>
+		<key>Movie-dev</key>
+		<string>meetzam-mobilehub-1569925313-Movie</string>
+		<key>Movie2</key>
+		<string>Movie2</string>
+		<key>UserProfile</key>
+		<string>meetzam-mobilehub-1569925313-UserProfile</string>
+		<key>movie_table</key>
+		<string>movie_table</string>
+	</dict>
 	<key>FacebookAppID</key>
 	<string>1158932457552741</string>
 	<key>FacebookDisplayName</key>
@@ -216,8 +216,6 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
-	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<false/>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -225,5 +223,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 </dict>
 </plist>
