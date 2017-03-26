@@ -21,6 +21,11 @@
 //         \|     /   |akn
 //          `-----`---'
 //
+//  profile photo需要一定时间上传，返回profile page之后图片的更新不能通过下载s3.
+//
+//  另外，选择头像时候可以resize， 可是传上s3的图片是原图。 
+//  要么就在取图片resize之后看看能不能有个temp的新的图片，要么干脆没有resize功能好了
+//  上载图片如果有预先压缩功能就好了，要不然真的慢
 //
 
 import UIKit
@@ -77,26 +82,28 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             profilePicture.image = image
+            //getting details of image
+            let uploadFileURL = info[UIImagePickerControllerReferenceURL] as! NSURL
+        
+            let imageName = uploadFileURL.lastPathComponent
+ 
+            let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! as String
+ 
+            // getting local path
+            let localPath = (documentDirectory as NSString).appendingPathComponent(imageName!)
+            localURL = URL(fileURLWithPath: localPath)
+        
+            //getting actual image
+            //let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+            let data = UIImagePNGRepresentation(image)
+            try! data?.write(to: localURL!)
         } else {
             // Error message
+            print("get image error")
         }
         
         
-        //getting details of image
-        let uploadFileURL = info[UIImagePickerControllerReferenceURL] as! NSURL
         
-        let imageName = uploadFileURL.lastPathComponent
- 
-        let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! as String
- 
-        // getting local path
-        let localPath = (documentDirectory as NSString).appendingPathComponent(imageName!)
-        localURL = URL(fileURLWithPath: localPath)
-        
-        //getting actual image
-        //let image = info[UIImagePickerControllerOriginalImage] as! UIImage
-        let data = UIImagePNGRepresentation(image)
-        try! data?.write(to: localURL!)
         
         self.dismiss(animated: true, completion: nil)
 
