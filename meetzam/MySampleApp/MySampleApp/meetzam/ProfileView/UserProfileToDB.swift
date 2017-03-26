@@ -54,10 +54,13 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         while(userProfile?.userId==nil)
         {
-//            print("waiting")
+            print("waiting")
         }
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
         userProfile?.userId  = _userId
         userProfile?.displayName = _displayName
@@ -187,10 +190,14 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         while(userProfile?.email==nil)
         {
             print("waiting")
         }
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        
         print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
         if (!((userProfile?.currentLikedMovie.contains(movieTitle))!))
         {

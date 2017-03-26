@@ -103,10 +103,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="400" height="675"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1DX-Sx-ngx" userLabel="profileMainBodyView">
-                                        <rect key="frame" x="-2" y="-64" width="402" height="675"/>
+                                        <rect key="frame" x="0.0" y="-64" width="402" height="675"/>
                                         <subviews>
                                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="I4T-Sg-NUe" userLabel="TopThreeMovieCollection View">
-                                                <rect key="frame" x="0.0" y="471" width="402" height="140"/>
+                                                <rect key="frame" x="0.0" y="505" width="402" height="140"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="140" id="E5M-uR-Aai"/>
@@ -149,7 +149,7 @@
                                                 </cells>
                                             </collectionView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c07-jd-Ndj">
-                                                <rect key="frame" x="369" y="524" width="25" height="34"/>
+                                                <rect key="frame" x="369" y="558" width="25" height="34"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="34" id="7JR-hr-D4M"/>
                                                 </constraints>
@@ -159,13 +159,13 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Liked Movies:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="keo-Rs-0sd">
-                                                <rect key="frame" x="15" y="443" width="101" height="20"/>
+                                                <rect key="frame" x="15" y="476" width="101" height="21"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HI6-mc-0bT">
-                                                <rect key="frame" x="355" y="368" width="39" height="34"/>
+                                                <rect key="frame" x="355" y="405" width="39" height="34"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="39" id="81K-KK-ZNN"/>
                                                 </constraints>
@@ -182,8 +182,8 @@
                                             <constraint firstItem="I4T-Sg-NUe" firstAttribute="top" secondItem="keo-Rs-0sd" secondAttribute="bottom" constant="8" id="0eC-WM-8WE"/>
                                             <constraint firstItem="c07-jd-Ndj" firstAttribute="trailing" secondItem="HI6-mc-0bT" secondAttribute="trailing" id="DjH-kk-xIw"/>
                                             <constraint firstAttribute="height" constant="675" id="FML-Ad-NIF"/>
-                                            <constraint firstAttribute="bottom" secondItem="keo-Rs-0sd" secondAttribute="bottom" constant="212" id="H2p-CO-AAy"/>
-                                            <constraint firstAttribute="bottom" secondItem="HI6-mc-0bT" secondAttribute="bottom" constant="273" id="bIo-Kz-cEI"/>
+                                            <constraint firstAttribute="bottom" secondItem="keo-Rs-0sd" secondAttribute="bottom" constant="178" id="H2p-CO-AAy"/>
+                                            <constraint firstAttribute="bottom" secondItem="HI6-mc-0bT" secondAttribute="bottom" constant="236" id="bIo-Kz-cEI"/>
                                             <constraint firstItem="keo-Rs-0sd" firstAttribute="leading" secondItem="I4T-Sg-NUe" secondAttribute="leading" constant="15" id="blB-Bi-w7L"/>
                                             <constraint firstItem="I4T-Sg-NUe" firstAttribute="centerY" secondItem="c07-jd-Ndj" secondAttribute="centerY" id="ecs-xz-hEj"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="640" id="kxJ-mX-LfZ"/>
@@ -194,13 +194,13 @@
                                     </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="1DX-Sx-ngx" firstAttribute="leading" secondItem="va2-js-5Km" secondAttribute="leading" constant="-2" id="ILL-QQ-Y93"/>
-                                    <constraint firstItem="1DX-Sx-ngx" firstAttribute="centerX" secondItem="va2-js-5Km" secondAttribute="centerX" constant="-1" id="MEx-Na-IAE"/>
-                                    <constraint firstAttribute="trailing" secondItem="1DX-Sx-ngx" secondAttribute="trailing" id="PO4-6D-l17"/>
+                                    <constraint firstItem="1DX-Sx-ngx" firstAttribute="leading" secondItem="va2-js-5Km" secondAttribute="leading" id="ILL-QQ-Y93"/>
+                                    <constraint firstItem="1DX-Sx-ngx" firstAttribute="centerX" secondItem="va2-js-5Km" secondAttribute="centerX" constant="1" id="MEx-Na-IAE"/>
+                                    <constraint firstAttribute="trailing" secondItem="1DX-Sx-ngx" secondAttribute="trailing" constant="-2" id="PO4-6D-l17"/>
                                     <constraint firstItem="1DX-Sx-ngx" firstAttribute="top" secondItem="va2-js-5Km" secondAttribute="top" id="Z7b-ty-yea"/>
-                                    <constraint firstAttribute="trailing" secondItem="1DX-Sx-ngx" secondAttribute="trailing" id="d0Q-k3-Y24"/>
+                                    <constraint firstAttribute="trailing" secondItem="1DX-Sx-ngx" secondAttribute="trailing" constant="-2" id="d0Q-k3-Y24"/>
                                     <constraint firstAttribute="bottom" secondItem="1DX-Sx-ngx" secondAttribute="bottom" id="jHP-j6-Kkf"/>
-                                    <constraint firstItem="1DX-Sx-ngx" firstAttribute="leading" secondItem="va2-js-5Km" secondAttribute="leading" constant="-2" id="u3B-zY-s1E"/>
+                                    <constraint firstItem="1DX-Sx-ngx" firstAttribute="leading" secondItem="va2-js-5Km" secondAttribute="leading" id="u3B-zY-s1E"/>
                                 </constraints>
                             </scrollView>
                         </subviews>

@@ -9,6 +9,7 @@
 import UIKit
 import Foundation
 import AWSMobileHubHelper
+import FBSDKCoreKit
 
 class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
@@ -16,17 +17,14 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var TopThreeMovieCollectionView: UICollectionView!
     @IBOutlet weak var profileMainBodyView: UIView!
     
-    
     var topThreeImages = ["split","loganposter2","lala"]
     
     //declare profile picture field
-    //let userPicField = UIImageView(frame: CGRect(x: UIScreen.main.bounds.width*0.15, y: 30, width: UIScreen.main.bounds.width*0.7, height: UIScreen.main.bounds.width*0.7))
-    let userPicField = UIImageView(frame: CGRect(x: UIScreen.main.bounds.width*0.1, y: 15, width: UIScreen.main.bounds.width*0.8, height: UIScreen.main.bounds.width*0.8))
+    let userPicField = UIImageView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width))
+//    let userPicField = UIImageView(frame: CGRect(x: UIScreen.main.bounds.width*0.1, y: 15, width: UIScreen.main.bounds.width*0.8, height: UIScreen.main.bounds.width*0.8))
     
-    //declare displayName
+    //declare UI var
     let displayName = UILabel()
-    
-    //declare bio
     let userBioField = UILabel()
     
     //declare AWS DB var
@@ -49,7 +47,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         //=========================set size and location of NAME Label==========================\\
         // new frame:
-        displayName.frame = CGRect(x: 0, y: userPicField.frame.height + 20, width: UIScreen.main.bounds.width, height: 35)
+        displayName.frame = CGRect(x: 0, y: userPicField.frame.height + 10, width: UIScreen.main.bounds.width, height: 35)
         displayName.font = UIFont(name: "HelveticaNeue-Light", size: 30)
         
         /* when the user first log in to meetzam, get name from database */
@@ -67,13 +65,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         //======set size and location of BIO Label=======\\
         // new frame:
-        userBioField.frame = CGRect(x: 0, y: userPicField.frame.height + 60, width: UIScreen.main.bounds.width, height: 25)
+        userBioField.frame = CGRect(x: 0, y: userPicField.frame.height + 50, width: UIScreen.main.bounds.width, height: 25)
         userBioField.font = UIFont(name: "HelveticaNeue-Thin", size: 18)
-        
-        // delete it:
-        print("This is the frame:")
-        print(userPicField.frame.width)
-        print(userPicField.frame.height)
         
         // new center:
         userBioField.textAlignment = .center
@@ -88,7 +81,14 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         //============set Profile Picture ==============\\
         self.profileMainBodyView.addSubview(userPicField)
-        if let imageURL = identityManager.imageURL {
+        let fbid = FBSDKAccessToken.current().userID
+        var largeImageURL = identityManager.imageURL?.absoluteString
+        if (fbid != nil) {
+            largeImageURL = "https://graph.facebook.com/" + fbid! + "/picture?type=large&redirect=true&width=720&height=720"
+        }
+        
+        //if let imageURL = identityManager.imageURL {
+        if let imageURL = URL(string: largeImageURL!) {
             let imageData = try! Data(contentsOf: imageURL)
             if let profileImage = UIImage(data: imageData) {
                 userPicField.image = profileImage
@@ -96,7 +96,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                 userPicField.image = UIImage(named: "UserIcon")
             }
         }
-  
+        
         //show top three movies
         TopThreeMovieCollectionView.delegate = self;
         TopThreeMovieCollectionView.dataSource = self;

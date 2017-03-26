@@ -32,6 +32,7 @@ import UIKit
 import Foundation
 import AWSS3
 import AWSMobileHubHelper
+import FBSDKCoreKit
 
 class EditProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate{
     
@@ -224,7 +225,15 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         }
         
         // Initiating profilePicture UIImageView from Facebook profile picture
-        if let imageURL = identityManager.imageURL {
+        
+        let fbid = FBSDKAccessToken.current().userID
+        var largeImageURL = identityManager.imageURL?.absoluteString
+        if (fbid != nil) {
+            largeImageURL = "https://graph.facebook.com/" + fbid! + "/picture?type=large&redirect=true&width=720&height=720"
+        }
+        
+        //if let imageURL = identityManager.imageURL {
+        if let imageURL = URL(string: largeImageURL!) {
             let imageData = try! Data(contentsOf: imageURL)
             if let profileImage = UIImage(data: imageData) {
                 profilePicture.image = profileImage

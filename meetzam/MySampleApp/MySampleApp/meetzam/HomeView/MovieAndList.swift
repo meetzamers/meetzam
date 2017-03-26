@@ -74,7 +74,10 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
  */
     func refreshList(movie_list: MovieList, view: FrameViewController, user_profile: UserProfileToDB)  {
         
+        // Loading Animations
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        view.loadingIndicatorView.startAnimating()
+        view.view.backgroundColor = UIColor.white
         
         let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.default()
         let queryExpression = AWSDynamoDBScanExpression()
@@ -91,6 +94,10 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                     let imageURL = URL(string: path)
                     let imageData = try! Data(contentsOf: imageURL!)
                     item.image = UIImage(data: imageData)
+                    
+                    print("++++++++++++++++++++++++++++++++++++++++++")
+                    print()
+                    
                     //item.pop = "Popularity: " + item.TMDB_popularity!
                     */
                     movie_list.tableRows.append(item)
@@ -111,13 +118,37 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
  
                         view.movieTitle.text = item.title
                         view.movieDetailedInfo.text = item.longDescription
+                        view.movieDetailedInfo.frame = CGRect(x: 6, y: view.imageView.frame.height + view.movieTitle.frame.height + 5, width: UIScreen.main.bounds.width - 15, height: view.movieDetailedInfo.contentSize.height) // resize the detailed info
+                        
                         let path = "https://image.tmdb.org/t/p/w500/" + (item.poster_path)!
                         let imageURL = URL(string: path)
                         let imageData = try! Data(contentsOf: imageURL!)
                         view.imageView.image = UIImage(data: imageData)
                         
-                        view.movie_info = item
-                        //view.override = true
+                        
+                        view.videoURL = "https://www.youtube.com/embed/" + item.trailer_key! + "?rel=0&showinfo=0&autoplay=1"
+                        // add movie trailer
+                        let htmlStyle = "<style> iframe { margin: 0px !important; padding: 0px !important; border: 0px !important; } html, body { margin: 0px !important; padding: 0px !important; border: 0px !important; width: 100%; height: 100%; } </style>"
+                        view.videoView.frame = CGRect(x: 6, y: view.imageView.frame.height + view.movieTitle.frame.height + view.movieDetailedInfo.frame.height + 5, width: UIScreen.main.bounds.width - 15, height: (UIScreen.main.bounds.width - 15)/1.85)
+                        view.videoView.loadHTMLString("<html><head><style>\(htmlStyle)</style></head><body><iframe width='100%' height='100%' src='\(view.videoURL)' frameborder='0' allowfullscreen></iframe></body></html>", baseURL: nil)
+                        view.movieContent.addSubview(view.videoView)
+                        
+                        view.movieRelease.frame = CGRect(x: 10, y: view.imageView.frame.height + view.movieTitle.frame.height + view.movieDetailedInfo.frame.height + view.videoView.frame.height + 10, width: UIScreen.main.bounds.width - 15, height: 23) // reposition
+                        let strText = NSMutableAttributedString(string: "Release Year: " + item.releaseYear!)
+                        strText.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 15)!, range: NSRange(location: 0, length: 13))
+                        strText.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Thin", size: 15)!, range: NSRange(location: 13, length: strText.length - 13))
+                        view.movieRelease.attributedText = strText
+                        
+                        view.movieDirector.frame = CGRect(x: 10, y: view.imageView.frame.height + view.movieTitle.frame.height + view.movieDetailedInfo.frame.height + view.videoView.frame.height + view.movieRelease.frame.height + 10, width: UIScreen.main.bounds.width - 15, height: 23) // reposition
+                        let realDirector = item.directors.joined(separator: ", ")
+                        let strText1 = NSMutableAttributedString(string: "Director: " + realDirector)
+                        strText1.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 15)!, range: NSRange(location: 0, length: 10))
+                        strText1.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Thin", size: 15)!, range: NSRange(location: 10, length: strText1.length - 10))
+                        view.movieDirector.attributedText = strText1
+                        
+                        view.movieContent.contentSize = CGSize(width: UIScreen.main.bounds.width, height: view.imageView.frame.height + view.movieTitle.frame.height + view.movieDetailedInfo.frame.height + view.videoView.frame.height + view.movieRelease.frame.height + view.movieDirector.frame.height + 200) // resize the scroll view
+                        
+                        view.movie_info = item;
                     }
                     
                     print(movie_list.tableRows.count)
@@ -138,6 +169,12 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             }
             print("number of all movies \(c)")
             
+            // Stop loading animation
+            view.loadingIndicatorView.stopAnimating()
+            view.loadingIndicatorView.removeFromSuperview()
+            UIView.animate(withDuration: 0.5, animations: { () -> Void in
+                view.view.backgroundColor = UIColor.clear
+            })
             return nil
         })
         
@@ -167,12 +204,14 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             return nil
         })
         
-        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         while (userProfile?.displayName==nil)
         {
             print("waiting")
         }
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         var MoviesPosterURL:Array = [String]()
         for movie in (currentLikedMovie) {
             print("You Liked \(movie)")
@@ -187,10 +226,13 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             })
         }
         
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         while ((MoviesPosterURL.count) != (currentLikedMovie.count))
         {
             print("waiting")
         }
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        
         return MoviesPosterURL
     }
     
