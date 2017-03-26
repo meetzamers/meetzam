@@ -3,11 +3,34 @@
 //  MySampleApp
 //
 //  Created by Sean Chew on 2/22/17.
+//  mushroom: upload profile photo 3/25/2017
+//           ____
+//       _.-'78o `"`--._
+//   ,o888o.  .o888o,   ''-.
+// ,88888P  `78888P..______.]
+///_..__..----""        __.'
+//`-._       /""| _..-''
+//    "`-----\  `\
+//            |   ;.-""--..
+//            | ,8o.  o88. `.
+//            `;888P  `788P  :
+//      .o""-.|`-._         ./
+//     J88 _.-/    ";"-P----'
+//     `--'\`|     /  /
+//         | /     |  |
+//         \|     /   |akn
+//          `-----`---'
 //
+//  profile photo需要一定时间上传，返回profile page之后图片的更新不能通过下载s3.
+//
+//  另外，选择头像时候可以resize， 可是传上s3的图片是原图。 
+//  要么就在取图片resize之后看看能不能有个temp的新的图片，要么干脆没有resize功能好了
+//  上载图片如果有预先压缩功能就好了，要不然真的慢
 //
 
 import UIKit
 import Foundation
+import AWSS3
 import AWSMobileHubHelper
 import FBSDKCoreKit
 
@@ -38,6 +61,9 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     var dbRegion: String!
     // User profile (for database use)
     var user_profile: UserProfileToDB?
+    //mush (for s3)
+    var localURL: URL?
+    
     
     // Change profile picture button
     @IBAction func changeProfilePictureButtonTapped(_ sender: UIButton) {
@@ -57,13 +83,50 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
             profilePicture.image = image
+            //getting details of image
+            let uploadFileURL = info[UIImagePickerControllerReferenceURL] as! NSURL
+        
+            let imageName = uploadFileURL.lastPathComponent
+ 
+            let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! as String
+ 
+            // getting local path
+            let localPath = (documentDirectory as NSString).appendingPathComponent(imageName!)
+            localURL = URL(fileURLWithPath: localPath)
+        
+            //getting actual image
+            //let image = info[UIImagePickerControllerOriginalImage] as! UIImage
+            let data = UIImagePNGRepresentation(image)
+            try! data?.write(to: localURL!)
         } else {
             // Error message
+            print("get image error")
         }
         
+        
+        
+        
         self.dismiss(animated: true, completion: nil)
+
     }
-    
+    func uploadProfileImage() {
+        //uploadImage()
+        let transferManager = AWSS3TransferManager.default()
+        //let testFileURL1 = localURL
+        let uploadRequest1 : AWSS3TransferManagerUploadRequest = AWSS3TransferManagerUploadRequest()
+        uploadRequest1.bucket = "testprofile-meetzam"
+        uploadRequest1.key =  AWSIdentityManager.default().identityId! + ".png"
+        uploadRequest1.body = localURL!
+        
+        transferManager.upload(uploadRequest1).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            if let error = task.error as? NSError {
+                print("InsertError: \(error)")
+            } else {
+                print("Upload Successful")
+            }
+            return nil
+        })
+    }
     // Save button
     @IBAction func saveButtonTapped(_ sender: UIButton) {
         dbName = name.text
@@ -75,7 +138,11 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         
         UserProfileToDB().insertProfile(_userId: dbID, _displayName: dbName, _bio: dbBio, _age: dbAge, _gender: dbGender, _region: dbRegion, _email: dbEmail)
         UserProfileToDB().getProfileForEdit(key: AWSIdentityManager.default().identityId!, user_profile:user_profile, displayname: name, bio: bio, age: age, gender: gender, region: region, email: email)
-        
+        if (localURL != nil) {
+            uploadProfileImage()
+        }
+        //reset so that it will not upload pic too many times
+        localURL = nil
         _ = navigationController?.popViewController(animated: true)
         
     }
