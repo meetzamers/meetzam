@@ -367,7 +367,7 @@ class FrameViewController: UIViewController {
         movieContent.isUserInteractionEnabled = true
         movieContent.backgroundColor = UIColor.clear
         self.view.addSubview(movieContent)
-        movieContent.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*1.775)
+//        movieContent.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*1.775)
         
         // add image view to scroll view
         imageView.isUserInteractionEnabled = true
@@ -404,22 +404,30 @@ class FrameViewController: UIViewController {
         
         // add movie release year in to the scroll view
         movieRelease.frame = CGRect(x: 10, y: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + videoView.frame.height + 10, width: UIScreen.main.bounds.width - 15, height: 23)
-        movieRelease.font = UIFont(name: "HelveticaNeue-thin", size: 15)
         movieRelease.textColor = UIColor.black
         if (movie_info?.releaseYear != nil) {
-            movieRelease.text = "Release Year: " + (movie_info?.releaseYear)!
+            let strText = NSMutableAttributedString(string: "Release Year: " + (movie_info?.releaseYear!)!)
+            strText.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 15)!, range: NSRange(location: 0, length: 13))
+            strText.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Thin", size: 15)!, range: NSRange(location: 13, length: strText.length - 13))
+            movieRelease.attributedText = strText
+
         }
         movieContent.addSubview(movieRelease)
         
         // add movie director in to the scrool view
         movieDirector.frame = CGRect(x: 10, y: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + videoView.frame.height + movieRelease.frame.height + 10, width: UIScreen.main.bounds.width - 15, height: 23)
-        movieDirector.font = UIFont(name: "HelveticaNeue-thin", size: 15)
         movieDirector.textColor = UIColor.black
         if (movie_info?.directors != nil) {
             let realDirector = movie_info?.directors.joined(separator: ", ")
-            movieDirector.text = "Director: " + realDirector!
+            let strText1 = NSMutableAttributedString(string: "Director: " + realDirector!)
+            strText1.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 15)!, range: NSRange(location: 0, length: 10))
+            strText1.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Thin", size: 15)!, range: NSRange(location: 10, length: strText1.length - 10))
+            movieDirector.attributedText = strText1
+            
         }
         movieContent.addSubview(movieDirector)
+        
+        movieContent.contentSize = CGSize(width: UIScreen.main.bounds.width, height: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + videoView.frame.height + movieRelease.frame.height + movieDirector.frame.height + 200)
         
         // add small heart
         if (like) {

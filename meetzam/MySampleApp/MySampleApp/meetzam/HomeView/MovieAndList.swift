@@ -134,10 +134,19 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                         view.movieContent.addSubview(view.videoView)
                         
                         view.movieRelease.frame = CGRect(x: 10, y: view.imageView.frame.height + view.movieTitle.frame.height + view.movieDetailedInfo.frame.height + view.videoView.frame.height + 10, width: UIScreen.main.bounds.width - 15, height: 23) // reposition
-                        view.movieRelease.text = "Release Year: " + item.releaseYear!
-                        let realDirector = item.directors.joined(separator: ", ")
-                        view.movieDirector.text = "Director: " + realDirector
+                        let strText = NSMutableAttributedString(string: "Release Year: " + item.releaseYear!)
+                        strText.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 15)!, range: NSRange(location: 0, length: 13))
+                        strText.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Thin", size: 15)!, range: NSRange(location: 13, length: strText.length - 13))
+                        view.movieRelease.attributedText = strText
+                        
                         view.movieDirector.frame = CGRect(x: 10, y: view.imageView.frame.height + view.movieTitle.frame.height + view.movieDetailedInfo.frame.height + view.videoView.frame.height + view.movieRelease.frame.height + 10, width: UIScreen.main.bounds.width - 15, height: 23) // reposition
+                        let realDirector = item.directors.joined(separator: ", ")
+                        let strText1 = NSMutableAttributedString(string: "Director: " + realDirector)
+                        strText1.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 15)!, range: NSRange(location: 0, length: 10))
+                        strText1.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Thin", size: 15)!, range: NSRange(location: 10, length: strText1.length - 10))
+                        view.movieDirector.attributedText = strText1
+                        
+                        view.movieContent.contentSize = CGSize(width: UIScreen.main.bounds.width, height: view.imageView.frame.height + view.movieTitle.frame.height + view.movieDetailedInfo.frame.height + view.videoView.frame.height + view.movieRelease.frame.height + view.movieDirector.frame.height + 200) // resize the scroll view
                         
                         view.movie_info = item;
                     }
