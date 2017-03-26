@@ -358,7 +358,7 @@ class FrameViewController: UIViewController {
             let imageURL = URL(string: path)
             let imageData = try! Data(contentsOf: imageURL!)
             imageView.image = UIImage(data: imageData)
-            videoURL = "https://www.youtube.com/embed/" + (movie_info?.trailer_key!)! + "?rel=0&version=3&controls=0&showinfo=0"
+            videoURL = "https://www.youtube.com/embed/" + (movie_info?.trailer_key!)! + "?rel=0&showinfo=0&autoplay=1"
         }
         
         // add scroll view

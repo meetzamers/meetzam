@@ -82,10 +82,13 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         //============set Profile Picture ==============\\
         self.profileMainBodyView.addSubview(userPicField)
         let fbid = FBSDKAccessToken.current().userID
-        let largeImageURL = "https://graph.facebook.com/" + fbid! + "/picture?type=large&redirect=true&width=720&height=720"
+        var largeImageURL = identityManager.imageURL?.absoluteString
+        if (fbid != nil) {
+            largeImageURL = "https://graph.facebook.com/" + fbid! + "/picture?type=large&redirect=true&width=720&height=720"
+        }
         
         //if let imageURL = identityManager.imageURL {
-        if let imageURL = URL(string: largeImageURL) {
+        if let imageURL = URL(string: largeImageURL!) {
             let imageData = try! Data(contentsOf: imageURL)
             if let profileImage = UIImage(data: imageData) {
                 userPicField.image = profileImage
