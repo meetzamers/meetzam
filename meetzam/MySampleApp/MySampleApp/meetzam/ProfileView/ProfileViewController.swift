@@ -17,8 +17,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var profileMainBodyView: UIView!
     
     
-    var topThreeImages = ["split","loganposter2","lala"]
-    
+
     //declare profile picture field
     //let userPicField = UIImageView(frame: CGRect(x: UIScreen.main.bounds.width*0.15, y: 30, width: UIScreen.main.bounds.width*0.7, height: UIScreen.main.bounds.width*0.7))
     let userPicField = UIImageView(frame: CGRect(x: UIScreen.main.bounds.width*0.1, y: 15, width: UIScreen.main.bounds.width*0.8, height: UIScreen.main.bounds.width*0.8))
@@ -31,6 +30,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     //declare AWS DB var
     var user_profile: UserProfileToDB?
+    
+    // declare top three movie images data
+    var imageData: [Data]!
     
     //************************** VIEW DID LOAD ********************************************//
     override func viewDidLoad() {
@@ -70,11 +72,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         userBioField.frame = CGRect(x: 0, y: userPicField.frame.height + 60, width: UIScreen.main.bounds.width, height: 25)
         userBioField.font = UIFont(name: "HelveticaNeue-Thin", size: 18)
         
-        // delete it:
-        print("This is the frame:")
-        print(userPicField.frame.width)
-        print(userPicField.frame.height)
-        
         // new center:
         userBioField.textAlignment = .center
         
@@ -102,6 +99,33 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         TopThreeMovieCollectionView.dataSource = self;
         TopThreeMovieCollectionView.backgroundColor = UIColor.init(red: 173/255, green: 173/255, blue: 173/255, alpha: 1)
         
+        /*
+        // update top three movie posters in collection view
+        var imagesURLs = SingleMovie().getLikedMoviePosters(key: AWSIdentityManager.default().identityId!)
+        
+        imageData.removeAll()
+        
+        var count = 0;
+        if (imagesURLs.count <= 3) {
+            count = imagesURLs.count
+            for var i in (0..<count) {
+                let path = "https://image.tmdb.org/t/p/w500" + imagesURLs[i]
+                let pathURL = URL(string: path)
+                imageData.append(try! Data(contentsOf: pathURL!))
+                //imageData.insert((try! Data(contentsOf: pathURL!)), at: 0)
+            }
+        } else {
+            count = 3
+            for var i in ((imagesURLs.count-3)..<imagesURLs.count) {
+                let path = "https://image.tmdb.org/t/p/w500" + imagesURLs[i]
+                let pathURL = URL(string: path)
+                imageData.append(try! Data(contentsOf: pathURL!))
+                //imageData.insert((try! Data(contentsOf: pathURL!)), at: 0)
+            }
+        }
+ */
+        
+        
     }
   
     //********************* VIEW DID APPEAR ***********************************************//
@@ -116,6 +140,35 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         self.profileMainBodyView.addSubview(displayName)
         self.profileMainBodyView.addSubview(userBioField)
+        
+        
+        /* update top 3 movies images */
+        
+        var imagesURLs = SingleMovie().getLikedMoviePosters(key: AWSIdentityManager.default().identityId!)
+        
+        imageData = [Data]()
+        //imageData.removeAll()
+        
+        var count = 0;
+        if (imagesURLs.count <= 3) {
+            count = imagesURLs.count
+            for var i in (0..<count) {
+                let path = "https://image.tmdb.org/t/p/w500" + imagesURLs[i]
+                let pathURL = URL(string: path)
+                //imageData.append(try! Data(contentsOf: pathURL!))
+                imageData.insert((try! Data(contentsOf: pathURL!)), at: 0)
+            }
+        } else {
+            count = 3
+            for var i in ((imagesURLs.count-3)..<imagesURLs.count) {
+                let path = "https://image.tmdb.org/t/p/w500" + imagesURLs[i]
+                let pathURL = URL(string: path)
+                imageData.append(try! Data(contentsOf: pathURL!))
+                //imageData.insert((try! Data(contentsOf: pathURL!)), at: 0)
+            }
+        }
+        
+        TopThreeMovieCollectionView.reloadData()
         
     }
     
@@ -137,12 +190,15 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     //setting up top three movie collection view
     //conform with UICollectionView protocal
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return topThreeImages.count
+        let imagesURLs = SingleMovie().getLikedMoviePosters(key: AWSIdentityManager.default().identityId!)
+        if (imagesURLs.count < 3) {return imagesURLs.count}
+        else {return 3}
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = TopThreeMovieCollectionView.dequeueReusableCell(withReuseIdentifier: "topThreeCell", for: indexPath) as! TopThreeMovieCell
-        cell.Top3MovieImage.image = UIImage(named: topThreeImages[indexPath.row])
+        cell.Top3MovieImage.image = UIImage(data: imageData[indexPath.row])
         
         return cell
     }
