@@ -41,37 +41,6 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         return "title"
     }
     
-/*
-    func getMovieForDisplay(key: String, movie_data: SingleMovie?, movieTitle: UILabel!, movieTitleDetailed: UITextView!, imageView: UIImageView!, moviePopInfo: UILabel!){
-        print("     enter func getmovieForDisplay")
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        
-        let mapper = AWSDynamoDBObjectMapper.default()
-        mapper.load(SingleMovie.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask!) -> AnyObject! in
-            if let error = task.error as? NSError {
-                print("Error: \(error)")
-            }
-            else if let movie_data = task.result as? SingleMovie {
-                //print("     Getting fields")
-                movieTitle.text = movie_data.Title
-                //print(movieTitle.text)
-                movieTitleDetailed.text = movie_data.overview
-                //print(movieTitleDetailed.text)
-                //imgName = URL("https://image.tmdb.org/t/p/w500/" + movie_data.poster_path)
-                let path = "https://image.tmdb.org/t/p/w500/" + movie_data.poster_path!
-                let imageURL = URL(string: path)
-                let imageData = try! Data(contentsOf: imageURL!)
-                imageView.image = UIImage(data: imageData)
-                
-                moviePopInfo.text = "Popularity: " + movie_data.TMDB_popularity!
-                
-            }
-            
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            return nil
-        })
-    }
- */
     func refreshList(movie_list: MovieList, view: FrameViewController, user_profile: UserProfileToDB)  {
         
         // Loading Animations
@@ -89,17 +58,6 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             
             if let paginatedOutput = task.result {
                 for item in paginatedOutput.items as! [SingleMovie] {
-                    /*
-                    let path = "https://image.tmdb.org/t/p/w500/" + (item.poster_path)!
-                    let imageURL = URL(string: path)
-                    let imageData = try! Data(contentsOf: imageURL!)
-                    item.image = UIImage(data: imageData)
-                    
-                    print("++++++++++++++++++++++++++++++++++++++++++")
-                    print()
-                    
-                    //item.pop = "Popularity: " + item.TMDB_popularity!
-                    */
                     movie_list.tableRows.append(item)
                     
                     if c == 0 {
@@ -152,10 +110,10 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                     }
                     
                     print(movie_list.tableRows.count)
-                    print(movie_list.tableRows[c].title ?? "mushroom_title")
+                    print(movie_list.tableRows[c].title )
                     print(movie_list.tableRows[c].topCast.description )
                     if c > 0 {
-                        print(movie_list.tableRows[c - 1].title ?? "mushroom_prev_title")
+                        print(movie_list.tableRows[c - 1].title )
                     }
                     c = c + 1
                     

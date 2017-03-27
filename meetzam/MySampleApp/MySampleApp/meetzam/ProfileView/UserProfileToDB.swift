@@ -3,6 +3,7 @@
 //  MySampleApp
 //
 //  Created by Rainy on 2017/2/26.
+//  update:bug fixed related to movie count in saving edited profile
 //
 //
 // Copyright 2017 Amazon.com, Inc. or its affiliates (Amazon). All Rights Reserved.
@@ -49,6 +50,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 print("InsertError: \(error)")
             } else if let user_profile_addTo = task.result as? UserProfileToDB {
                 userProfile?.currentLikedMovie=user_profile_addTo.currentLikedMovie
+                userProfile?.movieCount = user_profile_addTo.movieCount
                 userProfile?.userId=user_profile_addTo.userId
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false

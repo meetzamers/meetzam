@@ -35,6 +35,14 @@
 				</dict>
 			</dict>
 		</dict>
+        <key>S3</key>
+        <dict>
+            <key>Default</key>
+            <dict>
+                <key>Region</key>
+                <string>us-east-1</string>
+            </dict>
+        </dict>
         <key>S3TransferManager</key>
         <dict>
             <key>Default</key>
@@ -51,9 +59,7 @@
 				<string>us-east-1</string>
 			</dict>
 		</dict>
-
 		<key>IdentityManager</key>
-
 		<dict>
 			<key>Default</key>
 			<dict/>
