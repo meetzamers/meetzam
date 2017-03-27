@@ -39,7 +39,7 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         
         
         cell.movieImage.image = UIImage(named: images[indexPath.row])
-        var imagesURLs = SingleMovie().getLikedMoviePosters(key: AWSIdentityManager.default().identityId!)
+        let imagesURLs = SingleMovie().getLikedMoviePosters(key: AWSIdentityManager.default().identityId!)
         print("     put into imagesURLs")
         print("-------------------------------------------------")
         for url in imagesURLs {
