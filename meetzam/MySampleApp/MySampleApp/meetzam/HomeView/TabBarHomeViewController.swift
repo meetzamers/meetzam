@@ -12,7 +12,7 @@
 import UIKit
 import AWSDynamoDB
 import AWSMobileHubHelper
-//import AWSDynamoDB
+import NVActivityIndicatorView
 
 class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate{
     
@@ -58,11 +58,9 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         }
         
         let frameVC = movieView
-        
-        
         let viewControllers = [frameVC]
         
-        //        let viewControllers = [movieView]
+        // let viewControllers = [movieView]
         setViewControllers(viewControllers, direction: .forward, animated: true, completion: nil)
         
         // ============================================
@@ -76,7 +74,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
             object: AWSIdentityManager.default(),
             queue: OperationQueue.main,
             using: { [weak self] (note: Notification) -> Void in
-                guard let strongSelf = self else { return }
+                guard self != nil else { return }
                 print("Sign in observer observed sign in.")
         })
         
@@ -86,7 +84,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
             object: AWSIdentityManager.default(),
             queue: OperationQueue.main,
             using: { [weak self] (note: Notification) -> Void in
-                guard let strongSelf = self else { return }
+                guard self != nil else { return }
                 print("Sign Out Observer observed sign out.")
         })
         
@@ -122,7 +120,6 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     // AWS support functions end here
     // ============================================
     // Page view functions start here
-    
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         
         let currentMovie = (viewController as! FrameViewController).movie_info
@@ -199,19 +196,33 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     // ============================================
 }
 
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // This is each page's view controller
 class FrameViewController: UIViewController {
+    
+    // Loading Indicator
+    let loadingIndicatorView = NVActivityIndicatorView(frame: CGRect(x: UIScreen.main.bounds.width/2 - 30, y: UIScreen.main.bounds.height/2 - 30, width: 60, height: 60), type: .ballRotateChase, color: UIColor.darkGray, padding: CGFloat(0))
     
     // DB related var
     var user_p = UserProfileToDB()
     var like = false
     var movie_info = SingleMovie()
+    var videoURL = ""
     
     // UI var
     let movieTitle = UILabel()
     let movieDetailedInfo = UITextView()
-    
-    // scoll view
+    let videoView : UIWebView = {
+       let vd = UIWebView()
+        vd.backgroundColor = UIColor.clear
+        vd.scrollView.isScrollEnabled = false
+        vd.scrollView.bounces = false
+        vd.allowsInlineMediaPlayback = true
+        
+        return vd
+    }()
+    let movieRelease = UILabel()
+    let movieDirector = UILabel()
     let movieContent = UIScrollView(frame: CGRect(x: 0, y: 22, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 46))
     
     // image view init
@@ -232,14 +243,7 @@ class FrameViewController: UIViewController {
         return iv
     }()
     
-    // Small Do Heart image + button
-//    let doHeart: UIImageView = {
-//        let iv = UIImageView()
-//        iv.image = UIImage(named: "DoHeart")
-//        iv.contentMode = .scaleAspectFill
-//        
-//        return iv
-//    }()
+    // Small Heart button
     let doHeartButton: UIButton = {
         let bt = UIButton()
         bt.setImage(UIImage(named: "DoHeart"), for: .normal)
@@ -248,16 +252,20 @@ class FrameViewController: UIViewController {
         return bt
     }()
     
+    // ACTIONS:
     // Small heart button action (cancel like)
     func cancelLike() {
         print("unliked!!!!!!!")
-        
+        //remove user from movie's liked list
+        SingleMovie().deleteFromCurrentLikedUser(key: movieTitle.text!, userid: AWSIdentityManager.default().identityId!)
+        //remove movie from user's liked list
+        UserProfileToDB().deleteFromCurrentLikedMovie(key: AWSIdentityManager.default().identityId!, movieTitle: movieTitle.text!)
         // unlike animation
         UIView.animate(withDuration: 0.1 / 1.5, animations: {() -> Void in
-            self.doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 1.1, y: 1.1)
+            self.doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 1, y: 1)
         }, completion: {(_ finished: Bool) -> Void in
             UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
-                self.doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 0.9, y: 0.9)
+                self.doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 0.8, y: 0.8)
             }, completion: {(_ finished: Bool) -> Void in
                 UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
                     self.doHeartButton.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
@@ -272,8 +280,12 @@ class FrameViewController: UIViewController {
     
     // Double Tap action
     func doubleTapAction() {
+        //add movie to user's liked movie list
         UserProfileToDB().insertToCurrentLikedMovie(key: AWSIdentityManager.default().identityId!, movieTitle: movieTitle.text!)
-        imageView.isUserInteractionEnabled = false // in case if the user trying to do multiple double tap in a short time
+        //add user to movie's liked user list
+        SingleMovie().insertToCurrentLikedUser(key: movieTitle.text!, userid: AWSIdentityManager.default().identityId!)
+        
+//        imageView.isUserInteractionEnabled = false // in case if the user trying to do multiple double tap in a short time
         let newX = imageView.bounds.width
         let newY = imageView.bounds.height
         likeImage.frame = CGRect(x: newX * 0.4, y: newY * 0.4, width: newX * 0.2, height: newY * 0.2)
@@ -296,7 +308,7 @@ class FrameViewController: UIViewController {
                         self.likeImage.alpha = 0
                     }, completion: {(finished: Bool) in
                         self.likeImage.removeFromSuperview()
-                        self.imageView.isUserInteractionEnabled = true // reenable the double tap
+//                        self.imageView.isUserInteractionEnabled = true // reenable the double tap
                     })
                 })
             })
@@ -320,11 +332,15 @@ class FrameViewController: UIViewController {
                 }, completion: nil)
             })
         })
-
+        
     }
     
+    // ====================================================================================================================================
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Loading animation
+        self.view.addSubview(loadingIndicatorView)
         
         // view changes
         self.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
@@ -334,8 +350,16 @@ class FrameViewController: UIViewController {
         movieTitle.text = movie_info?.title
         movieDetailedInfo.text = movie_info?.longDescription
         
-        imageView.image = movie_info?.image
+        //mush
+        //imageView.image = movie_info?.image
         //moviePopInfo.text = movie_info?.pop
+        if (movie_info?.poster_path != nil) {
+            let path = "https://image.tmdb.org/t/p/w500/" + (movie_info?.poster_path)!
+            let imageURL = URL(string: path)
+            let imageData = try! Data(contentsOf: imageURL!)
+            imageView.image = UIImage(data: imageData)
+            videoURL = "https://www.youtube.com/embed/" + (movie_info?.trailer_key!)! + "?rel=0&showinfo=0&autoplay=1"
+        }
         
         // add scroll view
         movieContent.showsVerticalScrollIndicator = true
@@ -343,7 +367,7 @@ class FrameViewController: UIViewController {
         movieContent.isUserInteractionEnabled = true
         movieContent.backgroundColor = UIColor.clear
         self.view.addSubview(movieContent)
-        movieContent.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*1.775)
+//        movieContent.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*1.775)
         
         // add image view to scroll view
         imageView.isUserInteractionEnabled = true
@@ -367,6 +391,44 @@ class FrameViewController: UIViewController {
         movieDetailedInfo.isEditable = false
         movieContent.addSubview(movieDetailedInfo)
         
+        // resize the detailed info
+        if (movie_info?.longDescription != nil) {
+            movieDetailedInfo.frame = CGRect(x: 6, y: imageView.frame.height + movieTitle.frame.height + 5, width: UIScreen.main.bounds.width - 15, height: movieDetailedInfo.contentSize.height)
+        }
+        
+        // add movie trailer
+        let htmlStyle = "<style> iframe { margin: 0px !important; padding: 0px !important; border: 0px !important; } html, body { margin: 0px !important; padding: 0px !important; border: 0px !important; width: 100%; height: 100%; } </style>"
+        videoView.frame = CGRect(x: 6, y: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + 5, width: UIScreen.main.bounds.width - 15, height: (UIScreen.main.bounds.width - 15)/1.85)
+        videoView.loadHTMLString("<html><head><style>\(htmlStyle)</style></head><body><iframe width='100%' height='100%' src='\(videoURL)' frameborder='0' allowfullscreen></iframe></body></html>", baseURL: nil)
+        movieContent.addSubview(videoView)
+        
+        // add movie release year in to the scroll view
+        movieRelease.frame = CGRect(x: 10, y: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + videoView.frame.height + 10, width: UIScreen.main.bounds.width - 15, height: 23)
+        movieRelease.textColor = UIColor.black
+        if (movie_info?.releaseYear != nil) {
+            let strText = NSMutableAttributedString(string: "Release Year: " + (movie_info?.releaseYear!)!)
+            strText.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 15)!, range: NSRange(location: 0, length: 13))
+            strText.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Thin", size: 15)!, range: NSRange(location: 13, length: strText.length - 13))
+            movieRelease.attributedText = strText
+
+        }
+        movieContent.addSubview(movieRelease)
+        
+        // add movie director in to the scrool view
+        movieDirector.frame = CGRect(x: 10, y: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + videoView.frame.height + movieRelease.frame.height + 10, width: UIScreen.main.bounds.width - 15, height: 23)
+        movieDirector.textColor = UIColor.black
+        if (movie_info?.directors != nil) {
+            let realDirector = movie_info?.directors.joined(separator: ", ")
+            let strText1 = NSMutableAttributedString(string: "Director: " + realDirector!)
+            strText1.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 15)!, range: NSRange(location: 0, length: 10))
+            strText1.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Thin", size: 15)!, range: NSRange(location: 10, length: strText1.length - 10))
+            movieDirector.attributedText = strText1
+            
+        }
+        movieContent.addSubview(movieDirector)
+        
+        movieContent.contentSize = CGSize(width: UIScreen.main.bounds.width, height: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + videoView.frame.height + movieRelease.frame.height + movieDirector.frame.height + 200)
+        
         // add small heart
         if (like) {
             // do heart button create
@@ -376,40 +438,3 @@ class FrameViewController: UIViewController {
         }
     }
 }
-
-//    let moviePopInfo = UILabel()
-
-//            doHeart.frame = CGRect(x: 10 + movieTitle.frame.width, y: imageView.frame.height + 10, width: 25, height: 25)
-//            doHeart.alpha = 0.98
-//            imageView.addSubview(doHeart)
-
-//        // do heart
-//        doHeart.frame = CGRect(x: 10 + movieTitle.frame.width, y: imageView.frame.height + 10, width: 25, height: 25)
-//        doHeart.alpha = 0.98
-//        imageView.addSubview(doHeart)
-
-// pop up do heart
-//        doHeart.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
-//        UIView.animate(withDuration: 0.1 / 1.5, animations: {() -> Void in
-//            self.doHeart.transform = CGAffineTransform.identity.scaledBy(x: 1.1, y: 1.1)
-//        }, completion: {(_ finished: Bool) -> Void in
-//            UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
-//                self.doHeart.transform = CGAffineTransform.identity.scaledBy(x: 0.9, y: 0.9)
-//            }, completion: {(_ finished: Bool) -> Void in
-//                UIView.animate(withDuration: 0.1 / 2, animations: {() -> Void in
-//                    self.doHeart.transform = CGAffineTransform.identity
-//                }, completion: nil)
-//            })
-//        })
-
-
-// Scroll down action
-//    func scrollUpAction() {
-//        print("scrolled down")
-//    }
-
-// add scroll down to view the detailed stuff
-//        let scrolldown = UISwipeGestureRecognizer()
-//        scrolldown.direction = .up
-//        scrolldown.addTarget(self, action: #selector(FrameViewController.scrollUpAction))
-//        imageView.addGestureRecognizer(scrolldown)

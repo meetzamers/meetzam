@@ -3,12 +3,7 @@
 //  MySampleApp
 //
 //  Created by Rainy on 2017/2/26.
-//
-//
-import AWSDynamoDB
-//
-//  UserProfile.swift
-//  MySampleApp
+//  update:bug fixed related to movie count in saving edited profile
 //
 //
 // Copyright 2017 Amazon.com, Inc. or its affiliates (Amazon). All Rights Reserved.
@@ -31,6 +26,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     var region: String?
     var email: String?
     var currentLikedMovie = Set<String>()
+    var movieCount: NSNumber?
     
     class func dynamoDBTableName() -> String {
         
@@ -47,22 +43,26 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     func insertProfile(_userId: String, _displayName: String, _bio: String, _age: String, _gender: String, _region: String, _email: String) {
         print("     insertProfile")
         let mapper = AWSDynamoDBObjectMapper.default()
-        var userProfile = UserProfileToDB()
+        let userProfile = UserProfileToDB()
         
         mapper.load(UserProfileToDB.self, hashKey: _userId, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as? NSError {
                 print("InsertError: \(error)")
             } else if let user_profile_addTo = task.result as? UserProfileToDB {
                 userProfile?.currentLikedMovie=user_profile_addTo.currentLikedMovie
+                userProfile?.movieCount = user_profile_addTo.movieCount
                 userProfile?.userId=user_profile_addTo.userId
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         while(userProfile?.userId==nil)
         {
-//            print("waiting")
+            print("waiting")
         }
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
         userProfile?.userId  = _userId
         userProfile?.displayName = _displayName
@@ -160,7 +160,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         }*/
         let mapper = AWSDynamoDBObjectMapper.default()
         
-        var userProfile = UserProfileToDB()
+        let userProfile = UserProfileToDB()
 
         print("     before load!!")
         mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
@@ -183,6 +183,67 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 for movie in (userProfile?.currentLikedMovie)! {
                     print("\(movie)")
                 }
+                userProfile?.movieCount = user_profile_addTo.movieCount
+                
+                userProfile?.email = user_profile_addTo.email
+                print("email is \(userProfile?.email)")
+                print("     all put")
+            }
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            return nil
+        })
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        while(userProfile?.email==nil)
+        {
+            print("waiting")
+        }
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        
+        print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
+        if (!((userProfile?.currentLikedMovie.contains(movieTitle))!))
+        {
+            if (userProfile?.currentLikedMovie.count != 0 && userProfile?.movieCount == 0) {
+                //dummy exist
+                userProfile?.currentLikedMovie.removeAll()
+            }
+            userProfile?.currentLikedMovie.insert(movieTitle)
+            userProfile?.movieCount = userProfile?.currentLikedMovie.count as NSNumber?
+        }
+        for movie in (userProfile?.currentLikedMovie)! {
+            print("\(movie)")
+        }
+        mapper.save(userProfile!)
+    }
+    
+    func deleteFromCurrentLikedMovie(key: String, movieTitle: String)
+    {
+        print("     deleteFromCurrentLikedMovie!!")
+        
+        let mapper = AWSDynamoDBObjectMapper.default()
+        
+        let userProfile = UserProfileToDB()
+        
+        print("     before load!!")
+        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            if let error = task.error as? NSError {
+                print("InsertError: \(error)")
+            } else if let user_profile_addTo = task.result as? UserProfileToDB {
+                userProfile?.userId=key
+                print("     key is \(key)")
+                userProfile?.displayName = user_profile_addTo.displayName
+                print("displayname is \(userProfile?.displayName)")
+                userProfile?.bio = user_profile_addTo.bio
+                print("bio is \(userProfile?.bio)")
+                userProfile?.age = user_profile_addTo.age
+                print("age is \(userProfile?.age)")
+                userProfile?.gender = user_profile_addTo.gender
+                print("gender is \(userProfile?.gender)")
+                userProfile?.region = user_profile_addTo.region
+                print("region is \(userProfile?.region)")
+                userProfile?.currentLikedMovie=user_profile_addTo.currentLikedMovie
+                print("BEFORE DELETION, currentLikedMovie are: \(userProfile?.currentLikedMovie.description)")
+                userProfile?.movieCount = user_profile_addTo.movieCount
                 userProfile?.email = user_profile_addTo.email
                 print("email is \(userProfile?.email)")
                 print("     all put")
@@ -192,19 +253,27 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         })
         while(userProfile?.email==nil)
         {
-//            print("waiting")
+                        print("waiting")
         }
         print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
         if (!((userProfile?.currentLikedMovie.contains(movieTitle))!))
         {
-            userProfile?.currentLikedMovie.insert(movieTitle)
+            print("error: delete a movie not in user's liked movie list")
         }
-        for movie in (userProfile?.currentLikedMovie)! {
-            print("\(movie)")
+        else {
+            print("removing movie")
+            _ = userProfile?.currentLikedMovie.remove(movieTitle)
+            userProfile?.movieCount = userProfile?.currentLikedMovie.count as NSNumber?
+            //dummy string since empty string set not allowed
+            if (userProfile?.currentLikedMovie.count == 0) {
+                userProfile?.currentLikedMovie.insert("mushroom13")
+            }
         }
+        
+        print("AFTER DELETION, currentLikedMovie are: \(userProfile?.currentLikedMovie.description)")
         mapper.save(userProfile!)
     }
-    
+
     /*func returnUser(key: String) -> UserProfileToDB
     {
         print("     returnUser!!")
@@ -232,8 +301,13 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 print("Error: \(error)")
             } else if let user_profile_temp = task.result as? UserProfileToDB {
                 print("get: HERE ARE THE LIKED MOVIES")
-                user_profile.currentLikedMovie = user_profile_temp.currentLikedMovie
-                print(user_profile.currentLikedMovie.description)
+                if (user_profile_temp.currentLikedMovie.count != 0 && user_profile_temp.movieCount == 0) {
+                    print("dummy detected")
+                }
+                else {
+                    user_profile.currentLikedMovie = user_profile_temp.currentLikedMovie
+                    print(user_profile.currentLikedMovie.description)
+                }
             }
             
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
