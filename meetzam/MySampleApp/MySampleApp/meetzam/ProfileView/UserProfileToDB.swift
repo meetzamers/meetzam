@@ -340,23 +340,24 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         })
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        while (userProfile?.displayName==nil)
+        while (userProfile?.displayName == nil)
         {
             print("waiting")
         }
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        print("     next step")
         var matchedUserIDs: Array = [String]()
         var dummynum: Int = 0
         for movie in (currentLikedMovie) {
+            dummynum = 0
             print("You Liked \(movie)")
             mapper.load(SingleMovie.self, hashKey: movie, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
                 if let error = task.error as? NSError {
                     print("InsertError: \(error)")
                 } else if let single_movie = task.result as? SingleMovie {
                     // put all the matched user ids to matchedUserIDs array
-                    dummynum = 0
                     for likedUsers in single_movie.currentLikedUser
                     {
                         // if the id is not the user him/herself, add it to list
@@ -384,11 +385,14 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     
     func getMatchedUserProfiles(userIDs: [String]) -> [UserProfileToDB]
     {
+        print("     getMatchedUserProfiles")
         var matchedUserProfiles: Array = [UserProfileToDB]()
         let mapper = AWSDynamoDBObjectMapper.default()
         var dummynum: Int = 0
         for userID in userIDs
         {
+            dummynum = 0
+            print("userid is \(userID)")
             mapper.load(UserProfileToDB.self, hashKey: userID, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
                 if let error = task.error as? NSError {
                     print("InsertError: \(error)")
@@ -397,6 +401,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                     matchedUserProfiles.append(userProfile)
                 }
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                dummynum = 6
                 return nil
             })
             while (dummynum != 6)

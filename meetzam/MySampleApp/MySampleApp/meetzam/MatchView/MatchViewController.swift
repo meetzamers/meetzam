@@ -46,6 +46,11 @@ class MatchViewController: UIViewController {
         {
             print("match with you: \(matchID)")
         }
+        let matchedUsers = UserProfileToDB().getMatchedUserProfiles(userIDs: matchedUserIDs)
+        for matchUser in matchedUsers
+        {
+            print("your buddies are: \(matchUser.displayName)")
+        }
         
     }
     
