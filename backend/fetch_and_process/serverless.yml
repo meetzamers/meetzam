@@ -1,11 +1,11 @@
 
 service: dataFetching
 
-frameworkVersion: "=1.9.0"
+frameworkVersion: "=1.10.1"
 
 provider:
   name: aws
-  runtime: nodejs4.3
+  runtime: nodejs6.10
   iamRoleStatements:
     - Effect: Allow
       Action: "DynamoDB:*"
@@ -23,7 +23,7 @@ functions:
     handler: getLocalMovies.handler
     name: getLocalMovies-${self:provider.stage}
     description: this function calls TMS api movie playing in local theatra, pass zipcode and current date as parameters and fetch general data about movie that currentlly playing in local theaters, including showtime information.
-    runtime: nodejs4.3
+    runtime: nodejs6.10
     memorySize: 128
     timeout: 6
     environment:
@@ -33,7 +33,7 @@ functions:
     handler: getOneMovie.handler
     name: getOneMovie-${self:provider.stage}
     description: this function calls TMDB api search/movie pass movie title and release year as parameters and fetch general data about the movie.
-    runtime: nodejs4.3
+    runtime: nodejs6.10
     memorySize: 128
     timeout: 6
     environment:
@@ -43,7 +43,7 @@ functions:
     handler: getTrailer.handler
     name: getTrailer-${self:provider.stage}
     description: this function calls TMDB api movie/video pass imdb_id as parameter and fetch movie trailer data about movie.
-    runtime: nodejs4.3
+    runtime: nodejs6.10
     memorySize: 128
     timeout: 6
     environment:
@@ -53,7 +53,7 @@ functions:
     handler: deleteIdLessMovies.handler   
     name: deleteIdLessMovies-${self:provider.stage}
     description: scan movie_table and delete movies that doesn't have tmdb_id
-    runtime: nodejs4.3
+    runtime: nodejs6.10
     memorySize: 128
     timeout: 6
 
@@ -61,7 +61,7 @@ functions:
     handler: updateCurrentPlayingMovie.handler
     name: updateCurrentPlayingMovie-${self:provider.stage}
     description: invoke getLocalMovies and update movie_table
-    runtime: nodejs4.3
+    runtime: nodejs6.10
     memorySize: 128
     timeout: 6
 
@@ -75,7 +75,7 @@ functions:
     handler: parser.updateMovieTable
     name: updateMovieTable-${self:provider.stage}
     description: parse incoming data from tmd and tmdb
-    runtime: nodejs4.3
+    runtime: nodejs6.10
     memorySize: 128
     timeout: 12
 
