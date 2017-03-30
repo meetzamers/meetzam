@@ -9,21 +9,7 @@ const lambda = new AWS.Lambda({apiVersion: '2015-03-31'});
 const dynamoDB = new AWS.DynamoDB({apiVersion: '2012-08-10'});
 
 function invokeGetLocalMoviesAndUpdateMovieTable (event, context, callback) {
-
 	getLocalMovies(() => {
-
-		let params = {
-			FunctionName: "arn:aws:lambda:us-east-1:397508666882:function:getLocalMovies-dev",
-			InvocationType: "Event"
-		};
-		lambda.invoke(params, function localMovieResponse(err, data) {
-			if (err) 
-				console.error(err, null);
-			else  {
-				console.log("invoking function to GetTMDBMovies");
-			}   		
-		});
-		
 		callback(null, "success");
 	})
 }
@@ -75,13 +61,13 @@ function updateLocalMovieInfo(Payload, callback) {
                 }
             },
             ExpressionAttributeNames: {
-                "#shortDescription": "shortDescriptiontle",
+                "#shortDescription": "shortDescription",
                 "#longDescription": "longDescription",
                 "#genres": "genres",
                 "#topCast": "topCast",
                 "#directors": "directors",
+                "#isHistory": "isHistory",
                 "#releaseYear": "releaseYear"
-
             },
             ExpressionAttributeValues: {
                 ":shortDescription": {
@@ -101,11 +87,14 @@ function updateLocalMovieInfo(Payload, callback) {
                 },
                 ":directors": {
                 	SS: directors
+                },
+                ":isHistory": {
+                    BOOL: false
                 }
             },
             ReturnValues: "ALL_NEW",
             TableName: "movie_table",
-           	UpdateExpression: "SET #releaseYear = :releaseYear, #shortDescription = :shortDescription, #longDescription = :longDescription, #genres = :genres, #topCast = :topCast, #directors = :directors" 
+           	UpdateExpression: "SET #releaseYear = :releaseYear, #shortDescription = :shortDescription, #longDescription = :longDescription, #genres = :genres, #topCast = :topCast, #directors = :directors, #isHistory = :isHistory" 
 		};
 		dynamoDB.updateItem(params, function(err, data) {
             if (err) console.log(err, err.stack); // an error occurred

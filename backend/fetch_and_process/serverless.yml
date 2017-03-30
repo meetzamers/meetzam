@@ -12,12 +12,26 @@ provider:
       Resource: "arn:aws:dynamodb:us-east-1:397508666882:table/movie_table" 
 
     - Effect: Allow
+      Action: "DynamoDB:*"
+      Resource: "arn:aws:dynamodb:us-east-1:397508666882:table/movie_history"   
+
+    - Effect: Allow
       Action: "lambda:InvokeFunction"
       Resource: "arn:aws:lambda:*:*:*"
 
 custom: ${file(./credentials.json)}
 
 functions:
+
+  markAllMovieAsHistory:
+    handler: markAllMovieAsHistory.handler
+    name: markAllMovieAsHistory-${self:provider.stage}
+    description: Scheduled to run at 10:00am (UTC) everyday, scan movie_table and mark every movie as 'history'.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events: 
+      - schedule: cron(0 10 * * ? *)
 
   getLocalMovies:
     handler: getLocalMovies.handler
@@ -29,6 +43,38 @@ functions:
     environment:
       Gracenote_API_key: ${self:custom.Gracenote_API_key}
 
+  updateCurrentPlayingMovie:
+    handler: updateCurrentPlayingMovie.handler
+    name: updateCurrentPlayingMovie-${self:provider.stage}
+    description: Scheduled to run at 10:01am (UTC) everyday, invoke getLocalMovies and update movie_table.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events: 
+      - schedule: cron(1 10 * * ? *)
+
+  addHistoryMoviesToMovieHistoryTable:     
+    handler: addHistoryMoviesToMovieHistoryTable.handler
+    name: addHistoryMoviesToMovieHistoryTable-${self:provider.stage}
+    description: Scheduled to run at 10:02am (UTC) everyday, add history movies to movie_history table.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events: 
+      - schedule: cron(2 10 * * ? *)
+
+  deleteHistoryMovies:    
+    handler: deleteHistoryMovies.handler
+    name: deleteHistoryMovies-${self:provider.stage}
+    description: Scheduled to run at 10:03am (UTC) everyday, delete history movies from movie_table.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events: 
+      - schedule: cron(3 10 * * ? *)
+
+
+
   getOneMovie:
     handler: getOneMovie.handler
     name: getOneMovie-${self:provider.stage}
@@ -38,6 +84,28 @@ functions:
     timeout: 6
     environment:
       TMDB_API_key: ${self:custom.TMDB_API_key}
+
+  addTmdbidAndPosterPath:
+    handler: addTmdbidAndPosterPath.handler
+    name: addTmdbidAndPosterPath-${self:provider.stage}
+    description: Scheduled to run at 10:04am (UTC) everyday, update movie_table for tmdb_id and poster_path.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events: 
+      - schedule: cron(4 10 * * ? *)
+
+  deleteIdLessMovies:
+    handler: deleteIdLessMovies.handler   
+    name: deleteIdLessMovies-${self:provider.stage}
+    description: Scheduled to run at 10:05am (UTC) everyday, scan movie_table and delete movies that doesn't have tmdb_id.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events: 
+      - schedule: cron(5 10 * * ? *)     
+
+
 
   getTrailer:   
     handler: getTrailer.handler
@@ -49,36 +117,15 @@ functions:
     environment:
       TMDB_API_key: ${self:custom.TMDB_API_key} 
 
-  deleteIdLessMovies:
-    handler: deleteIdLessMovies.handler   
-    name: deleteIdLessMovies-${self:provider.stage}
-    description: scan movie_table and delete movies that doesn't have tmdb_id
+  addTrailerKey:
+    handler: addTrailerKey.handler
+    name: addTrailerKey-${self:provider.stage}
+    description: Scheduled to run at 10:06am (UTC) everyday, update movie_table for trailer_key.
     runtime: nodejs6.10
     memorySize: 128
     timeout: 6
-
-  updateCurrentPlayingMovie:
-    handler: updateCurrentPlayingMovie.handler
-    name: updateCurrentPlayingMovie-${self:provider.stage}
-    description: invoke getLocalMovies and update movie_table
-    runtime: nodejs6.10
-    memorySize: 128
-    timeout: 6
-
-
-    
-
-
-
-
-  updateMovieTable:
-    handler: parser.updateMovieTable
-    name: updateMovieTable-${self:provider.stage}
-    description: parse incoming data from tmd and tmdb
-    runtime: nodejs6.10
-    memorySize: 128
-    timeout: 12
-
+    events: 
+      - schedule: cron(6 10 * * ? *) 
 
 
 

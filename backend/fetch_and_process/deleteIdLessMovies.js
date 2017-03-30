@@ -19,7 +19,7 @@ function scanMovieTableAndDeleteIdLessMovies(event, context, callback) {
         if (error)
             console.error(error.stack);
         else {
-            data.Items.forEach(function(item) {
+            data.Items.forEach((item) => {
 	        	console.log("Idless movie: " + item.title.S);
 	        	if (!item.tmdb_id) {
 	        		var params_d = {
