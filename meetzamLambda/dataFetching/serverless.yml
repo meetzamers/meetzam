@@ -1,7 +1,7 @@
 
 service: dataFetching
 
-frameworkVersion: "=1.8.0"
+frameworkVersion: "=1.9.0"
 
 provider:
   name: aws
@@ -20,7 +20,7 @@ custom: ${file(./credentials.json)}
 functions:
 
   getLocalMovies:
-    handler: getter.getLocalMovies
+    handler: getLocalMovies.handler
     name: getLocalMovies-${self:provider.stage}
     description: this function calls TMS api movie playing in local theatra, pass zipcode and current date as parameters and fetch general data about movie that currentlly playing in local theaters, including showtime information.
     runtime: nodejs4.3
@@ -30,7 +30,7 @@ functions:
       Gracenote_API_key: ${self:custom.Gracenote_API_key}
 
   getOneMovie:
-    handler: getter.getOneMovie
+    handler: getOneMovie.handler
     name: getOneMovie-${self:provider.stage}
     description: this function calls TMDB api search/movie pass movie title and release year as parameters and fetch general data about the movie.
     runtime: nodejs4.3
@@ -40,7 +40,7 @@ functions:
       TMDB_API_key: ${self:custom.TMDB_API_key}
 
   getTrailer:   
-    handler: getter.getTrailer
+    handler: getTrailer.handler
     name: getTrailer-${self:provider.stage}
     description: this function calls TMDB api movie/video pass imdb_id as parameter and fetch movie trailer data about movie.
     runtime: nodejs4.3
@@ -49,6 +49,28 @@ functions:
     environment:
       TMDB_API_key: ${self:custom.TMDB_API_key} 
 
+  deleteIdLessMovies:
+    handler: deleteIdLessMovies.handler   
+    name: deleteIdLessMovies-${self:provider.stage}
+    description: scan movie_table and delete movies that doesn't have tmdb_id
+    runtime: nodejs4.3
+    memorySize: 128
+    timeout: 6
+
+  updateCurrentPlayingMovie:
+    handler: updateCurrentPlayingMovie.handler
+    name: updateCurrentPlayingMovie-${self:provider.stage}
+    description: invoke getLocalMovies and update movie_table
+    runtime: nodejs4.3
+    memorySize: 128
+    timeout: 6
+
+
+    
+
+
+
+
   updateMovieTable:
     handler: parser.updateMovieTable
     name: updateMovieTable-${self:provider.stage}
@@ -56,6 +78,7 @@ functions:
     runtime: nodejs4.3
     memorySize: 128
     timeout: 12
+
 
 
 

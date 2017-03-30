@@ -9,7 +9,9 @@ var titleToReleaseYear = new Map();
 module.exports.updateMovieTable = (event, context, callback) => {
 	getLocalMovies(() => {
 		thenGetTMDBMovies(() => {
-			callback(null, "seccess");
+			invokeIdLessMovieDeletion(() => {
+				callback(null, "seccess");
+			})
 		});
 	});
 };
@@ -231,7 +233,22 @@ function updateOneTrailer(title, Payload) {
     		break;
 		}
 	}
-	deleteNoId();
+}
+
+
+function invokeIdLessMovieDeletion(callback) {
+	let params = {
+		FunctionName: "arn:aws:lambda:us-east-1:397508666882:function:deleteIdLessMovies-dev",
+		InvocationType: "Event"
+	};
+	lambda.invoke(params, (err, data) => {
+		if (err) 
+			console.error(err, null);
+		else {
+			console.log(data);
+			callback();
+		}     
+	});
 }
 
 
@@ -266,8 +283,6 @@ function deleteNoId() {
             });
         }
     });
-
-
 }
 
 
