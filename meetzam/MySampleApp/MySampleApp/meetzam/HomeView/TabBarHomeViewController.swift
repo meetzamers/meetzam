@@ -40,6 +40,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         self.delegate = self
         self.dataSource = self
         
+
         // This is the first movie
         if (!AWSIdentityManager.default().isLoggedIn) {
             self.isFirstMovieView = true

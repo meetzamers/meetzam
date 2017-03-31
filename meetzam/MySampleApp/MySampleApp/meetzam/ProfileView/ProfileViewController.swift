@@ -17,8 +17,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var TopThreeMovieCollectionView: UICollectionView!
     @IBOutlet weak var profileMainBodyView: UIView!
     
-    var topThreeImages = ["split","loganposter2","lala"]
     
+
     //declare profile picture field
     let userPicField = UIImageView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width))
 //    let userPicField = UIImageView(frame: CGRect(x: UIScreen.main.bounds.width*0.1, y: 15, width: UIScreen.main.bounds.width*0.8, height: UIScreen.main.bounds.width*0.8))
@@ -33,6 +33,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     //************************** VIEW DID LOAD ********************************************//
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        TopThreeMovieCollectionView.reloadData()
         
         UserProfileToDB().getProfileForDisplay(key: AWSIdentityManager.default().identityId!, user_profile: user_profile, displayname: displayName, bio: userBioField)
         
@@ -102,11 +104,16 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         TopThreeMovieCollectionView.dataSource = self;
         TopThreeMovieCollectionView.backgroundColor = UIColor.init(red: 173/255, green: 173/255, blue: 173/255, alpha: 1)
         
+        
     }
   
-    //********************* VIEW DID APPEAR ***********************************************//
+    //********************* VIEW WILL APPEAR ***********************************************//
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        TopThreeMovieCollectionView.reloadData()
+        
+        
         /* get name and bio from database */
         UserProfileToDB().getProfileForDisplay(key: AWSIdentityManager.default().identityId!, user_profile: user_profile, displayname: displayName, bio: userBioField)
         
@@ -116,6 +123,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         self.profileMainBodyView.addSubview(displayName)
         self.profileMainBodyView.addSubview(userBioField)
+        
         
     }
     
@@ -137,14 +145,64 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     //setting up top three movie collection view
     //conform with UICollectionView protocal
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return topThreeImages.count
+        let imagesURLs = SingleMovie().getLikedMoviePosters(key: AWSIdentityManager.default().identityId!)
+        if (imagesURLs.count < 3) {return imagesURLs.count}
+        else {return 3}
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        var movieImageData = updateMovieImage()
+        
         let cell = TopThreeMovieCollectionView.dequeueReusableCell(withReuseIdentifier: "topThreeCell", for: indexPath) as! TopThreeMovieCell
-        cell.Top3MovieImage.image = UIImage(named: topThreeImages[indexPath.row])
+        cell.Top3MovieImage.image = nil
+        cell.Top3MovieImage.image = UIImage(data: movieImageData[indexPath.row])
         
         return cell
     }
     
+    
+    
+    public func updateMovieImage() -> [Data]{
+        var imagesURLs = SingleMovie().getLikedMoviePosters(key: AWSIdentityManager.default().identityId!)
+        
+        print("     put into imagesURLs")
+        print("-------------------------------------------------")
+        for url in imagesURLs {
+            print("This is url \(url)")
+        }
+        
+        //var movieImageData:[Data]!
+        var movieImageData = [Data]()
+        movieImageData.removeAll()
+        
+        var count = 0;
+        if (imagesURLs.count <= 3) {
+            count = imagesURLs.count
+            for var i in (0..<count) {
+                let path = "https://image.tmdb.org/t/p/w500" + imagesURLs[i]
+                let pathURL = URL(string: path)
+                movieImageData.append(try! Data(contentsOf: pathURL!))
+                //movieImageData.insert((try! Data(contentsOf: pathURL!)), at: 0)
+            }
+        
+        } else {
+            count = 3
+
+            for var i in (0..<3) {
+                let path = "https://image.tmdb.org/t/p/w500" + imagesURLs[i]
+                let pathURL = URL(string: path)
+                movieImageData.append(try! Data(contentsOf: pathURL!))
+                //movieImageData.insert((try! Data(contentsOf: pathURL!)), at: 0)
+            }
+            
+        }
+        
+        
+        return movieImageData
+        
+    }
+    
 }
+
+

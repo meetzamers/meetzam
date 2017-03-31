@@ -57,7 +57,7 @@ class MatchViewController: UIViewController {
         let cardView = CardView(frame: swipeableView.bounds)
         cardView.backgroundColor = UIColor.init(red: 253/255, green: 253/255, blue: 253/255, alpha: 1)
         
-        // ========================================
+        /* ========================================
         // you can display data on the card view here:
         let testlabel = UILabel.init(frame: CGRect(x: cardView.bounds.width*0.25 ,y: cardView.bounds.height*0.6, width: 200, height: 200))
         lablecount += 1
@@ -67,7 +67,27 @@ class MatchViewController: UIViewController {
         
         // Add the objects on the card view
         cardView.addSubview(testlabel)
-        // ========================================
+        // ========================================*/
+        
+        
+        // temperoray profile pic
+        let identityManager = AWSIdentityManager.default()
+        AWSIdentityManager.default()
+        if let imageURL = identityManager.imageURL {
+            let imageData = try! Data(contentsOf: imageURL)
+            if let profileImage = UIImage(data: imageData) {
+                cardView.userPicField.image = profileImage
+            } else {
+                cardView.userPicField.image = UIImage(named: "UserIcon")
+            }
+        }
+        
+        // temp user name
+        cardView.displayName.text = "Monika"
+        
+        // temp user bio
+        cardView.userBioField.text = "Hello :) Nice to meet you!!"
+        
         
         return cardView
     }
