@@ -194,6 +194,62 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         return MoviesPosterURL
     }
     
+    func getCurrentLikedMovies(key: String) -> [SingleMovie]
+    {
+        print("     getCurrentLikedMovies")
+        let mapper = AWSDynamoDBObjectMapper.default()
+        var currentLikedMovie = Set<String>()
+        let userProfile = UserProfileToDB()
+        
+        print("     before load!!")
+        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            if let error = task.error as? NSError {
+                print("InsertError: \(error)")
+            } else if let user_profile_addTo = task.result as? UserProfileToDB {
+                if (user_profile_addTo.currentLikedMovie.count != 0 && user_profile_addTo.movieCount == 0) {
+                    print("dummy detected")
+                }
+                else {
+                    currentLikedMovie=user_profile_addTo.currentLikedMovie
+                }
+                userProfile?.displayName=user_profile_addTo.displayName
+            }
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            return nil
+        })
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        while (userProfile?.displayName==nil)
+        {
+            print("waiting")
+        }
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        var currentLikedMoviesArr:Array = [SingleMovie]()
+        for movie in (currentLikedMovie) {
+            print("You Liked \(movie)")
+            mapper.load(SingleMovie.self, hashKey: movie, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+                if let error = task.error as? NSError {
+                    print("InsertError: \(error)")
+                } else if let single_movie = task.result as? SingleMovie {
+                    currentLikedMoviesArr.append(single_movie)
+                }
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                return nil
+            })
+        }
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        while ((currentLikedMoviesArr.count) != (currentLikedMovie.count))
+        {
+            print("waiting")
+        }
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        
+        return currentLikedMoviesArr
+    }
+    
     func insertToCurrentLikedUser(key: String, userid: String)
     {
         print("     ADD USER TO MOVIE")

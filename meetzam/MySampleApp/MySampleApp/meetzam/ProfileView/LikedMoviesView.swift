@@ -39,11 +39,18 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         
         
         cell.movieImage.image = UIImage(named: images[indexPath.row])
-        let imagesURLs = SingleMovie().getLikedMoviePosters(key: AWSIdentityManager.default().identityId!)
+        /*let imagesURLs = SingleMovie().getLikedMoviePosters(key: AWSIdentityManager.default().identityId!)
         print("     put into imagesURLs")
         print("-------------------------------------------------")
         for url in imagesURLs {
             print("This is url \(url)")
+        }*/
+        let currentMovies = SingleMovie().getCurrentLikedMovies(key: AWSIdentityManager.default().identityId!)
+        print("     put into imagesURLs")
+        print("-------------------------------------------------")
+        for movie in currentMovies {
+            print("This is title \(movie.title)")
+            print("This is url \(movie.poster_path)")
         }
         return cell
     }
