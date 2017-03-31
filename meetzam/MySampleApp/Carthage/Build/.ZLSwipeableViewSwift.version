@@ -1,0 +1,10 @@
+{
+  "xcodeVersion" : "Xcode 8.3\nBuild version 8E162",
+  "commitish" : "0.0.8",
+  "iOS" : [
+    {
+      "hash" : "69e844eac8230bf55ba495b8921c96a72208c476bb1ece563c182a171678b2f8",
+      "name" : "ZLSwipeableViewSwift"
+    }
+  ]
+}

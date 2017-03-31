@@ -1,0 +1,10 @@
+{
+  "xcodeVersion" : "Xcode 8.3\nBuild version 8E162",
+  "commitish" : "3.5.2",
+  "iOS" : [
+    {
+      "hash" : "8879e6f40d2c6f5f893644a3d5a8a065d41461173f729278500e35e06573ccdc",
+      "name" : "NVActivityIndicatorView"
+    }
+  ]
+}
