@@ -361,7 +361,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                     for likedUsers in single_movie.currentLikedUser
                     {
                         // if the id is not the user him/herself, add it to list
-                        if likedUsers != key
+                        if (likedUsers != key && !matchedUserIDs.contains(likedUsers))
                         {
                             matchedUserIDs.append(likedUsers)
                         }

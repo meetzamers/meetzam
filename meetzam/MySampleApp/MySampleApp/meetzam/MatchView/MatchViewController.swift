@@ -51,7 +51,6 @@ class MatchViewController: UIViewController {
         {
             print("your buddies are: \(matchUser.displayName)")
         }
-        
     }
     
     func nextCardView() -> UIView? {
