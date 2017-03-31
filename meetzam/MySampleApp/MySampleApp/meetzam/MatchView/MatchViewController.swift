@@ -41,7 +41,16 @@ class MatchViewController: UIViewController {
         swipeableView.numberOfActiveView = UInt(3)
         view.addSubview(swipeableView)
         // ========================================
-        
+        let matchedUserIDs = UserProfileToDB().getMatchedUserIDs(key: AWSIdentityManager.default().identityId!)
+        for matchID in matchedUserIDs
+        {
+            print("match with you: \(matchID)")
+        }
+        let matchedUsers = UserProfileToDB().getMatchedUserProfiles(userIDs: matchedUserIDs)
+        for matchUser in matchedUsers
+        {
+            print("your buddies are: \(matchUser.displayName)")
+        }
     }
     
     func nextCardView() -> UIView? {

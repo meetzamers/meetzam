@@ -92,6 +92,7 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
     
         cell.movieTitleLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 18)
         
+
         return cell
     }
     

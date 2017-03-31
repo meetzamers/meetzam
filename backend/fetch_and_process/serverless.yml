@@ -1,0 +1,133 @@
+
+service: dataFetching
+
+frameworkVersion: "=1.10.1"
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  iamRoleStatements:
+    - Effect: Allow
+      Action: "DynamoDB:*"
+      Resource: "arn:aws:dynamodb:us-east-1:397508666882:table/movie_table" 
+
+    - Effect: Allow
+      Action: "DynamoDB:*"
+      Resource: "arn:aws:dynamodb:us-east-1:397508666882:table/movie_history"   
+
+    - Effect: Allow
+      Action: "lambda:InvokeFunction"
+      Resource: "arn:aws:lambda:*:*:*"
+
+custom: ${file(./credentials.json)}
+
+functions:
+
+  markAllMovieAsHistory:
+    handler: markAllMovieAsHistory.handler
+    name: markAllMovieAsHistory-${self:provider.stage}
+    description: Scheduled to run at 10:00am (UTC) everyday, scan movie_table and mark every movie as 'history'.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events: 
+      - schedule: cron(0 10 * * ? *)
+
+  getLocalMovies:
+    handler: getLocalMovies.handler
+    name: getLocalMovies-${self:provider.stage}
+    description: this function calls TMS api movie playing in local theatra, pass zipcode and current date as parameters and fetch general data about movie that currentlly playing in local theaters, including showtime information.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    environment:
+      Gracenote_API_key: ${self:custom.Gracenote_API_key}
+
+  updateCurrentPlayingMovie:
+    handler: updateCurrentPlayingMovie.handler
+    name: updateCurrentPlayingMovie-${self:provider.stage}
+    description: Scheduled to run at 10:01am (UTC) everyday, invoke getLocalMovies and update movie_table.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events: 
+      - schedule: cron(1 10 * * ? *)
+
+  addHistoryMoviesToMovieHistoryTable:     
+    handler: addHistoryMoviesToMovieHistoryTable.handler
+    name: addHistoryMoviesToMovieHistoryTable-${self:provider.stage}
+    description: Scheduled to run at 10:02am (UTC) everyday, add history movies to movie_history table.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events: 
+      - schedule: cron(2 10 * * ? *)
+
+  deleteHistoryMovies:    
+    handler: deleteHistoryMovies.handler
+    name: deleteHistoryMovies-${self:provider.stage}
+    description: Scheduled to run at 10:03am (UTC) everyday, delete history movies from movie_table.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events: 
+      - schedule: cron(3 10 * * ? *)
+
+
+
+  getOneMovie:
+    handler: getOneMovie.handler
+    name: getOneMovie-${self:provider.stage}
+    description: this function calls TMDB api search/movie pass movie title and release year as parameters and fetch general data about the movie.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    environment:
+      TMDB_API_key: ${self:custom.TMDB_API_key}
+
+  addTmdbidAndPosterPath:
+    handler: addTmdbidAndPosterPath.handler
+    name: addTmdbidAndPosterPath-${self:provider.stage}
+    description: Scheduled to run at 10:04am (UTC) everyday, update movie_table for tmdb_id and poster_path.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events: 
+      - schedule: cron(4 10 * * ? *)
+
+  deleteIdLessMovies:
+    handler: deleteIdLessMovies.handler   
+    name: deleteIdLessMovies-${self:provider.stage}
+    description: Scheduled to run at 10:05am (UTC) everyday, scan movie_table and delete movies that doesn't have tmdb_id.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events: 
+      - schedule: cron(5 10 * * ? *)     
+
+
+
+  getTrailer:   
+    handler: getTrailer.handler
+    name: getTrailer-${self:provider.stage}
+    description: this function calls TMDB api movie/video pass imdb_id as parameter and fetch movie trailer data about movie.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    environment:
+      TMDB_API_key: ${self:custom.TMDB_API_key} 
+
+  addTrailerKey:
+    handler: addTrailerKey.handler
+    name: addTrailerKey-${self:provider.stage}
+    description: Scheduled to run at 10:06am (UTC) everyday, update movie_table for trailer_key.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events: 
+      - schedule: cron(6 10 * * ? *) 
+
+
+
+
+

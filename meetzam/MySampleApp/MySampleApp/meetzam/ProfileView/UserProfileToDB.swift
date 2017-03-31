@@ -315,4 +315,101 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         })
     }
     
+    func getMatchedUserIDs(key: String) -> [String]
+    {
+        print("     getMatchedUserIDs")
+        let mapper = AWSDynamoDBObjectMapper.default()
+        var currentLikedMovie = Set<String>()
+        let userProfile = UserProfileToDB()
+        
+        print("     before load!!")
+        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            if let error = task.error as? NSError {
+                print("InsertError: \(error)")
+            } else if let user_profile_addTo = task.result as? UserProfileToDB {
+                if (user_profile_addTo.currentLikedMovie.count != 0 && user_profile_addTo.movieCount == 0) {
+                    print("dummy detected")
+                }
+                else {
+                    currentLikedMovie=user_profile_addTo.currentLikedMovie
+                }
+                userProfile?.displayName=user_profile_addTo.displayName
+            }
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            return nil
+        })
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        while (userProfile?.displayName == nil)
+        {
+            print("waiting")
+        }
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        print("     next step")
+        var matchedUserIDs: Array = [String]()
+        var dummynum: Int = 0
+        for movie in (currentLikedMovie) {
+            dummynum = 0
+            print("You Liked \(movie)")
+            mapper.load(SingleMovie.self, hashKey: movie, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+                if let error = task.error as? NSError {
+                    print("InsertError: \(error)")
+                } else if let single_movie = task.result as? SingleMovie {
+                    // put all the matched user ids to matchedUserIDs array
+                    for likedUsers in single_movie.currentLikedUser
+                    {
+                        // if the id is not the user him/herself, add it to list
+                        if (likedUsers != key && !matchedUserIDs.contains(likedUsers))
+                        {
+                            matchedUserIDs.append(likedUsers)
+                        }
+                    }
+                }
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                dummynum = 6
+                return nil
+            })
+            while (dummynum != 6)
+            {
+                print("waiting")
+            }
+        }
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        
+        return matchedUserIDs
+    }
+    
+    func getMatchedUserProfiles(userIDs: [String]) -> [UserProfileToDB]
+    {
+        print("     getMatchedUserProfiles")
+        var matchedUserProfiles: Array = [UserProfileToDB]()
+        let mapper = AWSDynamoDBObjectMapper.default()
+        var dummynum: Int = 0
+        for userID in userIDs
+        {
+            dummynum = 0
+            print("userid is \(userID)")
+            mapper.load(UserProfileToDB.self, hashKey: userID, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+                if let error = task.error as? NSError {
+                    print("InsertError: \(error)")
+                } else if let userProfile = task.result as? UserProfileToDB {
+                    dummynum = 0
+                    matchedUserProfiles.append(userProfile)
+                }
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                dummynum = 6
+                return nil
+            })
+            while (dummynum != 6)
+            {
+                print("waiting")
+            }
+        }
+        return matchedUserProfiles
+    }
+    
 }

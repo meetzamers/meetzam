@@ -40,22 +40,15 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         self.delegate = self
         self.dataSource = self
         
-        //get user liked movies initially
-         UserProfileToDB().getLikedMovies(userId: AWSIdentityManager.default().identityId!, user_profile: user_p!)
-        //get homescreen movie list
-        //actually if we discard the executor; mainThread(),
-        //we might be able to discard the movieView thingy
-        //since without that the method will run asynchronizedly and return immediately
-        SingleMovie().refreshList(movie_list: movielist, view: movieView, user_profile: user_p!)
-        
-        // change background color to grey
-        //view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
-        view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
-        
+
         // This is the first movie
         if (!AWSIdentityManager.default().isLoggedIn) {
             self.isFirstMovieView = true
         }
+        
+        // change background color to grey
+        //view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
+        view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
         
         let frameVC = movieView
         let viewControllers = [frameVC]
@@ -74,7 +67,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
             object: AWSIdentityManager.default(),
             queue: OperationQueue.main,
             using: { [weak self] (note: Notification) -> Void in
-                guard self != nil else { return }
+                guard let strongSelf = self else { return }
                 print("Sign in observer observed sign in.")
         })
         
@@ -84,12 +77,21 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
             object: AWSIdentityManager.default(),
             queue: OperationQueue.main,
             using: { [weak self] (note: Notification) -> Void in
-                guard self != nil else { return }
+                guard let strongSelf = self else { return }
                 print("Sign Out Observer observed sign out.")
         })
         
         // AWS implementation ends here
         // ============================================
+        if (AWSIdentityManager.default().isLoggedIn) {
+            //get user liked movies initially
+            UserProfileToDB().getLikedMovies(userId: AWSIdentityManager.default().identityId!, user_profile: user_p!)
+            //get homescreen movie list
+            //actually if we discard the executor; mainThread(),
+            //we might be able to discard the movieView thingy
+            //since without that the method will run asynchronizedly and return immediately
+            SingleMovie().refreshList(movie_list: movielist, view: movieView, user_profile: user_p!)
+        }
         
     }
     
@@ -213,7 +215,7 @@ class FrameViewController: UIViewController {
     let movieTitle = UILabel()
     let movieDetailedInfo = UITextView()
     let videoView : UIWebView = {
-       let vd = UIWebView()
+        let vd = UIWebView()
         vd.backgroundColor = UIColor.clear
         vd.scrollView.isScrollEnabled = false
         vd.scrollView.bounces = false
@@ -285,7 +287,7 @@ class FrameViewController: UIViewController {
         //add user to movie's liked user list
         SingleMovie().insertToCurrentLikedUser(key: movieTitle.text!, userid: AWSIdentityManager.default().identityId!)
         
-//        imageView.isUserInteractionEnabled = false // in case if the user trying to do multiple double tap in a short time
+        //        imageView.isUserInteractionEnabled = false // in case if the user trying to do multiple double tap in a short time
         let newX = imageView.bounds.width
         let newY = imageView.bounds.height
         likeImage.frame = CGRect(x: newX * 0.4, y: newY * 0.4, width: newX * 0.2, height: newY * 0.2)
@@ -308,7 +310,7 @@ class FrameViewController: UIViewController {
                         self.likeImage.alpha = 0
                     }, completion: {(finished: Bool) in
                         self.likeImage.removeFromSuperview()
-//                        self.imageView.isUserInteractionEnabled = true // reenable the double tap
+                        //                        self.imageView.isUserInteractionEnabled = true // reenable the double tap
                     })
                 })
             })
@@ -367,7 +369,7 @@ class FrameViewController: UIViewController {
         movieContent.isUserInteractionEnabled = true
         movieContent.backgroundColor = UIColor.clear
         self.view.addSubview(movieContent)
-//        movieContent.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*1.775)
+        //        movieContent.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*1.775)
         
         // add image view to scroll view
         imageView.isUserInteractionEnabled = true
@@ -406,11 +408,11 @@ class FrameViewController: UIViewController {
         movieRelease.frame = CGRect(x: 10, y: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + videoView.frame.height + 10, width: UIScreen.main.bounds.width - 15, height: 23)
         movieRelease.textColor = UIColor.black
         if (movie_info?.releaseYear != nil) {
-            let strText = NSMutableAttributedString(string: "Release Year: " + (movie_info?.releaseYear!)!)
+            let strText = NSMutableAttributedString(string: "RELEASE YEAR  " + (movie_info?.releaseYear!)!)
             strText.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 15)!, range: NSRange(location: 0, length: 13))
             strText.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Thin", size: 15)!, range: NSRange(location: 13, length: strText.length - 13))
             movieRelease.attributedText = strText
-
+            
         }
         movieContent.addSubview(movieRelease)
         
@@ -419,7 +421,7 @@ class FrameViewController: UIViewController {
         movieDirector.textColor = UIColor.black
         if (movie_info?.directors != nil) {
             let realDirector = movie_info?.directors.joined(separator: ", ")
-            let strText1 = NSMutableAttributedString(string: "Director: " + realDirector!)
+            let strText1 = NSMutableAttributedString(string: "DIRECTOR  " + realDirector!)
             strText1.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 15)!, range: NSRange(location: 0, length: 10))
             strText1.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Thin", size: 15)!, range: NSRange(location: 10, length: strText1.length - 10))
             movieDirector.attributedText = strText1
