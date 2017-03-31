@@ -34,6 +34,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        TopThreeMovieCollectionView.reloadData()
+        
         UserProfileToDB().getProfileForDisplay(key: AWSIdentityManager.default().identityId!, user_profile: user_profile, displayname: displayName, bio: userBioField)
         
         //======================== formatting background==========================\\
@@ -109,7 +111,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        //TopThreeMovieCollectionView.reloadData()
+        TopThreeMovieCollectionView.reloadData()
+        
         
         /* get name and bio from database */
         UserProfileToDB().getProfileForDisplay(key: AWSIdentityManager.default().identityId!, user_profile: user_profile, displayname: displayName, bio: userBioField)
@@ -120,6 +123,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         self.profileMainBodyView.addSubview(displayName)
         self.profileMainBodyView.addSubview(userBioField)
+        
         
     }
     
@@ -151,6 +155,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         var movieImageData = updateMovieImage()
         
         let cell = TopThreeMovieCollectionView.dequeueReusableCell(withReuseIdentifier: "topThreeCell", for: indexPath) as! TopThreeMovieCell
+        cell.Top3MovieImage.image = nil
         cell.Top3MovieImage.image = UIImage(data: movieImageData[indexPath.row])
         
         return cell
@@ -161,9 +166,15 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     public func updateMovieImage() -> [Data]{
         var imagesURLs = SingleMovie().getLikedMoviePosters(key: AWSIdentityManager.default().identityId!)
         
+        print("     put into imagesURLs")
+        print("-------------------------------------------------")
+        for url in imagesURLs {
+            print("This is url \(url)")
+        }
+        
         //var movieImageData:[Data]!
         var movieImageData = [Data]()
-        //movieImageData.removeAll()
+        movieImageData.removeAll()
         
         var count = 0;
         if (imagesURLs.count <= 3) {

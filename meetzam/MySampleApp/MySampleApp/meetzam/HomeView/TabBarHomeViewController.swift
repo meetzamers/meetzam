@@ -41,7 +41,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         self.dataSource = self
         
         //get user liked movies initially
-        UserProfileToDB().getLikedMovies(userId: AWSIdentityManager.default().identityId!, user_profile: user_p!)
+         UserProfileToDB().getLikedMovies(userId: AWSIdentityManager.default().identityId!, user_profile: user_p!)
         //get homescreen movie list
         //actually if we discard the executor; mainThread(),
         //we might be able to discard the movieView thingy

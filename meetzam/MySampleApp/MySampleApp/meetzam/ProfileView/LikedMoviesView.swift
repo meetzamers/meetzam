@@ -61,7 +61,7 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         }
         */
         movieCollectionView.reloadData()
-
+        
     }
  
 
@@ -85,6 +85,7 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         
         var imageData = updateMovieImages()
         
+        cell.movieImage.image = nil
         cell.movieImage.image = UIImage(data: imageData[indexPath.row])
         
         cell.movieTitleLabel.text = "hello"
@@ -101,8 +102,8 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         var imageData = [Data]()
         //imageData.removeAll()
         
-        for i in (0..<imagesURLs.count) {
-            let path = "https://image.tmdb.org/t/p/w500" + imagesURLs[i]
+        for item in imagesURLs {
+            let path = "https://image.tmdb.org/t/p/w500" + item
             let pathURL = URL(string: path)
             //imageData.append(try! Data(contentsOf: pathURL!))
             imageData.insert(try! Data(contentsOf: pathURL!),at:0)
@@ -112,8 +113,11 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
     }
     
     @IBOutlet weak var movieCollectionView: UICollectionView!
-   
+
+    
 }
+
+
 
 
 
