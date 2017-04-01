@@ -165,13 +165,15 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         while (userProfile?.displayName==nil)
         {
-            print("waiting")
+            print("getLikedMoviePosters1 waiting")
         }
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         var MoviesPosterURL:Array = [String]()
+        var dummynum: Int = 0
         for movie in (currentLikedMovie) {
+            dummynum = 0
             print("You Liked \(movie)")
             mapper.load(SingleMovie.self, hashKey: movie, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
                 if let error = task.error as? NSError {
@@ -180,23 +182,28 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                     MoviesPosterURL.append(single_movie.poster_path!)
                 }
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                dummynum = 6
                 return nil
             })
+            while (dummynum != 6)
+            {
+                print("getLikedMoviePosters2 waiting")
+            }
         }
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        while ((MoviesPosterURL.count) != (currentLikedMovie.count))
+        /*while ((MoviesPosterURL.count) != (currentLikedMovie.count))
         {
-            print("waiting")
-        }
+            print("getLikedMoviePosters2 waiting")
+        }*/
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
         return MoviesPosterURL
     }
     
-    func getCurrentLikedMovies(key: String) -> [SingleMovie]
+    func getAllLikedMovies(key: String) -> [SingleMovie]
     {
-        print("     getCurrentLikedMovies")
+        print("     getAllLikedMovies")
         let mapper = AWSDynamoDBObjectMapper.default()
         var currentLikedMovie = Set<String>()
         let userProfile = UserProfileToDB()
@@ -221,13 +228,15 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         while (userProfile?.displayName==nil)
         {
-            print("waiting")
+            print("getAllLikedMovies1 waiting")
         }
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         var currentLikedMoviesArr:Array = [SingleMovie]()
+        var dummynum: Int = 0
         for movie in (currentLikedMovie) {
+            dummynum = 0
             print("You Liked \(movie)")
             mapper.load(SingleMovie.self, hashKey: movie, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
                 if let error = task.error as? NSError {
@@ -236,15 +245,20 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                     currentLikedMoviesArr.append(single_movie)
                 }
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                dummynum = 6
                 return nil
             })
+            while (dummynum != 6)
+            {
+                print("getLikedMoviePosters2 waiting")
+            }
         }
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        while ((currentLikedMoviesArr.count) != (currentLikedMovie.count))
+        /*while ((currentLikedMoviesArr.count) != (currentLikedMovie.count))
         {
-            print("waiting")
-        }
+            print("getAllLikedMovies2 waiting")
+        }*/
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
         return currentLikedMoviesArr

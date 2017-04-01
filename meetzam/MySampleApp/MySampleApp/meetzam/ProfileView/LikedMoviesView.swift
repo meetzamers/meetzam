@@ -21,6 +21,21 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         movieCollectionView.delegate = self
         movieCollectionView.dataSource = self
         
+        /*let userLikedMovieAll = SingleMovie().getAllLikedMovies(key: AWSIdentityManager.default().identityId!)
+        for likedMovie in userLikedMovieAll
+        {
+            print("your liked movie list: \(likedMovie)")
+        }
+        let allHistoryMovies = HistoryMovie().getAllHistoryMovies()
+        for history_movie in allHistoryMovies
+        {
+            print("history movies are: \(history_movie)")
+        }
+        let userLikedHistory = HistoryMovie().userLikedHistoryMovies(userLikedMovies: userLikedMovieAll, historyMovies: allHistoryMovies)
+        for liked_history_movie in userLikedHistory
+        {
+            print("your history liked movie is \(liked_history_movie.title)")
+        }*/
                 /*
         print("     put into imagesURLs")
         print("-------------------------------------------------")
