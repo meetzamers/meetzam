@@ -46,8 +46,9 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
     
    
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let imagesURLs = SingleMovie().getLikedMoviePosters(key: AWSIdentityManager.default().identityId!)
-        return imagesURLs.count
+        let movies = SingleMovie().getAllLikedMovies(key: AWSIdentityManager.default().identityId!)
+        
+        return movies.count
     }
     
     
@@ -62,12 +63,24 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         
         cell.movieImage.image = nil
         cell.movieTitleLabel.text = ""
+        
+        
         DispatchQueue.main.async {
             cell.movieImage.image = self.images[indexPath.row]
         }
+        
         DispatchQueue.main.async {
             cell.movieTitleLabel.text = self.titles[indexPath.row]
         }
+        
+        for var title in self.titles {
+            if (self.isHistory(movieTitle: title)){
+                cell.movieTitleLabel.textColor = UIColor.gray
+            } else {
+                cell.movieTitleLabel.textColor = UIColor.black
+            }
+        }
+        
 
         return cell
     }
@@ -90,11 +103,29 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         
         print("there are total: ")
         print(images.count)
+        
+        
+        let allHistoryMovies = HistoryMovie().getAllHistoryMovies()
+        userLikedHistory = HistoryMovie().userLikedHistoryMovies(userLikedMovies: movies, historyMovies: allHistoryMovies)
+        
+        
     }
+    
+    func isHistory(movieTitle:String)-> (_: Bool) {
+        
+        for var movie in userLikedHistory {
+            if (movie.title == movieTitle){
+                return true;
+            }
+        }
+        return false;
+    }
+    
     
     let imagecache = NSCache<AnyObject, AnyObject>()
     var images: [UIImage]!
     var titles: [String]!
+    var userLikedHistory: [HistoryMovie]!
     @IBOutlet weak var movieCollectionView: UICollectionView!
 
 }
