@@ -21,7 +21,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 
     //declare profile picture field
     let userPicField = UIImageView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width))
-//    let userPicField = UIImageView(frame: CGRect(x: UIScreen.main.bounds.width*0.1, y: 15, width: UIScreen.main.bounds.width*0.8, height: UIScreen.main.bounds.width*0.8))
     
     //declare UI var
     let displayName = UILabel()
@@ -187,7 +186,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             print("This is url \(movie.poster_path)")
         }
         
-        //var movieImageData:[Data]!
         var movieImageData = [Data]()
         movieImageData.removeAll()
         

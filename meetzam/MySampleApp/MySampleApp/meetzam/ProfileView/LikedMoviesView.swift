@@ -28,22 +28,6 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
             print("This is url \(url)")
         }
         */
-        /*
-        var imagesURLs = SingleMovie().getLikedMoviePosters(key: AWSIdentityManager.default().identityId!)
-
-        let count = imagesURLs.count;
-        
-        imageData = [Data]()
-        imageData.removeAll()
-        
-        for var i in (0..<count) {
-            let path = "https://image.tmdb.org/t/p/w500" + imagesURLs[i]
-            let pathURL = URL(string: path)
-            imageData.insert(try! Data(contentsOf: pathURL!),at:0)
-        }
-         */
-        
-        
 
     }
     
@@ -58,7 +42,6 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
-       
     }
     
    
@@ -73,56 +56,47 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         
         let cell = movieCollectionView.dequeueReusableCell( withReuseIdentifier: "CustomCell", for: indexPath) as! MovieCollectionCell
         
-        var imageData = updateMovieImages()
+        updateMovieImages()
         
         cell.movieTitleLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 18)
         
         cell.movieImage.image = nil
+        cell.movieTitleLabel.text = ""
         DispatchQueue.main.async {
-            cell.movieImage.image = imageData[indexPath.row]
+            cell.movieImage.image = self.images[indexPath.row]
         }
-        var text = ["1","2","3","4","5","6"]
-        cell.movieTitleLabel.text = text[indexPath.row]
+        DispatchQueue.main.async {
+            cell.movieTitleLabel.text = self.titles[indexPath.row]
+        }
+
         return cell
     }
     
-    func updateMovieImages() -> [UIImage] {
-        let imagesURLs = SingleMovie().getLikedMoviePosters(key: AWSIdentityManager.default().identityId!)
+    func updateMovieImages() {
+        let movies = SingleMovie().getAllLikedMovies(key: AWSIdentityManager.default().identityId!)
         
-        
-        var images = [UIImage]()
+        self.images = [UIImage]()
+        self.titles = [String]()
         var image = UIImage()
-        for item in imagesURLs {
-            let path = "https://image.tmdb.org/t/p/w500" + item
-            
-            /* abc's method */
-            //image = self.loadImageUsingURL(urlString: path)
-            
-            /* my method */
-            //DispatchQueue.main.async {
+        
+        for movie in movies {
+            let path = "https://image.tmdb.org/t/p/w500" + movie.poster_path!
             let pathURL = URL(string: path)
             let imageData = try! Data(contentsOf: pathURL!)
             image = UIImage(data: imageData)!
-            /* my method */
-            
             images.append(image)
-            //}
-            
+            titles.append(movie.title)
         }
         
         print("there are total: ")
         print(images.count)
-        return images
-        
     }
     
-    
     let imagecache = NSCache<AnyObject, AnyObject>()
-    var image: UIImage!
+    var images: [UIImage]!
+    var titles: [String]!
     @IBOutlet weak var movieCollectionView: UICollectionView!
 
-    
-    
 }
 
 
