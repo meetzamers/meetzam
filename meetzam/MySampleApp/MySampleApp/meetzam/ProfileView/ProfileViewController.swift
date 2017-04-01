@@ -34,8 +34,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        TopThreeMovieCollectionView.reloadData()
-        
+        /*
+        DispatchQueue.main.async {
+            self.TopThreeMovieCollectionView.reloadData()
+        }
+        */
         UserProfileToDB().getProfileForDisplay(key: AWSIdentityManager.default().identityId!, user_profile: user_profile, displayname: displayName, bio: userBioField)
         
         //======================== formatting background==========================\\
@@ -163,7 +166,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         cell.Top3MovieImage.image = nil
         
+        
         DispatchQueue.main.async {
+            cell.Top3MovieImage.image = nil
             cell.Top3MovieImage.image = UIImage(data: movieImageData[indexPath.row])
         }
     

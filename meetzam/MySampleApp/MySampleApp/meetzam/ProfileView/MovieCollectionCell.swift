@@ -15,5 +15,9 @@ class MovieCollectionCell: UICollectionViewCell {
     @IBOutlet weak var movieTitleLabel: UILabel!
     
 
+    override func prepareForReuse() {
+        movieImage.image = nil
+    }
+
     
 }

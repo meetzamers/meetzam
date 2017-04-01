@@ -14,7 +14,7 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        movieCollectionView.reloadData()
+        //movieCollectionView.reloadData()
         
         self.view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
         
@@ -75,17 +75,14 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         
         var imageData = updateMovieImages()
         
-        
-
-        DispatchQueue.main.async {
-            cell.movieImage.image = nil
-            cell.movieImage.image = imageData[indexPath.row]
-        }
-        cell.movieTitleLabel.text = "hello"
-
-
         cell.movieTitleLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 18)
         
+        cell.movieImage.image = nil
+        DispatchQueue.main.async {
+            cell.movieImage.image = imageData[indexPath.row]
+        }
+        var text = ["1","2","3","4","5","6"]
+        cell.movieTitleLabel.text = text[indexPath.row]
         return cell
     }
     
