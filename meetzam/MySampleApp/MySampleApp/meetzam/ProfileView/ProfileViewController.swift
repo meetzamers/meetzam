@@ -111,9 +111,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        TopThreeMovieCollectionView.reloadData()
-        
-        
         /* get name and bio from database */
         UserProfileToDB().getProfileForDisplay(key: AWSIdentityManager.default().identityId!, user_profile: user_profile, displayname: displayName, bio: userBioField)
         
@@ -124,7 +121,15 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         self.profileMainBodyView.addSubview(displayName)
         self.profileMainBodyView.addSubview(userBioField)
         
+        DispatchQueue.main.async {
+            self.TopThreeMovieCollectionView.reloadData()
+        }
         
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        DispatchQueue.main.async {
+        }
     }
     
     // Go to all movies I liked
@@ -155,9 +160,13 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         var movieImageData = updateMovieImage()
         
         let cell = TopThreeMovieCollectionView.dequeueReusableCell(withReuseIdentifier: "topThreeCell", for: indexPath) as! TopThreeMovieCell
-        cell.Top3MovieImage.image = nil
-        cell.Top3MovieImage.image = UIImage(data: movieImageData[indexPath.row])
         
+        cell.Top3MovieImage.image = nil
+        
+        DispatchQueue.main.async {
+            cell.Top3MovieImage.image = UIImage(data: movieImageData[indexPath.row])
+        }
+    
         return cell
     }
     

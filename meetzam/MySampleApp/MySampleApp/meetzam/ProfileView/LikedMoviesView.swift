@@ -21,7 +21,7 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         movieCollectionView.delegate = self
         movieCollectionView.dataSource = self
         
-                /*
+        /*
         print("     put into imagesURLs")
         print("-------------------------------------------------")
         for url in imagesURLs {
@@ -42,26 +42,16 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
             imageData.insert(try! Data(contentsOf: pathURL!),at:0)
         }
          */
+        
+        
 
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
-       /* var imagesURLs = SingleMovie().getLikedMoviePosters(key: AWSIdentityManager.default().identityId!)
-        
-        let count = imagesURLs.count;
-        imageData = [Data]()
-        imageData.removeAll()
-        
-        for var i in (0..<count) {
-            let path = "https://image.tmdb.org/t/p/w500" + imagesURLs[i]
-            let pathURL = URL(string: path)
-            //imageData.append(try! Data(contentsOf: pathURL!))
-            imageData.insert(try! Data(contentsOf: pathURL!),at:0)
+       DispatchQueue.main.async {
+            self.movieCollectionView.reloadData()
         }
-        */
-        movieCollectionView.reloadData()
-        
     }
  
 
@@ -85,36 +75,56 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         
         var imageData = updateMovieImages()
         
-        cell.movieImage.image = nil
-        cell.movieImage.image = UIImage(data: imageData[indexPath.row])
-        
-        cell.movieTitleLabel.text = "hello"
-    
-        cell.movieTitleLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 18)
         
 
+        DispatchQueue.main.async {
+            cell.movieImage.image = nil
+            cell.movieImage.image = imageData[indexPath.row]
+        }
+        cell.movieTitleLabel.text = "hello"
+
+
+        cell.movieTitleLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 18)
+        
         return cell
     }
     
-    public func updateMovieImages() -> [Data] {
+    func updateMovieImages() -> [UIImage] {
         let imagesURLs = SingleMovie().getLikedMoviePosters(key: AWSIdentityManager.default().identityId!)
         
-        //let count = imagesURLs.count;
-        var imageData = [Data]()
-        //imageData.removeAll()
         
+        var images = [UIImage]()
+        var image = UIImage()
         for item in imagesURLs {
             let path = "https://image.tmdb.org/t/p/w500" + item
+            
+            /* abc's method */
+            //image = self.loadImageUsingURL(urlString: path)
+            
+            /* my method */
+            //DispatchQueue.main.async {
             let pathURL = URL(string: path)
-            //imageData.append(try! Data(contentsOf: pathURL!))
-            imageData.insert(try! Data(contentsOf: pathURL!),at:0)
+            let imageData = try! Data(contentsOf: pathURL!)
+            image = UIImage(data: imageData)!
+            /* my method */
+            
+            images.append(image)
+            //}
+            
         }
         
-        return imageData
+        print("there are total: ")
+        print(images.count)
+        return images
+        
     }
     
+    
+    let imagecache = NSCache<AnyObject, AnyObject>()
+    var image: UIImage!
     @IBOutlet weak var movieCollectionView: UICollectionView!
 
+    
     
 }
 
