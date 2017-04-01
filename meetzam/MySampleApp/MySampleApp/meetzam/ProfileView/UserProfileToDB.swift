@@ -16,6 +16,7 @@
 import Foundation
 import UIKit
 import AWSDynamoDB
+import AWSS3
 class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     
     var userId: String?
@@ -27,6 +28,8 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     var email: String?
     var currentLikedMovie = Set<String>()
     var movieCount: NSNumber?
+    var likedUsers = Set<String>()
+    var matchedUsers = Set<String>()
     
     class func dynamoDBTableName() -> String {
         
@@ -50,6 +53,21 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 print("InsertError: \(error)")
             } else if let user_profile_addTo = task.result as? UserProfileToDB {
                 userProfile?.currentLikedMovie=user_profile_addTo.currentLikedMovie
+                // if the user does not have any liked movies
+                if (user_profile_addTo.currentLikedMovie.count == 0)
+                {
+                    userProfile?.currentLikedMovie.insert("mushroom13")
+                }
+                userProfile?.likedUsers = user_profile_addTo.likedUsers
+                if (user_profile_addTo.likedUsers.count == 0)
+                {
+                    userProfile?.likedUsers.insert("mushroom13")
+                }
+                userProfile?.matchedUsers = user_profile_addTo.matchedUsers
+                if (user_profile_addTo.matchedUsers.count == 0)
+                {
+                    userProfile?.matchedUsers.insert("mushroom13")
+                }
                 userProfile?.movieCount = user_profile_addTo.movieCount
                 userProfile?.userId=user_profile_addTo.userId
             }
@@ -72,15 +90,6 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         userProfile?.region = _region
         userProfile?.email = _email
         mapper.save(userProfile!)
-        
-        /*mapper.save(userProfile!).continueWith(block: { (task:AWSTask<AnyObject>!) -> Any? in
-         if let error = task.error as? NSError {
-         print("The request failed. Error: \(error)")
-         } else {
-         // Do something with task.result or perform other operations.
-         }
-         })*/
-        
         
         //return BFTask(forCompletionOfAllTasks: [task1, task2, task3])
     }
@@ -134,34 +143,13 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         
     }
     
-
     func insertToCurrentLikedMovie(key: String, movieTitle: String)
     {
         print("     insertToCurrentLikedMovie!!")
-        /*let dynamoDB = AWSDynamoDB.default()
-        let updateInput = AWSDynamoDBUpdateItemInput()
-        
-        let hashKeyValue = AWSDynamoDBAttributeValue()
-        hashKeyValue?.s = key
-        updateInput?.tableName = "meetzam-mobilehub-1569925313-UserProfile"
-        updateInput?.key = ["userId": hashKeyValue!]
-        let valueUpdate = AWSDynamoDBAttributeValueUpdate()
-        let newTitle = AWSDynamoDBAttributeValue()
-        newTitle?.ss?.append(movieTitle)
-        valueUpdate?.value = newTitle
-        valueUpdate?.action = .put
-        updateInput?.attributeUpdates = ["currentLikedMovie": valueUpdate!]
-        dynamoDB.updateItem(updateInput!).continueWith { (task:AWSTask<AWSDynamoDBUpdateItemOutput>) -> Any? in
-            if let error = task.error as? NSError {
-                print("The request failed. Error: \(error)")
-                return nil
-            }
-            return nil
-        }*/
         let mapper = AWSDynamoDBObjectMapper.default()
         
         let userProfile = UserProfileToDB()
-
+        
         print("     before load!!")
         mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as? NSError {
@@ -179,7 +167,17 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 print("gender is \(userProfile?.gender)")
                 userProfile?.region = user_profile_addTo.region
                 print("region is \(userProfile?.region)")
-                userProfile?.currentLikedMovie=user_profile_addTo.currentLikedMovie
+                userProfile?.currentLikedMovie = user_profile_addTo.currentLikedMovie
+                userProfile?.likedUsers = user_profile_addTo.likedUsers
+                if (user_profile_addTo.likedUsers.count == 0)
+                {
+                    userProfile?.likedUsers.insert("mushroom13")
+                }
+                userProfile?.matchedUsers = user_profile_addTo.matchedUsers
+                if (user_profile_addTo.matchedUsers.count == 0)
+                {
+                    userProfile?.matchedUsers.insert("mushroom13")
+                }
                 for movie in (userProfile?.currentLikedMovie)! {
                     print("\(movie)")
                 }
@@ -241,6 +239,16 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 print("gender is \(userProfile?.gender)")
                 userProfile?.region = user_profile_addTo.region
                 print("region is \(userProfile?.region)")
+                userProfile?.likedUsers = user_profile_addTo.likedUsers
+                if (user_profile_addTo.likedUsers.count == 0)
+                {
+                    userProfile?.likedUsers.insert("mushroom13")
+                }
+                userProfile?.matchedUsers = user_profile_addTo.matchedUsers
+                if (user_profile_addTo.matchedUsers.count == 0)
+                {
+                    userProfile?.matchedUsers.insert("mushroom13")
+                }
                 userProfile?.currentLikedMovie=user_profile_addTo.currentLikedMovie
                 print("BEFORE DELETION, currentLikedMovie are: \(userProfile?.currentLikedMovie.description)")
                 userProfile?.movieCount = user_profile_addTo.movieCount
@@ -253,7 +261,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         })
         while(userProfile?.email==nil)
         {
-                        print("waiting")
+            print("waiting")
         }
         print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
         if (!((userProfile?.currentLikedMovie.contains(movieTitle))!))
@@ -273,25 +281,6 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         print("AFTER DELETION, currentLikedMovie are: \(userProfile?.currentLikedMovie.description)")
         mapper.save(userProfile!)
     }
-
-    /*func returnUser(key: String) -> UserProfileToDB
-    {
-        print("     returnUser!!")
-        let mapper = AWSDynamoDBObjectMapper.default()
-        var getuserProfile = UserProfileToDB()
-        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask!) -> AnyObject! in
-            if let error = task.error as? NSError {
-                //print("Error: \(error)")
-            } else if let user_profile = task.result as? UserProfileToDB {
-                getuserProfile=user_profile
-            }
-            
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            return nil
-        })
-        print("     display name is \(getuserProfile?.displayName)")
-        return getuserProfile!
-    }*/
 
 
     func getLikedMovies(userId: String, user_profile: UserProfileToDB) {
@@ -410,6 +399,121 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             }
         }
         return matchedUserProfiles
+    }
+    
+    
+    func likeOneUser(key: String, likedUserID: String)
+    {
+        print("     likeOneUser")
+        let mapper = AWSDynamoDBObjectMapper.default()
+        let userProfile = UserProfileToDB()
+        
+        print("     before load!!")
+        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            if let error = task.error as? NSError {
+                print("InsertError: \(error)")
+            } else if let user_profile_addTo = task.result as? UserProfileToDB {
+                userProfile?.userId=key
+                print("     key is \(key)")
+                userProfile?.displayName = user_profile_addTo.displayName
+                print("displayname is \(userProfile?.displayName)")
+                userProfile?.bio = user_profile_addTo.bio
+                print("bio is \(userProfile?.bio)")
+                userProfile?.age = user_profile_addTo.age
+                print("age is \(userProfile?.age)")
+                userProfile?.gender = user_profile_addTo.gender
+                print("gender is \(userProfile?.gender)")
+                userProfile?.region = user_profile_addTo.region
+                print("region is \(userProfile?.region)")
+                userProfile?.currentLikedMovie=user_profile_addTo.currentLikedMovie
+                for movie in (userProfile?.currentLikedMovie)! {
+                    print("\(movie)")
+                }
+                userProfile?.movieCount = user_profile_addTo.movieCount
+                
+                userProfile?.email = user_profile_addTo.email
+                print("email is \(userProfile?.email)")
+                print("     all put")
+            }
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            return nil
+        })
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        while(userProfile?.email==nil)
+        {
+            print("waiting")
+        }
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        
+        print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
+        if (!((userProfile?.likedUsers.contains(likedUserID))!))
+        {
+            if (userProfile?.likedUsers.count == 1 && (userProfile?.likedUsers.contains("mushroom13"))!) {
+                //dummy exist
+                userProfile?.likedUsers.removeAll()
+            }
+            userProfile?.likedUsers.insert(likedUserID)
+        }
+        mapper.save(userProfile!)
+    }
+    
+    func findIsMatched(key: String, userID: String) -> Bool
+    {
+        let mapper = AWSDynamoDBObjectMapper.default()
+        var result: Bool = false
+        var dummynum: Int = 0
+        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task: AWSTask!) -> AnyObject! in
+            if let error = task.error as? NSError {
+                print("Error: \(error)")
+            } else if let user_profile = task.result as? UserProfileToDB {
+                if (user_profile.likedUsers.contains(userID))
+                {
+                    result = true
+                }
+            }
+            
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            dummynum = 6
+            return nil
+        })
+        while (dummynum == 0)
+        {
+            print("waiting")
+        }
+        return result
+    }
+    
+    func downloadUserIcon(userID: String) -> URL
+    {
+        let transferManager = AWSS3TransferManager.default()
+        
+        let downloadingFileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(userID)
+        
+        let downloadRequest = AWSS3TransferManagerDownloadRequest()
+        downloadRequest?.bucket = "testprofile-meetzam"
+        downloadRequest?.key = userID + ".jpeg"
+        downloadRequest?.downloadingFileURL = downloadingFileURL
+        
+        transferManager.download(downloadRequest!).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask<AnyObject>) -> Any? in
+            
+            if let error = task.error as? NSError {
+                if error.domain == AWSS3TransferManagerErrorDomain, let code = AWSS3TransferManagerErrorType(rawValue: error.code) {
+                    switch code {
+                    case .cancelled, .paused:
+                        break
+                    default:
+                        print("Error downloading: \(downloadRequest?.key) Error: \(error)")
+                    }
+                } else {
+                    print("Error downloading")
+                }
+                return nil
+            }
+            print("Download complete for: \(downloadRequest?.key)")
+            return nil
+        })
+        return downloadingFileURL
     }
     
 }

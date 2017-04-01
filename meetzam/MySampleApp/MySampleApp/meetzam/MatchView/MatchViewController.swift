@@ -42,7 +42,7 @@ class MatchViewController: UIViewController {
         view.addSubview(swipeableView)
         // ========================================
         let matchedUserIDs = UserProfileToDB().getMatchedUserIDs(key: AWSIdentityManager.default().identityId!)
-        for matchID in matchedUserIDs
+        /*for matchID in matchedUserIDs
         {
             print("match with you: \(matchID)")
         }
@@ -51,6 +51,11 @@ class MatchViewController: UIViewController {
         {
             print("your buddies are: \(matchUser.displayName)")
         }
+        let allHistoryMovies = HistoryMovie().getAllHistoryMovies()
+        for history_movie in allHistoryMovies
+        {
+            print("history movie is: \(history_movie.title)")
+        }*/
     }
     
     func nextCardView() -> UIView? {

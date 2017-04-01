@@ -179,11 +179,12 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     public func updateMovieImage() -> [Data]{
         var imagesURLs = SingleMovie().getLikedMoviePosters(key: AWSIdentityManager.default().identityId!)
+        let allLikedMovies = SingleMovie().getAllLikedMovies(key: AWSIdentityManager.default().identityId!)
         
         print("     put into imagesURLs")
         print("-------------------------------------------------")
-        for url in imagesURLs {
-            print("This is url \(url)")
+        for movie in allLikedMovies {
+            print("This is url \(movie.poster_path)")
         }
         
         //var movieImageData:[Data]!
