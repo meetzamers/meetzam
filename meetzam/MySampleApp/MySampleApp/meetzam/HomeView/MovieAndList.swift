@@ -298,36 +298,6 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         return result
     }
     
-    func isIsCurrentMovie(title: String) -> Bool
-    {
-        var result: Bool = false
-        var currentMovieTitles: Array = [String]()
-        let mapper = AWSDynamoDBObjectMapper.default()
-        let scanExpression = AWSDynamoDBScanExpression()
-        var dummynum: Int = 0
-        
-        mapper.scan(SingleMovie.self, expression: scanExpression).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
-            if let error = task.error as? NSError {
-                print("The request failed. Error: \(error)")
-            } else if let allCurrentMovie = task.result {
-                for current_movie in allCurrentMovie.items as! [SingleMovie] {
-                    currentMovieTitles.append(current_movie.title)
-                }
-                dummynum = 6
-            }
-            return nil
-        })
-        while (dummynum != 6)
-        {
-            print("isIsCurrentMovie waiting")
-        }
-        if (currentMovieTitles.contains(title))
-        {
-            result = true
-        }
-        return result
-    }
-    
     func insertToCurrentLikedUser(key: String, userid: String)
     {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
