@@ -31,10 +31,10 @@ class HistoryMovie: AWSDynamoDBObjectModel, AWSDynamoDBModeling
         return "title"
     }
     
-    func getAllHistoryMovies() -> [HistoryMovie]
+    func getAllHistoryMovieTitles() -> [String]
     {
         print("     getAllHistoryMovies")
-        var historyMovies: Array = [HistoryMovie]()
+        var historyMovieTitles: Array = [String]()
         let mapper = AWSDynamoDBObjectMapper.default()
         let scanExpression = AWSDynamoDBScanExpression()
         var dummynum: Int = 0
@@ -44,7 +44,7 @@ class HistoryMovie: AWSDynamoDBObjectModel, AWSDynamoDBModeling
                 print("The request failed. Error: \(error)")
             } else if let allHistoryMovies = task.result {
                 for history_movie in allHistoryMovies.items as! [HistoryMovie] {
-                    historyMovies.append(history_movie)
+                    historyMovieTitles.append(history_movie.title)
                 }
                 dummynum = 6
             }
@@ -54,31 +54,69 @@ class HistoryMovie: AWSDynamoDBObjectModel, AWSDynamoDBModeling
         {
             print("getAllHistoryMovies waiting")
         }
-        return historyMovies
+        return historyMovieTitles
     }
     
-    // pass SingleMovie().getAllLikedMovies as "userLikedMovies"
-    // pass HistoryMovie().getAllHistoryMovies as "historyMovies"
-    func userLikedHistoryMovies(userLikedMovies: [SingleMovie], historyMovies: [HistoryMovie]) -> [HistoryMovie]
+    func getAllLikedMovieTitles(userID: String) -> [String]
+    {
+        let mapper = AWSDynamoDBObjectMapper.default()
+        var currentLikedMovie = Set<String>()
+        let userProfile = UserProfileToDB()
+        var dummynum: Int = 0
+        
+        print("     before load!!")
+        mapper.load(UserProfileToDB.self, hashKey: userID, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            if let error = task.error as? NSError {
+                print("InsertError: \(error)")
+            } else if let user_profile_addTo = task.result as? UserProfileToDB {
+                if (user_profile_addTo.currentLikedMovie.count != 0 && user_profile_addTo.movieCount == 0) {
+                    print("dummy detected")
+                }
+                else {
+                    currentLikedMovie=user_profile_addTo.currentLikedMovie
+                }
+                dummynum = 6
+            }
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            return nil
+        })
+        while (dummynum != 6)
+        {
+            print("getAllLikedMovieTitles waiting")
+        }
+        var allLikedMovieTitles: Array = [String]()
+        for movie in currentLikedMovie
+        {
+            allLikedMovieTitles.append(movie)
+        }
+        return allLikedMovieTitles
+    }
+    
+    func userLikedHistoryMovies(_userID: String) -> [HistoryMovie]
     {
         print("     userLikedHistoryMovies")
+        var historyTitles: Array = [String]()
         var historyResult: Array = [HistoryMovie]()
         let mapper = AWSDynamoDBObjectMapper.default()
         var dummynum: Int = 0
-        
-        for likedMovie in userLikedMovies
+        let all_history_titles = HistoryMovie().getAllHistoryMovieTitles()
+        let all_liked_titles = HistoryMovie().getAllLikedMovieTitles(userID: _userID)
+        for movie_title in all_liked_titles
+        {
+            if (all_history_titles.contains(movie_title))
+            {
+                historyTitles.append(movie_title)
+            }
+        }
+        for history_title in historyTitles
         {
             dummynum = 0
-            mapper.load(HistoryMovie.self, hashKey: likedMovie, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task: AWSTask!) -> AnyObject! in
+            mapper.load(HistoryMovie.self, hashKey: history_title, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
                 if let error = task.error as? NSError {
-                    print("Error: \(error)")
-                } else if let likedMovie = task.result as? HistoryMovie {
-                    if (historyMovies.contains(likedMovie))
-                    {
-                        historyResult.append(likedMovie)
-                    }
+                    print("InsertError: \(error)")
+                } else if let history_movie = task.result as? HistoryMovie {
+                    historyResult.append(history_movie)
                 }
-                
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 dummynum = 6
                 return nil
