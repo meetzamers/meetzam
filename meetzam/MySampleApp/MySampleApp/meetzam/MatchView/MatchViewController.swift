@@ -48,8 +48,13 @@ class MatchViewController: UIViewController {
                         UserProfileToDB().likeOneUser(key: AWSIdentityManager.default().identityId!, likedUserID: self.userIds[self.lablecount-self.cardsToLoad])
                         
                         print("I liked \(self.displayNames[self.lablecount-self.cardsToLoad])")
-                        print("My match's ID is \(self.userIds[self.lablecount-self.cardsToLoad])")
+                       
                         if (UserProfileToDB().findIsMatched(key: AWSIdentityManager.default().identityId!, userID: self.userIds[self.lablecount-self.cardsToLoad]) && UserProfileToDB().findIsMatched(key: self.userIds[self.lablecount-self.cardsToLoad], userID: AWSIdentityManager.default().identityId!)){
+                            
+                            UserProfileToDB().insertToMatchedUser(key: AWSIdentityManager.default().identityId!, userID: self.userIds[self.lablecount-self.cardsToLoad])
+                            
+                            UserProfileToDB().insertToMatchedUser(key: self.userIds[self.lablecount-self.cardsToLoad], userID: AWSIdentityManager.default().identityId!)
+                            
                             print("Congradulations!! You have a new match!! with \(self.displayNames[self.lablecount-self.cardsToLoad])")
                         }
                     }
@@ -69,16 +74,6 @@ class MatchViewController: UIViewController {
         
         view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
         
-        // ========================================
-        let matchedUserIDs = UserProfileToDB().getMatchedUserIDs(key: AWSIdentityManager.default().identityId!)
-        
-        /*let likedUserIDs = UserProfileToDB().getLikedUserIDs(key: AWSIdentityManager.default().identityId!)
-        for userid in likedUserIDs
-        {
-            print("one of your liked users is \(userid)")
-        }
-        UserProfileToDB().insertToMatchedUser(key: AWSIdentityManager.default().identityId!, userID: "us-east-1:f0739f93-42d3-4ad8-9ddf-ca8f06cdfff2")*/
-        
         // Card View implementation
         swipeableView = ZLSwipeableView(frame: CGRect(x: UIScreen.main.bounds.width*0.04 ,y: 72, width: UIScreen.main.bounds.width*0.92, height: UIScreen.main.bounds.height*0.86))
         
@@ -87,13 +82,15 @@ class MatchViewController: UIViewController {
         swipeLeftImage.frame = CGRect(x: swipeableView.bounds.width - 75 ,y: 15, width: 60, height: 60)
         
         
-        /*
+        /* Set up the numebr of cards to load here.
+        let matchedUserIDs = UserProfileToDB().getMatchedUserIDs(key: AWSIdentityManager.default().identityId!)
         if (matchedUserIDs.count <= 3){
             swipeableView.numberOfActiveView = UInt(matchedUserIDs.count)
         } else {
             swipeableView.numberOfActiveView = UInt(3)
         }
         */
+        
         // Framework init
         swipeableView.numberOfActiveView = UInt(cardsToLoad)
         view.addSubview(swipeableView)
@@ -142,21 +139,7 @@ class MatchViewController: UIViewController {
         let cardView = CardView(frame: swipeableView.bounds)
         cardView.backgroundColor = UIColor.init(red: 253/255, green: 253/255, blue: 253/255, alpha: 1)
    
-        // temperoray profile pic
-        /*
-        let identityManager = AWSIdentityManager.default()
-        AWSIdentityManager.default()
-        if let imageURL = identityManager.imageURL {
-            let imageData = try! Data(contentsOf: imageURL)
-            if let profileImage = UIImage(data: imageData) {
-                cardView.userPicField.image = profileImage
-            } else {
-                cardView.userPicField.image = UIImage(named: "UserIcon")
-            }
-        }
-        */
-        
- 
+        //monika
         if (lablecount < displayNames.count) {
             // assign potential matches' DISPLAYNAME to cardView
             cardView.displayName.text = displayNames[lablecount]
@@ -199,6 +182,7 @@ class MatchViewController: UIViewController {
     func loadPotentialMatch(){
         displayNames = [String]()
         userIds = [String]()
+        likedUserIds = [String]()
         bios = [String]()
         movies1 = [UIImage]()
         movies2 = [UIImage]()
@@ -208,9 +192,15 @@ class MatchViewController: UIViewController {
         let matchedUserIDs = UserProfileToDB().getMatchedUserIDs(key: AWSIdentityManager.default().identityId!)
         let matchedUsers = UserProfileToDB().getMatchedUserProfiles(userIDs: matchedUserIDs)
         
+        likedUserIds = UserProfileToDB().getLikedUserIDs(key: AWSIdentityManager.default().identityId!)
+        
         print("I have this many potential matches: \(matchedUsers.count)")
         for matchedUser in matchedUsers
         {
+            if (likedBefore(userId: matchedUser.userId!)) {
+                continue
+            }
+            
             //add names to displayNames
             displayNames.append(matchedUser.displayName!)
             //add user id to userIds
@@ -238,6 +228,17 @@ class MatchViewController: UIViewController {
         
         
     }
+    
+    func likedBefore(userId: String) -> (Bool) {
+        for id in likedUserIds {
+            if (userId == id){
+                return true
+            }
+        }
+        return false
+    }
+    
+    
     func loadProfile(userId: String) {
         let URLString = UserProfileToDB().downloadUserIcon(userID: userId).path
         print("the local directory is \(URLString)")
@@ -290,6 +291,7 @@ class MatchViewController: UIViewController {
     
     var displayNames: [String]!
     var userIds: [String]!
+    var likedUserIds: [String]!
     var bios: [String]!
     var movies1: [UIImage]!
     var movies2: [UIImage]!
