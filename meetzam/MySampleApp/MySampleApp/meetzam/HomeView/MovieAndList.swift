@@ -79,10 +79,9 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                         view.movieDetailedInfo.frame = CGRect(x: 6, y: view.imageView.frame.height + view.movieTitle.frame.height + 5, width: UIScreen.main.bounds.width - 15, height: view.movieDetailedInfo.contentSize.height) // resize the detailed info
                         
                         let path = "https://image.tmdb.org/t/p/w780/" + (item.poster_path)!
-                        //                        let imageURL = URL(string: path)
-                        //                        let imageData = try! Data(contentsOf: imageURL!)
-                        //                        view.imageView.image = UIImage(data: imageData)
-                        view.imageView.loadImageUsingURLString(URLString: path)
+                        let imageURL = URL(string: path)
+                        let imageData = try! Data(contentsOf: imageURL!)
+                        view.imageView.image = UIImage(data: imageData)
                         
                         
                         view.videoURL = "https://www.youtube.com/embed/" + item.trailer_key! + "?rel=0&showinfo=0&autoplay=1"
@@ -93,14 +92,14 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                         view.movieContent.addSubview(view.videoView)
                         
                         view.movieRelease.frame = CGRect(x: 10, y: view.imageView.frame.height + view.movieTitle.frame.height + view.movieDetailedInfo.frame.height + view.videoView.frame.height + 10, width: UIScreen.main.bounds.width - 15, height: 23) // reposition
-                        let strText = NSMutableAttributedString(string: "RELEASE YEAR  " + item.releaseYear!)
+                        let strText = NSMutableAttributedString(string: "Release Year: " + item.releaseYear!)
                         strText.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 15)!, range: NSRange(location: 0, length: 13))
                         strText.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Thin", size: 15)!, range: NSRange(location: 13, length: strText.length - 13))
                         view.movieRelease.attributedText = strText
                         
                         view.movieDirector.frame = CGRect(x: 10, y: view.imageView.frame.height + view.movieTitle.frame.height + view.movieDetailedInfo.frame.height + view.videoView.frame.height + view.movieRelease.frame.height + 10, width: UIScreen.main.bounds.width - 15, height: 23) // reposition
                         let realDirector = item.directors.joined(separator: ", ")
-                        let strText1 = NSMutableAttributedString(string: "DIRECTOR  " + realDirector)
+                        let strText1 = NSMutableAttributedString(string: "Director: " + realDirector)
                         strText1.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 15)!, range: NSRange(location: 0, length: 10))
                         strText1.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Thin", size: 15)!, range: NSRange(location: 10, length: strText1.length - 10))
                         view.movieDirector.attributedText = strText1
@@ -139,9 +138,9 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         
     }
     
-    func getLikedMoviePosters(key: String) -> [String] {
-        
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    func getLikedMoviePosters(key: String) -> [String]
+    {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         print("     getLikedMoviePosters")
         let mapper = AWSDynamoDBObjectMapper.default()
@@ -165,10 +164,11 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             return nil
         })
         
-        var fakenode = 0
-        while (userProfile?.displayName==nil) {
+        var fakenode0 = 0
+        while (userProfile?.displayName==nil)
+        {
 //            print("getLikedMoviePosters1 waiting")
-            fakenode = 1
+            fakenode0 = 1
         }
         
         var MoviesPosterURL:Array = [String]()
@@ -186,8 +186,10 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                 dummynum = 6
                 return nil
             })
+            
             var fakenode1 = 0
-            while (dummynum != 6) {
+            while (dummynum != 6)
+            {
 //                print("getLikedMoviePosters2 waiting")
                 fakenode1 = 1
             }
@@ -197,8 +199,8 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         return MoviesPosterURL
     }
     
-    func getAllLikedMovies(key: String) -> [SingleMovie] {
-        
+    func getCurrentLikedMovies(key: String) -> [SingleMovie]
+    {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         print("     getAllLikedMovies")
@@ -219,17 +221,16 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                 }
                 userProfile?.displayName=user_profile_addTo.displayName
             }
-            
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
         
-        var fakenode2 = 0
-        while (userProfile?.displayName == nil) {
-            //            print("getAllLikedMovies1 waiting")
-            fakenode2 = 1
+        var fakenode0 = 0
+        while (userProfile?.displayName==nil)
+        {
+//            print("getAllLikedMovies1 waiting")
+            fakenode0 = 1
         }
-        
         
         var currentLikedMoviesArr:Array = [SingleMovie]()
         var dummynum: Int = 0
@@ -242,24 +243,65 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                 } else if let single_movie = task.result as? SingleMovie {
                     currentLikedMoviesArr.append(single_movie)
                 }
-                
-                dummynum = 6
-                
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                dummynum = 6
                 return nil
             })
-            var fakenode3 = 0
-            while (dummynum != 6) {
+            
+            var fakenode1 = 0
+            while (dummynum != 6)
+            {
 //                print("getLikedMoviePosters2 waiting")
-                fakenode3 = 1
+                fakenode1 = 1
             }
         }
         
+
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         return currentLikedMoviesArr
     }
     
-    func insertToCurrentLikedUser(key: String, userid: String) {
+    func isIsCurrentMovie(title: String) -> Bool
+    {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        var result: Bool = false
+        var currentMovieTitles: Array = [String]()
+        let mapper = AWSDynamoDBObjectMapper.default()
+        let scanExpression = AWSDynamoDBScanExpression()
+        var dummynum: Int = 0
+        
+        mapper.scan(SingleMovie.self, expression: scanExpression).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            if let error = task.error as? NSError {
+                print("The request failed. Error: \(error)")
+            } else if let allCurrentMovie = task.result {
+                for current_movie in allCurrentMovie.items as! [SingleMovie] {
+                    currentMovieTitles.append(current_movie.title)
+                }
+                dummynum = 6
+            }
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            return nil
+        })
+        
+        var fakenode0 = 0
+        while (dummynum != 6)
+        {
+//            print("isIsCurrentMovie waiting")
+            fakenode0 = 1
+        }
+        if (currentMovieTitles.contains(title))
+        {
+            result = true
+        }
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        return result
+    }
+    
+    func insertToCurrentLikedUser(key: String, userid: String)
+    {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
         print("     ADD USER TO MOVIE")
         
         let mapper = AWSDynamoDBObjectMapper.default()
@@ -275,47 +317,52 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                 print("     key:title is \(key)")
                 
                 movie?.directors = movie_addTo.directors
-//                print("directors are \(movie?.directors.description)")
+                print("directors are \(movie?.directors.description)")
                 
                 movie?.genres = movie_addTo.genres
-//                print("genres are \(movie?.genres.description)")
+                print("genres are \(movie?.genres.description)")
                 
                 movie?.longDescription = movie_addTo.longDescription
-//                print("longDescription is \(movie?.longDescription)")
+                print("longDescription is \(movie?.longDescription)")
                 
                 movie?.poster_path = movie_addTo.poster_path
-//                print("poster_path is \(movie?.poster_path)")
+                print("poster_path is \(movie?.poster_path)")
                 
                 movie?.releaseYear = movie_addTo.releaseYear
-//                print("releaseYear is \(movie?.releaseYear)")
+                print("releaseYear is \(movie?.releaseYear)")
                 
                 movie?.shortDescriptiontle = movie_addTo.shortDescriptiontle
-//                print("shortDescriptiontle is \(movie?.shortDescriptiontle)")
+                print("shortDescriptiontle is \(movie?.shortDescriptiontle)")
                 
                 movie?.tmdb_id = movie_addTo.tmdb_id
-//                print("tmdb_id is \(movie?.tmdb_id)")
+                print("tmdb_id is \(movie?.tmdb_id)")
                 
                 movie?.topCast = movie_addTo.topCast
-//                print("topCast are \(movie?.topCast.description)")
+                print("topCast are \(movie?.topCast.description)")
                 
                 movie?.currentLikedUser = movie_addTo.currentLikedUser
-//                print("BEFORE INSERTING: currentLikedUser are \(movie?.currentLikedUser.description)")
+                print("BEFORE INSERTING: currentLikedUser are \(movie?.currentLikedUser.description)")
                 
                 movie?.userCount = movie_addTo.userCount
                 
                 movie?.trailer_key = movie_addTo.trailer_key
-//                print("trailer_key is \(movie?.trailer_key)")
+                print("trailer_key is \(movie?.trailer_key)")
                 
                 print("     all put")
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
-        while(movie?.trailer_key==nil) {
-            print("waiting")
+        
+        var fakenode0 = 0
+        while(movie?.trailer_key==nil)
+        {
+//            print("waiting")
+            fakenode0 = 1
         }
         print("SHOULD BE AFTER LOAD: title and id are \(movie?.title) and \(movie?.tmdb_id)")
-        if (!((movie?.currentLikedUser.contains(userid))!)) {
+        if (!((movie?.currentLikedUser.contains(userid))!))
+        {
             if (movie?.currentLikedUser.count != 0 && movie?.userCount == 0) {
                 //dummy detected
                 movie?.currentLikedUser.removeAll()
@@ -325,9 +372,14 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         }
         print("AFTER INSERTING: currentLikedUser are \(movie?.currentLikedUser.description)")
         mapper.save(movie!)
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
-    func deleteFromCurrentLikedUser(key: String, userid: String) {
+    func deleteFromCurrentLikedUser(key: String, userid: String)
+    {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
         print("     ADD USER TO MOVIE")
         
         let mapper = AWSDynamoDBObjectMapper.default()
@@ -343,47 +395,52 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                 print("     key:title is \(key)")
                 
                 movie?.directors = movie_addTo.directors
-//                print("directors are \(movie?.directors.description)")
+                print("directors are \(movie?.directors.description)")
                 
                 movie?.genres = movie_addTo.genres
-//                print("genres are \(movie?.genres.description)")
+                print("genres are \(movie?.genres.description)")
                 
                 movie?.longDescription = movie_addTo.longDescription
-//                print("longDescription is \(movie?.longDescription)")
+                print("longDescription is \(movie?.longDescription)")
                 
                 movie?.poster_path = movie_addTo.poster_path
-//                print("poster_path is \(movie?.poster_path)")
+                print("poster_path is \(movie?.poster_path)")
                 
                 movie?.releaseYear = movie_addTo.releaseYear
-//                print("releaseYear is \(movie?.releaseYear)")
+                print("releaseYear is \(movie?.releaseYear)")
                 
                 movie?.shortDescriptiontle = movie_addTo.shortDescriptiontle
-//                print("shortDescriptiontle is \(movie?.shortDescriptiontle)")
+                print("shortDescriptiontle is \(movie?.shortDescriptiontle)")
                 
                 movie?.tmdb_id = movie_addTo.tmdb_id
-//                print("tmdb_id is \(movie?.tmdb_id)")
+                print("tmdb_id is \(movie?.tmdb_id)")
                 
                 movie?.topCast = movie_addTo.topCast
-//                print("topCast are \(movie?.topCast.description)")
+                print("topCast are \(movie?.topCast.description)")
                 
                 movie?.currentLikedUser = movie_addTo.currentLikedUser
-//                print("BEFORE DELETION: currentLikedUser are \(movie?.currentLikedUser.description)")
+                print("BEFORE DELETION: currentLikedUser are \(movie?.currentLikedUser.description)")
                 
                 movie?.userCount = movie_addTo.userCount
                 
                 movie?.trailer_key = movie_addTo.trailer_key
-//                print("trailer_key is \(movie?.trailer_key)")
+                print("trailer_key is \(movie?.trailer_key)")
                 
                 print("     all put")
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
-        while(movie?.trailer_key==nil) {
-            print("waiting")
+        
+        var fakenode0 = 0
+        while(movie?.trailer_key==nil)
+        {
+//            print("waiting")
+            fakenode0 = 1
         }
         print("SHOULD BE AFTER LOAD: title and id are \(movie?.title) and \(movie?.tmdb_id)")
-        if ((movie?.currentLikedUser.contains(userid))!) {
+        if ((movie?.currentLikedUser.contains(userid))!)
+        {
             _ = movie?.currentLikedUser.remove(userid)
             movie?.userCount = movie?.currentLikedUser.count as NSNumber?
             //dummy string since empty string set not allowed
@@ -396,10 +453,13 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         }
         print("AFTER DELETION: currentLikedUser are \(movie?.currentLikedUser.description)")
         mapper.save(movie!)
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
 }
 
 class MovieList {
     var tableRows:Array = [SingleMovie]()
+    
     
 }

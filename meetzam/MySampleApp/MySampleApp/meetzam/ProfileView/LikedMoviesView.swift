@@ -38,7 +38,7 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
     
    
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let movies = SingleMovie().getAllLikedMovies(key: AWSIdentityManager.default().identityId!)
+        let movies = SingleMovie().getCurrentLikedMovies(key: AWSIdentityManager.default().identityId!)
         
         return movies.count
     }
@@ -57,6 +57,7 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         
         DispatchQueue.main.async {
             cell.movieImage.image = self.images[indexPath.row]
+            cell.movieImage.contentMode = .scaleAspectFill
         }
         
         DispatchQueue.main.async {
@@ -76,7 +77,7 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
     }
     
     func updateMovieImages() {
-        let movies = SingleMovie().getAllLikedMovies(key: AWSIdentityManager.default().identityId!)
+        let movies = SingleMovie().getCurrentLikedMovies(key: AWSIdentityManager.default().identityId!)
         
         self.images = [UIImage]()
         self.titles = [String]()

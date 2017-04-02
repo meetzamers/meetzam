@@ -166,6 +166,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         DispatchQueue.main.async {
             cell.Top3MovieImage.image = nil
             cell.Top3MovieImage.image = UIImage(data: movieImageData[indexPath.row])
+            cell.Top3MovieImage.contentMode = .scaleAspectFill
         }
     
         return cell
@@ -175,7 +176,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     public func updateMovieImage() -> [Data]{
         var imagesURLs = SingleMovie().getLikedMoviePosters(key: AWSIdentityManager.default().identityId!)
-        let allLikedMovies = SingleMovie().getAllLikedMovies(key: AWSIdentityManager.default().identityId!)
+        let allLikedMovies = SingleMovie().getCurrentLikedMovies(key: AWSIdentityManager.default().identityId!)
         
         print("     put into imagesURLs")
         print("-------------------------------------------------")
