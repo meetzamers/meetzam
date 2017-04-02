@@ -44,6 +44,9 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     // function to add/update user info into database
     // argument: dbName...
     func insertProfile(_userId: String, _displayName: String, _bio: String, _age: String, _gender: String, _region: String, _email: String) {
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
         print("     insertProfile")
         let mapper = AWSDynamoDBObjectMapper.default()
         let userProfile = UserProfileToDB()
@@ -75,12 +78,11 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             return nil
         })
         
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        while(userProfile?.userId==nil)
-        {
-            print("waiting")
+        var fakenode = 0
+        while(userProfile?.userId==nil) {
+//            print("waiting")
+            fakenode = 1
         }
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
         userProfile?.userId  = _userId
         userProfile?.displayName = _displayName
@@ -90,6 +92,8 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         userProfile?.region = _region
         userProfile?.email = _email
         mapper.save(userProfile!)
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
         //return BFTask(forCompletionOfAllTasks: [task1, task2, task3])
     }
@@ -141,10 +145,14 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             return nil
         })
         
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        
     }
     
-    func insertToCurrentLikedMovie(key: String, movieTitle: String)
-    {
+    func insertToCurrentLikedMovie(key: String, movieTitle: String) {
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
         print("     insertToCurrentLikedMovie!!")
         let mapper = AWSDynamoDBObjectMapper.default()
         
@@ -191,12 +199,11 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             return nil
         })
         
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        while(userProfile?.email==nil)
-        {
-            print("waiting")
+        var fakenode = 0
+        while(userProfile?.email==nil) {
+//            print("waiting")
+            fakenode = 1
         }
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
         print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
         if (!((userProfile?.currentLikedMovie.contains(movieTitle))!))
@@ -212,10 +219,14 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             print("\(movie)")
         }
         mapper.save(userProfile!)
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
-    func deleteFromCurrentLikedMovie(key: String, movieTitle: String)
-    {
+    func deleteFromCurrentLikedMovie(key: String, movieTitle: String) {
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
         print("     deleteFromCurrentLikedMovie!!")
         
         let mapper = AWSDynamoDBObjectMapper.default()
@@ -259,9 +270,11 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
-        while(userProfile?.email==nil)
-        {
-            print("waiting")
+        
+        var fakenode = 0
+        while(userProfile?.email==nil) {
+//            print("waiting")
+            fakenode = 1
         }
         print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
         if (!((userProfile?.currentLikedMovie.contains(movieTitle))!))
@@ -280,10 +293,15 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         
         print("AFTER DELETION, currentLikedMovie are: \(userProfile?.currentLikedMovie.description)")
         mapper.save(userProfile!)
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
 
 
     func getLikedMovies(userId: String, user_profile: UserProfileToDB) {
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
         let mapper = AWSDynamoDBObjectMapper.default()
         mapper.load(UserProfileToDB.self, hashKey: userId, rangeKey: nil).continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as? NSError {
@@ -302,10 +320,14 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
-    func getMatchedUserIDs(key: String) -> [String]
-    {
+    func getMatchedUserIDs(key: String) -> [String] {
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
         print("     getMatchedUserIDs")
         let mapper = AWSDynamoDBObjectMapper.default()
         var currentLikedMovie = Set<String>()
@@ -328,14 +350,12 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             return nil
         })
         
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        while (userProfile?.displayName == nil)
-        {
-            print("waiting")
+        var fakenode = 0
+        while (userProfile?.displayName == nil) {
+//            print("waiting")
+            fakenode = 1
         }
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+
         print("     next step")
         var matchedUserIDs: Array = [String]()
         var dummynum: Int = 0
@@ -360,20 +380,22 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 dummynum = 6
                 return nil
             })
-            while (dummynum != 6)
-            {
-                print("waiting")
+            
+            var fakenode = 0
+            while (dummynum != 6) {
+//                print("waiting")
+                fakenode = 1
             }
         }
         
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        
         return matchedUserIDs
     }
     
-    func getMatchedUserProfiles(userIDs: [String]) -> [UserProfileToDB]
-    {
+    func getMatchedUserProfiles(userIDs: [String]) -> [UserProfileToDB] {
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
         print("     getMatchedUserProfiles")
         var matchedUserProfiles: Array = [UserProfileToDB]()
         let mapper = AWSDynamoDBObjectMapper.default()
@@ -393,17 +415,23 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 dummynum = 6
                 return nil
             })
-            while (dummynum != 6)
-            {
-                print("waiting")
+            
+            var fakenode = 0
+            while (dummynum != 6) {
+//                print("waiting")
+                fakenode = 1
             }
         }
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         return matchedUserProfiles
     }
     
     
-    func likeOneUser(key: String, likedUserID: String)
-    {
+    func likeOneUser(key: String, likedUserID: String) {
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
         print("     likeOneUser")
         let mapper = AWSDynamoDBObjectMapper.default()
         let userProfile = UserProfileToDB()
@@ -439,12 +467,11 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             return nil
         })
         
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        while(userProfile?.email==nil)
-        {
-            print("waiting")
+        var fakenode = 0
+        while(userProfile?.email == nil) {
+//            print("waiting")
+            fakenode = 1
         }
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
         print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
         if (!((userProfile?.likedUsers.contains(likedUserID))!))
@@ -456,10 +483,14 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             userProfile?.likedUsers.insert(likedUserID)
         }
         mapper.save(userProfile!)
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
-    func findIsMatched(key: String, userID: String) -> Bool
-    {
+    func findIsMatched(key: String, userID: String) -> Bool {
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
         let mapper = AWSDynamoDBObjectMapper.default()
         var result: Bool = false
         var dummynum: Int = 0
@@ -477,15 +508,21 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             dummynum = 6
             return nil
         })
-        while (dummynum == 0)
-        {
-            print("waiting")
+        
+        var fakenode = 0
+        while (dummynum == 0) {
+//            print("waiting")
+            fakenode = 1
         }
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         return result
     }
     
-    func downloadUserIcon(userID: String) -> URL
-    {
+    func downloadUserIcon(userID: String) -> URL {
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
         let transferManager = AWSS3TransferManager.default()
         
         let downloadingFileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(userID)
@@ -508,11 +545,14 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 } else {
                     print("Error downloading")
                 }
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 return nil
             }
             print("Download complete for: \(downloadRequest?.key)")
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         return downloadingFileURL
     }
     

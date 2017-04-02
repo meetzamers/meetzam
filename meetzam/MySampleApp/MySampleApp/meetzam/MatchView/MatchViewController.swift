@@ -17,8 +17,24 @@ class MatchViewController: UIViewController {
     // Var:
     var swipeableView: ZLSwipeableView!
     
-    // Because I set the labelcount here, it will set to 0 whenever this page appears.
-    var lablecount = 0
+    // Swipe Right Heart image
+    let swipeRightImage: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(named: "DoHeart")
+        iv.contentMode = .scaleAspectFill
+        
+        return iv
+    }()
+    
+    // Swipe Left Cancel image
+    let swipeLeftImage: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(named: "MatchCancel")
+        iv.contentMode = .scaleAspectFill
+        
+        return iv
+    }()
+    
     // ========================================
     
     // functions:
@@ -38,8 +54,51 @@ class MatchViewController: UIViewController {
         // Card View implementation
         swipeableView = ZLSwipeableView(frame: CGRect(x: UIScreen.main.bounds.width*0.04 ,y: 72, width: UIScreen.main.bounds.width*0.92, height: UIScreen.main.bounds.height*0.86))
         
+        // Swipe Left and Right Images
+        swipeRightImage.frame = CGRect(x: 15 ,y: 15, width: 60, height: 60)
+        swipeLeftImage.frame = CGRect(x: swipeableView.bounds.width - 75 ,y: 15, width: 60, height: 60)
+        
+        // Framework init
         swipeableView.numberOfActiveView = UInt(3)
         view.addSubview(swipeableView)
+        
+        // Left and Right images init
+        var startLocation = CGFloat()
+        var prevLocation = CGFloat()
+        
+        // User did start swiping
+        swipeableView.didStart = {view, location in
+            startLocation = location.x
+            self.swipeableView.activeViews()[0].addSubview(self.swipeRightImage)
+            self.swipeRightImage.alpha = 0
+            self.swipeableView.activeViews()[0].addSubview(self.swipeLeftImage)
+            self.swipeLeftImage.alpha = 0
+        }
+        
+        // User is swiping
+        swipeableView.swiping = {view, location, translation in
+            // if swipe right
+            if (location.x > startLocation) {
+                self.swipeRightImage.alpha = (location.x - startLocation)*2/(UIScreen.main.bounds.width - startLocation)
+                self.swipeLeftImage.alpha = 0
+            }
+                // if swipe left
+            else {
+                self.swipeRightImage.alpha = 0
+                self.swipeLeftImage.alpha = -((location.x - startLocation)*2/(UIScreen.main.bounds.width - startLocation))
+            }
+            prevLocation = location.x
+        }
+        
+        // User did end swiping
+        swipeableView.didEnd = {view, location in
+            UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                self.swipeRightImage.alpha = 0
+                self.swipeRightImage.removeFromSuperview()
+                self.swipeLeftImage.alpha = 0
+                self.swipeLeftImage.removeFromSuperview()
+            })
+        }
         // ========================================
         let matchedUserIDs = UserProfileToDB().getMatchedUserIDs(key: AWSIdentityManager.default().identityId!)
         /*for matchID in matchedUserIDs
@@ -61,20 +120,7 @@ class MatchViewController: UIViewController {
     func nextCardView() -> UIView? {
         let cardView = CardView(frame: swipeableView.bounds)
         cardView.backgroundColor = UIColor.init(red: 253/255, green: 253/255, blue: 253/255, alpha: 1)
-        
-        /* ========================================
-        // you can display data on the card view here:
-        let testlabel = UILabel.init(frame: CGRect(x: cardView.bounds.width*0.25 ,y: cardView.bounds.height*0.6, width: 200, height: 200))
-        lablecount += 1
-        var re_string = "This is page number "
-        re_string += String(lablecount)
-        testlabel.text = re_string
-        
-        // Add the objects on the card view
-        cardView.addSubview(testlabel)
-        // ========================================*/
-        
-        
+   
         // temperoray profile pic
         let identityManager = AWSIdentityManager.default()
         AWSIdentityManager.default()

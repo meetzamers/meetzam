@@ -21,14 +21,6 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         movieCollectionView.delegate = self
         movieCollectionView.dataSource = self
         
-        /*
-        print("     put into imagesURLs")
-        print("-------------------------------------------------")
-        for url in imagesURLs {
-            print("This is url \(url)")
-        }
-        */
-
     }
     
     
@@ -60,10 +52,8 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         updateMovieImages()
         
         cell.movieTitleLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 18)
-        
         cell.movieImage.image = nil
         cell.movieTitleLabel.text = ""
-        
         
         DispatchQueue.main.async {
             cell.movieImage.image = self.images[indexPath.row]
@@ -93,7 +83,7 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         var image = UIImage()
         
         for movie in movies {
-            let path = "https://image.tmdb.org/t/p/w500" + movie.poster_path!
+            let path = "https://image.tmdb.org/t/p/w342" + movie.poster_path!
             let pathURL = URL(string: path)
             let imageData = try! Data(contentsOf: pathURL!)
             image = UIImage(data: imageData)!

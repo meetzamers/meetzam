@@ -40,14 +40,15 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         self.delegate = self
         self.dataSource = self
         
-
+        AWSLogger.default().logLevel = .none
+        
         // This is the first movie
         if (!AWSIdentityManager.default().isLoggedIn) {
             self.isFirstMovieView = true
         }
         
         // change background color to grey
-        //view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
+        //        view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
         view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
         
         let frameVC = movieView
@@ -356,10 +357,9 @@ class FrameViewController: UIViewController {
         //imageView.image = movie_info?.image
         //moviePopInfo.text = movie_info?.pop
         if (movie_info?.poster_path != nil) {
-            let path = "https://image.tmdb.org/t/p/w500/" + (movie_info?.poster_path)!
-            let imageURL = URL(string: path)
-            let imageData = try! Data(contentsOf: imageURL!)
-            imageView.image = UIImage(data: imageData)
+            let path = "https://image.tmdb.org/t/p/w780/" + (movie_info?.poster_path)!
+            imageView.loadImageUsingURLString(URLString: path)
+            
             videoURL = "https://www.youtube.com/embed/" + (movie_info?.trailer_key!)! + "?rel=0&showinfo=0&autoplay=1"
         }
         
@@ -368,6 +368,7 @@ class FrameViewController: UIViewController {
         movieContent.isScrollEnabled = true
         movieContent.isUserInteractionEnabled = true
         movieContent.backgroundColor = UIColor.clear
+        
         self.view.addSubview(movieContent)
         //        movieContent.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*1.775)
         
@@ -431,6 +432,7 @@ class FrameViewController: UIViewController {
         
         movieContent.contentSize = CGSize(width: UIScreen.main.bounds.width, height: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + videoView.frame.height + movieRelease.frame.height + movieDirector.frame.height + 200)
         
+        
         // add small heart
         if (like) {
             // do heart button create
@@ -439,4 +441,38 @@ class FrameViewController: UIViewController {
             movieContent.addSubview(doHeartButton)
         }
     }
+}
+
+var picCache = NSCache<NSString, UIImage>()
+
+extension UIImageView {
+    
+    func loadImageUsingURLString(URLString: String) {
+        
+        guard let url = URL(string: URLString) else { return }
+        
+        image = nil
+        
+        let imageFromCache = picCache.object(forKey: URLString as NSString)
+        
+        if imageFromCache != nil {
+            self.image = imageFromCache
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if (error != nil) {
+                print("Error in loading Image")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                let imageToCache = UIImage(data: data!)
+                picCache.setObject(imageToCache!, forKey: URLString as NSString)
+                self.image = imageToCache
+            }
+            }.resume()
+        
+    }
+    
 }
