@@ -298,7 +298,7 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         return result
     }
     
-    func isIsCurrentMovie(title: String) -> Bool
+    func isCurrentMovie(title: String) -> Bool
     {
         var result: Bool = false
         var currentMovieTitles: Array = [String]()

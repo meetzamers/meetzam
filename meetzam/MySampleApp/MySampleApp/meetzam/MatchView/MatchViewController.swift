@@ -20,6 +20,21 @@ class MatchViewController: UIViewController {
     // Because I set the labelcount here, it will set to 0 whenever this page appears.
     var lablecount = 0
     var cardsToLoad = 2
+    
+    let swipeRightImage: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(named: "DoHeart")
+        iv.contentMode = .scaleAspectFill
+        return iv
+    }()
+    
+        // Swipe Left Cancel image
+    let swipeLeftImage: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(named: "MatchCancel")
+        iv.contentMode = .scaleAspectFill
+        return iv
+    }()
     // ========================================
     
     // functions:
@@ -122,6 +137,7 @@ class MatchViewController: UIViewController {
         {
             print("one of your history liked movies is \(history_liked.title)")
         }
+         */
         /*let matchedUsers = UserProfileToDB().getMatchedUserProfiles(userIDs: matchedUserIDs)
         for matchUser in matchedUsers
         {
@@ -169,7 +185,9 @@ class MatchViewController: UIViewController {
             if (lablecount >= displayNames.count - cardsToLoad ) {
                 cardView.backgroundLabel.backgroundColor = UIColor.white
                 cardView.alsoLiked.text = ""
-                cardView.displayName.text = "You have reached the end!"
+                if (lablecount == displayNames.count - cardsToLoad){
+                    cardView.displayName.text = "You have reached the end!"
+                }
             } else {
                 // assign potential matches' LIKEDMOVIES to cardView
                 cardView.moviePic1.image = movies1[lablecount]
@@ -224,7 +242,6 @@ class MatchViewController: UIViewController {
             //loadProfile(userId: matchedUser.userId!)
             
         }
-        
         
         
         //add cardsToLoad # of blank pages at the end.
@@ -286,4 +303,5 @@ class MatchViewController: UIViewController {
     var movies2: [UIImage]!
     var movies3: [UIImage]!
     var profilePics: [UIImage]!
+
 }
