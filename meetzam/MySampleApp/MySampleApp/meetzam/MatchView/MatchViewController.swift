@@ -71,6 +71,13 @@ class MatchViewController: UIViewController {
         // ========================================
         let matchedUserIDs = UserProfileToDB().getMatchedUserIDs(key: AWSIdentityManager.default().identityId!)
         
+        /*let likedUserIDs = UserProfileToDB().getLikedUserIDs(key: AWSIdentityManager.default().identityId!)
+        for userid in likedUserIDs
+        {
+            print("one of your liked users is \(userid)")
+        }
+        UserProfileToDB().insertToMatchedUser(key: AWSIdentityManager.default().identityId!, userID: "us-east-1:f0739f93-42d3-4ad8-9ddf-ca8f06cdfff2")*/
+        
         // Card View implementation
         swipeableView = ZLSwipeableView(frame: CGRect(x: UIScreen.main.bounds.width*0.04 ,y: 72, width: UIScreen.main.bounds.width*0.92, height: UIScreen.main.bounds.height*0.86))
         
