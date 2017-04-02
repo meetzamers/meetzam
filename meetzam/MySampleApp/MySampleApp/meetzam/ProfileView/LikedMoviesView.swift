@@ -39,8 +39,10 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
    
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let movies = SingleMovie().getCurrentLikedMovies(key: AWSIdentityManager.default().identityId!)
+        let userLikedHistory = HistoryMovie().userLikedHistoryMovies(_userID: AWSIdentityManager.default().identityId!)
+
         
-        return movies.count
+        return (movies.count + userLikedHistory.count)
     }
     
     
@@ -65,11 +67,11 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         }
         
         for var title in self.titles {
-//            if (self.isHistory(movieTitle: title)){
-//                cell.movieTitleLabel.textColor = UIColor.gray
-//            } else {
+            if (self.isHistory(movieTitle: title)){
+                cell.movieTitleLabel.textColor = UIColor.gray
+            } else {
                 cell.movieTitleLabel.textColor = UIColor.black
-//            }
+            }
         }
         
 
@@ -77,10 +79,13 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
     }
     
     func updateMovieImages() {
+        
+        //add movies that are currently showing
         let movies = SingleMovie().getCurrentLikedMovies(key: AWSIdentityManager.default().identityId!)
         
         self.images = [UIImage]()
         self.titles = [String]()
+        self.historyTitles = [String]()
         var image = UIImage()
         
         for movie in movies {
@@ -92,19 +97,30 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
             titles.append(movie.title)
         }
         
+        //add movies that are no longer showing
+        let userLikedHistory = HistoryMovie().userLikedHistoryMovies(_userID: AWSIdentityManager.default().identityId!)
+        
+        for movie in userLikedHistory {
+            let path = "https://image.tmdb.org/t/p/w342" + movie.poster_path!
+            let pathURL = URL(string: path)
+            let imageData = try! Data(contentsOf: pathURL!)
+            image = UIImage(data: imageData)!
+            images.append(image)
+            titles.append(movie.title)
+            historyTitles.append(movie.title)
+        }
+        
+        
         print("there are total: ")
         print(images.count)
-        
-//        let allHistoryMovies = HistoryMovie().getAllHistoryMovies()
-//        userLikedHistory = HistoryMovie().userLikedHistoryMovies(userLikedMovies: movies, historyMovies: allHistoryMovies)
         
         
     }
     
     func isHistory(movieTitle:String)-> (_: Bool) {
         
-        for var movie in userLikedHistory {
-            if (movie.title == movieTitle){
+        for var title in historyTitles {
+            if (title == movieTitle){
                 return true;
             }
         }
@@ -115,7 +131,7 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
     let imagecache = NSCache<AnyObject, AnyObject>()
     var images: [UIImage]!
     var titles: [String]!
-    var userLikedHistory: [HistoryMovie]!
+    var historyTitles: [String]!
     @IBOutlet weak var movieCollectionView: UICollectionView!
 
 }

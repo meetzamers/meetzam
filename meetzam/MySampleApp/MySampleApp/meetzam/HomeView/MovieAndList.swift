@@ -261,7 +261,7 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         return currentLikedMoviesArr
     }
     
-    func isIsCurrentMovie(title: String) -> Bool
+    func isCurrentMovie(title: String) -> Bool
     {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         var result: Bool = false
