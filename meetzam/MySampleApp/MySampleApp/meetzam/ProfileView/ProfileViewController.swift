@@ -84,23 +84,26 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         self.profileMainBodyView.addSubview(userBioField)
         
         //============set Profile Picture ==============\\
-        self.profileMainBodyView.addSubview(userPicField)
-        let fbid = FBSDKAccessToken.current().userID
-        var largeImageURL = identityManager.imageURL?.absoluteString
-        if (fbid != nil) {
-            largeImageURL = "https://graph.facebook.com/" + fbid! + "/picture?type=large&redirect=true&width=720&height=720"
-        }
         
-        //if let imageURL = identityManager.imageURL {
-        if let imageURL = URL(string: largeImageURL!) {
-            let imageData = try! Data(contentsOf: imageURL)
-            if let profileImage = UIImage(data: imageData) {
-                userPicField.image = profileImage
-            } else {
-                userPicField.image = UIImage(named: "UserIcon")
+        DispatchQueue.main.async {
+            self.profileMainBodyView.addSubview(self.userPicField)
+            let fbid = FBSDKAccessToken.current().userID
+            var largeImageURL = identityManager.imageURL?.absoluteString
+            if (fbid != nil) {
+                largeImageURL = "https://graph.facebook.com/" + fbid! + "/picture?type=large&redirect=true&width=720&height=720"
+            }
+            
+            //if let imageURL = identityManager.imageURL {
+            if let imageURL = URL(string: largeImageURL!) {
+                let imageData = try! Data(contentsOf: imageURL)
+                if let profileImage = UIImage(data: imageData) {
+                    self.userPicField.image = profileImage
+                } else {
+                    self.userPicField.image = UIImage(named: "UserIcon")
+                }
             }
         }
-        
+            
         //show top three movies
         TopThreeMovieCollectionView.delegate = self;
         TopThreeMovieCollectionView.dataSource = self;
@@ -127,11 +130,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             self.TopThreeMovieCollectionView.reloadData()
         }
         
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        DispatchQueue.main.async {
-        }
     }
     
     // Go to all movies I liked
@@ -165,10 +163,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         cell.Top3MovieImage.image = nil
         
-        
         DispatchQueue.main.async {
             cell.Top3MovieImage.image = nil
             cell.Top3MovieImage.image = UIImage(data: movieImageData[indexPath.row])
+            cell.Top3MovieImage.contentMode = .scaleAspectFill
         }
     
         return cell
@@ -193,7 +191,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         if (imagesURLs.count <= 3) {
             count = imagesURLs.count
             for var i in (0..<count) {
-                let path = "https://image.tmdb.org/t/p/w500" + imagesURLs[i]
+                let path = "https://image.tmdb.org/t/p/w154" + imagesURLs[i]
                 let pathURL = URL(string: path)
                 movieImageData.append(try! Data(contentsOf: pathURL!))
                 //movieImageData.insert((try! Data(contentsOf: pathURL!)), at: 0)
@@ -203,7 +201,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             count = 3
 
             for var i in (0..<3) {
-                let path = "https://image.tmdb.org/t/p/w500" + imagesURLs[i]
+                let path = "https://image.tmdb.org/t/p/w154" + imagesURLs[i]
                 let pathURL = URL(string: path)
                 movieImageData.append(try! Data(contentsOf: pathURL!))
                 //movieImageData.insert((try! Data(contentsOf: pathURL!)), at: 0)

@@ -313,8 +313,8 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         print("AFTER DELETION, currentLikedMovie are: \(userProfile?.currentLikedMovie.description)")
         mapper.save(userProfile!)
     }
-
-
+    
+    
     func getLikedMovies(userId: String, user_profile: UserProfileToDB) {
         let mapper = AWSDynamoDBObjectMapper.default()
         mapper.load(UserProfileToDB.self, hashKey: userId, rangeKey: nil).continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask!) -> AnyObject! in

@@ -21,14 +21,6 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         movieCollectionView.delegate = self
         movieCollectionView.dataSource = self
         
-        /*
-        print("     put into imagesURLs")
-        print("-------------------------------------------------")
-        for url in imagesURLs {
-            print("This is url \(url)")
-        }
-        */
-
     }
     
     
@@ -46,7 +38,7 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
     
    
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let movies = SingleMovie().getAllLikedMovies(key: AWSIdentityManager.default().identityId!)
+        let movies = SingleMovie().getCurrentLikedMovies(key: AWSIdentityManager.default().identityId!)
         
         return movies.count
     }
@@ -60,13 +52,12 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         updateMovieImages()
         
         cell.movieTitleLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 18)
-        
         cell.movieImage.image = nil
         cell.movieTitleLabel.text = ""
         
-        
         DispatchQueue.main.async {
             cell.movieImage.image = self.images[indexPath.row]
+            cell.movieImage.contentMode = .scaleAspectFill
         }
         
         DispatchQueue.main.async {
@@ -74,11 +65,11 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         }
         
         for var title in self.titles {
-            if (self.isHistory(movieTitle: title)){
-                cell.movieTitleLabel.textColor = UIColor.gray
-            } else {
+//            if (self.isHistory(movieTitle: title)){
+//                cell.movieTitleLabel.textColor = UIColor.gray
+//            } else {
                 cell.movieTitleLabel.textColor = UIColor.black
-            }
+//            }
         }
         
 
@@ -86,14 +77,14 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
     }
     
     func updateMovieImages() {
-        let movies = SingleMovie().getAllLikedMovies(key: AWSIdentityManager.default().identityId!)
+        let movies = SingleMovie().getCurrentLikedMovies(key: AWSIdentityManager.default().identityId!)
         
         self.images = [UIImage]()
         self.titles = [String]()
         var image = UIImage()
         
         for movie in movies {
-            let path = "https://image.tmdb.org/t/p/w500" + movie.poster_path!
+            let path = "https://image.tmdb.org/t/p/w342" + movie.poster_path!
             let pathURL = URL(string: path)
             let imageData = try! Data(contentsOf: pathURL!)
             image = UIImage(data: imageData)!
@@ -104,9 +95,8 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         print("there are total: ")
         print(images.count)
         
-        
-        let allHistoryMovies = HistoryMovie().getAllHistoryMovies()
-        userLikedHistory = HistoryMovie().userLikedHistoryMovies(userLikedMovies: movies, historyMovies: allHistoryMovies)
+//        let allHistoryMovies = HistoryMovie().getAllHistoryMovies()
+//        userLikedHistory = HistoryMovie().userLikedHistoryMovies(userLikedMovies: movies, historyMovies: allHistoryMovies)
         
         
     }
