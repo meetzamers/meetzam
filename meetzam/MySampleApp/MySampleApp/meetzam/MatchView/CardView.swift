@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CardView: UIView, UICollectionViewDelegate, UICollectionViewDataSource {
+class CardView: UIView{
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -32,7 +32,7 @@ class CardView: UIView, UICollectionViewDelegate, UICollectionViewDataSource {
         // Corner Radius
         layer.cornerRadius = 3.0;
         
-        
+        /*  Monika  */
         //profile picture
         self.addSubview(userPicField)
         
@@ -48,24 +48,37 @@ class CardView: UIView, UICollectionViewDelegate, UICollectionViewDataSource {
         self.addSubview(userBioField)
         
         // also liked
-        let alsoLiked = UILabel()
-        alsoLiked.text = "Also liked"
+        alsoLiked.text = "Liked"
         alsoLiked.frame = CGRect(x: 25, y: userPicField.frame.height + 70, width: UIScreen.main.bounds.width-30, height: 20)
         alsoLiked.font = UIFont(name: "HelveticaNeue-Thin", size: 18)
         alsoLiked.textColor = UIColor.darkGray
         self.addSubview(alsoLiked)
         
-        // collection view
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: UIScreen.main.bounds.width + 70, left: 0, bottom: 10, right: 0)
-        layout.itemSize = CGSize(width: 90, height: 140)
         
-        likedMoviesCollectionView = UICollectionView(frame: CGRect(x: 0, y: UIScreen.main.bounds.width + 70, width: UIScreen.main.bounds.width-30, height: 140), collectionViewLayout: layout)
-        likedMoviesCollectionView.dataSource = self
-        likedMoviesCollectionView.delegate = self
-        likedMoviesCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "MyCell")
-        likedMoviesCollectionView.backgroundColor = UIColor.init(red: 173/255, green: 173/255, blue: 173/255, alpha: 1)
-        self.addSubview(likedMoviesCollectionView)
+        // liked movie backgroundLabel
+        backgroundLabel.frame = CGRect(x: 0, y: UIScreen.main.bounds.width + 70, width: UIScreen.main.bounds.width-30, height: 140)
+        backgroundLabel.text = ""
+        backgroundLabel.backgroundColor = UIColor.init(red: 173/255, green: 173/255, blue: 173/255, alpha: 1)
+        self.addSubview(backgroundLabel)
+        
+        
+        // movies
+        moviePic1.frame = CGRect(x: 0, y: UIScreen.main.bounds.width + 70, width: (UIScreen.main.bounds.width-30)/4, height: 140)
+        moviePic2.contentMode = .scaleToFill
+        
+        moviePic2.frame = CGRect(x: moviePic1.frame.width, y: UIScreen.main.bounds.width + 70, width: (UIScreen.main.bounds.width-30)/4, height: 140)
+        
+        moviePic3.frame = CGRect(x: moviePic1.frame.width*2, y: UIScreen.main.bounds.width + 70, width: (UIScreen.main.bounds.width-30)/4, height: 140)
+        
+        //moviePic4.frame = CGRect(x: moviePic1.frame.width*3, y: UIScreen.main.bounds.width + 70, width: (UIScreen.main.bounds.width-30)/4, height: 140)
+        
+        
+        self.addSubview(moviePic1)
+        self.addSubview(moviePic2)
+        self.addSubview(moviePic3)
+        //self.addSubview(moviePic4)
+        /* Monika */
+
 
     }
     
@@ -75,21 +88,19 @@ class CardView: UIView, UICollectionViewDelegate, UICollectionViewDataSource {
     
     let userBioField = UILabel()
     
-    var likedMoviesCollectionView: UICollectionView!
+    let alsoLiked = UILabel()
+    
+    let backgroundLabel = UILabel()
+    
+    var moviePic1 = UIImageView()
+    
+    var moviePic2 = UIImageView()
+    
+    var moviePic3 = UIImageView()
+    
+    var moviePic4 = UIImageView()
     
     
-    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return topThreeImages.count
-    }
-    
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = likedMoviesCollectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath) as! TopThreeMovieCell
-        cell.Top3MovieImage.image = UIImage(named: topThreeImages[indexPath.row])
-        
-        return cell
-    }
-    
-    var topThreeImages = ["split","loganposter2","lala"]
 
     
 }

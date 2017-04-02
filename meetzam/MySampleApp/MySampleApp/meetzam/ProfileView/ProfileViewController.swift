@@ -180,11 +180,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         var imagesURLs = SingleMovie().getLikedMoviePosters(key: AWSIdentityManager.default().identityId!)
         let allLikedMovies = SingleMovie().getAllLikedMovies(key: AWSIdentityManager.default().identityId!)
         
-        print("     put into imagesURLs")
-        print("-------------------------------------------------")
-        for movie in allLikedMovies {
-            print("This is url \(movie.poster_path)")
-        }
         
         var movieImageData = [Data]()
         movieImageData.removeAll()
