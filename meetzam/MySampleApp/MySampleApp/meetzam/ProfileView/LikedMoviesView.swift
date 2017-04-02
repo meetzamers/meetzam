@@ -64,11 +64,11 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         }
         
         for var title in self.titles {
-            if (self.isHistory(movieTitle: title)){
-                cell.movieTitleLabel.textColor = UIColor.gray
-            } else {
+//            if (self.isHistory(movieTitle: title)){
+//                cell.movieTitleLabel.textColor = UIColor.gray
+//            } else {
                 cell.movieTitleLabel.textColor = UIColor.black
-            }
+//            }
         }
         
 
@@ -94,9 +94,8 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         print("there are total: ")
         print(images.count)
         
-        
-        let allHistoryMovies = HistoryMovie().getAllHistoryMovies()
-        userLikedHistory = HistoryMovie().userLikedHistoryMovies(userLikedMovies: movies, historyMovies: allHistoryMovies)
+//        let allHistoryMovies = HistoryMovie().getAllHistoryMovies()
+//        userLikedHistory = HistoryMovie().userLikedHistoryMovies(userLikedMovies: movies, historyMovies: allHistoryMovies)
         
         
     }
