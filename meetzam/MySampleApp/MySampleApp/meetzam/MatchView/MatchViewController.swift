@@ -49,8 +49,8 @@ class MatchViewController: UIViewController {
                         
                         print("I liked \(self.displayNames[self.lablecount-self.cardsToLoad])")
                         print("My match's ID is \(self.userIds[self.lablecount-self.cardsToLoad])")
-                        if (UserProfileToDB().findIsMatched(key: AWSIdentityManager.default().identityId!, userID: self.userIds[self.lablecount-self.cardsToLoad])){
-                            print("Congradulations!! You have a new match!!")
+                        if (UserProfileToDB().findIsMatched(key: AWSIdentityManager.default().identityId!, userID: self.userIds[self.lablecount-self.cardsToLoad]) && UserProfileToDB().findIsMatched(key: self.userIds[self.lablecount-self.cardsToLoad], userID: AWSIdentityManager.default().identityId!)){
+                            print("Congradulations!! You have a new match!! with \(self.displayNames[self.lablecount-self.cardsToLoad])")
                         }
                     }
                     
@@ -128,37 +128,7 @@ class MatchViewController: UIViewController {
                 self.swipeLeftImage.removeFromSuperview()
             })
         }
-        // ========================================
-        
-        /*for matchID in matchedUserIDs
-        {
-            print("match with you: \(matchID)")
-        }
-        let likedMovies = SingleMovie().getCurrentLikedMovies(key: AWSIdentityManager.default().identityId!)
-        for movie in likedMovies
-        {
-            print("one of your liked movies is \(movie.title)")
-        }
-        let historyLikedMovies = HistoryMovie().userLikedHistoryMovies(_userID: AWSIdentityManager.default().identityId!)
-        for history_liked in historyLikedMovies
-        {
-            print("one of your history liked movies is \(history_liked.title)")
-        }
-         */
-        /*let matchedUsers = UserProfileToDB().getMatchedUserProfiles(userIDs: matchedUserIDs)
-        for matchUser in matchedUsers
-        {
-            print("your buddies are: \(matchUser.displayName)")
-        }
-        let allHistoryMovies = HistoryMovie().getAllHistoryMovies()
-        for history_movie in allHistoryMovies
-        {
-            print("history movie is: \(history_movie.title)")
-        }*/
-        
         loadPotentialMatch()
-
-
     }
     
     func nextCardView() -> UIView? {
@@ -178,7 +148,6 @@ class MatchViewController: UIViewController {
             }
         }
         */
-        //cardView.userPicField.image = profilePics[lablecount]
         
  
         if (lablecount < displayNames.count) {
@@ -200,6 +169,7 @@ class MatchViewController: UIViewController {
                 cardView.moviePic1.image = movies1[lablecount]
                 cardView.moviePic2.image = movies2[lablecount]
                 cardView.moviePic3.image = movies3[lablecount]
+                cardView.userPicField.image = profilePics[lablecount]
             }
         }
         
@@ -226,6 +196,7 @@ class MatchViewController: UIViewController {
         movies1 = [UIImage]()
         movies2 = [UIImage]()
         movies3 = [UIImage]()
+        profilePics = [UIImage]()
         
         let matchedUserIDs = UserProfileToDB().getMatchedUserIDs(key: AWSIdentityManager.default().identityId!)
         let matchedUsers = UserProfileToDB().getMatchedUserProfiles(userIDs: matchedUserIDs)
@@ -246,7 +217,7 @@ class MatchViewController: UIViewController {
             }
             //add pictures to movies1,2,3
             loadMovies(userId: matchedUser.userId!)
-            //loadProfile(userId: matchedUser.userId!)
+            loadProfile(userId: matchedUser.userId!)
             
         }
         
@@ -261,9 +232,16 @@ class MatchViewController: UIViewController {
         
     }
     func loadProfile(userId: String) {
-        let profileURL = UserProfileToDB().downloadUserIcon(userID: userId)
-        let profileData = try! Data(contentsOf: profileURL)
-        profilePics.append(UIImage(data: profileData)!)
+        let URLString = UserProfileToDB().downloadUserIcon(userID: userId).path
+        print("the local directory is \(URLString)")
+        if FileManager.default.fileExists(atPath: URLString) {
+            print("The file exists!! \(userId)")
+            let profileURL = NSURL(string: URLString)
+            let profileData = NSData(contentsOf: profileURL! as URL)
+            profilePics.append(UIImage(data: profileData! as Data)!)
+        } else {
+            profilePics.append(#imageLiteral(resourceName: "emptyMovie"))
+        }
     }
     
     func loadMovies(userId: String) {
