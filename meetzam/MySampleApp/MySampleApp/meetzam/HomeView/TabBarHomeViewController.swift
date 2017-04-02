@@ -449,6 +449,12 @@ extension UIImageView {
     
     func loadImageUsingURLString(URLString: String) {
         
+        // Loading Indicator
+        let imageLoadingIndicatorView = NVActivityIndicatorView(frame: CGRect(x: self.bounds.width/2 - 30, y: self.bounds.height/2 - 30, width: 60, height: 60), type: .squareSpin, color: UIColor.init(red: 95/255, green: 95/255, blue: 95/255, alpha: 1), padding: CGFloat(0))
+        self.addSubview(imageLoadingIndicatorView)
+        self.backgroundColor = UIColor.init(red: 223/255, green: 223/255, blue: 223/255, alpha: 1)
+        imageLoadingIndicatorView.startAnimating()
+        
         guard let url = URL(string: URLString) else { return }
         
         image = nil
@@ -456,6 +462,10 @@ extension UIImageView {
         let imageFromCache = picCache.object(forKey: URLString as NSString)
         
         if imageFromCache != nil {
+            // Stop loading animation
+            imageLoadingIndicatorView.stopAnimating()
+            imageLoadingIndicatorView.removeFromSuperview()
+            
             self.image = imageFromCache
             return
         }
@@ -467,6 +477,10 @@ extension UIImageView {
             }
             
             DispatchQueue.main.async {
+                // Stop loading animation
+                imageLoadingIndicatorView.stopAnimating()
+                imageLoadingIndicatorView.removeFromSuperview()
+                
                 let imageToCache = UIImage(data: data!)
                 picCache.setObject(imageToCache!, forKey: URLString as NSString)
                 self.image = imageToCache
