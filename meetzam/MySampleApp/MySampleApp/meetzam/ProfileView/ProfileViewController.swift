@@ -21,7 +21,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 
     //declare profile picture field
     let userPicField = UIImageView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width))
-//    let userPicField = UIImageView(frame: CGRect(x: UIScreen.main.bounds.width*0.1, y: 15, width: UIScreen.main.bounds.width*0.8, height: UIScreen.main.bounds.width*0.8))
     
     //declare UI var
     let displayName = UILabel()
@@ -34,8 +33,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        TopThreeMovieCollectionView.reloadData()
-        
+        /*
+        DispatchQueue.main.async {
+            self.TopThreeMovieCollectionView.reloadData()
+        }
+        */
         UserProfileToDB().getProfileForDisplay(key: AWSIdentityManager.default().identityId!, user_profile: user_profile, displayname: displayName, bio: userBioField)
         
         //======================== formatting background==========================\\
@@ -111,9 +113,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        TopThreeMovieCollectionView.reloadData()
-        
-        
         /* get name and bio from database */
         UserProfileToDB().getProfileForDisplay(key: AWSIdentityManager.default().identityId!, user_profile: user_profile, displayname: displayName, bio: userBioField)
         
@@ -124,7 +123,15 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         self.profileMainBodyView.addSubview(displayName)
         self.profileMainBodyView.addSubview(userBioField)
         
+        DispatchQueue.main.async {
+            self.TopThreeMovieCollectionView.reloadData()
+        }
         
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        DispatchQueue.main.async {
+        }
     }
     
     // Go to all movies I liked
@@ -155,9 +162,15 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         var movieImageData = updateMovieImage()
         
         let cell = TopThreeMovieCollectionView.dequeueReusableCell(withReuseIdentifier: "topThreeCell", for: indexPath) as! TopThreeMovieCell
-        cell.Top3MovieImage.image = nil
-        cell.Top3MovieImage.image = UIImage(data: movieImageData[indexPath.row])
         
+        cell.Top3MovieImage.image = nil
+        
+        
+        DispatchQueue.main.async {
+            cell.Top3MovieImage.image = nil
+            cell.Top3MovieImage.image = UIImage(data: movieImageData[indexPath.row])
+        }
+    
         return cell
     }
     
@@ -173,7 +186,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             print("This is url \(movie.poster_path)")
         }
         
-        //var movieImageData:[Data]!
         var movieImageData = [Data]()
         movieImageData.removeAll()
         

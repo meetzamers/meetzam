@@ -14,82 +14,41 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        movieCollectionView.reloadData()
+        //movieCollectionView.reloadData()
         
         self.view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
         
         movieCollectionView.delegate = self
         movieCollectionView.dataSource = self
         
-        /*let userLikedMovieAll = SingleMovie().getAllLikedMovies(key: AWSIdentityManager.default().identityId!)
-        for likedMovie in userLikedMovieAll
-        {
-            print("your liked movie list: \(likedMovie)")
-        }
-        let allHistoryMovies = HistoryMovie().getAllHistoryMovies()
-        for history_movie in allHistoryMovies
-        {
-            print("history movies are: \(history_movie)")
-        }
-        let userLikedHistory = HistoryMovie().userLikedHistoryMovies(userLikedMovies: userLikedMovieAll, historyMovies: allHistoryMovies)
-        for liked_history_movie in userLikedHistory
-        {
-            print("your history liked movie is \(liked_history_movie.title)")
-        }*/
-                /*
+        /*
         print("     put into imagesURLs")
         print("-------------------------------------------------")
         for url in imagesURLs {
             print("This is url \(url)")
         }
         */
-        /*
-        var imagesURLs = SingleMovie().getLikedMoviePosters(key: AWSIdentityManager.default().identityId!)
-
-        let count = imagesURLs.count;
-        
-        imageData = [Data]()
-        imageData.removeAll()
-        
-        for var i in (0..<count) {
-            let path = "https://image.tmdb.org/t/p/w500" + imagesURLs[i]
-            let pathURL = URL(string: path)
-            imageData.insert(try! Data(contentsOf: pathURL!),at:0)
-        }
-         */
 
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
-       /* var imagesURLs = SingleMovie().getLikedMoviePosters(key: AWSIdentityManager.default().identityId!)
-        
-        let count = imagesURLs.count;
-        imageData = [Data]()
-        imageData.removeAll()
-        
-        for var i in (0..<count) {
-            let path = "https://image.tmdb.org/t/p/w500" + imagesURLs[i]
-            let pathURL = URL(string: path)
-            //imageData.append(try! Data(contentsOf: pathURL!))
-            imageData.insert(try! Data(contentsOf: pathURL!),at:0)
+       DispatchQueue.main.async {
+            self.movieCollectionView.reloadData()
         }
-        */
-        movieCollectionView.reloadData()
-        
     }
  
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
-       
     }
     
    
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let imagesURLs = SingleMovie().getLikedMoviePosters(key: AWSIdentityManager.default().identityId!)
-        return imagesURLs.count
+        let movies = SingleMovie().getAllLikedMovies(key: AWSIdentityManager.default().identityId!)
+        
+        return movies.count
     }
     
     
@@ -98,39 +57,77 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         
         let cell = movieCollectionView.dequeueReusableCell( withReuseIdentifier: "CustomCell", for: indexPath) as! MovieCollectionCell
         
-        var imageData = updateMovieImages()
+        updateMovieImages()
+        
+        cell.movieTitleLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 18)
         
         cell.movieImage.image = nil
-        cell.movieImage.image = UIImage(data: imageData[indexPath.row])
+        cell.movieTitleLabel.text = ""
         
-        cell.movieTitleLabel.text = "hello"
-    
-        cell.movieTitleLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 18)
+        
+        DispatchQueue.main.async {
+            cell.movieImage.image = self.images[indexPath.row]
+        }
+        
+        DispatchQueue.main.async {
+            cell.movieTitleLabel.text = self.titles[indexPath.row]
+        }
+        
+        for var title in self.titles {
+            if (self.isHistory(movieTitle: title)){
+                cell.movieTitleLabel.textColor = UIColor.gray
+            } else {
+                cell.movieTitleLabel.textColor = UIColor.black
+            }
+        }
         
 
         return cell
     }
     
-    public func updateMovieImages() -> [Data] {
-        let imagesURLs = SingleMovie().getLikedMoviePosters(key: AWSIdentityManager.default().identityId!)
+    func updateMovieImages() {
+        let movies = SingleMovie().getAllLikedMovies(key: AWSIdentityManager.default().identityId!)
         
-        //let count = imagesURLs.count;
-        var imageData = [Data]()
-        //imageData.removeAll()
+        self.images = [UIImage]()
+        self.titles = [String]()
+        var image = UIImage()
         
-        for item in imagesURLs {
-            let path = "https://image.tmdb.org/t/p/w500" + item
+        for movie in movies {
+            let path = "https://image.tmdb.org/t/p/w500" + movie.poster_path!
             let pathURL = URL(string: path)
-            //imageData.append(try! Data(contentsOf: pathURL!))
-            imageData.insert(try! Data(contentsOf: pathURL!),at:0)
+            let imageData = try! Data(contentsOf: pathURL!)
+            image = UIImage(data: imageData)!
+            images.append(image)
+            titles.append(movie.title)
         }
         
-        return imageData
+        print("there are total: ")
+        print(images.count)
+        
+        
+        let allHistoryMovies = HistoryMovie().getAllHistoryMovies()
+        userLikedHistory = HistoryMovie().userLikedHistoryMovies(userLikedMovies: movies, historyMovies: allHistoryMovies)
+        
+        
     }
     
+    func isHistory(movieTitle:String)-> (_: Bool) {
+        
+        for var movie in userLikedHistory {
+            if (movie.title == movieTitle){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    
+    let imagecache = NSCache<AnyObject, AnyObject>()
+    var images: [UIImage]!
+    var titles: [String]!
+    var userLikedHistory: [HistoryMovie]!
     @IBOutlet weak var movieCollectionView: UICollectionView!
 
-    
 }
 
 
