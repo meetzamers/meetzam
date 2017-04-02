@@ -12,7 +12,6 @@ class TopThreeMovieCell: UICollectionViewCell {
     
     @IBOutlet weak var Top3MovieImage: UIImageView!
     
-    
     override func prepareForReuse() {
         Top3MovieImage.image = nil
     }

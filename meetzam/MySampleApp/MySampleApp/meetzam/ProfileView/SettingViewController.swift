@@ -10,7 +10,7 @@ import UIKit
 import AWSMobileHubHelper
 
 class SettingViewController: UIViewController {
-
+    
     // ============================================
     // Variable starts here
     var new_signinObserver: AnyObject!
@@ -26,8 +26,28 @@ class SettingViewController: UIViewController {
         
         self.view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
         
-        handleSigninStatus()
+        // ============================================
+        // Push notification cell:
+        let pushNFCell: UITableViewCell = UITableViewCell()
+        pushNFCell.frame = CGRect(x: 0, y: 64, width: UIScreen.main.bounds.width, height: 50)
+        pushNFCell.backgroundColor = UIColor.white
         
+        let pushNFLabel: UILabel = UILabel()
+        pushNFLabel.text = "Receive Push Notifications"
+        pushNFLabel.frame = CGRect(x: 15, y: 5, width: UIScreen.main.bounds.width - 70, height: 40)
+        pushNFCell.addSubview(pushNFLabel)
+        
+        let pushNFSwitch: UISwitch = UISwitch()
+        pushNFSwitch.frame = CGRect(x: UIScreen.main.bounds.width - 66, y: 9.5, width: 51, height: 31)
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        pushNFSwitch.addTarget(self, action: #selector(self.switchChanged), for: .valueChanged)
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        pushNFCell.addSubview(pushNFSwitch)
+        
+        self.view.addSubview(pushNFCell)
+        
+        // ============================================
+        handleSigninStatus()
         
         // ============================================
         // AWS implementation starts here
@@ -66,7 +86,7 @@ class SettingViewController: UIViewController {
         // ============================================
         
     }
-
+    
     // ============================================
     // AWS support functions start here
     
@@ -99,19 +119,11 @@ class SettingViewController: UIViewController {
         if (AWSIdentityManager.default().isLoggedIn) {
             AWSIdentityManager.default().logout(
                 completionHandler: { (result: Any?, error: Error?) in
-//                    URLCache.shared.removeAllCachedResponses()
-//                    
-//                    if let cookies = HTTPCookieStorage.shared.cookies {
-//                        for cookie in cookies {
-//                            HTTPCookieStorage.shared.deleteCookie(cookie)
-//                        }
-//                    }
-                    //let cookies = HTTPCookieStorage.shared
                     let facebookCookies = HTTPCookieStorage.shared.cookies(for: URL(string: "https://login.facebook.com")!)
                     for cookie in facebookCookies! {
                         HTTPCookieStorage.shared.deleteCookie(cookie)
                     }
-
+                    
                     self.setloginStatusButton()
                     //self.popSignInViewController()
                     self.animated_SignInViewController()
@@ -148,6 +160,14 @@ class SettingViewController: UIViewController {
             self.present(viewController, animated: true, completion: nil)
         }
     }
-
-
+    
+    // ============================================
+    // Notification switch action:
+    
+    //    This is an example.
+    func switchChanged(sender: UISwitch!) {
+        print("Switch value is \(sender.isOn)")
+    }
+    
+    
 }

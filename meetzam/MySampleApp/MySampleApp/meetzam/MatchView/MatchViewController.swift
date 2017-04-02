@@ -68,13 +68,61 @@ class MatchViewController: UIViewController {
         */
         swipeableView.numberOfActiveView = UInt(cardsToLoad)
         view.addSubview(swipeableView)
+        
+        // Left and Right images init
+        var startLocation = CGFloat()
+        var prevLocation = CGFloat()
+        
+        // User did start swiping
+        swipeableView.didStart = {view, location in
+            startLocation = location.x
+            self.swipeableView.activeViews()[0].addSubview(self.swipeRightImage)
+            self.swipeRightImage.alpha = 0
+            self.swipeableView.activeViews()[0].addSubview(self.swipeLeftImage)
+            self.swipeLeftImage.alpha = 0
+        }
+        
+        // User is swiping
+        swipeableView.swiping = {view, location, translation in
+            // if swipe right
+            if (location.x > startLocation) {
+                self.swipeRightImage.alpha = (location.x - startLocation)*2/(UIScreen.main.bounds.width - startLocation)
+                self.swipeLeftImage.alpha = 0
+            }
+                // if swipe left
+            else {
+                self.swipeRightImage.alpha = 0
+                self.swipeLeftImage.alpha = -((location.x - startLocation)*2/(UIScreen.main.bounds.width - startLocation))
+            }
+            prevLocation = location.x
+        }
+        
+        // User did end swiping
+        swipeableView.didEnd = {view, location in
+            UIView.animate(withDuration: 0.2, delay: 0, options: UIViewAnimationOptions.curveEaseOut, animations: {
+                self.swipeRightImage.alpha = 0
+                self.swipeRightImage.removeFromSuperview()
+                self.swipeLeftImage.alpha = 0
+                self.swipeLeftImage.removeFromSuperview()
+            })
+        }
         // ========================================
         
         /*for matchID in matchedUserIDs
         {
             print("match with you: \(matchID)")
         }
-        let matchedUsers = UserProfileToDB().getMatchedUserProfiles(userIDs: matchedUserIDs)
+        let likedMovies = SingleMovie().getCurrentLikedMovies(key: AWSIdentityManager.default().identityId!)
+        for movie in likedMovies
+        {
+            print("one of your liked movies is \(movie.title)")
+        }
+        let historyLikedMovies = HistoryMovie().userLikedHistoryMovies(_userID: AWSIdentityManager.default().identityId!)
+        for history_liked in historyLikedMovies
+        {
+            print("one of your history liked movies is \(history_liked.title)")
+        }
+        /*let matchedUsers = UserProfileToDB().getMatchedUserProfiles(userIDs: matchedUserIDs)
         for matchUser in matchedUsers
         {
             print("your buddies are: \(matchUser.displayName)")
@@ -93,20 +141,7 @@ class MatchViewController: UIViewController {
     func nextCardView() -> UIView? {
         let cardView = CardView(frame: swipeableView.bounds)
         cardView.backgroundColor = UIColor.init(red: 253/255, green: 253/255, blue: 253/255, alpha: 1)
-        
-        /* ========================================
-        // you can display data on the card view here:
-        let testlabel = UILabel.init(frame: CGRect(x: cardView.bounds.width*0.25 ,y: cardView.bounds.height*0.6, width: 200, height: 200))
-        lablecount += 1
-        var re_string = "This is page number "
-        re_string += String(lablecount)
-        testlabel.text = re_string
-        
-        // Add the objects on the card view
-        cardView.addSubview(testlabel)
-        // ========================================*/
-        
-        
+   
         // temperoray profile pic
         /*
         let identityManager = AWSIdentityManager.default()

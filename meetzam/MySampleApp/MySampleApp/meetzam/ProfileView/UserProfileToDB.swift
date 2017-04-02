@@ -48,39 +48,43 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         let mapper = AWSDynamoDBObjectMapper.default()
         let userProfile = UserProfileToDB()
         
-        mapper.load(UserProfileToDB.self, hashKey: _userId, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
-            if let error = task.error as? NSError {
-                print("InsertError: \(error)")
-            } else if let user_profile_addTo = task.result as? UserProfileToDB {
-                userProfile?.currentLikedMovie=user_profile_addTo.currentLikedMovie
-                // if the user does not have any liked movies
-                if (user_profile_addTo.currentLikedMovie.count == 0)
-                {
-                    userProfile?.currentLikedMovie.insert("mushroom13")
+        // update only if the user is in table
+        if (UserProfileToDB().isInTable(userID: _userId) == true)
+        {
+            mapper.load(UserProfileToDB.self, hashKey: _userId, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+                if let error = task.error as? NSError {
+                    print("InsertError: \(error)")
+                } else if let user_profile_addTo = task.result as? UserProfileToDB {
+                    userProfile?.currentLikedMovie=user_profile_addTo.currentLikedMovie
+                    // if the user does not have any liked movies
+                    if (user_profile_addTo.currentLikedMovie.count == 0)
+                    {
+                        userProfile?.currentLikedMovie.insert("mushroom13")
+                    }
+                    userProfile?.likedUsers = user_profile_addTo.likedUsers
+                    if (user_profile_addTo.likedUsers.count == 0)
+                    {
+                        userProfile?.likedUsers.insert("mushroom13")
+                    }
+                    userProfile?.matchedUsers = user_profile_addTo.matchedUsers
+                    if (user_profile_addTo.matchedUsers.count == 0)
+                    {
+                        userProfile?.matchedUsers.insert("mushroom13")
+                    }
+                    userProfile?.movieCount = user_profile_addTo.movieCount
+                    userProfile?.userId=user_profile_addTo.userId
                 }
-                userProfile?.likedUsers = user_profile_addTo.likedUsers
-                if (user_profile_addTo.likedUsers.count == 0)
-                {
-                    userProfile?.likedUsers.insert("mushroom13")
-                }
-                userProfile?.matchedUsers = user_profile_addTo.matchedUsers
-                if (user_profile_addTo.matchedUsers.count == 0)
-                {
-                    userProfile?.matchedUsers.insert("mushroom13")
-                }
-                userProfile?.movieCount = user_profile_addTo.movieCount
-                userProfile?.userId=user_profile_addTo.userId
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                return nil
+            })
+            
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+            while(userProfile?.userId==nil)
+            {
+                print("insertProfile waiting")
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            return nil
-        })
-        
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        while(userProfile?.userId==nil)
-        {
-            print("waiting")
         }
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
         userProfile?.userId  = _userId
         userProfile?.displayName = _displayName
@@ -90,8 +94,36 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         userProfile?.region = _region
         userProfile?.email = _email
         mapper.save(userProfile!)
+    }
+    
+    func isInTable(userID: String) -> Bool
+    {
+        var result: Bool = false
+        var userIDInTable: Array = [String]()
+        let mapper = AWSDynamoDBObjectMapper.default()
+        let scanExpression = AWSDynamoDBScanExpression()
+        var dummynum: Int = 0
         
-        //return BFTask(forCompletionOfAllTasks: [task1, task2, task3])
+        mapper.scan(UserProfileToDB.self, expression: scanExpression).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            if let error = task.error as? NSError {
+                print("The request failed. Error: \(error)")
+            } else if let allUsers = task.result {
+                for user in allUsers.items as! [UserProfileToDB] {
+                    userIDInTable.append(user.userId!)
+                }
+                dummynum = 6
+            }
+            return nil
+        })
+        while (dummynum != 6)
+        {
+            print("isInTable waiting")
+        }
+        if (userIDInTable.contains(userID))
+        {
+            result = true
+        }
+        return result
     }
     
     func getProfileForEdit(key: String, user_profile: UserProfileToDB?, displayname: UITextField!, bio: UITextField!, age: UITextField!, gender: UITextField!, region: UITextField!, email: UITextField!){
@@ -281,8 +313,8 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         print("AFTER DELETION, currentLikedMovie are: \(userProfile?.currentLikedMovie.description)")
         mapper.save(userProfile!)
     }
-
-
+    
+    
     func getLikedMovies(userId: String, user_profile: UserProfileToDB) {
         let mapper = AWSDynamoDBObjectMapper.default()
         mapper.load(UserProfileToDB.self, hashKey: userId, rangeKey: nil).continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask!) -> AnyObject! in
