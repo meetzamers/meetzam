@@ -20,7 +20,7 @@ function scan_invoke_and_update (event, context, callback) {
         	data.Items.forEach((item) => {
         		// invoking getOneMovie
         		var title = item.title.S;
-        		title = title.replace(/\ /g, "%20");
+        		title = title.replace(/\ /g, "%20"); 
         		var year = item.releaseYear.S;
 
         		let payload = {

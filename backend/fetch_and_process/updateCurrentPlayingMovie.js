@@ -43,6 +43,7 @@ function updateLocalMovieInfo(Payload, callback) {
 			continue;
 
 		var title = Payload[i].title;
+        title = title.replace(/ 3D/g, ""); // remove tailing " 3D" from movie title
 		var shortDescription = Payload[i].shortDescription;
 		var longDescription = Payload[i].longDescription;
 		var releaseYear = Payload[i].releaseYear.toString();

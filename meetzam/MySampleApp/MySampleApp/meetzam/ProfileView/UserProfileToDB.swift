@@ -200,6 +200,10 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 userProfile?.region = user_profile_addTo.region
                 print("region is \(userProfile?.region)")
                 userProfile?.currentLikedMovie = user_profile_addTo.currentLikedMovie
+                if (user_profile_addTo.currentLikedMovie.count == 0)
+                {
+                    userProfile?.currentLikedMovie.insert("mushroom13")
+                }
                 userProfile?.likedUsers = user_profile_addTo.likedUsers
                 if (user_profile_addTo.likedUsers.count == 0)
                 {
@@ -502,8 +506,42 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         mapper.save(userProfile!)
     }
     
+    func getLikedUserIDs(key: String) -> [String]
+    {
+        print("     getLikedUserIDs")
+        let mapper = AWSDynamoDBObjectMapper.default()
+        var likedUserArr = Set<String>()
+        var likedUserIDs: Array = [String]()
+        var dummynum: Int = 0
+        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task: AWSTask!) -> AnyObject! in
+            if let error = task.error as? NSError {
+                print("Error: \(error)")
+            } else if let user_profile = task.result as? UserProfileToDB {
+                likedUserArr = user_profile.likedUsers
+            }
+            
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            dummynum = 6
+            return nil
+        })
+        while (dummynum == 0)
+        {
+            print("waiting")
+        }
+        for user in likedUserArr
+        {
+            likedUserIDs.append(user)
+        }
+        return likedUserIDs
+    }
+    
+    // Call this twice!
+    // 1st: (your id, other's id)
+    // 2nd: (other's id, your id)
+    // if both true, then there is a match
     func findIsMatched(key: String, userID: String) -> Bool
     {
+        print("     findIsMatched")
         let mapper = AWSDynamoDBObjectMapper.default()
         var result: Bool = false
         var dummynum: Int = 0
@@ -523,9 +561,77 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         })
         while (dummynum == 0)
         {
-            print("waiting")
+            print("findIsMatched waiting")
         }
         return result
+    }
+    
+    func insertToMatchedUser(key: String, userID: String)
+    {
+        print("     insertToMatchedUser")
+        let mapper = AWSDynamoDBObjectMapper.default()
+        let userProfile = UserProfileToDB()
+        
+        print("     before load!!")
+        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            if let error = task.error as? NSError {
+                print("InsertError: \(error)")
+            } else if let user_profile_addTo = task.result as? UserProfileToDB {
+                userProfile?.userId=key
+                print("     key is \(key)")
+                userProfile?.displayName = user_profile_addTo.displayName
+                print("displayname is \(userProfile?.displayName)")
+                userProfile?.bio = user_profile_addTo.bio
+                print("bio is \(userProfile?.bio)")
+                userProfile?.age = user_profile_addTo.age
+                print("age is \(userProfile?.age)")
+                userProfile?.gender = user_profile_addTo.gender
+                print("gender is \(userProfile?.gender)")
+                userProfile?.region = user_profile_addTo.region
+                print("region is \(userProfile?.region)")
+                userProfile?.currentLikedMovie = user_profile_addTo.currentLikedMovie
+                if (user_profile_addTo.currentLikedMovie.count == 0)
+                {
+                    userProfile?.currentLikedMovie.insert("mushroom13")
+                }
+                userProfile?.likedUsers = user_profile_addTo.likedUsers
+                if (user_profile_addTo.likedUsers.count == 0)
+                {
+                    userProfile?.likedUsers.insert("mushroom13")
+                }
+                userProfile?.matchedUsers = user_profile_addTo.matchedUsers
+                if (user_profile_addTo.matchedUsers.count == 0)
+                {
+                    userProfile?.matchedUsers.insert("mushroom13")
+                }
+                for movie in (userProfile?.currentLikedMovie)! {
+                    print("\(movie)")
+                }
+                userProfile?.movieCount = user_profile_addTo.movieCount
+                userProfile?.email = user_profile_addTo.email
+            }
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            return nil
+        })
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        while(userProfile?.email==nil)
+        {
+            print("insertToMatchedUser waiting")
+        }
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        
+        print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
+        if (!((userProfile?.matchedUsers.contains(userID))!))
+        {
+            if (userProfile?.matchedUsers.count != 0 && (userProfile?.matchedUsers.contains("mushroom13"))!) {
+                //dummy exist
+                print("dummy here")
+                userProfile?.matchedUsers.removeAll()
+            }
+            userProfile?.matchedUsers.insert(userID)
+        }
+        mapper.save(userProfile!)
     }
     
     func downloadUserIcon(userID: String) -> URL
