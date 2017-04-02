@@ -48,6 +48,7 @@ class MatchViewController: UIViewController {
                         UserProfileToDB().likeOneUser(key: AWSIdentityManager.default().identityId!, likedUserID: self.userIds[self.lablecount-self.cardsToLoad])
                         
                         print("I liked \(self.displayNames[self.lablecount-self.cardsToLoad])")
+                        print("My match's ID is \(self.userIds[self.lablecount-self.cardsToLoad])")
                         if (UserProfileToDB().findIsMatched(key: AWSIdentityManager.default().identityId!, userID: self.userIds[self.lablecount-self.cardsToLoad])){
                             print("Congradulations!! You have a new match!!")
                         }
