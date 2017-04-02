@@ -74,6 +74,11 @@ class MatchViewController: UIViewController {
         // Card View implementation
         swipeableView = ZLSwipeableView(frame: CGRect(x: UIScreen.main.bounds.width*0.04 ,y: 72, width: UIScreen.main.bounds.width*0.92, height: UIScreen.main.bounds.height*0.86))
         
+        // Swipe Left and Right Images
+        swipeRightImage.frame = CGRect(x: 15 ,y: 15, width: 60, height: 60)
+        swipeLeftImage.frame = CGRect(x: swipeableView.bounds.width - 75 ,y: 15, width: 60, height: 60)
+        
+        
         /*
         if (matchedUserIDs.count <= 3){
             swipeableView.numberOfActiveView = UInt(matchedUserIDs.count)
@@ -81,6 +86,7 @@ class MatchViewController: UIViewController {
             swipeableView.numberOfActiveView = UInt(3)
         }
         */
+        // Framework init
         swipeableView.numberOfActiveView = UInt(cardsToLoad)
         view.addSubview(swipeableView)
         
