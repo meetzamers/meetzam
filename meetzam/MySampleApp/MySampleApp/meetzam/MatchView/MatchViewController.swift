@@ -42,11 +42,21 @@ class MatchViewController: UIViewController {
         view.addSubview(swipeableView)
         // ========================================
         let matchedUserIDs = UserProfileToDB().getMatchedUserIDs(key: AWSIdentityManager.default().identityId!)
-        /*for matchID in matchedUserIDs
+        for matchID in matchedUserIDs
         {
             print("match with you: \(matchID)")
         }
-        let matchedUsers = UserProfileToDB().getMatchedUserProfiles(userIDs: matchedUserIDs)
+        let likedMovies = SingleMovie().getCurrentLikedMovies(key: AWSIdentityManager.default().identityId!)
+        for movie in likedMovies
+        {
+            print("one of your liked movies is \(movie.title)")
+        }
+        let historyLikedMovies = HistoryMovie().userLikedHistoryMovies(_userID: AWSIdentityManager.default().identityId!)
+        for history_liked in historyLikedMovies
+        {
+            print("one of your history liked movies is \(history_liked.title)")
+        }
+        /*let matchedUsers = UserProfileToDB().getMatchedUserProfiles(userIDs: matchedUserIDs)
         for matchUser in matchedUsers
         {
             print("your buddies are: \(matchUser.displayName)")
