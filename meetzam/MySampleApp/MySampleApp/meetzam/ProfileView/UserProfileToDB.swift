@@ -458,8 +458,20 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 userProfile?.region = user_profile_addTo.region
                 print("region is \(userProfile?.region)")
                 userProfile?.currentLikedMovie=user_profile_addTo.currentLikedMovie
-                for movie in (userProfile?.currentLikedMovie)! {
-                    print("\(movie)")
+                // if the user does not have any liked movies
+                if (user_profile_addTo.currentLikedMovie.count == 0)
+                {
+                    userProfile?.currentLikedMovie.insert("mushroom13")
+                }
+                userProfile?.likedUsers = user_profile_addTo.likedUsers
+                if (user_profile_addTo.likedUsers.count == 0)
+                {
+                    userProfile?.likedUsers.insert("mushroom13")
+                }
+                userProfile?.matchedUsers = user_profile_addTo.matchedUsers
+                if (user_profile_addTo.matchedUsers.count == 0)
+                {
+                    userProfile?.matchedUsers.insert("mushroom13")
                 }
                 userProfile?.movieCount = user_profile_addTo.movieCount
                 
@@ -474,7 +486,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         while(userProfile?.email==nil)
         {
-            print("waiting")
+            print("likeOneUser waiting")
         }
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
