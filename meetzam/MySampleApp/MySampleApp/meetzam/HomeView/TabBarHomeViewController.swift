@@ -472,6 +472,12 @@ extension UIImageView {
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if (error != nil) {
+                // Stop loading animation
+                imageLoadingIndicatorView.stopAnimating()
+                imageLoadingIndicatorView.removeFromSuperview()
+                
+                self.backgroundColor = UIColor.brown
+                
                 print("Error in loading Image")
                 return
             }
