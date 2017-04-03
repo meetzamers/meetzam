@@ -54,6 +54,7 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         updateMovieImages()
         
         cell.movieTitleLabel.font = UIFont(name: "HelveticaNeue-Thin", size: 18)
+        cell.movieTitleLabel.textColor = UIColor.black
         cell.movieImage.image = nil
         cell.movieTitleLabel.text = ""
         
@@ -62,19 +63,21 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
             cell.movieImage.contentMode = .scaleAspectFill
         }
         
+        
+        for var i in (0..<(self.titles.count)) {
+            if (self.isHistory(movieTitle: titles[i])){
+                if (i == indexPath.row){
+                    cell.movieImage.alpha = 0.5
+                    cell.movieTitleLabel.textColor = UIColor.darkGray
+                }
+            }
+        }
+        
         DispatchQueue.main.async {
             cell.movieTitleLabel.text = self.titles[indexPath.row]
         }
         
-        for var title in self.titles {
-            if (self.isHistory(movieTitle: title)){
-                cell.movieTitleLabel.textColor = UIColor.gray
-            } else {
-                cell.movieTitleLabel.textColor = UIColor.black
-            }
-        }
-        
-
+ 
         return cell
     }
     
@@ -108,6 +111,7 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
             images.append(image)
             titles.append(movie.title)
             historyTitles.append(movie.title)
+            print("I just added \(movie.title)")
         }
         
         
@@ -118,8 +122,9 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
     }
     
     func isHistory(movieTitle:String)-> (_: Bool) {
-        
+        //print("I just got \(movieTitle)")
         for var title in historyTitles {
+            print("I am comparing \(movieTitle) with \(title)")
             if (title == movieTitle){
                 return true;
             }

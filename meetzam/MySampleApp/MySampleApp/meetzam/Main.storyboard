@@ -270,7 +270,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="164" height="333"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="C5X-zT-d6T">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="C5X-zT-d6T">
                                                     <rect key="frame" x="0.0" y="0.0" width="164" height="283"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="283" id="Lxt-Ry-yg0"/>
@@ -278,7 +278,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="cij-yi-b5m">
-                                                    <rect key="frame" x="0.0" y="282" width="164" height="51"/>
+                                                    <rect key="frame" x="0.0" y="282" width="164" height="39"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="21"/>
                                                     <nil key="textColor"/>
