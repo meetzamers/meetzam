@@ -49,6 +49,22 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
     // Last Page
     let goAppButton = UIButton()
     
+    override func viewWillAppear(_ animated: Bool) {
+        UIView.animate(withDuration: 0, delay: 0, options: .curveEaseOut, animations: {
+            self.view.addSubview(self.welcomeLabel1)
+        }, completion: { _ in
+            self.view.addSubview(self.welcomeLabel2)
+            UIView.animate(withDuration: 0.2, delay: 1, options: .curveEaseOut, animations: {
+                self.welcomeLabel2.alpha = 1
+            }, completion: { _ in
+                self.view.addSubview(self.welcomeButton)
+                UIView.animate(withDuration: 0.2, delay: 0.5, options: .curveEaseOut, animations: {
+                    self.welcomeButton.alpha = 1
+                }, completion: nil)
+            })
+        })
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -63,7 +79,7 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         welcomeLabel1.text = "Welcome!"
         welcomeLabel1.morphingEffect = .scale
         welcomeLabel1.morphingDuration = 1
-        self.view.addSubview(welcomeLabel1)
+//        self.view.addSubview(welcomeLabel1)
         
         // No 2
         welcomeLabel2.font = UIFont(name: "Raleway-Light", size: 15)
@@ -73,10 +89,10 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         welcomeLabel2.numberOfLines = 2;
         welcomeLabel2.textAlignment = .center
         welcomeLabel2.alpha = 0
-        self.view.addSubview(welcomeLabel2)
-        UIView.animate(withDuration: 0.2, delay: 1, options: .curveEaseOut, animations: {
-            self.welcomeLabel2.alpha = 1
-        }, completion: nil)
+//        self.view.addSubview(welcomeLabel2)
+//        UIView.animate(withDuration: 0.2, delay: 1, options: .curveEaseOut, animations: {
+//            self.welcomeLabel2.alpha = 1
+//        }, completion: nil)
         
         // No 3
         welcomeButton.frame = CGRect(x: 0, y: UIScreen.main.bounds.height - 50, width: UIScreen.main.bounds.width, height: 50)
@@ -94,10 +110,11 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         }
         welcomeButton.addTarget(self, action: #selector(welcomeButtonAction), for: .touchUpInside)
         welcomeButton.alpha = 0
-        self.view.addSubview(welcomeButton)
-        UIView.animate(withDuration: 0.2, delay: 1.5, options: .curveEaseOut, animations: {
-            self.welcomeButton.alpha = 1
-        }, completion: nil)
+//        self.view.addSubview(welcomeButton)
+//        UIView.animate(withDuration: 0.2, delay: 1.5, options: .curveEaseOut, animations: {
+//            self.welcomeButton.alpha = 1
+//        }, completion: nil)
+        
         // ============================================================
         // Page 2
         self.hideKeyboard()
@@ -467,6 +484,8 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
                 self.genderPicker.removeFromSuperview()
                 
                 self.welcomeLabel1 = LTMorphingLabel()
+                
+                self.viewWillAppear(false)
                 self.viewDidLoad()
                 
             })
