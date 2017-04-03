@@ -637,7 +637,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     func downloadUserIcon(userID: String) -> URL
     {
         let transferManager = AWSS3TransferManager.default()
-        
+        print("downloading pic for \(userID)")
         let downloadingFileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(userID)
         
         let downloadRequest = AWSS3TransferManagerDownloadRequest()
@@ -645,22 +645,13 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         downloadRequest?.key = userID + ".jpeg"
         downloadRequest?.downloadingFileURL = downloadingFileURL
         
-        transferManager.download(downloadRequest!).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask<AnyObject>) -> Any? in
-            
+        transferManager.download(downloadRequest!).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as? NSError {
-                if error.domain == AWSS3TransferManagerErrorDomain, let code = AWSS3TransferManagerErrorType(rawValue: error.code) {
-                    switch code {
-                    case .cancelled, .paused:
-                        break
-                    default:
-                        print("Error downloading: \(downloadRequest?.key) Error: \(error)")
-                    }
-                } else {
-                    print("Error downloading")
-                }
+                print("download Error: \(error)")
                 return nil
+            } else {
+                print("download Successful")
             }
-            print("Download complete for: \(downloadRequest?.key)")
             return nil
         })
         return downloadingFileURL
