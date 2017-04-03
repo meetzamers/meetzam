@@ -62,6 +62,8 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         // 1. first attempt to pop sign in view controller
         perform(#selector(popSignInViewController), with: nil, afterDelay: 0)
         
+        perform(#selector(popFirstUserViewController), with: nil, afterDelay: 0)
+        
         // 2. signinObserver: need to figure it out.
         new_signinObserver = NotificationCenter.default.addObserver(
             forName: NSNotification.Name.AWSIdentityManagerDidSignIn,
@@ -118,6 +120,21 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         }
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+    
+    var times = 0 // delete it
+    // display first time view controller
+    func popFirstUserViewController() {
+        // ======================================================================================================
+        // TODO: check if this is new user:
+        if (AWSIdentityManager.default().isLoggedIn) {
+            if (times == 0) {
+                let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
+                let viewController = storyboard.instantiateViewController(withIdentifier: "FirstTimeUser")
+                self.present(viewController, animated: false, completion: nil)
+            }
+            times += 1
+        }
     }
     
     // AWS support functions end here

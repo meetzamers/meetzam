@@ -1,0 +1,10 @@
+{
+  "xcodeVersion" : "Xcode 8.3\nBuild version 8E162",
+  "commitish" : "1.3.2",
+  "iOS" : [
+    {
+      "hash" : "7605297ead657f1bee19a67ef6f92b8fe81e8aa72c423bdf5bbbd90bf81343ab",
+      "name" : "TextFieldEffects"
+    }
+  ]
+}
