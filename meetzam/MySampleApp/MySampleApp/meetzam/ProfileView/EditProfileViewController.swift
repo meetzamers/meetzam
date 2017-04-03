@@ -163,7 +163,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     func downloadProfileImage() {
-        print("downloading")
+        print("downloading image")
         
         let downloadingFilePath1 = (NSTemporaryDirectory() as NSString).appendingPathComponent("temp-download")
         self.downloadingFileURL = NSURL(fileURLWithPath: downloadingFilePath1 ) as URL!

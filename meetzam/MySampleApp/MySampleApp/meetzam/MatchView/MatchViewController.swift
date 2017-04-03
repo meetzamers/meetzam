@@ -81,6 +81,8 @@ class MatchViewController: UIViewController {
         swipeRightImage.frame = CGRect(x: 15 ,y: 15, width: 60, height: 60)
         swipeLeftImage.frame = CGRect(x: swipeableView.bounds.width - 75 ,y: 15, width: 60, height: 60)
         
+        /*let url = UserProfileToDB().downloadUserIcon(userID: AWSIdentityManager.default().identityId!)
+        print("downloaded url is \(url)")*/
         
         /* Set up the numebr of cards to load here.
         let matchedUserIDs = UserProfileToDB().getMatchedUserIDs(key: AWSIdentityManager.default().identityId!)
