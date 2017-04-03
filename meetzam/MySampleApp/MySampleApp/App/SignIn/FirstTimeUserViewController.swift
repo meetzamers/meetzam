@@ -533,7 +533,7 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
                     let endendText = UILabel()
                     endendText.frame = CGRect(x: 0, y: UIScreen.main.bounds.height-100, width: UIScreen.main.bounds.width, height: 50)
                     endendText.text = "© 2017 meetzam-dev"
-                    endendText.font = UIFont(name: "HelveticaNeue-Thin", size: 20)
+                    endendText.font = UIFont(name: "Comfortaa-Regular", size: 20)
                     endendText.textAlignment = .center
                     endendText.textColor = UIColor.white
                     endendText.alpha = 0
