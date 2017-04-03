@@ -84,8 +84,12 @@ class SignInViewController: UIViewController {
             // If no error reported by SignInProvider, discard the sign-in view controller.
             if error == nil {
                 DispatchQueue.main.async(execute: {
+                    // ======================================================================================================
+                    // Original dismiss
                     self.presentingViewController?.dismiss(animated: true, completion: nil)
                 })
+                
+                
             }
             print("result = \(result), error = \(error)")
         })

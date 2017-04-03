@@ -163,7 +163,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     func downloadProfileImage() {
-        print("downloading")
+        print("downloading image")
         
         let downloadingFilePath1 = (NSTemporaryDirectory() as NSString).appendingPathComponent("temp-download")
         self.downloadingFileURL = NSURL(fileURLWithPath: downloadingFilePath1 ) as URL!
@@ -330,7 +330,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     // Function to disable keyboard (called in viewDidLoad())
-    func dismissKeyboard() {
+    override func dismissKeyboard() {
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
     }
