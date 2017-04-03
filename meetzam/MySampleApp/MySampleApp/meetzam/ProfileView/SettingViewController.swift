@@ -47,6 +47,19 @@ class SettingViewController: UIViewController {
         self.view.addSubview(pushNFCell)
         
         // ============================================
+        // Clear cache cell:
+        let clearCacheCell: UIButton = UIButton()
+        clearCacheCell.frame = CGRect(x: 0, y: 115, width: UIScreen.main.bounds.width, height: 50)
+        clearCacheCell.backgroundColor = UIColor.white
+        clearCacheCell.addTarget(self, action: #selector(self.clearCacheAction), for: .touchUpInside)
+        
+        let clearCacheLabel: UILabel = UILabel()
+        clearCacheLabel.text = "Clear Cache"
+        clearCacheLabel.frame = CGRect(x: 15, y: 5, width: UIScreen.main.bounds.width - 70, height: 40)
+        clearCacheCell.addSubview(clearCacheLabel)
+        
+        self.view.addSubview(clearCacheCell)
+        // ============================================
         handleSigninStatus()
         
         // ============================================
@@ -169,5 +182,23 @@ class SettingViewController: UIViewController {
         print("Switch value is \(sender.isOn)")
     }
     
-    
+    // ============================================
+    // Clear cache action:
+    func clearCacheAction() {
+        let alertView = UIAlertController(title: nil, message: "Clearing Cache...", preferredStyle: .alert)
+        
+        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        loadingIndicator.startAnimating();
+        alertView.view.addSubview(loadingIndicator)
+        
+        self.present(alertView, animated: true, completion: nil)
+        
+        picCache.removeAllObjects()
+        
+        
+        
+        alertView.dismiss(animated: true, completion: nil)
+    }
 }

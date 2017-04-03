@@ -79,10 +79,7 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                         view.movieDetailedInfo.frame = CGRect(x: 6, y: view.imageView.frame.height + view.movieTitle.frame.height + 5, width: UIScreen.main.bounds.width - 15, height: view.movieDetailedInfo.contentSize.height) // resize the detailed info
                         
                         let path = "https://image.tmdb.org/t/p/w780/" + (item.poster_path)!
-                        let imageURL = URL(string: path)
-                        let imageData = try! Data(contentsOf: imageURL!)
-                        view.imageView.image = UIImage(data: imageData)
-                        
+                        view.imageView.loadImageUsingURLString(URLString: path)
                         
                         view.videoURL = "https://www.youtube.com/embed/" + item.trailer_key! + "?rel=0&showinfo=0&autoplay=1"
                         // add movie trailer

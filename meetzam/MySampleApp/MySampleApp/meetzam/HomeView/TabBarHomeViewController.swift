@@ -62,6 +62,8 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         // 1. first attempt to pop sign in view controller
         perform(#selector(popSignInViewController), with: nil, afterDelay: 0)
         
+        perform(#selector(popFirstUserViewController), with: nil, afterDelay: 0)
+        
         // 2. signinObserver: need to figure it out.
         new_signinObserver = NotificationCenter.default.addObserver(
             forName: NSNotification.Name.AWSIdentityManagerDidSignIn,
@@ -118,6 +120,21 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         }
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+    
+    var times = 0 // delete it
+    // display first time view controller
+    func popFirstUserViewController() {
+        // ======================================================================================================
+        // TODO: check if this is new user:
+        if (AWSIdentityManager.default().isLoggedIn) {
+            if (times == 0) {
+                let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
+                let viewController = storyboard.instantiateViewController(withIdentifier: "FirstTimeUser")
+                self.present(viewController, animated: false, completion: nil)
+            }
+            times += 1
+        }
     }
     
     // AWS support functions end here
@@ -449,6 +466,12 @@ extension UIImageView {
     
     func loadImageUsingURLString(URLString: String) {
         
+        // Loading Indicator
+        let imageLoadingIndicatorView = NVActivityIndicatorView(frame: CGRect(x: self.bounds.width/2 - 30, y: self.bounds.height/2 - 30, width: 60, height: 60), type: .squareSpin, color: UIColor.init(red: 95/255, green: 95/255, blue: 95/255, alpha: 1), padding: CGFloat(0))
+        self.addSubview(imageLoadingIndicatorView)
+        self.backgroundColor = UIColor.init(red: 223/255, green: 223/255, blue: 223/255, alpha: 1)
+        imageLoadingIndicatorView.startAnimating()
+        
         guard let url = URL(string: URLString) else { return }
         
         image = nil
@@ -456,17 +479,31 @@ extension UIImageView {
         let imageFromCache = picCache.object(forKey: URLString as NSString)
         
         if imageFromCache != nil {
+            // Stop loading animation
+            imageLoadingIndicatorView.stopAnimating()
+            imageLoadingIndicatorView.removeFromSuperview()
+            
             self.image = imageFromCache
             return
         }
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if (error != nil) {
+                // Stop loading animation
+                imageLoadingIndicatorView.stopAnimating()
+                imageLoadingIndicatorView.removeFromSuperview()
+                
+                self.backgroundColor = UIColor.brown
+                
                 print("Error in loading Image")
                 return
             }
             
             DispatchQueue.main.async {
+                // Stop loading animation
+                imageLoadingIndicatorView.stopAnimating()
+                imageLoadingIndicatorView.removeFromSuperview()
+                
                 let imageToCache = UIImage(data: data!)
                 picCache.setObject(imageToCache!, forKey: URLString as NSString)
                 self.image = imageToCache

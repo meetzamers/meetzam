@@ -92,16 +92,18 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             if (fbid != nil) {
                 largeImageURL = "https://graph.facebook.com/" + fbid! + "/picture?type=large&redirect=true&width=720&height=720"
             }
+
+            self.userPicField.loadImageUsingURLString(URLString: largeImageURL!)
             
             //if let imageURL = identityManager.imageURL {
-            if let imageURL = URL(string: largeImageURL!) {
-                let imageData = try! Data(contentsOf: imageURL)
-                if let profileImage = UIImage(data: imageData) {
-                    self.userPicField.image = profileImage
-                } else {
-                    self.userPicField.image = UIImage(named: "UserIcon")
-                }
-            }
+//            if let imageURL = URL(string: largeImageURL!) {
+//                let imageData = try! Data(contentsOf: imageURL)
+//                if let profileImage = UIImage(data: imageData) {
+//                    self.userPicField.image = profileImage
+//                } else {
+//                    self.userPicField.image = UIImage(named: "UserIcon")
+//                }
+//            }
         }
             
         //show top three movies

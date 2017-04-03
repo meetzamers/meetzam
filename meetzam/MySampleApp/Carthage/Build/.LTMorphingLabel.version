@@ -1,0 +1,10 @@
+{
+  "xcodeVersion" : "Xcode 8.3\nBuild version 8E162",
+  "commitish" : "0.5.0",
+  "iOS" : [
+    {
+      "hash" : "15c51340aa8ab04b8393f5c0a3c5f2892c87646e69c3ab5e372c642318905e21",
+      "name" : "LTMorphingLabel"
+    }
+  ]
+}
