@@ -43,6 +43,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     
     // function to add/update user info into database
     // argument: dbName...
+    // fixed busy waiting
     func insertProfile(_userId: String, _displayName: String, _bio: String, _age: String, _gender: String, _region: String, _email: String) {
         print("     insertProfile")
         let mapper = AWSDynamoDBObjectMapper.default()
@@ -73,29 +74,36 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                     }
                     userProfile?.movieCount = user_profile_addTo.movieCount
                     userProfile?.userId=user_profile_addTo.userId
+                    
+                    
+                    ////////////////////////////////////
+                    
+                    userProfile?.userId  = _userId
+                    userProfile?.displayName = _displayName
+                    userProfile?.bio = _bio
+                    userProfile?.age = _age
+                    userProfile?.gender = _gender
+                    userProfile?.region = _region
+                    userProfile?.email = _email
+                    mapper.save(userProfile!)
                 }
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 return nil
             })
             
-            UIApplication.shared.isNetworkActivityIndicatorVisible = true
-            while(userProfile?.userId==nil)
-            {
-                print("insertProfile waiting")
-            }
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+//            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+//            while(userProfile?.userId==nil)
+//            {
+//                print("insertProfile waiting")
+//            }
+//            UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
-        
-        userProfile?.userId  = _userId
-        userProfile?.displayName = _displayName
-        userProfile?.bio = _bio
-        userProfile?.age = _age
-        userProfile?.gender = _gender
-        userProfile?.region = _region
-        userProfile?.email = _email
-        mapper.save(userProfile!)
+
     }
     
+    
+    
+    // async dependency in the code, busy waiting still exist
     func isInTable(userID: String) -> Bool
     {
         var result: Bool = false
@@ -119,6 +127,8 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         {
             print("isInTable waiting")
         }
+        
+        
         if (userIDInTable.contains(userID))
         {
             result = true
@@ -174,7 +184,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         })
         
     }
-    
+    /// fixed busy waiting
     func insertToCurrentLikedMovie(key: String, movieTitle: String)
     {
         print("     insertToCurrentLikedMovie!!")
@@ -222,34 +232,41 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 userProfile?.email = user_profile_addTo.email
                 print("email is \(userProfile?.email)")
                 print("     all put")
+                
+                //////////////////////////////////////////////
+                
+                print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
+                if (!((userProfile?.currentLikedMovie.contains(movieTitle))!))
+                {
+                    if (userProfile?.currentLikedMovie.count != 0 && userProfile?.movieCount == 0) {
+                        //dummy exist
+                        userProfile?.currentLikedMovie.removeAll()
+                    }
+                    userProfile?.currentLikedMovie.insert(movieTitle)
+                    userProfile?.movieCount = userProfile?.currentLikedMovie.count as NSNumber?
+                }
+                for movie in (userProfile?.currentLikedMovie)! {
+                    print("\(movie)")
+                }
+                mapper.save(userProfile!)
+                
+                
+                
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
         
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        while(userProfile?.email==nil)
-        {
-            print("waiting")
-        }
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+//        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+//        while(userProfile?.email==nil)
+//        {
+//            print("waiting")
+//        }
+//        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
-        print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
-        if (!((userProfile?.currentLikedMovie.contains(movieTitle))!))
-        {
-            if (userProfile?.currentLikedMovie.count != 0 && userProfile?.movieCount == 0) {
-                //dummy exist
-                userProfile?.currentLikedMovie.removeAll()
-            }
-            userProfile?.currentLikedMovie.insert(movieTitle)
-            userProfile?.movieCount = userProfile?.currentLikedMovie.count as NSNumber?
-        }
-        for movie in (userProfile?.currentLikedMovie)! {
-            print("\(movie)")
-        }
-        mapper.save(userProfile!)
+
     }
-    
+    // fixed busy waiting
     func deleteFromCurrentLikedMovie(key: String, movieTitle: String)
     {
         print("     deleteFromCurrentLikedMovie!!")
@@ -291,31 +308,59 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 userProfile?.email = user_profile_addTo.email
                 print("email is \(userProfile?.email)")
                 print("     all put")
+                
+                
+                ///////////////////////
+                print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
+                if (!((userProfile?.currentLikedMovie.contains(movieTitle))!))
+                {
+                    print("error: delete a movie not in user's liked movie list")
+                }
+                else {
+                    print("removing movie")
+                    _ = userProfile?.currentLikedMovie.remove(movieTitle)
+                    userProfile?.movieCount = userProfile?.currentLikedMovie.count as NSNumber?
+                    //dummy string since empty string set not allowed
+                    if (userProfile?.currentLikedMovie.count == 0) {
+                        userProfile?.currentLikedMovie.insert("mushroom13")
+                    }
+                }
+                
+                print("AFTER DELETION, currentLikedMovie are: \(userProfile?.currentLikedMovie.description)")
+                mapper.save(userProfile!)
+
+                
+                
+                
+                
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
-        while(userProfile?.email==nil)
-        {
-            print("waiting")
-        }
-        print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
-        if (!((userProfile?.currentLikedMovie.contains(movieTitle))!))
-        {
-            print("error: delete a movie not in user's liked movie list")
-        }
-        else {
-            print("removing movie")
-            _ = userProfile?.currentLikedMovie.remove(movieTitle)
-            userProfile?.movieCount = userProfile?.currentLikedMovie.count as NSNumber?
-            //dummy string since empty string set not allowed
-            if (userProfile?.currentLikedMovie.count == 0) {
-                userProfile?.currentLikedMovie.insert("mushroom13")
-            }
-        }
         
-        print("AFTER DELETION, currentLikedMovie are: \(userProfile?.currentLikedMovie.description)")
-        mapper.save(userProfile!)
+//        while(userProfile?.email==nil)
+//        {
+//            print("waiting")
+//        }
+        
+        
+//        print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
+//        if (!((userProfile?.currentLikedMovie.contains(movieTitle))!))
+//        {
+//            print("error: delete a movie not in user's liked movie list")
+//        }
+//        else {
+//            print("removing movie")
+//            _ = userProfile?.currentLikedMovie.remove(movieTitle)
+//            userProfile?.movieCount = userProfile?.currentLikedMovie.count as NSNumber?
+//            //dummy string since empty string set not allowed
+//            if (userProfile?.currentLikedMovie.count == 0) {
+//                userProfile?.currentLikedMovie.insert("mushroom13")
+//            }
+//        }
+//        
+//        print("AFTER DELETION, currentLikedMovie are: \(userProfile?.currentLikedMovie.description)")
+//        mapper.save(userProfile!)
     }
     
     
@@ -340,6 +385,8 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         })
     }
     
+    
+    // async dependency in the code, busy waiting still exist
     func getMatchedUserIDs(key: String) -> [String]
     {
         print("     getMatchedUserIDs")
@@ -359,6 +406,9 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                     currentLikedMovie=user_profile_addTo.currentLikedMovie
                 }
                 userProfile?.displayName=user_profile_addTo.displayName
+                
+                
+                
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
@@ -370,6 +420,8 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             print("waiting")
         }
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        
+        
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         print("     next step")
@@ -408,6 +460,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         return matchedUserIDs
     }
     
+    // async dependency in the code, busy waiting still exist
     func getMatchedUserProfiles(userIDs: [String]) -> [UserProfileToDB]
     {
         print("     getMatchedUserProfiles")
@@ -437,7 +490,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         return matchedUserProfiles
     }
     
-    
+    // fixed busy waiting
     func likeOneUser(key: String, likedUserID: String)
     {
         print("     likeOneUser")
@@ -482,32 +535,41 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 userProfile?.email = user_profile_addTo.email
                 print("email is \(userProfile?.email)")
                 print("     all put")
+                
+                
+                ///////////////
+                print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
+                if (!((userProfile?.likedUsers.contains(likedUserID))!))
+                {
+                    if (userProfile?.likedUsers.count == 1 && (userProfile?.likedUsers.contains("mushroom13"))!) {
+                        //dummy exist
+                        userProfile?.likedUsers.removeAll()
+                    }
+                    userProfile?.likedUsers.insert(likedUserID)
+                }
+                mapper.save(userProfile!)
+                
+                
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
         
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        while(userProfile?.email==nil)
-        {
-            print("likeOneUser waiting")
-        }
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+//        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+//        while(userProfile?.email==nil)
+//        {
+//            print("likeOneUser waiting")
+//        }
+//        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
-        print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
-        if (!((userProfile?.likedUsers.contains(likedUserID))!))
-        {
-            if (userProfile?.likedUsers.count == 1 && (userProfile?.likedUsers.contains("mushroom13"))!) {
-                //dummy exist
-                userProfile?.likedUsers.removeAll()
-            }
-            userProfile?.likedUsers.insert(likedUserID)
-        }
-        mapper.save(userProfile!)
+
     }
     
+    
+    // async dependency in the code, busy waiting still exist
     func getLikedUserIDs(key: String) -> [String]
     {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         print("     getLikedUserIDs")
         let mapper = AWSDynamoDBObjectMapper.default()
         var likedUserArr = Set<String>()
@@ -520,7 +582,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 likedUserArr = user_profile.likedUsers
             }
             
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            
             dummynum = 6
             return nil
         })
@@ -528,10 +590,13 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         {
             print("waiting")
         }
+        
+        // dependency of async ops
         for user in likedUserArr
         {
             likedUserIDs.append(user)
         }
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         return likedUserIDs
     }
     
@@ -539,6 +604,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     // 1st: (your id, other's id)
     // 2nd: (other's id, your id)
     // if both true, then there is a match
+    // async dependency in the code, busy waiting still exist
     func findIsMatched(key: String, userID: String) -> Bool
     {
         print("     findIsMatched")
@@ -566,6 +632,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         return result
     }
     
+    // fixed busy waiting
     func insertToMatchedUser(key: String, userID: String)
     {
         print("     insertToMatchedUser")
@@ -609,29 +676,44 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 }
                 userProfile?.movieCount = user_profile_addTo.movieCount
                 userProfile?.email = user_profile_addTo.email
+                
+                ///////////////////////////////////
+                print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
+                if (!((userProfile?.matchedUsers.contains(userID))!))
+                {
+                    if (userProfile?.matchedUsers.count != 0 && (userProfile?.matchedUsers.contains("mushroom13"))!) {
+                        //dummy exist
+                        print("dummy here")
+                        userProfile?.matchedUsers.removeAll()
+                    }
+                    userProfile?.matchedUsers.insert(userID)
+                }
+                mapper.save(userProfile!)
+                
+            
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
         
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        while(userProfile?.email==nil)
-        {
-            print("insertToMatchedUser waiting")
-        }
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+//        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+//        while(userProfile?.email==nil)
+//        {
+//            print("insertToMatchedUser waiting")
+//        }
+//        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
-        print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
-        if (!((userProfile?.matchedUsers.contains(userID))!))
-        {
-            if (userProfile?.matchedUsers.count != 0 && (userProfile?.matchedUsers.contains("mushroom13"))!) {
-                //dummy exist
-                print("dummy here")
-                userProfile?.matchedUsers.removeAll()
-            }
-            userProfile?.matchedUsers.insert(userID)
-        }
-        mapper.save(userProfile!)
+//        print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
+//        if (!((userProfile?.matchedUsers.contains(userID))!))
+//        {
+//            if (userProfile?.matchedUsers.count != 0 && (userProfile?.matchedUsers.contains("mushroom13"))!) {
+//                //dummy exist
+//                print("dummy here")
+//                userProfile?.matchedUsers.removeAll()
+//            }
+//            userProfile?.matchedUsers.insert(userID)
+//        }
+//        mapper.save(userProfile!)
     }
     
     func downloadUserIcon(userID: String) -> URL
