@@ -31,6 +31,7 @@ class HistoryMovie: AWSDynamoDBObjectModel, AWSDynamoDBModeling
         return "title"
     }
     
+    // async dependency in the code, busy waiting still exist
     func getAllHistoryMovieTitles() -> [String]
     {
         print("     getAllHistoryMovies")
@@ -57,6 +58,7 @@ class HistoryMovie: AWSDynamoDBObjectModel, AWSDynamoDBModeling
         return historyMovieTitles
     }
     
+    // async dependency in the code, busy waiting still exist
     func getAllLikedMovieTitles(userID: String) -> [String]
     {
         let mapper = AWSDynamoDBObjectMapper.default()
