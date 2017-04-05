@@ -42,7 +42,7 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
     }
     
     func refreshList(movie_list: MovieList, view: FrameViewController, user_profile: UserProfileToDB)  {
-        
+        print("===== refreshList =====")
         // Loading Animations
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         view.loadingIndicatorView.startAnimating()
@@ -130,22 +130,23 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             UIView.animate(withDuration: 0.5, animations: { () -> Void in
                 view.view.backgroundColor = UIColor.clear
             })
+            print("SUCCESS")
             return nil
         })
-        
     }
     
+    //JUNPU: async dependency in the code, busy waiting still exist
     func getLikedMoviePosters(key: String) -> [String]
     {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        print("===== getLikedMoviePosters =====")
         
-        print("     getLikedMoviePosters")
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         let mapper = AWSDynamoDBObjectMapper.default()
         var currentLikedMovie = Set<String>()
         let userProfile = UserProfileToDB()
         
-        print("     before load!!")
-        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+        
+        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as? NSError {
                 print("InsertError: \(error)")
             } else if let user_profile_addTo = task.result as? UserProfileToDB {
@@ -164,7 +165,6 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         var fakenode0 = 0
         while (userProfile?.displayName==nil)
         {
-//            print("getLikedMoviePosters1 waiting")
             fakenode0 = 1
         }
         
@@ -187,7 +187,6 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             var fakenode1 = 0
             while (dummynum != 6)
             {
-//                print("getLikedMoviePosters2 waiting")
                 fakenode1 = 1
             }
         }
@@ -196,16 +195,16 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         return MoviesPosterURL
     }
     
+    //JUNPU: async dependency in the code, busy waiting still exist
     func getCurrentLikedMovies(key: String) -> [SingleMovie]
     {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
-        print("     getAllLikedMovies")
+        print("===== getCurrentLikedMovies =====")
         let mapper = AWSDynamoDBObjectMapper.default()
         var currentLikedMovie = Set<String>()
         let userProfile = UserProfileToDB()
         
-        print("     before load!!")
         mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as? NSError {
                 print("InsertError: \(error)")
@@ -225,7 +224,6 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         var fakenode0 = 0
         while (userProfile?.displayName==nil)
         {
-//            print("getAllLikedMovies1 waiting")
             fakenode0 = 1
         }
         
@@ -248,7 +246,6 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             var fakenode1 = 0
             while (dummynum != 6)
             {
-//                print("getLikedMoviePosters2 waiting")
                 fakenode1 = 1
             }
         }
@@ -258,8 +255,10 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         return currentLikedMoviesArr
     }
     
+    //JUNPU: async dependency in the code, busy waiting still exist
     func isCurrentMovie(title: String) -> Bool
     {
+        print("===== isCurrentMovie =====")
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         var result: Bool = false
         var currentMovieTitles: Array = [String]()
@@ -283,7 +282,6 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         var fakenode0 = 0
         while (dummynum != 6)
         {
-//            print("isIsCurrentMovie waiting")
             fakenode0 = 1
         }
         if (currentMovieTitles.contains(title))
@@ -295,11 +293,11 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         return result
     }
     
+    //JUNPU: fixed busy waiting
     func insertToCurrentLikedUser(key: String, userid: String)
     {
+        print("===== insertToCurrentLikedUser =====")
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        
-        print("     ADD USER TO MOVIE")
         
         let mapper = AWSDynamoDBObjectMapper.default()
         
@@ -311,73 +309,71 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             } else if let movie_addTo = task.result as? SingleMovie {
                 
                 movie?.title=key
-                print("     key:title is \(key)")
+//                print("     key:title is \(key)")
                 
                 movie?.directors = movie_addTo.directors
-                print("directors are \(movie?.directors.description)")
+//                print("directors are \(movie?.directors.description)")
                 
                 movie?.genres = movie_addTo.genres
-                print("genres are \(movie?.genres.description)")
+//                print("genres are \(movie?.genres.description)")
                 
                 movie?.longDescription = movie_addTo.longDescription
-                print("longDescription is \(movie?.longDescription)")
+//                print("longDescription is \(movie?.longDescription)")
                 
                 movie?.poster_path = movie_addTo.poster_path
-                print("poster_path is \(movie?.poster_path)")
+//                print("poster_path is \(movie?.poster_path)")
                 
                 movie?.releaseYear = movie_addTo.releaseYear
-                print("releaseYear is \(movie?.releaseYear)")
+//                print("releaseYear is \(movie?.releaseYear)")
                 
                 movie?.shortDescriptiontle = movie_addTo.shortDescriptiontle
-                print("shortDescriptiontle is \(movie?.shortDescriptiontle)")
+//                print("shortDescriptiontle is \(movie?.shortDescriptiontle)")
                 
                 movie?.tmdb_id = movie_addTo.tmdb_id
-                print("tmdb_id is \(movie?.tmdb_id)")
+//                print("tmdb_id is \(movie?.tmdb_id)")
                 
                 movie?.topCast = movie_addTo.topCast
-                print("topCast are \(movie?.topCast.description)")
+//                print("topCast are \(movie?.topCast.description)")
                 
                 movie?.currentLikedUser = movie_addTo.currentLikedUser
-                print("BEFORE INSERTING: currentLikedUser are \(movie?.currentLikedUser.description)")
+//                print("BEFORE INSERTING: currentLikedUser are \(movie?.currentLikedUser.description)")
                 
                 movie?.userCount = movie_addTo.userCount
                 
                 movie?.trailer_key = movie_addTo.trailer_key
-                print("trailer_key is \(movie?.trailer_key)")
+//                print("trailer_key is \(movie?.trailer_key)")
                 
-                print("     all put")
+//                print("     all put")
+                
+                
+              /////////////////////
+                
+                if (!((movie?.currentLikedUser.contains(userid))!))
+                {
+                    if (movie?.currentLikedUser.count != 0 && movie?.userCount == 0) {
+                        //dummy detected
+                        movie?.currentLikedUser.removeAll()
+                    }
+                    movie?.currentLikedUser.insert(userid)
+                    movie?.userCount = movie?.currentLikedUser.count as NSNumber?
+                }
+                mapper.save(movie!)
+                
+                print("SUCCESS")
+                
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
-        
-        var fakenode0 = 0
-        while(movie?.trailer_key==nil)
-        {
-//            print("waiting")
-            fakenode0 = 1
-        }
-        print("SHOULD BE AFTER LOAD: title and id are \(movie?.title) and \(movie?.tmdb_id)")
-        if (!((movie?.currentLikedUser.contains(userid))!))
-        {
-            if (movie?.currentLikedUser.count != 0 && movie?.userCount == 0) {
-                //dummy detected
-                movie?.currentLikedUser.removeAll()
-            }
-            movie?.currentLikedUser.insert(userid)
-            movie?.userCount = movie?.currentLikedUser.count as NSNumber?
-        }
-        print("AFTER INSERTING: currentLikedUser are \(movie?.currentLikedUser.description)")
-        mapper.save(movie!)
-        
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
+    //JUNPU: fixed busy waiting
     func deleteFromCurrentLikedUser(key: String, userid: String)
     {
+        print("===== deleteFromCurrentLikedUser =====")
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
-        print("     ADD USER TO MOVIE")
+//        print("     ADD USER TO MOVIE")
         
         let mapper = AWSDynamoDBObjectMapper.default()
         
@@ -389,67 +385,67 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             } else if let movie_addTo = task.result as? SingleMovie {
                 
                 movie?.title=key
-                print("     key:title is \(key)")
+//                print("     key:title is \(key)")
                 
                 movie?.directors = movie_addTo.directors
-                print("directors are \(movie?.directors.description)")
+//                print("directors are \(movie?.directors.description)")
                 
                 movie?.genres = movie_addTo.genres
-                print("genres are \(movie?.genres.description)")
+//                print("genres are \(movie?.genres.description)")
                 
                 movie?.longDescription = movie_addTo.longDescription
-                print("longDescription is \(movie?.longDescription)")
+//                print("longDescription is \(movie?.longDescription)")
                 
                 movie?.poster_path = movie_addTo.poster_path
-                print("poster_path is \(movie?.poster_path)")
+//                print("poster_path is \(movie?.poster_path)")
                 
                 movie?.releaseYear = movie_addTo.releaseYear
-                print("releaseYear is \(movie?.releaseYear)")
+//                print("releaseYear is \(movie?.releaseYear)")
                 
                 movie?.shortDescriptiontle = movie_addTo.shortDescriptiontle
-                print("shortDescriptiontle is \(movie?.shortDescriptiontle)")
+//                print("shortDescriptiontle is \(movie?.shortDescriptiontle)")
                 
                 movie?.tmdb_id = movie_addTo.tmdb_id
-                print("tmdb_id is \(movie?.tmdb_id)")
+//                print("tmdb_id is \(movie?.tmdb_id)")
                 
                 movie?.topCast = movie_addTo.topCast
-                print("topCast are \(movie?.topCast.description)")
+//                print("topCast are \(movie?.topCast.description)")
                 
                 movie?.currentLikedUser = movie_addTo.currentLikedUser
-                print("BEFORE DELETION: currentLikedUser are \(movie?.currentLikedUser.description)")
+//                print("BEFORE DELETION: currentLikedUser are \(movie?.currentLikedUser.description)")
                 
                 movie?.userCount = movie_addTo.userCount
                 
                 movie?.trailer_key = movie_addTo.trailer_key
-                print("trailer_key is \(movie?.trailer_key)")
+//                print("trailer_key is \(movie?.trailer_key)")
                 
-                print("     all put")
+//                print("     all put")
+                
+              ///////////
+                if ((movie?.currentLikedUser.contains(userid))!)
+                {
+                    _ = movie?.currentLikedUser.remove(userid)
+                    movie?.userCount = movie?.currentLikedUser.count as NSNumber?
+                    //dummy string since empty string set not allowed
+                    if (movie?.currentLikedUser.count == 0) {
+                        movie?.currentLikedUser.insert("mushroom13")
+                    }
+                }
+                else {
+                    print("error: remove a user that is not in the list")
+                }
+                mapper.save(movie!)
+                print("SUCCESS")
+                
+                
+                
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
+
         
-        var fakenode0 = 0
-        while(movie?.trailer_key==nil)
-        {
-//            print("waiting")
-            fakenode0 = 1
-        }
-        print("SHOULD BE AFTER LOAD: title and id are \(movie?.title) and \(movie?.tmdb_id)")
-        if ((movie?.currentLikedUser.contains(userid))!)
-        {
-            _ = movie?.currentLikedUser.remove(userid)
-            movie?.userCount = movie?.currentLikedUser.count as NSNumber?
-            //dummy string since empty string set not allowed
-            if (movie?.currentLikedUser.count == 0) {
-                movie?.currentLikedUser.insert("mushroom13")
-            }
-        }
-        else {
-            print("error: remove a user that is not in the list")
-        }
-        print("AFTER DELETION: currentLikedUser are \(movie?.currentLikedUser.description)")
-        mapper.save(movie!)
+       
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
