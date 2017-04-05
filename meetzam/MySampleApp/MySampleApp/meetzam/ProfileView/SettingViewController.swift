@@ -28,24 +28,24 @@ class SettingViewController: UIViewController {
         
         // ============================================
         // Push notification cell:
-        let pushNFCell: UITableViewCell = UITableViewCell()
+        let pushNFCell: UIButton = UIButton()
         pushNFCell.frame = CGRect(x: 0, y: 64, width: UIScreen.main.bounds.width, height: 50)
         pushNFCell.backgroundColor = UIColor.white
+        pushNFCell.addTarget(self, action: #selector(toNotification), for: .touchUpInside)
         
         let pushNFLabel: UILabel = UILabel()
         pushNFLabel.text = "Receive Push Notifications"
         pushNFLabel.frame = CGRect(x: 15, y: 5, width: UIScreen.main.bounds.width - 70, height: 40)
         pushNFCell.addSubview(pushNFLabel)
         
-        let pushNFSwitch: UISwitch = UISwitch()
-        pushNFSwitch.frame = CGRect(x: UIScreen.main.bounds.width - 66, y: 9.5, width: 51, height: 31)
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        pushNFSwitch.addTarget(self, action: #selector(self.switchChanged), for: .valueChanged)
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        pushNFCell.addSubview(pushNFSwitch)
+        let pushNFNextImage: UIImageView = UIImageView()
+        pushNFNextImage.frame = CGRect(x: UIScreen.main.bounds.width - 41, y: 9.5, width: 31, height: 31)
+        pushNFNextImage.image = UIImage(named: "Next")
+        pushNFNextImage.contentMode = .scaleAspectFit
+        pushNFNextImage.alpha = 0.5
+        pushNFCell.addSubview(pushNFNextImage)
         
         self.view.addSubview(pushNFCell)
-        
         // ============================================
         // Clear cache cell:
         let clearCacheCell: UIButton = UIButton()
@@ -175,12 +175,16 @@ class SettingViewController: UIViewController {
     }
     
     // ============================================
-    // Notification switch action:
+    // Notification button action:
     
-    //    This is an example.
-    func switchChanged(sender: UISwitch!) {
-        print("Switch value is \(sender.isOn)")
+    // to aws notification
+    func toNotification(sender: UIButton!) {
+        let storyboard = UIStoryboard(name: "PushNotification", bundle: nil)
+        let VC1 = storyboard.instantiateViewController(withIdentifier: "AWSPushNoti")
+        
+        self.navigationController?.pushViewController(VC1, animated: true)
     }
+    
     
     // ============================================
     // Clear cache action:

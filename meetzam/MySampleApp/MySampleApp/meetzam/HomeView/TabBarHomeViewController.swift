@@ -62,7 +62,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         // 1. first attempt to pop sign in view controller
         perform(#selector(popSignInViewController), with: nil, afterDelay: 0)
         
-        perform(#selector(popFirstUserViewController), with: nil, afterDelay: 0)
+//        perform(#selector(popFirstUserViewController), with: nil, afterDelay: 0)
         
         // 2. signinObserver: need to figure it out.
         new_signinObserver = NotificationCenter.default.addObserver(

@@ -299,7 +299,6 @@
 				B401C9793F67953A00000000 /* ContentDelivery */,
 				1DD70E29218BD6F000000000 /* DemoFeature.swift */,
 				B401C979720B63BA00000000 /* NoSQL */,
-				B401C9794F60BC4800000000 /* Push */,
 				B401C979BF2A7F8000000000 /* UserDataStorage */,
 				B401C9795984C14400000000 /* UserFiles */,
 				B401C9795916BB7200000000 /* UserIdentity */,
@@ -326,7 +325,7 @@
 				1DD70E29E9D4F87B00000000 /* PushNotificationViewController.swift */,
 			);
 			name = Push;
-			path = mysampleapp/demo/push;
+			path = mysampleapp/demo/mysampleapp/demo/push;
 			sourceTree = "<group>";
 		};
 		B401C9795916BB7200000000 /* UserIdentity */ = {
@@ -602,6 +601,7 @@
 				C40661BB1E5CBC69005D2145 /* ChatView */,
 				C40661BE1E5CBCA4005D2145 /* ProfileView */,
 				B401C979E100CAB200000000 /* SignIn */,
+				B401C9794F60BC4800000000 /* Push */,
 				C41A64701E922373004239CB /* Font */,
 				C412E65E1E5BF93100BE8B61 /* Animation */,
 			);
