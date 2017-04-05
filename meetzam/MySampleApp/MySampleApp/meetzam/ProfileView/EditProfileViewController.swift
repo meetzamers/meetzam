@@ -179,6 +179,18 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 print("download Error: \(error)")
                 self.downloadingFileURL = nil
             } else {
+                //monika
+                if (self.downloadingFileURL != nil) {
+                    let imageURL = URL(fileURLWithPath: (self.downloadingFileURL?.path)!)
+                    let image    = UIImage(contentsOfFile: imageURL.path)
+                        
+                    if (image == nil) {
+                        print("cannot get the image")
+                    } else {
+                        self.profilePicture.image = image
+                    }
+                }
+                //monika
                 print("SUCCESS")
             }
             return nil
@@ -304,7 +316,16 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         }
         
         // Initiating profilePicture UIImageView from Facebook profile picture
-        
+        downloadProfileImage()
+        if (downloadingFileURL != nil) {
+            /*
+            if FileManager.default.fileExists(atPath: (downloadingFileURL?.path)!) {
+                let url = NSURL(string: (downloadingFileURL?.path)!)
+                let data = NSData(contentsOf: url! as URL)
+                profilePicture.image = UIImage(data: data! as Data)
+            }
+            */
+        } else {
         let fbid = FBSDKAccessToken.current().userID
         var largeImageURL = identityManager.imageURL?.absoluteString
         if (fbid != nil) {
@@ -320,7 +341,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 profilePicture.image = UIImage(named: "UserIcon")
             }
         }
-        
+        }
         
         // Function to disable keyboard upon touching anywhere else
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(EditProfileViewController.dismissKeyboard))
