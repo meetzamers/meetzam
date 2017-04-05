@@ -46,13 +46,33 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     //JUNPU: fixed busy waiting
     func insertProfile(_userId: String, _displayName: String, _bio: String, _age: String, _gender: String, _region: String, _email: String) {
         print("===== insertProfile =====")
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         let mapper = AWSDynamoDBObjectMapper.default()
         let userProfile = UserProfileToDB()
-        
-        // update only if the user is in table
-        if (UserProfileToDB().isInTable(userID: _userId) == true)
-        {
-            mapper.load(UserProfileToDB.self, hashKey: _userId, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+        //JUNPU: tixed this
+        var result: Bool = false
+        var userIDInTable: Array = [String]()
+        let scanExpression = AWSDynamoDBScanExpression()
+        mapper.scan(UserProfileToDB.self, expression: scanExpression).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            if let error = task.error as? NSError {
+                print("The request failed. Error: \(error)")
+            } else if let allUsers = task.result {
+                for user in allUsers.items as! [UserProfileToDB] {
+                    userIDInTable.append(user.userId!)
+                }
+            }
+            if (userIDInTable.contains(_userId)) {
+                print("found user in the table")
+                result = true
+            }
+            return nil
+        }).continueWith(block: { (task:AWSTask<AnyObject>) -> Any? in
+            if result == false {
+                print("Error: Can not find the user in the table.")
+                return nil
+            }
+            print("now continue to insertProfile")
+            mapper.load(UserProfileToDB.self, hashKey: _userId, rangeKey: nil).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
                 if let error = task.error as? NSError {
                     print("InsertError: \(error)")
                 } else if let user_profile_addTo = task.result as? UserProfileToDB {
@@ -75,9 +95,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                     userProfile?.movieCount = user_profile_addTo.movieCount
                     userProfile?.userId=user_profile_addTo.userId
                     
-                    
                     ////////////////////////////////////
-                    
                     userProfile?.userId  = _userId
                     userProfile?.displayName = _displayName
                     userProfile?.bio = _bio
@@ -91,45 +109,13 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 return nil
             })
-        }
-    }
-    
-    
-    
-    //JUNPU: async dependency in the code, busy waiting still exist
-    func isInTable(userID: String) -> Bool
-    {
-        var result: Bool = false
-        var userIDInTable: Array = [String]()
-        let mapper = AWSDynamoDBObjectMapper.default()
-        let scanExpression = AWSDynamoDBScanExpression()
-        var dummynum: Int = 0
-        
-        mapper.scan(UserProfileToDB.self, expression: scanExpression).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
-            if let error = task.error as? NSError {
-                print("The request failed. Error: \(error)")
-            } else if let allUsers = task.result {
-                for user in allUsers.items as! [UserProfileToDB] {
-                    userIDInTable.append(user.userId!)
-                }
-                dummynum = 6
-            }
             return nil
         })
-        
-        var waiting = 0;
-        while (dummynum != 6)
-        {
-            waiting = 1;
-        }
-        
-        
-        if (userIDInTable.contains(userID))
-        {
-            result = true
-        }
-        return result
     }
+    
+    
+    //JUNPU: func isInTable(userID: String) -> Bool is nolonger needed.
+    
     
     func getProfileForEdit(key: String, user_profile: UserProfileToDB?, displayname: UITextField!, bio: UITextField!, age: UITextField!, gender: UITextField!, region: UITextField!, email: UITextField!){
         print("===== getProfileForEdit =====")
@@ -295,7 +281,6 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
 //                print("email is \(userProfile?.email)")
 //                print("     all put")
                 
-                
                 ///////////////////////
 //                print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
                 if (!((userProfile?.currentLikedMovie.contains(movieTitle))!))
@@ -317,7 +302,6 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 print("SUCCESS")
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            
             return nil
         })
     }
@@ -339,7 +323,6 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                     print(user_profile.currentLikedMovie.description)
                 }
             }
-            
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
@@ -366,13 +349,12 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                     currentLikedMovie=user_profile_addTo.currentLikedMovie
                 }
                 userProfile?.displayName=user_profile_addTo.displayName
-                
-                
-                
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
+        
+        
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         var waiting = 0
@@ -385,13 +367,16 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
+        
+        
         print("     next step")
         var matchedUserIDs: Array = [String]()
         var dummynum: Int = 0
         for movie in (currentLikedMovie) {
             dummynum = 0
             print("You Liked \(movie)")
-            mapper.load(SingleMovie.self, hashKey: movie, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            mapper.load(SingleMovie.self, hashKey: movie, rangeKey: nil).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
                 if let error = task.error as? NSError {
                     print("InsertError: \(error)")
                 } else if let single_movie = task.result as? SingleMovie {
@@ -409,6 +394,8 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 dummynum = 6
                 return nil
             })
+            
+            
             while (dummynum != 6)
             {
                 waiting = 1
