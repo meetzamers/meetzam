@@ -31,9 +31,10 @@ class HistoryMovie: AWSDynamoDBObjectModel, AWSDynamoDBModeling
         return "title"
     }
     
+    //JUNPU: async dependency in the code, busy waiting still exist
     func getAllHistoryMovieTitles() -> [String]
     {
-        print("     getAllHistoryMovies")
+        print("===== getAllHistoryMovies =====")
         var historyMovieTitles: Array = [String]()
         let mapper = AWSDynamoDBObjectMapper.default()
         let scanExpression = AWSDynamoDBScanExpression()
@@ -50,15 +51,20 @@ class HistoryMovie: AWSDynamoDBObjectModel, AWSDynamoDBModeling
             }
             return nil
         })
+        
+        
+        var waiting = 0
         while (dummynum != 6)
         {
-            print("getAllHistoryMovies waiting")
+            waiting = 1
         }
         return historyMovieTitles
     }
     
+    //JUNPU: async dependency in the code, busy waiting still exist
     func getAllLikedMovieTitles(userID: String) -> [String]
     {
+        print("===== getAllLikedMovieTitles =====")
         let mapper = AWSDynamoDBObjectMapper.default()
         var currentLikedMovie = Set<String>()
         let userProfile = UserProfileToDB()
@@ -80,9 +86,12 @@ class HistoryMovie: AWSDynamoDBObjectModel, AWSDynamoDBModeling
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
+        
+        
+        var waiting = 0
         while (dummynum != 6)
         {
-            print("getAllLikedMovieTitles waiting")
+            waiting = 1
         }
         var allLikedMovieTitles: Array = [String]()
         for movie in currentLikedMovie
@@ -92,9 +101,11 @@ class HistoryMovie: AWSDynamoDBObjectModel, AWSDynamoDBModeling
         return allLikedMovieTitles
     }
     
+    
+    //JUNPU: async dependency in the code, busy waiting still exist
     func userLikedHistoryMovies(_userID: String) -> [HistoryMovie]
     {
-        print("     userLikedHistoryMovies")
+        print("===== userLikedHistoryMovies =====")
         var historyTitles: Array = [String]()
         var historyResult: Array = [HistoryMovie]()
         let mapper = AWSDynamoDBObjectMapper.default()
@@ -121,9 +132,11 @@ class HistoryMovie: AWSDynamoDBObjectModel, AWSDynamoDBModeling
                 dummynum = 6
                 return nil
             })
+            
+            var waiting = 0
             while (dummynum != 6)
             {
-                print("userLikedHistoryMovies waiting")
+                waiting = 1
             }
         }
         return historyResult

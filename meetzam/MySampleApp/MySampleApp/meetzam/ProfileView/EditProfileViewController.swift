@@ -125,7 +125,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     //mush
     func uploadProfileImage() {
-        print("uploading")
+        print("===== uploadProfileImage =====")
         let transferManager = AWSS3TransferManager.default()
         //let testFileURL1 = uploadingFileURL
         let uploadRequest1 : AWSS3TransferManagerUploadRequest = AWSS3TransferManagerUploadRequest()
@@ -136,7 +136,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             if let error = task.error as? NSError {
                 print("Upload Error: \(error)")
             } else {
-                print("Upload Successful")
+                print("SUCCESS")
                 //mush
                 self.downloadProfileImage()
             }
@@ -163,7 +163,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     func downloadProfileImage() {
-        print("downloading image")
+        print("===== downloadProfileImage =====")
         
         let downloadingFilePath1 = (NSTemporaryDirectory() as NSString).appendingPathComponent("temp-download")
         self.downloadingFileURL = NSURL(fileURLWithPath: downloadingFilePath1 ) as URL!
@@ -198,6 +198,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     func deleteProfileImage() {
+        print("===== deleteProfileImage =====")
         let s3 = AWSS3.default()
         let deleteObjectRequest = AWSS3DeleteObjectRequest()
         deleteObjectRequest?.bucket = "testprofile-meetzam"
@@ -208,7 +209,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 return nil
             }
             else {
-                print("Deleted successfully.")
+                print("SUCCESS")
             }
             return nil
         })
