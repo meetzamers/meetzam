@@ -15,6 +15,7 @@ import Foundation
 import UIKit
 import AWSMobileHubHelper
 
+
 class PushNotificationViewController: UIViewController {
     @IBOutlet weak var pushNotificationSwitch: UISwitch!
     @IBOutlet var tableView: UITableView!
