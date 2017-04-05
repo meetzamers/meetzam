@@ -71,6 +71,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 print("Error: Can not find the user in the table.")
                 return nil
             }
+            //JUNPU: nested promises
             print("now continue to insertProfile")
             mapper.load(UserProfileToDB.self, hashKey: _userId, rangeKey: nil).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
                 if let error = task.error as? NSError {
@@ -330,15 +331,20 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     
     
     //JUNPU: async dependency in the code, busy waiting still exist
+    //JUNPU: most of the latency comes from this function
+    //JUNPU: working
     func getMatchedUserIDs(key: String) -> [String]
     {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         print("===== getMatchedUserIDs =====")
         let mapper = AWSDynamoDBObjectMapper.default()
         var currentLikedMovie = Set<String>()
         let userProfile = UserProfileToDB()
+        var waiting = 0
         
         print("     before load!!")
-        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+        
+        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as? NSError {
                 print("InsertError: \(error)")
             } else if let user_profile_addTo = task.result as? UserProfileToDB {
@@ -350,30 +356,20 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 }
                 userProfile?.displayName=user_profile_addTo.displayName
             }
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
         
-        
-        
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        var waiting = 0
+        waiting = 0
         while (userProfile?.displayName == nil)
         {
             waiting = 1
         }
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        
-        
-        
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        
-        
-        
+
         print("     next step")
         var matchedUserIDs: Array = [String]()
         var dummynum: Int = 0
         for movie in (currentLikedMovie) {
+            //JUNPU: this loop produces lots of latency by busy waiting in a sequence
             dummynum = 0
             print("You Liked \(movie)")
             mapper.load(SingleMovie.self, hashKey: movie, rangeKey: nil).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
@@ -390,31 +386,28 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                         }
                     }
                 }
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 dummynum = 6
                 return nil
             })
-            
-            
             while (dummynum != 6)
             {
                 waiting = 1
             }
         }
         
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        
         return matchedUserIDs
     }
     
     //JUNPU: async dependency in the code, busy waiting still exist
+    //JUNPU: Tried but did not fix. I'll come back to this
     func getMatchedUserProfiles(userIDs: [String]) -> [UserProfileToDB]
     {
         print("===== getMatchedUserProfiles =====")
         var matchedUserProfiles: Array = [UserProfileToDB]()
         let mapper = AWSDynamoDBObjectMapper.default()
         var dummynum: Int = 0
+        
         for userID in userIDs
         {
             dummynum = 0
@@ -422,7 +415,8 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             mapper.load(UserProfileToDB.self, hashKey: userID, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
                 if let error = task.error as? NSError {
                     print("InsertError: \(error)")
-                } else if let userProfile = task.result as? UserProfileToDB {
+                }
+                else if let userProfile = task.result as? UserProfileToDB {
                     dummynum = 0
                     matchedUserProfiles.append(userProfile)
                 }
@@ -438,6 +432,8 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         }
         return matchedUserProfiles
     }
+    
+    
     
     //JUNPU: fixed busy waiting
     func likeOneUser(key: String, likedUserID: String)
@@ -508,7 +504,8 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     }
     
     
-    //JUNPU: async dependency in the code, busy waiting still exist
+    //JUNPU: seems to fixed the busy waiting, more testing is required
+    //JUNPU: Tried but did not fix. I'll come back to this
     func getLikedUserIDs(key: String) -> [String]
     {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
@@ -517,14 +514,15 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         var likedUserArr = Set<String>()
         var likedUserIDs: Array = [String]()
         var dummynum: Int = 0
-        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task: AWSTask!) -> AnyObject! in
-            if let error = task.error as? NSError {
+        
+        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil).continueWith(executor: AWSExecutor.immediate(), block: { (task: AWSTask!) -> AnyObject! in
+            if let error = task.error as NSError? {
                 print("Error: \(error)")
-            } else if let user_profile = task.result as? UserProfileToDB {
+            }
+            else if let user_profile = task.result as? UserProfileToDB {
                 likedUserArr = user_profile.likedUsers
             }
-            
-            
+
             dummynum = 6
             return nil
         })
@@ -534,12 +532,12 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         {
             waiting = 1
         }
-        
-        // dependency of async ops
         for user in likedUserArr
         {
             likedUserIDs.append(user)
         }
+        
+        print(likedUserIDs)
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         return likedUserIDs
     }
