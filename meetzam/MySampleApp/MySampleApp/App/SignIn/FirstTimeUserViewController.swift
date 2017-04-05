@@ -54,7 +54,7 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
             self.view.addSubview(self.welcomeLabel1)
             self.view.addSubview(self.welcomeLabel2)
         }, completion: { _ in
-            UIView.animate(withDuration: 0.2, delay: 1.2, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: 0.2, delay: 1, options: .curveEaseOut, animations: {
                 self.welcomeLabel2.alpha = 1
             }, completion: { _ in
                 self.view.addSubview(self.welcomeButton)
@@ -594,6 +594,11 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         self.animateTextField(textField: textField, up:true)
+        if (textField.placeholder == "Gender *") {
+            if (genderTextField.text == "") {
+                genderTextField.text = genderOption[0]
+            }
+        }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
