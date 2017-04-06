@@ -10,6 +10,7 @@ import UIKit
 import ZLSwipeableViewSwift
 import AWSMobileHubHelper
 import Foundation
+import UserNotifications
 
 class MatchViewController: UIViewController {
     
@@ -85,6 +86,43 @@ class MatchViewController: UIViewController {
                             dataTask.resume()
                             // ================== push notification ======================================
                             
+                            
+                            // ========================================================================================
+                            let application = UIApplication.shared
+                            application.applicationIconBadgeNumber += 1
+                            
+                            let inAppNotificationWindow = UIView()
+                            inAppNotificationWindow.backgroundColor = UIColor.gray
+                            inAppNotificationWindow.frame = CGRect(x: 0 ,y: -100, width: UIScreen.main.bounds.width, height: 100)
+                            inAppNotificationWindow.alpha = 0.93
+                            
+                            let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.light)
+                            let blurEffectView = UIVisualEffectView(effect: blurEffect)
+                            blurEffectView.frame = inAppNotificationWindow.bounds
+                            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                            inAppNotificationWindow.addSubview(blurEffectView)
+                            
+                            let inAppLabel = UILabel()
+                            inAppLabel.frame = CGRect(x: 0, y: inAppNotificationWindow.frame.height/2 - 10, width: UIScreen.main.bounds.width, height: 30)
+                            inAppLabel.text = "Congratulations! You have a new match!"
+                            inAppLabel.font = UIFont(name: "Raleway-Light", size: 18)
+                            inAppLabel.textColor = UIColor.white
+                            inAppLabel.textAlignment = .center
+                            inAppLabel.alpha = 1.5
+                            inAppNotificationWindow.addSubview(inAppLabel)
+                            
+                            self.view.window!.addSubview(inAppNotificationWindow)
+                            
+                            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut, animations: {
+                                inAppNotificationWindow.frame = CGRect(x: 0 ,y: 0, width: UIScreen.main.bounds.width, height: 100)
+                            }, completion: {_ in
+                                UIView.animate(withDuration: 0.3, delay: 1.5, options: .curveEaseOut, animations: {
+                                    inAppNotificationWindow.frame = CGRect(x: 0 ,y: -100, width: UIScreen.main.bounds.width, height: 100)
+                                }, completion: {_ in
+                                    inAppNotificationWindow.removeFromSuperview()
+                                })
+                            })
+                            // ========================================================================================
                         }
                     }
                     
@@ -165,6 +203,7 @@ class MatchViewController: UIViewController {
         }
         loadPotentialMatch()
 
+        
     }
     
     func nextCardView() -> UIView? {
