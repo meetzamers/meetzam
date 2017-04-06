@@ -28,6 +28,12 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
     
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if (UIApplication.shared.applicationIconBadgeNumber != 0) {
+            setBadge()
+        }
+    }
+    
     //sean:
     func setBadge() {
         //tab bar, chat icon, set badge value(for notification of new match)
