@@ -12,7 +12,8 @@
 //
 
 import UIKit
-
+import UserNotifications
+    
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
@@ -90,8 +91,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         AWSMobileClient.sharedInstance.application(application, didReceiveRemoteNotification: userInfo , fetchCompletionHandler: completionHandler)
-        
     }
     
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        
+        
+        completionHandler(UNNotificationPresentationOptions.alert)
+    }
 }
 

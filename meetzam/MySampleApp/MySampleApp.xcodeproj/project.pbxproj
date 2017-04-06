@@ -10,6 +10,7 @@
 		136D68631E82F1C2004E96CA /* MovieAndList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136D68621E82F1C2004E96CA /* MovieAndList.swift */; };
 		1B2F3E701E95581A00417F6B /* AWSLambda.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2F3E6F1E95581A00417F6B /* AWSLambda.framework */; };
 		1B2F3E711E95581A00417F6B /* AWSLambda.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2F3E6F1E95581A00417F6B /* AWSLambda.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1B46BF821E96D75000FEADD0 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B46BF811E96D75000FEADD0 /* UserNotifications.framework */; };
 		362A26BA1E902ED3008BA57E /* HistoryMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362A26B91E902ED3008BA57E /* HistoryMovie.swift */; };
 		5DD94CEB1E66149500B7DD80 /* LikedMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD94CEA1E66149500B7DD80 /* LikedMoviesView.swift */; };
 		5DD94CED1E6614F800B7DD80 /* MovieCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD94CEC1E6614F800B7DD80 /* MovieCollectionCell.swift */; };
@@ -132,6 +133,7 @@
 /* Begin PBXFileReference section */
 		136D68621E82F1C2004E96CA /* MovieAndList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MovieAndList.swift; path = MySampleApp/meetzam/HomeView/MovieAndList.swift; sourceTree = SOURCE_ROOT; };
 		1B2F3E6F1E95581A00417F6B /* AWSLambda.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSLambda.framework; sourceTree = "<group>"; };
+		1B46BF811E96D75000FEADD0 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		1DD70E29008FEFA700000000 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignInViewController.swift; path = MySampleApp/App/SignIn/SignInViewController.swift; sourceTree = SOURCE_ROOT; };
 		1DD70E2902E65C3B00000000 /* PushNotification.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = PushNotification.storyboard; path = MySampleApp/Demo/Push/PushNotification.storyboard; sourceTree = SOURCE_ROOT; };
 		1DD70E29081A119000000000 /* ContentDeliveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentDeliveryViewController.swift; path = MySampleApp/Demo/ContentDelivery/ContentDeliveryViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -238,6 +240,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B46BF821E96D75000FEADD0 /* UserNotifications.framework in Frameworks */,
 				C41A646E1E922268004239CB /* LTMorphingLabel.framework in Frameworks */,
 				C41A646F1E922268004239CB /* TextFieldEffects.framework in Frameworks */,
 				C4A86E601E8617A20066B6F9 /* NVActivityIndicatorView.framework in Frameworks */,
@@ -419,6 +422,7 @@
 		B401C979BAD7438500000000 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1B46BF811E96D75000FEADD0 /* UserNotifications.framework */,
 				1B2F3E6F1E95581A00417F6B /* AWSLambda.framework */,
 				C41A646C1E922268004239CB /* LTMorphingLabel.framework */,
 				C41A646D1E922268004239CB /* TextFieldEffects.framework */,
