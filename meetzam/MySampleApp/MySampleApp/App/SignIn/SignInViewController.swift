@@ -105,6 +105,9 @@ class SignInViewController: UIViewController {
 
     // MARK: - IBActions
     func handleFacebookLogin() {
+        let provider = AWSFacebookSignInProvider.sharedInstance()
+        provider.setLoginBehavior(FBSDKLoginBehavior.web.rawValue)
+        
         handleLoginWithSignInProvider(AWSFacebookSignInProvider.sharedInstance())
     }
     
