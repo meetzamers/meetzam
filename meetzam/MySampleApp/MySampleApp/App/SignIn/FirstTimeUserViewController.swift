@@ -52,8 +52,8 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
     override func viewWillAppear(_ animated: Bool) {
         UIView.animate(withDuration: 0, delay: 0, options: .curveEaseOut, animations: {
             self.view.addSubview(self.welcomeLabel1)
-        }, completion: { _ in
             self.view.addSubview(self.welcomeLabel2)
+        }, completion: { _ in
             UIView.animate(withDuration: 0.2, delay: 1, options: .curveEaseOut, animations: {
                 self.welcomeLabel2.alpha = 1
             }, completion: { _ in
@@ -120,7 +120,7 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         self.hideKeyboard()
         
         // No 0
-        secondPageLabel.font = UIFont(name: "Raleway-Light", size: 25)
+        secondPageLabel.font = UIFont(name: "Raleway-Light", size: 30)
         secondPageLabel.text = "Basic Information: "
         secondPageLabel.frame = CGRect(x: 30, y: 100, width: UIScreen.main.bounds.width, height: 50)
         secondPageLabel.textAlignment = .left
@@ -132,7 +132,7 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         nameTextField.placeholder = "Display Name *"
         nameTextField.borderInactiveColor = UIColor.darkGray
         nameTextField.borderActiveColor = UIColor.init(red: 242/255, green: 92/255, blue: 0/255, alpha: 0.8)
-        nameTextField.font = UIFont(name: "Raleway-Light", size: 16)
+        nameTextField.font = UIFont(name: "Raleway-Light", size: 18)
         nameTextField.autocapitalizationType = .words
         nameTextField.autocorrectionType = .no
         nameTextField.alpha = 0
@@ -144,7 +144,7 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         emailTextField.placeholder = "Email"
         emailTextField.borderInactiveColor = UIColor.darkGray
         emailTextField.borderActiveColor = UIColor.init(red: 242/255, green: 92/255, blue: 0/255, alpha: 0.8)
-        emailTextField.font = UIFont(name: "Raleway-Light", size: 16)
+        emailTextField.font = UIFont(name: "Raleway-Light", size: 18)
         emailTextField.keyboardType = .emailAddress
         emailTextField.autocapitalizationType = .none
         emailTextField.autocorrectionType = .no
@@ -157,7 +157,7 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         ageTextField.placeholder = "Age"
         ageTextField.borderInactiveColor = UIColor.darkGray
         ageTextField.borderActiveColor = UIColor.init(red: 242/255, green: 92/255, blue: 0/255, alpha: 0.8)
-        ageTextField.font = UIFont(name: "Raleway-Light", size: 16)
+        ageTextField.font = UIFont(name: "Raleway-Light", size: 18)
         ageTextField.keyboardType = .asciiCapableNumberPad
         ageTextField.alpha = 0
         ageTextField.delegate = self
@@ -168,7 +168,7 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         genderTextField.placeholder = "Gender *"
         genderTextField.borderInactiveColor = UIColor.darkGray
         genderTextField.borderActiveColor = UIColor.init(red: 242/255, green: 92/255, blue: 0/255, alpha: 0.8)
-        genderTextField.font = UIFont(name: "Raleway-Light", size: 16)
+        genderTextField.font = UIFont(name: "Raleway-Light", size: 18)
         genderTextField.alpha = 0
         genderPicker.delegate = self
         genderPicker.dataSource = self
@@ -181,7 +181,7 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         regionTextField.placeholder = "Region"
         regionTextField.borderInactiveColor = UIColor.darkGray
         regionTextField.borderActiveColor = UIColor.init(red: 242/255, green: 92/255, blue: 0/255, alpha: 0.8)
-        regionTextField.font = UIFont(name: "Raleway-Light", size: 16)
+        regionTextField.font = UIFont(name: "Raleway-Light", size: 18)
         regionTextField.autocapitalizationType = .words
         regionTextField.alpha = 0
         regionTextField.delegate = self
@@ -225,20 +225,22 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         // Warning label
         emptyWarningLabel.frame = CGRect(x: UIScreen.main.bounds.width * 0.15, y: 250, width: UIScreen.main.bounds.width * 0.7, height: 10)
         emptyWarningLabel.text = "You can't leave this empty."
+        emptyWarningLabel.textAlignment = .right
         emptyWarningLabel.textColor = UIColor.red
-        emptyWarningLabel.font = UIFont(name: "Raleway-Light", size: 8)
+        emptyWarningLabel.font = UIFont(name: "Raleway-Light", size: 10)
         emptyWarningLabel.alpha = 0
         
         // Warning label2
         emptyWarningLabel2.frame = CGRect(x: UIScreen.main.bounds.width * 0.15, y: 415, width: UIScreen.main.bounds.width * 0.7, height: 10)
         emptyWarningLabel2.text = "You can't leave this empty."
+        emptyWarningLabel2.textAlignment = .right
         emptyWarningLabel2.textColor = UIColor.red
-        emptyWarningLabel2.font = UIFont(name: "Raleway-Light", size: 8)
+        emptyWarningLabel2.font = UIFont(name: "Raleway-Light", size: 10)
         emptyWarningLabel2.alpha = 0
         // ============================================================
         // Page 3
         // No 0
-        thirdPageLabel.font = UIFont(name: "Raleway-Light", size: 25)
+        thirdPageLabel.font = UIFont(name: "Raleway-Light", size: 30)
         thirdPageLabel.text = "Introduce Yourself: "
         thirdPageLabel.frame = CGRect(x: 30, y: 100, width: UIScreen.main.bounds.width, height: 50)
         thirdPageLabel.textAlignment = .left
@@ -250,7 +252,7 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         bioTextField.placeholder = "Bio"
         bioTextField.borderInactiveColor = UIColor.darkGray
         bioTextField.borderActiveColor = UIColor.init(red: 242/255, green: 92/255, blue: 0/255, alpha: 0.8)
-        bioTextField.font = UIFont(name: "Raleway-Light", size: 16)
+        bioTextField.font = UIFont(name: "Raleway-Light", size: 18)
         bioTextField.autocapitalizationType = .sentences
         bioTextField.alpha = 0
         bioTextField.delegate = self
@@ -533,7 +535,7 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
                     let endendText = UILabel()
                     endendText.frame = CGRect(x: 0, y: UIScreen.main.bounds.height-100, width: UIScreen.main.bounds.width, height: 50)
                     endendText.text = "© 2017 meetzam-dev"
-                    endendText.font = UIFont(name: "HelveticaNeue-Thin", size: 20)
+                    endendText.font = UIFont(name: "Comfortaa-Regular", size: 20)
                     endendText.textAlignment = .center
                     endendText.textColor = UIColor.white
                     endendText.alpha = 0
@@ -594,6 +596,11 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         self.animateTextField(textField: textField, up:true)
+        if (textField.placeholder == "Gender *") {
+            if (genderTextField.text == "") {
+                genderTextField.text = genderOption[0]
+            }
+        }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {

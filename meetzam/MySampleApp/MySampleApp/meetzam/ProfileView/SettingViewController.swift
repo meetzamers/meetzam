@@ -8,6 +8,7 @@
 
 import UIKit
 import AWSMobileHubHelper
+import FBSDKLoginKit
 
 class SettingViewController: UIViewController {
     
@@ -136,6 +137,9 @@ class SettingViewController: UIViewController {
                     for cookie in facebookCookies! {
                         HTTPCookieStorage.shared.deleteCookie(cookie)
                     }
+                    
+                    let provider = AWSFacebookSignInProvider.sharedInstance()
+                    provider.clearCachedLoginFlag()
                     
                     self.setloginStatusButton()
                     //self.popSignInViewController()

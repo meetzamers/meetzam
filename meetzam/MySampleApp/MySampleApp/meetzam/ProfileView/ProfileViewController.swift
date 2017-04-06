@@ -96,7 +96,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                 largeImageURL = "https://graph.facebook.com/" + fbid! + "/picture?type=large&redirect=true&width=720&height=720"
             }
             
-            //if let imageURL = identityManager.imageURL {
             if let imageURL = URL(string: largeImageURL!) {
                 let imageData = try! Data(contentsOf: imageURL)
                 if let profileImage = UIImage(data: imageData) {
@@ -106,6 +105,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                 }
             }
         }
+        self.profileMainBodyView.addSubview(userPicField)
         
         //show top three movies
         TopThreeMovieCollectionView.delegate = self;
@@ -230,8 +230,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                 
                 //monika
                 if (self.downloadingFileURL != nil) {
+                    print("here")
                     let imageURL = URL(fileURLWithPath: (self.downloadingFileURL?.path)!)
                     self.userPicField.image = UIImage(contentsOfFile: imageURL.path)
+//                    self.view.addSubview(self.userPicField)
+                    
                 }
                 
                 //monika
