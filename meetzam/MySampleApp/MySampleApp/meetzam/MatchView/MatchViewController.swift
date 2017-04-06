@@ -56,6 +56,7 @@ class MatchViewController: UIViewController {
                             UserProfileToDB().insertToMatchedUser(key: self.userIds[self.lablecount-self.cardsToLoad], userID: AWSIdentityManager.default().identityId!)
                             
                             print("Congradulations!! You have a new match!! with \(self.displayNames[self.lablecount-self.cardsToLoad])")
+                            MainViewController().setBadge()
                         }
                     }
                     
@@ -246,9 +247,8 @@ class MatchViewController: UIViewController {
         print("the local directory is \(URLString)")
         if FileManager.default.fileExists(atPath: URLString) {
             print("The file exists!! \(userId)")
-            let profileURL = NSURL(string: URLString)
-            let profileData = NSData(contentsOf: profileURL! as URL)
-            profilePics.append(UIImage(data: profileData! as Data)!)
+            let profileURL = URL(fileURLWithPath: URLString)
+            profilePics.append(UIImage(contentsOfFile: profileURL.path)!)
         } else {
             profilePics.append(#imageLiteral(resourceName: "emptyMovie"))
         }

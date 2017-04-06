@@ -276,7 +276,6 @@ class FrameViewController: UIViewController {
     // ACTIONS:
     // Small heart button action (cancel like)
     func cancelLike() {
-        print("unliked!!!!!!!")
         //remove user from movie's liked list
         SingleMovie().deleteFromCurrentLikedUser(key: movieTitle.text!, userid: AWSIdentityManager.default().identityId!)
         //remove movie from user's liked list

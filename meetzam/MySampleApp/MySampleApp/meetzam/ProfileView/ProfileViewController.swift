@@ -5,7 +5,7 @@
 //  Created by ZuYuan Fan on 2/21/17.
 //
 //
-
+import AWSS3
 import UIKit
 import Foundation
 import AWSMobileHubHelper
@@ -18,9 +18,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var profileMainBodyView: UIView!
     
     
-
     //declare profile picture field
     let userPicField = UIImageView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width))
+    var downloadingFileURL: URL?
+
     
     //declare UI var
     let displayName = UILabel()
@@ -32,7 +33,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     //************************** VIEW DID LOAD ********************************************//
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        downloadProfileImage()
         /*
         DispatchQueue.main.async {
             self.TopThreeMovieCollectionView.reloadData()
@@ -85,27 +86,27 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         //============set Profile Picture ==============\\
         
-        DispatchQueue.main.async {
-            self.profileMainBodyView.addSubview(self.userPicField)
+        if (downloadingFileURL != nil) {
+            let imageURL = URL(fileURLWithPath: (self.downloadingFileURL?.path)!)
+            self.userPicField.image = UIImage(contentsOfFile: imageURL.path)
+        } else {
             let fbid = FBSDKAccessToken.current().userID
             var largeImageURL = identityManager.imageURL?.absoluteString
             if (fbid != nil) {
                 largeImageURL = "https://graph.facebook.com/" + fbid! + "/picture?type=large&redirect=true&width=720&height=720"
             }
-
-            self.userPicField.loadImageUsingURLString(URLString: largeImageURL!)
             
             //if let imageURL = identityManager.imageURL {
-//            if let imageURL = URL(string: largeImageURL!) {
-//                let imageData = try! Data(contentsOf: imageURL)
-//                if let profileImage = UIImage(data: imageData) {
-//                    self.userPicField.image = profileImage
-//                } else {
-//                    self.userPicField.image = UIImage(named: "UserIcon")
-//                }
-//            }
+            if let imageURL = URL(string: largeImageURL!) {
+                let imageData = try! Data(contentsOf: imageURL)
+                if let profileImage = UIImage(data: imageData) {
+                    userPicField.image = profileImage
+                } else {
+                    userPicField.image = UIImage(named: "UserIcon")
+                }
+            }
         }
-            
+        
         //show top three movies
         TopThreeMovieCollectionView.delegate = self;
         TopThreeMovieCollectionView.dataSource = self;
@@ -191,7 +192,6 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                 let path = "https://image.tmdb.org/t/p/w154" + imagesURLs[i]
                 let pathURL = URL(string: path)
                 movieImageData.append(try! Data(contentsOf: pathURL!))
-                //movieImageData.insert((try! Data(contentsOf: pathURL!)), at: 0)
             }
         
         } else {
@@ -201,14 +201,44 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                 let path = "https://image.tmdb.org/t/p/w154" + imagesURLs[i]
                 let pathURL = URL(string: path)
                 movieImageData.append(try! Data(contentsOf: pathURL!))
-                //movieImageData.insert((try! Data(contentsOf: pathURL!)), at: 0)
             }
-            
         }
-        
-        
+
         return movieImageData
         
+    }
+    
+    func downloadProfileImage() -> (Bool){
+        print("downloading image")
+        
+        let downloadingFilePath1 = (NSTemporaryDirectory() as NSString).appendingPathComponent("temp-download")
+        self.downloadingFileURL = NSURL(fileURLWithPath: downloadingFilePath1 ) as URL!
+        
+        let transferManager = AWSS3TransferManager.default()
+        
+        let readRequest1 : AWSS3TransferManagerDownloadRequest = AWSS3TransferManagerDownloadRequest()
+        readRequest1.bucket = "testprofile-meetzam"
+        readRequest1.key =  AWSIdentityManager.default().identityId! + ".jpeg"
+        readRequest1.downloadingFileURL = downloadingFileURL
+        transferManager.download(readRequest1).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            if let error = task.error as? NSError {
+                print("download Error: \(error)")
+                self.downloadingFileURL = nil
+                return false as AnyObject
+            } else {
+                print("download Successful")
+                
+                //monika
+                if (self.downloadingFileURL != nil) {
+                    let imageURL = URL(fileURLWithPath: (self.downloadingFileURL?.path)!)
+                    self.userPicField.image = UIImage(contentsOfFile: imageURL.path)
+                }
+                
+                //monika
+                return true as AnyObject
+            }
+        })
+        return false
     }
     
 }

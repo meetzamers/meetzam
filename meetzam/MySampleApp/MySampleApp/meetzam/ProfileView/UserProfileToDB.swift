@@ -43,16 +43,37 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     
     // function to add/update user info into database
     // argument: dbName...
-    // fixed busy waiting
+    //JUNPU: fixed busy waiting
     func insertProfile(_userId: String, _displayName: String, _bio: String, _age: String, _gender: String, _region: String, _email: String) {
-        print("     insertProfile")
+        print("===== insertProfile =====")
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         let mapper = AWSDynamoDBObjectMapper.default()
         let userProfile = UserProfileToDB()
-        
-        // update only if the user is in table
-        if (UserProfileToDB().isInTable(userID: _userId) == true)
-        {
-            mapper.load(UserProfileToDB.self, hashKey: _userId, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+        //JUNPU: tixed this
+        var result: Bool = false
+        var userIDInTable: Array = [String]()
+        let scanExpression = AWSDynamoDBScanExpression()
+        mapper.scan(UserProfileToDB.self, expression: scanExpression).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            if let error = task.error as? NSError {
+                print("The request failed. Error: \(error)")
+            } else if let allUsers = task.result {
+                for user in allUsers.items as! [UserProfileToDB] {
+                    userIDInTable.append(user.userId!)
+                }
+            }
+            if (userIDInTable.contains(_userId)) {
+                print("found user in the table")
+                result = true
+            }
+            return nil
+        }).continueWith(block: { (task:AWSTask<AnyObject>) -> Any? in
+            if result == false {
+                print("Error: Can not find the user in the table.")
+                return nil
+            }
+            //JUNPU: nested promises
+            print("now continue to insertProfile")
+            mapper.load(UserProfileToDB.self, hashKey: _userId, rangeKey: nil).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
                 if let error = task.error as? NSError {
                     print("InsertError: \(error)")
                 } else if let user_profile_addTo = task.result as? UserProfileToDB {
@@ -75,9 +96,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                     userProfile?.movieCount = user_profile_addTo.movieCount
                     userProfile?.userId=user_profile_addTo.userId
                     
-                    
                     ////////////////////////////////////
-                    
                     userProfile?.userId  = _userId
                     userProfile?.displayName = _displayName
                     userProfile?.bio = _bio
@@ -86,57 +105,21 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                     userProfile?.region = _region
                     userProfile?.email = _email
                     mapper.save(userProfile!)
+                    print("SUCCESS")
                 }
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 return nil
             })
-            
-//            UIApplication.shared.isNetworkActivityIndicatorVisible = true
-//            while(userProfile?.userId==nil)
-//            {
-//                print("insertProfile waiting")
-//            }
-//            UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        }
-
-    }
-    
-    
-    
-    // async dependency in the code, busy waiting still exist
-    func isInTable(userID: String) -> Bool
-    {
-        var result: Bool = false
-        var userIDInTable: Array = [String]()
-        let mapper = AWSDynamoDBObjectMapper.default()
-        let scanExpression = AWSDynamoDBScanExpression()
-        var dummynum: Int = 0
-        
-        mapper.scan(UserProfileToDB.self, expression: scanExpression).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
-            if let error = task.error as? NSError {
-                print("The request failed. Error: \(error)")
-            } else if let allUsers = task.result {
-                for user in allUsers.items as! [UserProfileToDB] {
-                    userIDInTable.append(user.userId!)
-                }
-                dummynum = 6
-            }
             return nil
         })
-        while (dummynum != 6)
-        {
-            print("isInTable waiting")
-        }
-        
-        
-        if (userIDInTable.contains(userID))
-        {
-            result = true
-        }
-        return result
     }
     
+    
+    //JUNPU: func isInTable(userID: String) -> Bool is nolonger needed.
+    
+    
     func getProfileForEdit(key: String, user_profile: UserProfileToDB?, displayname: UITextField!, bio: UITextField!, age: UITextField!, gender: UITextField!, region: UITextField!, email: UITextField!){
+        print("===== getProfileForEdit =====")
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         let mapper = AWSDynamoDBObjectMapper.default()
         
@@ -156,6 +139,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 //print(region.text)
                 email.text = user_profile.email
                 //print(email.text)
+                print("SUCCESS")
             }
             
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
@@ -165,6 +149,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     }
     
     func getProfileForDisplay(key: String, user_profile: UserProfileToDB?, displayname: UILabel!, bio: UILabel!){
+        print("===== getProfileForDisplay =====")
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         let mapper = AWSDynamoDBObjectMapper.default()
         
@@ -177,6 +162,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 //print(displayname.text)
                 bio.text = user_profile.bio
                 //print(bio.text)
+                print("SUCCESS")
             }
             
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
@@ -184,31 +170,30 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         })
         
     }
-    /// fixed busy waiting
+    //JUNPU: fixed busy waiting
     func insertToCurrentLikedMovie(key: String, movieTitle: String)
     {
-        print("     insertToCurrentLikedMovie!!")
+        print("===== insertToCurrentLikedMovie =====")
         let mapper = AWSDynamoDBObjectMapper.default()
         
         let userProfile = UserProfileToDB()
         
-        print("     before load!!")
         mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as? NSError {
                 print("InsertError: \(error)")
             } else if let user_profile_addTo = task.result as? UserProfileToDB {
                 userProfile?.userId=key
-                print("     key is \(key)")
+//                print("     key is \(key)")
                 userProfile?.displayName = user_profile_addTo.displayName
-                print("displayname is \(userProfile?.displayName)")
+//                print("displayname is \(userProfile?.displayName)")
                 userProfile?.bio = user_profile_addTo.bio
-                print("bio is \(userProfile?.bio)")
+//                print("bio is \(userProfile?.bio)")
                 userProfile?.age = user_profile_addTo.age
-                print("age is \(userProfile?.age)")
+//                print("age is \(userProfile?.age)")
                 userProfile?.gender = user_profile_addTo.gender
-                print("gender is \(userProfile?.gender)")
+//                print("gender is \(userProfile?.gender)")
                 userProfile?.region = user_profile_addTo.region
-                print("region is \(userProfile?.region)")
+//                print("region is \(userProfile?.region)")
                 userProfile?.currentLikedMovie = user_profile_addTo.currentLikedMovie
                 if (user_profile_addTo.currentLikedMovie.count == 0)
                 {
@@ -225,17 +210,16 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                     userProfile?.matchedUsers.insert("mushroom13")
                 }
                 for movie in (userProfile?.currentLikedMovie)! {
-                    print("\(movie)")
+//                    print("\(movie)")
                 }
                 userProfile?.movieCount = user_profile_addTo.movieCount
                 
                 userProfile?.email = user_profile_addTo.email
-                print("email is \(userProfile?.email)")
-                print("     all put")
+//                print("email is \(userProfile?.email)")
+
                 
                 //////////////////////////////////////////////
                 
-                print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
                 if (!((userProfile?.currentLikedMovie.contains(movieTitle))!))
                 {
                     if (userProfile?.currentLikedMovie.count != 0 && userProfile?.movieCount == 0) {
@@ -249,49 +233,38 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                     print("\(movie)")
                 }
                 mapper.save(userProfile!)
-                
-                
-                
+                print("SUCCESS")
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
-        
-//        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-//        while(userProfile?.email==nil)
-//        {
-//            print("waiting")
-//        }
-//        UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        
-
     }
-    // fixed busy waiting
+    
+    //JUNPU: fixed busy waiting
     func deleteFromCurrentLikedMovie(key: String, movieTitle: String)
     {
-        print("     deleteFromCurrentLikedMovie!!")
+        print("===== deleteFromCurrentLikedMovie =====")
         
         let mapper = AWSDynamoDBObjectMapper.default()
         
         let userProfile = UserProfileToDB()
         
-        print("     before load!!")
         mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as? NSError {
                 print("InsertError: \(error)")
             } else if let user_profile_addTo = task.result as? UserProfileToDB {
                 userProfile?.userId=key
-                print("     key is \(key)")
+//                print("     key is \(key)")
                 userProfile?.displayName = user_profile_addTo.displayName
-                print("displayname is \(userProfile?.displayName)")
+//                print("displayname is \(userProfile?.displayName)")
                 userProfile?.bio = user_profile_addTo.bio
-                print("bio is \(userProfile?.bio)")
+//                print("bio is \(userProfile?.bio)")
                 userProfile?.age = user_profile_addTo.age
-                print("age is \(userProfile?.age)")
+//                print("age is \(userProfile?.age)")
                 userProfile?.gender = user_profile_addTo.gender
-                print("gender is \(userProfile?.gender)")
+//                print("gender is \(userProfile?.gender)")
                 userProfile?.region = user_profile_addTo.region
-                print("region is \(userProfile?.region)")
+//                print("region is \(userProfile?.region)")
                 userProfile?.likedUsers = user_profile_addTo.likedUsers
                 if (user_profile_addTo.likedUsers.count == 0)
                 {
@@ -303,21 +276,20 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                     userProfile?.matchedUsers.insert("mushroom13")
                 }
                 userProfile?.currentLikedMovie=user_profile_addTo.currentLikedMovie
-                print("BEFORE DELETION, currentLikedMovie are: \(userProfile?.currentLikedMovie.description)")
+//                print("BEFORE DELETION, currentLikedMovie are: \(userProfile?.currentLikedMovie.description)")
                 userProfile?.movieCount = user_profile_addTo.movieCount
                 userProfile?.email = user_profile_addTo.email
-                print("email is \(userProfile?.email)")
-                print("     all put")
-                
+//                print("email is \(userProfile?.email)")
+//                print("     all put")
                 
                 ///////////////////////
-                print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
+//                print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
                 if (!((userProfile?.currentLikedMovie.contains(movieTitle))!))
                 {
                     print("error: delete a movie not in user's liked movie list")
                 }
                 else {
-                    print("removing movie")
+//                    print("removing movie")
                     _ = userProfile?.currentLikedMovie.remove(movieTitle)
                     userProfile?.movieCount = userProfile?.currentLikedMovie.count as NSNumber?
                     //dummy string since empty string set not allowed
@@ -326,51 +298,24 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                     }
                 }
                 
-                print("AFTER DELETION, currentLikedMovie are: \(userProfile?.currentLikedMovie.description)")
+//                print("AFTER DELETION, currentLikedMovie are: \(userProfile?.currentLikedMovie.description)")
                 mapper.save(userProfile!)
-
-                
-                
-                
-                
+                print("SUCCESS")
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
-        
-//        while(userProfile?.email==nil)
-//        {
-//            print("waiting")
-//        }
-        
-        
-//        print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
-//        if (!((userProfile?.currentLikedMovie.contains(movieTitle))!))
-//        {
-//            print("error: delete a movie not in user's liked movie list")
-//        }
-//        else {
-//            print("removing movie")
-//            _ = userProfile?.currentLikedMovie.remove(movieTitle)
-//            userProfile?.movieCount = userProfile?.currentLikedMovie.count as NSNumber?
-//            //dummy string since empty string set not allowed
-//            if (userProfile?.currentLikedMovie.count == 0) {
-//                userProfile?.currentLikedMovie.insert("mushroom13")
-//            }
-//        }
-//        
-//        print("AFTER DELETION, currentLikedMovie are: \(userProfile?.currentLikedMovie.description)")
-//        mapper.save(userProfile!)
     }
     
     
     func getLikedMovies(userId: String, user_profile: UserProfileToDB) {
+        print("===== getLikedMovies =====")
         let mapper = AWSDynamoDBObjectMapper.default()
         mapper.load(UserProfileToDB.self, hashKey: userId, rangeKey: nil).continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as? NSError {
                 print("Error: \(error)")
             } else if let user_profile_temp = task.result as? UserProfileToDB {
-                print("get: HERE ARE THE LIKED MOVIES")
+//                print("get: HERE ARE THE LIKED MOVIES")
                 if (user_profile_temp.currentLikedMovie.count != 0 && user_profile_temp.movieCount == 0) {
                     print("dummy detected")
                 }
@@ -379,23 +324,27 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                     print(user_profile.currentLikedMovie.description)
                 }
             }
-            
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
     }
     
     
-    // async dependency in the code, busy waiting still exist
+    //JUNPU: async dependency in the code, busy waiting still exist
+    //JUNPU: most of the latency comes from this function
+    //JUNPU: working
     func getMatchedUserIDs(key: String) -> [String]
     {
-        print("     getMatchedUserIDs")
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        print("===== getMatchedUserIDs =====")
         let mapper = AWSDynamoDBObjectMapper.default()
         var currentLikedMovie = Set<String>()
         let userProfile = UserProfileToDB()
+        var waiting = 0
         
         print("     before load!!")
-        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+        
+        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as? NSError {
                 print("InsertError: \(error)")
             } else if let user_profile_addTo = task.result as? UserProfileToDB {
@@ -406,31 +355,24 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                     currentLikedMovie=user_profile_addTo.currentLikedMovie
                 }
                 userProfile?.displayName=user_profile_addTo.displayName
-                
-                
-                
             }
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
         
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        waiting = 0
         while (userProfile?.displayName == nil)
         {
-            print("waiting")
+            waiting = 1
         }
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        
-        
-        
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+
         print("     next step")
         var matchedUserIDs: Array = [String]()
         var dummynum: Int = 0
         for movie in (currentLikedMovie) {
+            //JUNPU: this loop produces lots of latency by busy waiting in a sequence
             dummynum = 0
             print("You Liked \(movie)")
-            mapper.load(SingleMovie.self, hashKey: movie, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            mapper.load(SingleMovie.self, hashKey: movie, rangeKey: nil).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
                 if let error = task.error as? NSError {
                     print("InsertError: \(error)")
                 } else if let single_movie = task.result as? SingleMovie {
@@ -444,29 +386,28 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                         }
                     }
                 }
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 dummynum = 6
                 return nil
             })
             while (dummynum != 6)
             {
-                print("waiting")
+                waiting = 1
             }
         }
         
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        
         return matchedUserIDs
     }
     
-    // async dependency in the code, busy waiting still exist
+    //JUNPU: async dependency in the code, busy waiting still exist
+    //JUNPU: Tried but did not fix. I'll come back to this
     func getMatchedUserProfiles(userIDs: [String]) -> [UserProfileToDB]
     {
-        print("     getMatchedUserProfiles")
+        print("===== getMatchedUserProfiles =====")
         var matchedUserProfiles: Array = [UserProfileToDB]()
         let mapper = AWSDynamoDBObjectMapper.default()
         var dummynum: Int = 0
+        
         for userID in userIDs
         {
             dummynum = 0
@@ -474,7 +415,8 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             mapper.load(UserProfileToDB.self, hashKey: userID, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
                 if let error = task.error as? NSError {
                     print("InsertError: \(error)")
-                } else if let userProfile = task.result as? UserProfileToDB {
+                }
+                else if let userProfile = task.result as? UserProfileToDB {
                     dummynum = 0
                     matchedUserProfiles.append(userProfile)
                 }
@@ -482,38 +424,41 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 dummynum = 6
                 return nil
             })
+            var waiting = 0
             while (dummynum != 6)
             {
-                print("waiting")
+                waiting = 1
             }
         }
         return matchedUserProfiles
     }
     
-    // fixed busy waiting
+    
+    
+    //JUNPU: fixed busy waiting
     func likeOneUser(key: String, likedUserID: String)
     {
-        print("     likeOneUser")
+        print("===== likeOneUser =====")
         let mapper = AWSDynamoDBObjectMapper.default()
         let userProfile = UserProfileToDB()
         
-        print("     before load!!")
+//        print("     before load!!")
         mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as? NSError {
                 print("InsertError: \(error)")
             } else if let user_profile_addTo = task.result as? UserProfileToDB {
                 userProfile?.userId=key
-                print("     key is \(key)")
+//                print("     key is \(key)")
                 userProfile?.displayName = user_profile_addTo.displayName
-                print("displayname is \(userProfile?.displayName)")
+//                print("displayname is \(userProfile?.displayName)")
                 userProfile?.bio = user_profile_addTo.bio
-                print("bio is \(userProfile?.bio)")
+//                print("bio is \(userProfile?.bio)")
                 userProfile?.age = user_profile_addTo.age
-                print("age is \(userProfile?.age)")
+//                print("age is \(userProfile?.age)")
                 userProfile?.gender = user_profile_addTo.gender
-                print("gender is \(userProfile?.gender)")
+//                print("gender is \(userProfile?.gender)")
                 userProfile?.region = user_profile_addTo.region
-                print("region is \(userProfile?.region)")
+//                print("region is \(userProfile?.region)")
                 userProfile?.currentLikedMovie=user_profile_addTo.currentLikedMovie
                 // if the user does not have any liked movies
                 if (user_profile_addTo.currentLikedMovie.count == 0)
@@ -533,12 +478,12 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 userProfile?.movieCount = user_profile_addTo.movieCount
                 
                 userProfile?.email = user_profile_addTo.email
-                print("email is \(userProfile?.email)")
-                print("     all put")
+//                print("email is \(userProfile?.email)")
+//                print("     all put")
                 
                 
                 ///////////////
-                print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
+//                print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
                 if (!((userProfile?.likedUsers.contains(likedUserID))!))
                 {
                     if (userProfile?.likedUsers.count == 1 && (userProfile?.likedUsers.contains("mushroom13"))!) {
@@ -548,54 +493,51 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                     userProfile?.likedUsers.insert(likedUserID)
                 }
                 mapper.save(userProfile!)
+                print("SUCCESS")
                 
                 
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
-        
-//        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-//        while(userProfile?.email==nil)
-//        {
-//            print("likeOneUser waiting")
-//        }
-//        UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        
 
     }
     
     
-    // async dependency in the code, busy waiting still exist
+    //JUNPU: seems to fixed the busy waiting, more testing is required
+    //JUNPU: Tried but did not fix. I'll come back to this
     func getLikedUserIDs(key: String) -> [String]
     {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        print("     getLikedUserIDs")
+        print("===== getLikedUserIDs =====")
         let mapper = AWSDynamoDBObjectMapper.default()
         var likedUserArr = Set<String>()
         var likedUserIDs: Array = [String]()
         var dummynum: Int = 0
-        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task: AWSTask!) -> AnyObject! in
-            if let error = task.error as? NSError {
+        
+        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil).continueWith(executor: AWSExecutor.immediate(), block: { (task: AWSTask!) -> AnyObject! in
+            if let error = task.error as NSError? {
                 print("Error: \(error)")
-            } else if let user_profile = task.result as? UserProfileToDB {
+            }
+            else if let user_profile = task.result as? UserProfileToDB {
                 likedUserArr = user_profile.likedUsers
             }
-            
-            
+
             dummynum = 6
             return nil
         })
+        
+        var waiting = 0
         while (dummynum == 0)
         {
-            print("waiting")
+            waiting = 1
         }
-        
-        // dependency of async ops
         for user in likedUserArr
         {
             likedUserIDs.append(user)
         }
+        
+        print(likedUserIDs)
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         return likedUserIDs
     }
@@ -604,10 +546,10 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     // 1st: (your id, other's id)
     // 2nd: (other's id, your id)
     // if both true, then there is a match
-    // async dependency in the code, busy waiting still exist
+    //JUNPU: async dependency in the code, busy waiting still exist
     func findIsMatched(key: String, userID: String) -> Bool
     {
-        print("     findIsMatched")
+        print("===== findIsMatched =====")
         let mapper = AWSDynamoDBObjectMapper.default()
         var result: Bool = false
         var dummynum: Int = 0
@@ -625,37 +567,39 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             dummynum = 6
             return nil
         })
+        
+        var waiting = 0
         while (dummynum == 0)
         {
-            print("findIsMatched waiting")
+            waiting = 1
         }
         return result
     }
     
-    // fixed busy waiting
+    //JUNPU: fixed busy waiting
     func insertToMatchedUser(key: String, userID: String)
     {
-        print("     insertToMatchedUser")
+        print("===== insertToMatchedUser =====")
         let mapper = AWSDynamoDBObjectMapper.default()
         let userProfile = UserProfileToDB()
         
-        print("     before load!!")
+//        print("     before load!!")
         mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as? NSError {
                 print("InsertError: \(error)")
             } else if let user_profile_addTo = task.result as? UserProfileToDB {
                 userProfile?.userId=key
-                print("     key is \(key)")
+//                print("     key is \(key)")
                 userProfile?.displayName = user_profile_addTo.displayName
-                print("displayname is \(userProfile?.displayName)")
+//                print("displayname is \(userProfile?.displayName)")
                 userProfile?.bio = user_profile_addTo.bio
-                print("bio is \(userProfile?.bio)")
+//                print("bio is \(userProfile?.bio)")
                 userProfile?.age = user_profile_addTo.age
-                print("age is \(userProfile?.age)")
+//                print("age is \(userProfile?.age)")
                 userProfile?.gender = user_profile_addTo.gender
-                print("gender is \(userProfile?.gender)")
+//                print("gender is \(userProfile?.gender)")
                 userProfile?.region = user_profile_addTo.region
-                print("region is \(userProfile?.region)")
+//                print("region is \(userProfile?.region)")
                 userProfile?.currentLikedMovie = user_profile_addTo.currentLikedMovie
                 if (user_profile_addTo.currentLikedMovie.count == 0)
                 {
@@ -678,7 +622,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 userProfile?.email = user_profile_addTo.email
                 
                 ///////////////////////////////////
-                print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
+//                print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
                 if (!((userProfile?.matchedUsers.contains(userID))!))
                 {
                     if (userProfile?.matchedUsers.count != 0 && (userProfile?.matchedUsers.contains("mushroom13"))!) {
@@ -689,37 +633,21 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                     userProfile?.matchedUsers.insert(userID)
                 }
                 mapper.save(userProfile!)
+                print("SECCESS")
                 
             
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
-        
-//        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-//        while(userProfile?.email==nil)
-//        {
-//            print("insertToMatchedUser waiting")
-//        }
-//        UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        
-//        print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
-//        if (!((userProfile?.matchedUsers.contains(userID))!))
-//        {
-//            if (userProfile?.matchedUsers.count != 0 && (userProfile?.matchedUsers.contains("mushroom13"))!) {
-//                //dummy exist
-//                print("dummy here")
-//                userProfile?.matchedUsers.removeAll()
-//            }
-//            userProfile?.matchedUsers.insert(userID)
-//        }
-//        mapper.save(userProfile!)
+
     }
     
     func downloadUserIcon(userID: String) -> URL
     {
+        print("===== downloadUserIcon =====")
         let transferManager = AWSS3TransferManager.default()
-        print("downloading pic for \(userID)")
+//        print("downloading pic for \(userID)")
         let downloadingFileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(userID)
         
         let downloadRequest = AWSS3TransferManagerDownloadRequest()
@@ -732,11 +660,11 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 print("download Error: \(error)")
                 return nil
             } else {
-                print("download Successful")
+                print("SUCCESS")
             }
             return nil
         })
-        return downloadingFileURL
+        return downloadingFileURL // possible error, downloadingFileURL dependent on async operation, this return statement might returnning null.
     }
     
 }

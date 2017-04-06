@@ -125,7 +125,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     //mush
     func uploadProfileImage() {
-        print("uploading")
+        print("===== uploadProfileImage =====")
         let transferManager = AWSS3TransferManager.default()
         //let testFileURL1 = uploadingFileURL
         let uploadRequest1 : AWSS3TransferManagerUploadRequest = AWSS3TransferManagerUploadRequest()
@@ -136,7 +136,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             if let error = task.error as? NSError {
                 print("Upload Error: \(error)")
             } else {
-                print("Upload Successful")
+                print("SUCCESS")
                 //mush
                 self.downloadProfileImage()
             }
@@ -163,7 +163,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     func downloadProfileImage() {
-        print("downloading image")
+        print("===== downloadProfileImage =====")
         
         let downloadingFilePath1 = (NSTemporaryDirectory() as NSString).appendingPathComponent("temp-download")
         self.downloadingFileURL = NSURL(fileURLWithPath: downloadingFilePath1 ) as URL!
@@ -179,13 +179,26 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 print("download Error: \(error)")
                 self.downloadingFileURL = nil
             } else {
-                print("download Successful")
+                //monika
+                if (self.downloadingFileURL != nil) {
+                    let imageURL = URL(fileURLWithPath: (self.downloadingFileURL?.path)!)
+                    let image    = UIImage(contentsOfFile: imageURL.path)
+                        
+                    if (image == nil) {
+                        print("cannot get the image")
+                    } else {
+                        self.profilePicture.image = image
+                    }
+                }
+                //monika
+                print("SUCCESS")
             }
             return nil
         })
     }
     
     func deleteProfileImage() {
+        print("===== deleteProfileImage =====")
         let s3 = AWSS3.default()
         let deleteObjectRequest = AWSS3DeleteObjectRequest()
         deleteObjectRequest?.bucket = "testprofile-meetzam"
@@ -196,7 +209,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 return nil
             }
             else {
-                print("Deleted successfully.")
+                print("SUCCESS")
             }
             return nil
         })
@@ -303,7 +316,16 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         }
         
         // Initiating profilePicture UIImageView from Facebook profile picture
-        
+        downloadProfileImage()
+        if (downloadingFileURL != nil) {
+            /*
+            if FileManager.default.fileExists(atPath: (downloadingFileURL?.path)!) {
+                let url = NSURL(string: (downloadingFileURL?.path)!)
+                let data = NSData(contentsOf: url! as URL)
+                profilePicture.image = UIImage(data: data! as Data)
+            }
+            */
+        } else {
         let fbid = FBSDKAccessToken.current().userID
         var largeImageURL = identityManager.imageURL?.absoluteString
         if (fbid != nil) {
@@ -319,7 +341,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 profilePicture.image = UIImage(named: "UserIcon")
             }
         }
-        
+        }
         
         // Function to disable keyboard upon touching anywhere else
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(EditProfileViewController.dismissKeyboard))

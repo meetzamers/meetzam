@@ -25,6 +25,13 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
         self.tabBar.tintColor = UIColor.init(red: 30/255, green: 30/255, blue: 30/255, alpha: 1)
         self.tabBar.barTintColor = UIColor.init(red: 176/255, green: 176/255, blue: 176/255, alpha: 1)
         self.tabBar.unselectedItemTintColor = UIColor.init(red: 104/255, green: 104/255, blue: 104/255, alpha: 1)
+    
+    }
+    
+    //sean:
+    func setBadge() {
+        //tab bar, chat icon, set badge value(for notification of new match)
+        self.tabBar.items?[3].badgeValue = "·"
     }
     
     // tap match pop up.
