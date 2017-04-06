@@ -2,7 +2,7 @@
 //  ChatRoom.swift
 //  MySampleApp
 //
-//  Created by 成熟 稳重 靠谱 on 4/5/17.
+//  Created by mushroom on 4/5/17.
 //
 //
 
