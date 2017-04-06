@@ -222,7 +222,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 
                 if (!((userProfile?.currentLikedMovie.contains(movieTitle))!))
                 {
-                    if (userProfile?.currentLikedMovie.count != 0 && userProfile?.movieCount == 0) {
+                    if (userProfile?.currentLikedMovie.count == 1 && (userProfile?.currentLikedMovie.contains("mushroom13"))!) {
                         //dummy exist
                         userProfile?.currentLikedMovie.removeAll()
                     }
