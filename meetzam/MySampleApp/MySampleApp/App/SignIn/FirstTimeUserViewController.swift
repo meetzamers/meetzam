@@ -225,15 +225,17 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         // Warning label
         emptyWarningLabel.frame = CGRect(x: UIScreen.main.bounds.width * 0.15, y: 250, width: UIScreen.main.bounds.width * 0.7, height: 10)
         emptyWarningLabel.text = "You can't leave this empty."
+        emptyWarningLabel.textAlignment = .right
         emptyWarningLabel.textColor = UIColor.red
-        emptyWarningLabel.font = UIFont(name: "Raleway-Light", size: 8)
+        emptyWarningLabel.font = UIFont(name: "Raleway-Light", size: 10)
         emptyWarningLabel.alpha = 0
         
         // Warning label2
         emptyWarningLabel2.frame = CGRect(x: UIScreen.main.bounds.width * 0.15, y: 415, width: UIScreen.main.bounds.width * 0.7, height: 10)
         emptyWarningLabel2.text = "You can't leave this empty."
+        emptyWarningLabel2.textAlignment = .right
         emptyWarningLabel2.textColor = UIColor.red
-        emptyWarningLabel2.font = UIFont(name: "Raleway-Light", size: 8)
+        emptyWarningLabel2.font = UIFont(name: "Raleway-Light", size: 10)
         emptyWarningLabel2.alpha = 0
         // ============================================================
         // Page 3
