@@ -9,6 +9,7 @@
 import UIKit
 import ZLSwipeableViewSwift
 import AWSMobileHubHelper
+import Foundation
 
 class MatchViewController: UIViewController {
     
@@ -57,6 +58,33 @@ class MatchViewController: UIViewController {
                             
                             print("Congradulations!! You have a new match!! with \(self.displayNames[self.lablecount-self.cardsToLoad])")
                             MainViewController().setBadge()
+                            
+                            // ================== push notification ======================================
+                            var userId_A: String = AWSIdentityManager.default().identityId!
+                            var userId_B: String = self.userIds[self.lablecount-self.cardsToLoad]
+                            var url: String = "https://3cxxybjcgc.execute-api.us-east-1.amazonaws.com/MobileHub_Deployments/match?userId="
+                            var urlToUserB: String = url + userId_B
+                            var urlToUserA: String = url + userId_A
+                            
+                            print("===== push notification =========")
+                            let request = NSMutableURLRequest(url: NSURL(string: urlToUserB)! as URL,
+                                                              cachePolicy: .useProtocolCachePolicy,
+                                                              timeoutInterval: 10.0)
+                            request.httpMethod = "POST"
+                            
+                            let session = URLSession.shared
+                            let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+                                if (error != nil) {
+                                    print(error)
+                                } else {
+                                    let httpResponse = response as? HTTPURLResponse
+                                    print(httpResponse)
+                                }
+                            })
+                            
+                            dataTask.resume()
+                            // ================== push notification ======================================
+                            
                         }
                     }
                     
@@ -136,6 +164,7 @@ class MatchViewController: UIViewController {
             })
         }
         loadPotentialMatch()
+
     }
     
     func nextCardView() -> UIView? {

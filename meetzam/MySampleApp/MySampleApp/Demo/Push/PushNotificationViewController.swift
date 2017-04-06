@@ -135,6 +135,10 @@ extension PushNotificationViewController: AWSPushManagerDelegate {
         })
     }
     
+    
+    
+    
+    
     func pushManagerDidDisable(_ pushManager: AWSPushManager) {
         print("Successfully disabled Push Notification.")
         DispatchQueue.main.async(execute: {
