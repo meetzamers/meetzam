@@ -139,8 +139,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 print("SUCCESS")
                 //mush
                 self.downloadProfileImage()
-                let arn = UserProfileToDB().getDeviceArn()
-                print("device arn is \(arn ?? "no arn")")
+                
             }
             return nil
         })
@@ -216,6 +215,10 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             print("prepare uploading")
             uploadProfileImage()
         }
+        
+        let arn = UserProfileToDB().getDeviceArn()
+        print("device arn is \(arn ?? "no arn")")
+        
         //reset so that it will not upload pic too many times
         uploadingFileURL = nil
         //deleteProfileImage()

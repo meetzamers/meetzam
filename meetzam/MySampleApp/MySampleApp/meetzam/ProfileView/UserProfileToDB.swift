@@ -674,7 +674,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     //mushroom
     func getDeviceArn() -> String? {
         
-        let pushManager = AWSPushManager.default()
+        let pushManager = AWSPushManager()
         
         
         if let _endpointARN = pushManager.endpointARN {
