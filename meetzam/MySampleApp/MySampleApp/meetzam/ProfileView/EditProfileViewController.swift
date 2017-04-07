@@ -138,7 +138,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             } else {
                 print("SUCCESS")
                 //mush
-                self.downloadProfileImage()
+                //self.downloadProfileImage()
             }
             return nil
         })
@@ -179,6 +179,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 print("download Error: \(error)")
                 self.downloadingFileURL = nil
             } else {
+                print("download Successful")
                 //monika
                 if (self.downloadingFileURL != nil) {
                     let imageURL = URL(fileURLWithPath: (self.downloadingFileURL?.path)!)
@@ -191,7 +192,6 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                     }
                 }
                 //monika
-                print("SUCCESS")
             }
             return nil
         })
