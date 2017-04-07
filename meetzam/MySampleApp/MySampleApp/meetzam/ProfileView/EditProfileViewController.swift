@@ -125,7 +125,10 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     //mush
     func uploadProfileImage() {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         print("===== uploadProfileImage =====")
+        var waiting = 0
+        var dummy = 0
         let transferManager = AWSS3TransferManager.default()
         //let testFileURL1 = uploadingFileURL
         let uploadRequest1 : AWSS3TransferManagerUploadRequest = AWSS3TransferManagerUploadRequest()
@@ -140,8 +143,14 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 //mush
                 //self.downloadProfileImage()
             }
+            dummy = 6
             return nil
         })
+        while (dummy != 6) {
+            waiting = 1
+        }
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        
         /*
         let group = DispatchGroup()
         group.enter()
