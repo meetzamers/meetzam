@@ -133,12 +133,11 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         uploadRequest1.key =  AWSIdentityManager.default().identityId! + ".jpeg"
         uploadRequest1.body = uploadingFileURL!
         transferManager.upload(uploadRequest1).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
-            if let error = task.error as? NSError {
+            if let error = task.error as NSError? {
                 print("Upload Error: \(error)")
             } else {
                 print("SUCCESS")
-                //mush
-                self.downloadProfileImage()
+                
                 
             }
             return nil
@@ -159,7 +158,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         readRequest1.key =  AWSIdentityManager.default().identityId! + ".jpeg"
         readRequest1.downloadingFileURL = downloadingFileURL
         transferManager.download(readRequest1).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
-            if let error = task.error as? NSError {
+            if let error = task.error as NSError? {
                 print("download Error: \(error)")
                 self.downloadingFileURL = nil
             } else {
@@ -215,7 +214,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             print("prepare uploading")
             uploadProfileImage()
         }
-        
+        print("get arn")
         let arn = UserProfileToDB().getDeviceArn()
         print("device arn is \(arn ?? "no arn")")
         

@@ -4,7 +4,8 @@
 //
 //  Created by Rainy on 2017/2/26.
 //  update:bug fixed related to movie count in saving edited profile
-//
+//  
+//  add device in line: 104, 204, 278, 475, 619
 //
 // Copyright 2017 Amazon.com, Inc. or its affiliates (Amazon). All Rights Reserved.
 //
@@ -99,6 +100,8 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                     }
                     userProfile?.movieCount = user_profile_addTo.movieCount
                     userProfile?.userId=user_profile_addTo.userId
+                    //mush
+                    userProfile?.device=user_profile_addTo.device
                     
                     ////////////////////////////////////
                     userProfile?.userId  = _userId
@@ -198,6 +201,8 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
 //                print("gender is \(userProfile?.gender)")
                 userProfile?.region = user_profile_addTo.region
 //                print("region is \(userProfile?.region)")
+                userProfile?.device=user_profile_addTo.device
+                
                 userProfile?.currentLikedMovie = user_profile_addTo.currentLikedMovie
                 if (user_profile_addTo.currentLikedMovie.count == 0)
                 {
@@ -269,6 +274,9 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
 //                print("gender is \(userProfile?.gender)")
                 userProfile?.region = user_profile_addTo.region
 //                print("region is \(userProfile?.region)")
+                
+                userProfile?.device=user_profile_addTo.device
+                
                 userProfile?.likedUsers = user_profile_addTo.likedUsers
                 if (user_profile_addTo.likedUsers.count == 0)
                 {
@@ -463,6 +471,9 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
 //                print("gender is \(userProfile?.gender)")
                 userProfile?.region = user_profile_addTo.region
 //                print("region is \(userProfile?.region)")
+                
+                userProfile?.device=user_profile_addTo.device
+                
                 userProfile?.currentLikedMovie=user_profile_addTo.currentLikedMovie
                 // if the user does not have any liked movies
                 if (user_profile_addTo.currentLikedMovie.count == 0)
@@ -604,6 +615,9 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
 //                print("gender is \(userProfile?.gender)")
                 userProfile?.region = user_profile_addTo.region
 //                print("region is \(userProfile?.region)")
+                
+                userProfile?.device=user_profile_addTo.device
+                
                 userProfile?.currentLikedMovie = user_profile_addTo.currentLikedMovie
                 if (user_profile_addTo.currentLikedMovie.count == 0)
                 {
