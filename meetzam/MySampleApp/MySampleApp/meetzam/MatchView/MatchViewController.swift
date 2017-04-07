@@ -58,12 +58,11 @@ class MatchViewController: UIViewController {
                             UserProfileToDB().insertToMatchedUser(key: self.userIds[self.lablecount-self.cardsToLoad], userID: AWSIdentityManager.default().identityId!)
                             
                             print("Congradulations!! You have a new match!! with \(self.displayNames[self.lablecount-self.cardsToLoad])")
-                            MainViewController().setBadge()
                             
                             // ================== push notification ======================================
-                            var userId_B: String = self.userIds[self.lablecount-self.cardsToLoad]
-                            var url: String = "https://3cxxybjcgc.execute-api.us-east-1.amazonaws.com/MobileHub_Deployments/match?userId="
-                            var urlToUserB: String = url + userId_B
+                            let userId_B: String = self.userIds[self.lablecount-self.cardsToLoad]
+                            let url: String = "https://3cxxybjcgc.execute-api.us-east-1.amazonaws.com/MobileHub_Deployments/match?userId="
+                            let urlToUserB: String = url + userId_B
                             self.matchNotification(url: urlToUserB)
                             // ================== push notification ======================================
                             
