@@ -17,6 +17,9 @@ import Foundation
 import UIKit
 import AWSDynamoDB
 import AWSS3
+
+import AWSMobileHubHelper
+
 class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     
     var userId: String?
@@ -30,6 +33,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     var movieCount: NSNumber?
     var likedUsers = Set<String>()
     var matchedUsers = Set<String>()
+    var device: String?
     
     class func dynamoDBTableName() -> String {
         
@@ -666,5 +670,22 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         })
         return downloadingFileURL // possible error, downloadingFileURL dependent on async operation, this return statement might returnning null.
     }
-    
+ 
+    //mushroom
+    func getDeviceArn() -> String? {
+        
+        let pushManager = AWSPushManager.default()
+        
+        
+        if let _endpointARN = pushManager.endpointARN {
+            // pushManager.enabled = true
+            return _endpointARN
+        }else{
+            print("failed to get endpoint arn")
+            pushManager.registerForPushNotifications()
+        }
+        
+        return nil
+    }
+
 }
