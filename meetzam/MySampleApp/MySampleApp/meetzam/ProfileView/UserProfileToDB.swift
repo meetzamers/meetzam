@@ -105,7 +105,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                     userProfile?.region = _region
                     userProfile?.email = _email
                     mapper.save(userProfile!)
-                    print("SUCCESS")
+                    print("insertProfile SUCCESS")
                 }
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 return nil
@@ -139,7 +139,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 //print(region.text)
                 email.text = user_profile.email
                 //print(email.text)
-                print("SUCCESS")
+                print("getProfileForEdit SUCCESS")
             }
             
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
@@ -233,7 +233,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                     print("\(movie)")
                 }
                 mapper.save(userProfile!)
-                print("SUCCESS")
+                print("insertToCurrentLikedMovie SUCCESS")
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
@@ -300,7 +300,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 
 //                print("AFTER DELETION, currentLikedMovie are: \(userProfile?.currentLikedMovie.description)")
                 mapper.save(userProfile!)
-                print("SUCCESS")
+                print("deleteFromCurrentLikedMovie SUCCESS")
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
@@ -394,7 +394,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 waiting = 1
             }
         }
-        
+        print("getMatchedUserIDs SUCCESS")
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         return matchedUserIDs
     }
@@ -430,17 +430,19 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 waiting = 1
             }
         }
+        print("getMatchedUserProfiles SUCCESS")
         return matchedUserProfiles
     }
     
     
     
-    //JUNPU: fixed busy waiting
+    //JUNPU: let it busy waiting for now
     func likeOneUser(key: String, likedUserID: String)
     {
         print("===== likeOneUser =====")
         let mapper = AWSDynamoDBObjectMapper.default()
         let userProfile = UserProfileToDB()
+        var dummynum: Int = 0
         
 //        print("     before load!!")
         mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
@@ -478,29 +480,31 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 userProfile?.movieCount = user_profile_addTo.movieCount
                 
                 userProfile?.email = user_profile_addTo.email
-//                print("email is \(userProfile?.email)")
-//                print("     all put")
-                
-                
-                ///////////////
-//                print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
-                if (!((userProfile?.likedUsers.contains(likedUserID))!))
-                {
-                    if (userProfile?.likedUsers.count == 1 && (userProfile?.likedUsers.contains("mushroom13"))!) {
-                        //dummy exist
-                        userProfile?.likedUsers.removeAll()
-                    }
-                    userProfile?.likedUsers.insert(likedUserID)
-                }
-                mapper.save(userProfile!)
-                print("SUCCESS")
-                
-                
+        
             }
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            dummynum = 6
             return nil
         })
+        
+        var waiting = 0
+        while (dummynum != 6)
+        {
+            waiting = 1
+        }
+        
 
+//        print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
+        if (!((userProfile?.likedUsers.contains(likedUserID))!))
+        {
+            if (userProfile?.likedUsers.count == 1 && (userProfile?.likedUsers.contains("mushroom13"))!) {
+                //dummy exist
+                userProfile?.likedUsers.removeAll()
+            }
+            userProfile?.likedUsers.insert(likedUserID)
+        }
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        mapper.save(userProfile!)
+        print("likeOneUser SUCCESS")
     }
     
     
@@ -536,8 +540,9 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         {
             likedUserIDs.append(user)
         }
-        
+    
         print(likedUserIDs)
+        print("getLikedUserIDs SUCCESS")
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         return likedUserIDs
     }
@@ -573,6 +578,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         {
             waiting = 1
         }
+        print("findIsMatched SUCCESS. result = \(result)")
         return result
     }
     
@@ -633,7 +639,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                     userProfile?.matchedUsers.insert(userID)
                 }
                 mapper.save(userProfile!)
-                print("SECCESS")
+                print("insertToMatchedUser SECCESS")
                 
             
             }
@@ -660,7 +666,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 print("download Error: \(error)")
                 return nil
             } else {
-                print("SUCCESS")
+                print("downloadUserIcon SUCCESS")
             }
             return nil
         })
