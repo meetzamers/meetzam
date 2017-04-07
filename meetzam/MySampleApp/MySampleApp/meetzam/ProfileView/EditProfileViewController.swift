@@ -139,27 +139,12 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
                 print("SUCCESS")
                 //mush
                 self.downloadProfileImage()
+                let arn = UserProfileToDB().getDeviceArn()
+                print("device arn is \(arn ?? "no arn")")
             }
             return nil
         })
-        /*
-        let group = DispatchGroup()
-        group.enter()
-        DispatchQueue.main.async {
-            transferManager.upload(uploadRequest1).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
-                if let error = task.error as? NSError {
-                    print("Upload Error: \(error)")
-                } else {
-                    print("Upload Successful")
-                    //mush
-                    self.downloadProfileImage()
-                }
-                return nil
-            })
-            group.leave()
-        }
-        group.wait()
-        */
+        
     }
     
     func downloadProfileImage() {
