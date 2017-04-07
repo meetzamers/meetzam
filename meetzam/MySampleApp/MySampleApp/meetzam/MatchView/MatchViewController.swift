@@ -66,9 +66,8 @@ class MatchViewController: UIViewController {
                                 let urlToUserB: String = url + userId_B
                                 self.matchNotification(url: urlToUserB)
                                 self.pushInAppNF()
-                                // ================== push notification ======================================
-                            
-                            }
+                                // ================== push notification ======================================                       
+
                         }
                     }
                     
