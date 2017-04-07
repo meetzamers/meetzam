@@ -118,6 +118,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     //********************* VIEW WILL APPEAR ***********************************************//
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        downloadProfileImage()
         
         /* get name and bio from database */
         UserProfileToDB().getProfileForDisplay(key: AWSIdentityManager.default().identityId!, user_profile: user_profile, displayname: displayName, bio: userBioField)
@@ -134,6 +135,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         }
         
     }
+    
     
     // Go to all movies I liked
     @IBAction func toLikedMovies(_ sender: Any) {

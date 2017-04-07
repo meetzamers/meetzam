@@ -138,7 +138,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             } else {
                 print("SUCCESS")
                 //mush
-                self.downloadProfileImage()
+                //self.downloadProfileImage()
             }
             return nil
         })
