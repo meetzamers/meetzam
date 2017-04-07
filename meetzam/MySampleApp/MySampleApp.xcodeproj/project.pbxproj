@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		136D68631E82F1C2004E96CA /* MovieAndList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136D68621E82F1C2004E96CA /* MovieAndList.swift */; };
+		1B2F3E701E95581A00417F6B /* AWSLambda.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2F3E6F1E95581A00417F6B /* AWSLambda.framework */; };
+		1B2F3E711E95581A00417F6B /* AWSLambda.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2F3E6F1E95581A00417F6B /* AWSLambda.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		1B46BF821E96D75000FEADD0 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B46BF811E96D75000FEADD0 /* UserNotifications.framework */; };
 		362A26BA1E902ED3008BA57E /* HistoryMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362A26B91E902ED3008BA57E /* HistoryMovie.swift */; };
 		5DD94CEB1E66149500B7DD80 /* LikedMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD94CEA1E66149500B7DD80 /* LikedMoviesView.swift */; };
 		5DD94CED1E6614F800B7DD80 /* MovieCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD94CEC1E6614F800B7DD80 /* MovieCollectionCell.swift */; };
@@ -119,6 +122,7 @@
 				E7A30F04B7BABA4000000000 /* AWSAPIGateway.framework in Embed Frameworks */,
 				E7A30F04FFE8EDF300000000 /* AWSCognito.framework in Embed Frameworks */,
 				E7A30F04DA71BA1600000000 /* AWSS3.framework in Embed Frameworks */,
+				1B2F3E711E95581A00417F6B /* AWSLambda.framework in Embed Frameworks */,
 				E7A30F0431BF140A00000000 /* AWSSNS.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -128,6 +132,8 @@
 
 /* Begin PBXFileReference section */
 		136D68621E82F1C2004E96CA /* MovieAndList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MovieAndList.swift; path = MySampleApp/meetzam/HomeView/MovieAndList.swift; sourceTree = SOURCE_ROOT; };
+		1B2F3E6F1E95581A00417F6B /* AWSLambda.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSLambda.framework; sourceTree = "<group>"; };
+		1B46BF811E96D75000FEADD0 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		1DD70E29008FEFA700000000 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignInViewController.swift; path = MySampleApp/App/SignIn/SignInViewController.swift; sourceTree = SOURCE_ROOT; };
 		1DD70E2902E65C3B00000000 /* PushNotification.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = PushNotification.storyboard; path = MySampleApp/Demo/Push/PushNotification.storyboard; sourceTree = SOURCE_ROOT; };
 		1DD70E29081A119000000000 /* ContentDeliveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentDeliveryViewController.swift; path = MySampleApp/Demo/ContentDelivery/ContentDeliveryViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -234,6 +240,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B46BF821E96D75000FEADD0 /* UserNotifications.framework in Frameworks */,
 				C41A646E1E922268004239CB /* LTMorphingLabel.framework in Frameworks */,
 				C41A646F1E922268004239CB /* TextFieldEffects.framework in Frameworks */,
 				C4A86E601E8617A20066B6F9 /* NVActivityIndicatorView.framework in Frameworks */,
@@ -251,6 +258,7 @@
 				E7A30F041B4FE28C00000000 /* SystemConfiguration.framework in Frameworks */,
 				E7A30F04C19E1A5200000000 /* Security.framework in Frameworks */,
 				E7A30F0407CAE03600000000 /* CFNetwork.framework in Frameworks */,
+				1B2F3E701E95581A00417F6B /* AWSLambda.framework in Frameworks */,
 				E7A30F047B57DFEF00000000 /* libz.tbd in Frameworks */,
 				E7A30F04A627D6FE00000000 /* libsqlite3.tbd in Frameworks */,
 				E7A30F04887DF4A600000000 /* Foundation.framework in Frameworks */,
@@ -294,7 +302,6 @@
 				B401C9793F67953A00000000 /* ContentDelivery */,
 				1DD70E29218BD6F000000000 /* DemoFeature.swift */,
 				B401C979720B63BA00000000 /* NoSQL */,
-				B401C9794F60BC4800000000 /* Push */,
 				B401C979BF2A7F8000000000 /* UserDataStorage */,
 				B401C9795984C14400000000 /* UserFiles */,
 				B401C9795916BB7200000000 /* UserIdentity */,
@@ -321,7 +328,7 @@
 				1DD70E29E9D4F87B00000000 /* PushNotificationViewController.swift */,
 			);
 			name = Push;
-			path = mysampleapp/demo/push;
+			path = mysampleapp/demo/mysampleapp/demo/push;
 			sourceTree = "<group>";
 		};
 		B401C9795916BB7200000000 /* UserIdentity */ = {
@@ -415,6 +422,8 @@
 		B401C979BAD7438500000000 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1B46BF811E96D75000FEADD0 /* UserNotifications.framework */,
+				1B2F3E6F1E95581A00417F6B /* AWSLambda.framework */,
 				C41A646C1E922268004239CB /* LTMorphingLabel.framework */,
 				C41A646D1E922268004239CB /* TextFieldEffects.framework */,
 				C4A86E611E8617B00066B6F9 /* Lottie.framework */,
@@ -596,6 +605,7 @@
 				C40661BB1E5CBC69005D2145 /* ChatView */,
 				C40661BE1E5CBCA4005D2145 /* ProfileView */,
 				B401C979E100CAB200000000 /* SignIn */,
+				B401C9794F60BC4800000000 /* Push */,
 				C41A64701E922373004239CB /* Font */,
 				C412E65E1E5BF93100BE8B61 /* Animation */,
 			);
