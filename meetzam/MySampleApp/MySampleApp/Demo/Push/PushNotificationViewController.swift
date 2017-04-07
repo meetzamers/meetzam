@@ -15,6 +15,7 @@ import Foundation
 import UIKit
 import AWSMobileHubHelper
 
+
 class PushNotificationViewController: UIViewController {
     @IBOutlet weak var pushNotificationSwitch: UISwitch!
     @IBOutlet var tableView: UITableView!
@@ -133,6 +134,10 @@ extension PushNotificationViewController: AWSPushManagerDelegate {
             self.showAlertWithTitle("Received a Push Notification.", message: userInfo.description)
         })
     }
+    
+    
+    
+    
     
     func pushManagerDidDisable(_ pushManager: AWSPushManager) {
         print("Successfully disabled Push Notification.")

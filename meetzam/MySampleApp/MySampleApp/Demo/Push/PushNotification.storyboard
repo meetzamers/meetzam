@@ -1,40 +1,44 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Push Notification-->
         <scene sceneID="CwI-T5-Awr">
             <objects>
-                <tableViewController title="Push Notifications" id="c7R-eA-poz" userLabel="Push Notification" customClass="PushNotificationViewController" customModule="MySampleApp" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="AWSPushNoti" title="Push Notifications" id="c7R-eA-poz" userLabel="Push Notification" customClass="PushNotificationViewController" customModule="MySampleApp" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="2Zq-F0-f7H">
-                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="W0P-gl-Xa9">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="66"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="66"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Receive Push Notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i6N-lH-ey3">
-                                    <rect key="frame" x="8" y="20" width="527" height="21"/>
+                                    <rect key="frame" x="8" y="20" width="302" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="8mG-fe-S3n"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GMZ-OG-Ewa">
-                                    <rect key="frame" x="543" y="15" width="51" height="31"/>
+                                    <rect key="frame" x="318" y="15" width="51" height="31"/>
                                     <connections>
                                         <action selector="toggleSwitch:" destination="c7R-eA-poz" eventType="valueChanged" id="852-1t-2zm"/>
                                     </connections>
                                 </switch>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstItem="GMZ-OG-Ewa" firstAttribute="trailing" secondItem="W0P-gl-Xa9" secondAttribute="trailingMargin" id="DVE-o9-hMo"/>
                                 <constraint firstItem="GMZ-OG-Ewa" firstAttribute="leading" secondItem="i6N-lH-ey3" secondAttribute="trailing" constant="8" symbolic="YES" id="Sma-fT-J9u"/>
@@ -51,24 +55,24 @@
                         </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="checkmark" indentationWidth="10" reuseIdentifier="AWSPushNotificationViewCell" textLabel="V5p-1s-BVK" detailTextLabel="VcS-xa-v7F" style="IBUITableViewCellStyleSubtitle" id="j14-eK-yzb">
-                                <rect key="frame" x="0.0" y="88" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="88" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="j14-eK-yzb" id="sFY-nv-WBZ">
-                                    <rect key="frame" x="0.0" y="0.0" width="561" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="336" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="V5p-1s-BVK">
                                             <rect key="frame" x="15" y="6" width="31.5" height="19.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VcS-xa-v7F">
                                             <rect key="frame" x="15" y="25.5" width="40.5" height="13.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -87,94 +91,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A9K-VS-g38" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-89" y="54"/>
-        </scene>
-        <!--Push Notifications-->
-        <scene sceneID="rtA-Bd-myA">
-            <objects>
-                <viewController storyboardIdentifier="PushNotification" title="Push Notifications" id="Jrq-tO-0rH" customClass="FeatureDescriptionViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="OOd-6j-ZA2"/>
-                        <viewControllerLayoutGuide type="bottom" id="8S6-Sv-0aW"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="tc1-M8-fw9">
-                        <rect key="frame" x="0.0" y="64" width="600" height="536"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2bU-7x-V36">
-                                <rect key="frame" x="196" y="498" width="209" height="30"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <state key="normal" title="Demo Push Notifications" image="PushIconSmall">
-                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <segue destination="c7R-eA-poz" kind="show" id="xJB-2R-yau"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Powered by Amazon SNS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rjb-eA-EZO">
-                                <rect key="frame" x="235" y="476.5" width="132" height="13.5"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Overview" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Kx-TE-o2i">
-                                <rect key="frame" x="20" y="8" width="71" height="19.5"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Receive push notifications on your device and subscribe to topics you have created." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JQs-At-2iY">
-                                <rect key="frame" x="20" y="35.5" width="560" height="40.5"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sample App Features" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PYq-Dq-fpH">
-                                <rect key="frame" x="20" y="84" width="161.5" height="19.5"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m7F-U3-6l8">
-                                <rect key="frame" x="20" y="111.5" width="560" height="61.5"/>
-                                <string key="text">The Sample App allows you to register to receive push notifications, and it provides checkboxes to demonstrate subscribing to receive messages from your configured Amazon SNS topics.</string>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="JQs-At-2iY" firstAttribute="leading" secondItem="8Kx-TE-o2i" secondAttribute="leading" id="BVD-J6-MGG"/>
-                            <constraint firstItem="m7F-U3-6l8" firstAttribute="top" secondItem="PYq-Dq-fpH" secondAttribute="bottom" constant="8" symbolic="YES" id="DVy-Ew-bqS"/>
-                            <constraint firstItem="m7F-U3-6l8" firstAttribute="leading" secondItem="PYq-Dq-fpH" secondAttribute="leading" id="F7e-D4-sDD"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="8Kx-TE-o2i" secondAttribute="leading" id="Ioa-au-8kb"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="m7F-U3-6l8" secondAttribute="trailing" id="Ioy-3A-f2w"/>
-                            <constraint firstItem="JQs-At-2iY" firstAttribute="top" secondItem="8Kx-TE-o2i" secondAttribute="bottom" constant="8" symbolic="YES" id="LhU-3W-1Cc"/>
-                            <constraint firstItem="8S6-Sv-0aW" firstAttribute="top" secondItem="2bU-7x-V36" secondAttribute="bottom" constant="8" symbolic="YES" id="NIK-sF-Z9V"/>
-                            <constraint firstItem="PYq-Dq-fpH" firstAttribute="leading" secondItem="JQs-At-2iY" secondAttribute="leading" id="SfE-gc-RWE"/>
-                            <constraint firstItem="2bU-7x-V36" firstAttribute="centerX" secondItem="tc1-M8-fw9" secondAttribute="centerX" id="XBI-XI-BGV"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="JQs-At-2iY" secondAttribute="trailing" id="Zbg-0u-uRb"/>
-                            <constraint firstItem="m7F-U3-6l8" firstAttribute="leading" secondItem="Rjb-eA-EZO" secondAttribute="trailing" constant="-355.5" id="cfv-8t-TVw"/>
-                            <constraint firstItem="2bU-7x-V36" firstAttribute="top" secondItem="Rjb-eA-EZO" secondAttribute="bottom" constant="8" symbolic="YES" id="dWN-YV-m7W"/>
-                            <constraint firstItem="PYq-Dq-fpH" firstAttribute="top" secondItem="JQs-At-2iY" secondAttribute="bottom" constant="8" symbolic="YES" id="f4Y-cx-7LI"/>
-                            <constraint firstItem="Rjb-eA-EZO" firstAttribute="centerX" secondItem="2bU-7x-V36" secondAttribute="centerX" id="huC-58-gdu"/>
-                            <constraint firstItem="8Kx-TE-o2i" firstAttribute="top" secondItem="OOd-6j-ZA2" secondAttribute="bottom" constant="8" symbolic="YES" id="kMS-2K-VYt"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="cfv-8t-TVw"/>
-                            </mask>
-                        </variation>
-                    </view>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gNF-HO-TWM" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-747" y="54"/>
+            <point key="canvasLocation" x="132" y="54"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="PushIconSmall" width="30" height="30"/>
-    </resources>
 </document>

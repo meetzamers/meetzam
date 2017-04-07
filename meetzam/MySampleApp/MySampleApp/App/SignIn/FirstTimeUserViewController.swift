@@ -42,6 +42,9 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
     let bioTextField = HoshiTextField()
     
     // Page 4
+    let profilePicPageLabel = UILabel()
+    
+    // Page 5
     var endingText = LTMorphingLabel()
     let endingButton = UIButton()
     let endingText2 = UILabel()
@@ -79,7 +82,6 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         welcomeLabel1.text = "Welcome!"
         welcomeLabel1.morphingEffect = .scale
         welcomeLabel1.morphingDuration = 1
-//        self.view.addSubview(welcomeLabel1)
         
         // No 2
         welcomeLabel2.font = UIFont(name: "Raleway-Light", size: 15)
@@ -89,10 +91,6 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         welcomeLabel2.numberOfLines = 2;
         welcomeLabel2.textAlignment = .center
         welcomeLabel2.alpha = 0
-//        self.view.addSubview(welcomeLabel2)
-//        UIView.animate(withDuration: 0.2, delay: 1, options: .curveEaseOut, animations: {
-//            self.welcomeLabel2.alpha = 1
-//        }, completion: nil)
         
         // No 3
         welcomeButton.frame = CGRect(x: 0, y: UIScreen.main.bounds.height - 50, width: UIScreen.main.bounds.width, height: 50)
@@ -110,10 +108,6 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         }
         welcomeButton.addTarget(self, action: #selector(welcomeButtonAction), for: .touchUpInside)
         welcomeButton.alpha = 0
-//        self.view.addSubview(welcomeButton)
-//        UIView.animate(withDuration: 0.2, delay: 1.5, options: .curveEaseOut, animations: {
-//            self.welcomeButton.alpha = 1
-//        }, completion: nil)
         
         // ============================================================
         // Page 2
@@ -223,7 +217,7 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         backButton.alpha = 0
         
         // Warning label
-        emptyWarningLabel.frame = CGRect(x: UIScreen.main.bounds.width * 0.15, y: 250, width: UIScreen.main.bounds.width * 0.7, height: 10)
+        emptyWarningLabel.frame = CGRect(x: UIScreen.main.bounds.width * 0.15, y: 250, width: UIScreen.main.bounds.width * 0.7, height: 12)
         emptyWarningLabel.text = "You can't leave this empty."
         emptyWarningLabel.textAlignment = .right
         emptyWarningLabel.textColor = UIColor.red
@@ -231,7 +225,7 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         emptyWarningLabel.alpha = 0
         
         // Warning label2
-        emptyWarningLabel2.frame = CGRect(x: UIScreen.main.bounds.width * 0.15, y: 415, width: UIScreen.main.bounds.width * 0.7, height: 10)
+        emptyWarningLabel2.frame = CGRect(x: UIScreen.main.bounds.width * 0.15, y: 415, width: UIScreen.main.bounds.width * 0.7, height: 12)
         emptyWarningLabel2.text = "You can't leave this empty."
         emptyWarningLabel2.textAlignment = .right
         emptyWarningLabel2.textColor = UIColor.red
@@ -258,6 +252,16 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         bioTextField.delegate = self
         // ============================================================
         // Page 4
+        // No 0
+        profilePicPageLabel.font = UIFont(name: "Raleway-Light", size: 30)
+        profilePicPageLabel.text = "Upload Profile Picture: "
+        profilePicPageLabel.frame = CGRect(x: 30, y: 100, width: UIScreen.main.bounds.width, height: 50)
+        profilePicPageLabel.textAlignment = .left
+        profilePicPageLabel.alpha = 0
+        
+        
+        // ============================================================
+        // Last Page
         // No 2
         endingText2.font = UIFont(name: "Raleway-Light", size: 15)
         endingText2.text = "Your information looks good \n\n\n Now please enjoy the app!"
@@ -266,8 +270,8 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         endingText2.numberOfLines = 4;
         endingText2.textAlignment = .center
         endingText2.alpha = 0
-        // ============================================================
-        // Last Page
+        
+        // No 3
         goAppButton.frame = CGRect(x: UIScreen.main.bounds.width * 0.2, y: UIScreen.main.bounds.height * 0.8, width: UIScreen.main.bounds.width * 0.6, height: 50)
         goAppButton.backgroundColor = UIColor.init(red: 242/255, green: 92/255, blue: 0/255, alpha: 0.8)
         goAppButton.addTarget(self, action: #selector(goAppButtonAction), for: .touchUpInside)
@@ -401,7 +405,7 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
             }
         }
             
-            // current page is 3
+        // current page is 3
         else if (self.currentPage == 3) {
             self.regionTextField.borderInactiveColor = UIColor.darkGray
             
@@ -410,7 +414,6 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
                 self.bioTextField.alpha = 0
                 self.basicInfoButton.alpha = 0
                 self.backButton.alpha = 0
-                //                self.view.backgroundColor = UIColor.white
             }, completion: {(finished: Bool) in
                 // Page 2+3
                 self.secondPageLabel.removeFromSuperview()
@@ -447,6 +450,45 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
                 
                 self.currentPage = 4
             })
+        }
+        
+        // TODO
+        // current page is 4
+        else if (self.currentPage == 4) {
+            UIView.animate(withDuration: 0.2, animations: {() -> Void in
+                self.thirdPageLabel.alpha = 0
+                self.bioTextField.alpha = 0
+                
+            }, completion: {(finished: Bool) in
+                // Page 2+3
+                self.thirdPageLabel.removeFromSuperview()
+                self.bioTextField.removeFromSuperview()
+                
+                // Page 5
+                // No 1
+                self.endingText = LTMorphingLabel()
+                self.endingText.frame = CGRect(x: 0, y: 150, width: UIScreen.main.bounds.width, height: 50)
+                self.endingText.textAlignment = .center
+                self.endingText.font = UIFont(name: "Comfortaa-Regular", size: 35)
+                self.endingText.text = "Congratulations!"
+                self.endingText.morphingEffect = .scale
+                self.endingText.morphingDuration = 1
+                self.view.addSubview(self.endingText)
+                
+                self.view.addSubview(self.endingText2)
+                UIView.animate(withDuration: 0.2, delay: 1, options: .curveEaseOut, animations: {
+                    self.endingText2.alpha = 1
+                }, completion: nil)
+                
+                self.view.addSubview(self.goAppButton)
+                UIView.animate(withDuration: 0.2, delay: 1.5, options: .curveEaseOut, animations: {
+                    self.goAppButton.alpha = 1
+                }, completion: nil)
+                
+            })
+            
+            
+            self.currentPage = -1
         }
         
         // TODO: send the strings to DB

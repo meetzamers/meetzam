@@ -14,29 +14,20 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //movieCollectionView.reloadData()
-        
         self.view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
-        
         movieCollectionView.delegate = self
         movieCollectionView.dataSource = self
         
+        movieCollectionView.alwaysBounceHorizontal = false
+        
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
        DispatchQueue.main.async {
             self.movieCollectionView.reloadData()
         }
     }
- 
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        
-    }
     
-   
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let movies = SingleMovie().getCurrentLikedMovies(key: AWSIdentityManager.default().identityId!)
         let userLikedHistory = HistoryMovie().userLikedHistoryMovies(_userID: AWSIdentityManager.default().identityId!)
@@ -59,7 +50,8 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         cell.movieTitleLabel.text = ""
         
         DispatchQueue.main.async {
-            cell.movieImage.image = self.images[indexPath.row]
+            cell.movieImage.loadImageUsingURLString(URLString: self.imageURLs[indexPath.row])
+//            cell.movieImage.image = self.imageViews[indexPath.row].image
             cell.movieImage.contentMode = .scaleAspectFill
         }
         
@@ -77,7 +69,9 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
             cell.movieTitleLabel.text = self.titles[indexPath.row]
         }
         
- 
+        cell.layer.shouldRasterize = true
+        cell.layer.rasterizationScale = UIScreen.main.scale
+        
         return cell
     }
     
@@ -86,17 +80,13 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         //add movies that are currently showing
         let movies = SingleMovie().getCurrentLikedMovies(key: AWSIdentityManager.default().identityId!)
         
-        self.images = [UIImage]()
+        self.imageURLs = [String]()
         self.titles = [String]()
         self.historyTitles = [String]()
-        var image = UIImage()
         
         for movie in movies {
             let path = "https://image.tmdb.org/t/p/w342" + movie.poster_path!
-            let pathURL = URL(string: path)
-            let imageData = try! Data(contentsOf: pathURL!)
-            image = UIImage(data: imageData)!
-            images.append(image)
+            imageURLs.append(path)
             titles.append(movie.title)
         }
         
@@ -105,19 +95,14 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         
         for movie in userLikedHistory {
             let path = "https://image.tmdb.org/t/p/w342" + movie.poster_path!
-            let pathURL = URL(string: path)
-            let imageData = try! Data(contentsOf: pathURL!)
-            image = UIImage(data: imageData)!
-            images.append(image)
+            imageURLs.append(path)
             titles.append(movie.title)
             historyTitles.append(movie.title)
             print("I just added \(movie.title)")
         }
         
-        
         print("there are total: ")
-        print(images.count)
-        
+//        print(images.count)
         
     }
     
@@ -132,17 +117,10 @@ class LikedMoviesView: UIViewController, UICollectionViewDelegate, UICollectionV
         return false;
     }
     
-    
     let imagecache = NSCache<AnyObject, AnyObject>()
-    var images: [UIImage]!
+    var imageURLs: [String]!
     var titles: [String]!
     var historyTitles: [String]!
     @IBOutlet weak var movieCollectionView: UICollectionView!
 
 }
-
-
-
-
-
-
