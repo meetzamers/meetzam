@@ -71,7 +71,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
             object: AWSIdentityManager.default(),
             queue: OperationQueue.main,
             using: { [weak self] (note: Notification) -> Void in
-                guard let strongSelf = self else { return }
+                guard self != nil else { return }
                 print("Sign in observer observed sign in.")
         })
         
@@ -81,7 +81,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
             object: AWSIdentityManager.default(),
             queue: OperationQueue.main,
             using: { [weak self] (note: Notification) -> Void in
-                guard let strongSelf = self else { return }
+                guard self != nil else { return }
                 print("Sign Out Observer observed sign out.")
         })
         
