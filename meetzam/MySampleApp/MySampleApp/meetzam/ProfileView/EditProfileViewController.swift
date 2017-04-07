@@ -141,7 +141,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             } else {
                 print("SUCCESS")
                 
-                
+               
             }
             dummy = 6
             return nil
@@ -151,24 +151,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         }
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
-        /*
-        let group = DispatchGroup()
-        group.enter()
-        DispatchQueue.main.async {
-            transferManager.upload(uploadRequest1).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
-                if let error = task.error as? NSError {
-                    print("Upload Error: \(error)")
-                } else {
-                    print("Upload Successful")
-                    //mush
-                    self.downloadProfileImage()
-                }
-                return nil
-            })
-            group.leave()
-        }
-        group.wait()
-        */
+        
     }
     
     func downloadProfileImage() {
@@ -240,9 +223,11 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             print("prepare uploading")
             uploadProfileImage()
         }
+        /*
         print("get arn")
         let arn = UserProfileToDB().getDeviceArn(userID: dbID)
         print("device arn is \(arn ?? "no arn")")
+        */
         
         //reset so that it will not upload pic too many times
         uploadingFileURL = nil
