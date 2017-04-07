@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		136D68631E82F1C2004E96CA /* MovieAndList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136D68621E82F1C2004E96CA /* MovieAndList.swift */; };
+		18FC3D8B1E980CF70091B37F /* ChatRoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FC3D8A1E980CF70091B37F /* ChatRoomModel.swift */; };
 		1B2F3E701E95581A00417F6B /* AWSLambda.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2F3E6F1E95581A00417F6B /* AWSLambda.framework */; };
 		1B2F3E711E95581A00417F6B /* AWSLambda.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2F3E6F1E95581A00417F6B /* AWSLambda.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1B46BF821E96D75000FEADD0 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B46BF811E96D75000FEADD0 /* UserNotifications.framework */; };
@@ -132,6 +133,7 @@
 
 /* Begin PBXFileReference section */
 		136D68621E82F1C2004E96CA /* MovieAndList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MovieAndList.swift; path = MySampleApp/meetzam/HomeView/MovieAndList.swift; sourceTree = SOURCE_ROOT; };
+		18FC3D8A1E980CF70091B37F /* ChatRoomModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatRoomModel.swift; path = MySampleApp/meetzam/ChatView/ChatRoomModel.swift; sourceTree = SOURCE_ROOT; };
 		1B2F3E6F1E95581A00417F6B /* AWSLambda.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSLambda.framework; sourceTree = "<group>"; };
 		1B46BF811E96D75000FEADD0 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		1DD70E29008FEFA700000000 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignInViewController.swift; path = MySampleApp/App/SignIn/SignInViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -546,6 +548,7 @@
 		C40661BB1E5CBC69005D2145 /* ChatView */ = {
 			isa = PBXGroup;
 			children = (
+				18FC3D8A1E980CF70091B37F /* ChatRoomModel.swift */,
 				C40661BC1E5CBC85005D2145 /* ChatViewController.swift */,
 			);
 			name = ChatView;
@@ -790,6 +793,7 @@
 				E7A30F042D45845500000000 /* DemoViewController.swift in Sources */,
 				C41A646B1E92210D004239CB /* FirstTimeUserViewController.swift in Sources */,
 				E7A30F046F849B0700000000 /* ChatRoomTable.swift in Sources */,
+				18FC3D8B1E980CF70091B37F /* ChatRoomModel.swift in Sources */,
 				E7A30F04559CB61500000000 /* CloudLogicAPI.swift in Sources */,
 				E7A30F04B9F764D000000000 /* NoSQLQueryResultViewController.swift in Sources */,
 				E7A30F04FDE8AC3000000000 /* CloudLogicAPIOperationsViewController.swift in Sources */,

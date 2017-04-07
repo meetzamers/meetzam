@@ -4,7 +4,8 @@
 //
 //  Created by Rainy on 2017/2/26.
 //  update:bug fixed related to movie count in saving edited profile
-//
+//  
+//  add device in line: 104, 204, 278, 475, 619
 //
 // Copyright 2017 Amazon.com, Inc. or its affiliates (Amazon). All Rights Reserved.
 //
@@ -17,6 +18,9 @@ import Foundation
 import UIKit
 import AWSDynamoDB
 import AWSS3
+
+import AWSMobileHubHelper
+
 class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     
     var userId: String?
@@ -30,6 +34,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     var movieCount: NSNumber?
     var likedUsers = Set<String>()
     var matchedUsers = Set<String>()
+    var device: String?
     
     class func dynamoDBTableName() -> String {
         
@@ -95,6 +100,8 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                     }
                     userProfile?.movieCount = user_profile_addTo.movieCount
                     userProfile?.userId=user_profile_addTo.userId
+                    //mush
+                    userProfile?.device=user_profile_addTo.device
                     
                     ////////////////////////////////////
                     userProfile?.userId  = _userId
@@ -194,6 +201,8 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
 //                print("gender is \(userProfile?.gender)")
                 userProfile?.region = user_profile_addTo.region
 //                print("region is \(userProfile?.region)")
+                userProfile?.device=user_profile_addTo.device
+                
                 userProfile?.currentLikedMovie = user_profile_addTo.currentLikedMovie
                 if (user_profile_addTo.currentLikedMovie.count == 0)
                 {
@@ -265,6 +274,9 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
 //                print("gender is \(userProfile?.gender)")
                 userProfile?.region = user_profile_addTo.region
 //                print("region is \(userProfile?.region)")
+                
+                userProfile?.device=user_profile_addTo.device
+                
                 userProfile?.likedUsers = user_profile_addTo.likedUsers
                 if (user_profile_addTo.likedUsers.count == 0)
                 {
@@ -461,6 +473,9 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
 //                print("gender is \(userProfile?.gender)")
                 userProfile?.region = user_profile_addTo.region
 //                print("region is \(userProfile?.region)")
+                
+                userProfile?.device=user_profile_addTo.device
+                
                 userProfile?.currentLikedMovie=user_profile_addTo.currentLikedMovie
                 // if the user does not have any liked movies
                 if (user_profile_addTo.currentLikedMovie.count == 0)
@@ -606,6 +621,9 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
 //                print("gender is \(userProfile?.gender)")
                 userProfile?.region = user_profile_addTo.region
 //                print("region is \(userProfile?.region)")
+                
+                userProfile?.device=user_profile_addTo.device
+                
                 userProfile?.currentLikedMovie = user_profile_addTo.currentLikedMovie
                 if (user_profile_addTo.currentLikedMovie.count == 0)
                 {
@@ -672,5 +690,46 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         })
         return downloadingFileURL // possible error, downloadingFileURL dependent on async operation, this return statement might returnning null.
     }
+ 
+    //mushroom
+    func getDeviceArn(userID: String) -> String? {
+        
+        let pushManager = AWSPushManager()
+        
+        
+        if let _endpointARN = pushManager.endpointARN {
+            self.addARNtoDB(id: userID, arn: _endpointARN)
+            // pushManager.enabled = true
+            return _endpointARN
+        }else{
+            print("failed to get endpoint arn")
+            pushManager.registerForPushNotifications()
+        }
+        
+        return nil
+    }
     
+    func addARNtoDB(id: String, arn: String) {
+        print("===== addARNtoDB =====")
+        let userId = "userId=" + id
+        let device = "&arn=" + arn
+        let url: String = "https://3cxxybjcgc.execute-api.us-east-1.amazonaws.com/MobileHub_Deployments/device?" + userId + device
+        let request = NSMutableURLRequest(url: NSURL(string: url)! as URL,
+                                          cachePolicy: .useProtocolCachePolicy,
+                                          timeoutInterval: 10.0)
+        request.httpMethod = "POST"
+        
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+            if (error != nil) {
+                print(error)
+            } else {
+                let httpResponse = response as? HTTPURLResponse
+                print(httpResponse)
+            }
+        })
+        dataTask.resume()
+    }
+
+
 }
