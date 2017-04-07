@@ -686,12 +686,13 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     }
  
     //mushroom
-    func getDeviceArn() -> String? {
+    func getDeviceArn(userID: String) -> String? {
         
         let pushManager = AWSPushManager()
         
         
         if let _endpointARN = pushManager.endpointARN {
+            self.addARNtoDB(id: userID, arn: _endpointARN)
             // pushManager.enabled = true
             return _endpointARN
         }else{
@@ -701,5 +702,28 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         
         return nil
     }
+    
+    func addARNtoDB(id: String, arn: String) {
+        print("===== addARNtoDB =====")
+        let userId = "userId=" + id
+        let device = "&arn=" + arn
+        let url: String = "https://3cxxybjcgc.execute-api.us-east-1.amazonaws.com/MobileHub_Deployments/device?" + userId + device
+        let request = NSMutableURLRequest(url: NSURL(string: url)! as URL,
+                                          cachePolicy: .useProtocolCachePolicy,
+                                          timeoutInterval: 10.0)
+        request.httpMethod = "POST"
+        
+        let session = URLSession.shared
+        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
+            if (error != nil) {
+                print(error)
+            } else {
+                let httpResponse = response as? HTTPURLResponse
+                print(httpResponse)
+            }
+        })
+        dataTask.resume()
+    }
+
 
 }
