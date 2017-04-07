@@ -43,38 +43,39 @@ class MatchViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.swipeableView.didSwipe = {view, direction, vector in
-                if (self.lablecount < self.userIds.count) {
+            if (self.lablecount < self.userIds.count) {
+                
+                print("i am swiping \(self.lablecount-self.cardsToLoad) th user")
+                if (direction == Direction.Right){
+                    UserProfileToDB().likeOneUser(key: AWSIdentityManager.default().identityId!, likedUserID: self.userIds[self.lablecount-self.cardsToLoad])
                     
-                    print("i am swiping \(self.lablecount-self.cardsToLoad) th user")
-                    if (direction == Direction.Right){
-                        UserProfileToDB().likeOneUser(key: AWSIdentityManager.default().identityId!, likedUserID: self.userIds[self.lablecount-self.cardsToLoad])
+                    print("I liked \(self.displayNames[self.lablecount-self.cardsToLoad])")
+                    
+                    if (UserProfileToDB().findIsMatched(key: AWSIdentityManager.default().identityId!, userID: self.userIds[self.lablecount-self.cardsToLoad])) {
+                        if (UserProfileToDB().findIsMatched(key: self.userIds[self.lablecount-self.cardsToLoad], userID: AWSIdentityManager.default().identityId!)) {
+                            
+                        UserProfileToDB().insertToMatchedUser(key: AWSIdentityManager.default().identityId!, userID: self.userIds[self.lablecount-self.cardsToLoad])
                         
-                        print("I liked \(self.displayNames[self.lablecount-self.cardsToLoad])")
-                       
-                        if (UserProfileToDB().findIsMatched(key: AWSIdentityManager.default().identityId!, userID: self.userIds[self.lablecount-self.cardsToLoad])) {
-                            if (UserProfileToDB().findIsMatched(key: self.userIds[self.lablecount-self.cardsToLoad], userID: AWSIdentityManager.default().identityId!)) {
-                                UserProfileToDB().insertToMatchedUser(key: AWSIdentityManager.default().identityId!, userID: self.userIds[self.lablecount-self.cardsToLoad])
-                                
-                                UserProfileToDB().insertToMatchedUser(key: self.userIds[self.lablecount-self.cardsToLoad], userID: AWSIdentityManager.default().identityId!)
-                                
-                                print("Congradulations!! You have a new match!! with \(self.displayNames[self.lablecount-self.cardsToLoad])")
-                                MainViewController().setBadge()
-                                
-                                // ================== push notification ======================================
-                                let userId_B: String = self.userIds[self.lablecount-self.cardsToLoad]
-                                let url: String = "https://3cxxybjcgc.execute-api.us-east-1.amazonaws.com/MobileHub_Deployments/match?userId="
-                                let urlToUserB: String = url + userId_B
-                                self.matchNotification(url: urlToUserB)
-                                self.pushInAppNF()
-                                // ================== push notification ======================================                       
-
+                        UserProfileToDB().insertToMatchedUser(key: self.userIds[self.lablecount-self.cardsToLoad], userID: AWSIdentityManager.default().identityId!)
+                        
+                        print("Congradulations!! You have a new match!! with \(self.displayNames[self.lablecount-self.cardsToLoad])")
+                        
+                        // ================== push notification ======================================
+                        let userId_B: String = self.userIds[self.lablecount-self.cardsToLoad]
+                        let url: String = "https://3cxxybjcgc.execute-api.us-east-1.amazonaws.com/MobileHub_Deployments/match?userId="
+                        let urlToUserB: String = url + userId_B
+                        self.matchNotification(url: urlToUserB)
+                        self.pushInAppNF()
+                        // ================== push notification ======================================
+                     
                         }
                     }
-                    
-                } else {
-                    self.swipeableView.removeFromSuperview()
                 }
+                
+            } else {
+                self.swipeableView.removeFromSuperview()
             }
+        }
         swipeableView.nextView = {
             return self.nextCardView()
         }
