@@ -92,7 +92,9 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         // AWS implementation ends here
         // ============================================
         if (AWSIdentityManager.default().isLoggedIn) {
-            UserProfileToDB().getDeviceArn(userID: AWSIdentityManager.default().identityId!)
+            if let arn = UserProfileToDB().getDeviceArn() {
+                API().addDeviceARNtoDB(userId: AWSIdentityManager.default().identityId!, deviceARN: arn)
+            }
             //get user liked movies initially
             UserProfileToDB().getLikedMovies(userId: AWSIdentityManager.default().identityId!, user_profile: user_p!)
             //get homescreen movie list

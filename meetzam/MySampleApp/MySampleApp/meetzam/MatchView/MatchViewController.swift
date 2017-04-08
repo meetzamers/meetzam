@@ -61,13 +61,10 @@ class MatchViewController: UIViewController {
                         print("Congradulations!! You have a new match!! with \(self.displayNames[self.lablecount-self.cardsToLoad])")
                         
                         // ================== push notification ======================================
-                        let userId_B: String = self.userIds[self.lablecount-self.cardsToLoad]
-                        let url: String = "https://3cxxybjcgc.execute-api.us-east-1.amazonaws.com/MobileHub_Deployments/match?userId="
-                        let urlToUserB: String = url + userId_B
-                        self.matchNotification(url: urlToUserB)
+                        let userB: String = self.userIds[self.lablecount-self.cardsToLoad]
+                        API().pushMatchNotification(userId: userB)
                         self.pushInAppNF()
                         // ================== push notification ======================================
-                     
                         }
                     }
                 }
@@ -81,28 +78,7 @@ class MatchViewController: UIViewController {
         }
         
     }
-    
-    func matchNotification(url: String) {
-        
-        print("===== push notification =========")
-        let request = NSMutableURLRequest(url: NSURL(string: url)! as URL,
-                                          cachePolicy: .useProtocolCachePolicy,
-                                          timeoutInterval: 10.0)
-        request.httpMethod = "POST"
-        
-        let session = URLSession.shared
-        let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
-            if (error != nil) {
-                print(error)
-            } else {
-                let httpResponse = response as? HTTPURLResponse
-                print(httpResponse)
-            }
-        })
-        
-        dataTask.resume()
-    }
-    
+  
     func pushInAppNF() {
         // ========================================================================================
         let application = UIApplication.shared
