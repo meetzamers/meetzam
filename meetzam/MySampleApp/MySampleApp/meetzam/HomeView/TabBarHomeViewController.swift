@@ -37,8 +37,12 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         // Let self be the delegate and dataSource
+        
+        print("wiew did load")
+        
         self.delegate = self
         self.dataSource = self
+        
         
         AWSLogger.default().logLevel = .none
         
@@ -63,7 +67,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         perform(#selector(popSignInViewController), with: nil, afterDelay: 0)
         
         // 1.5 attempt to pop first time user view controller
-        perform(#selector(popFirstUserViewController), with: nil, afterDelay: 0)
+//        perform(#selector(popFirstUserViewController), with: nil, afterDelay: 0)
         
         // 2. signinObserver: need to figure it out.
         new_signinObserver = NotificationCenter.default.addObserver(
@@ -88,6 +92,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         // AWS implementation ends here
         // ============================================
         if (AWSIdentityManager.default().isLoggedIn) {
+            UserProfileToDB().getDeviceArn(userID: AWSIdentityManager.default().identityId!)
             //get user liked movies initially
             UserProfileToDB().getLikedMovies(userId: AWSIdentityManager.default().identityId!, user_profile: user_p!)
             //get homescreen movie list
@@ -208,7 +213,9 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     
     // current viewcontroller
     override func viewWillAppear(_ animated: Bool) {
+        print("wiew Appear")
         if (isFirstMovieView && AWSIdentityManager.default().isLoggedIn) {
+            print("view First appear")
             viewDidLoad()
         }
     }
