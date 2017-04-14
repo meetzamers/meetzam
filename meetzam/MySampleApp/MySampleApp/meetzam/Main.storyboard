@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kPB-Rz-uBK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kPB-Rz-uBK">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -21,13 +21,78 @@
                     <view key="view" contentMode="scaleToFill" id="KT1-V1-ewX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="63" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aUv-Co-VfX">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="contactCell" rowHeight="63" id="En7-Xk-xG3" customClass="ContactCell" customModule="MySampleApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="63"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="En7-Xk-xG3" id="3ZP-w6-CEE">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="62.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fko-pz-Bsr">
+                                                    <rect key="frame" x="85" y="0.0" width="290" height="63"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D2o-nD-z9t">
+                                                    <rect key="frame" x="0.0" y="-1" width="64" height="64"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="displayName" destination="Fko-pz-Bsr" id="5El-aW-VMQ"/>
+                                            <outlet property="profilePicture" destination="D2o-nD-z9t" id="Mgw-Ox-P3A"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="s7B-no-7ow" id="8qn-fA-wxD"/>
+                                    <outlet property="delegate" destination="s7B-no-7ow" id="S7k-Hd-Qzq"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aUv-Co-VfX" firstAttribute="leading" secondItem="KT1-V1-ewX" secondAttribute="leading" id="WSn-Pz-qpw"/>
+                            <constraint firstAttribute="bottom" secondItem="aUv-Co-VfX" secondAttribute="bottom" id="ZJI-sa-bDI"/>
+                            <constraint firstItem="aUv-Co-VfX" firstAttribute="top" secondItem="KT1-V1-ewX" secondAttribute="top" id="eAV-YU-MPM"/>
+                            <constraint firstAttribute="trailing" secondItem="aUv-Co-VfX" secondAttribute="trailing" id="fXb-x0-6CQ"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Contacts" id="YM5-De-hKQ"/>
+                    <connections>
+                        <outlet property="contactTable" destination="aUv-Co-VfX" id="u4I-ac-uzB"/>
+                        <segue destination="WTO-Za-ess" kind="show" identifier="showProfile" id="7f2-pT-Fl6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wGP-DG-ye4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="988" y="-564"/>
+            <point key="canvasLocation" x="988" y="-564.46776611694156"/>
+        </scene>
+        <!--Contact Profile-->
+        <scene sceneID="Zmc-6q-tPT">
+            <objects>
+                <viewController id="WTO-Za-ess" customClass="ContactProfile" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qGG-OK-IqN"/>
+                        <viewControllerLayoutGuide type="bottom" id="sIL-iB-w8t"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sdx-y3-0nD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nWU-Dy-jSS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1692" y="-564"/>
         </scene>
         <!--Tab Bar Home View Controller-->
         <scene sceneID="QRX-ic-pJf">
@@ -539,7 +604,7 @@
                         <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
                     </tabBarItem>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="kce-y9-hjy">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="kce-y9-hjy">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -560,7 +625,7 @@
                         <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
                     </tabBarItem>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yxh-rP-jz5">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="yxh-rP-jz5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -581,7 +646,7 @@
                         <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
                     </tabBarItem>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="joM-tj-XfO">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="joM-tj-XfO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -602,7 +667,7 @@
                         <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
                     </tabBarItem>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="kQk-QR-BUa">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="kQk-QR-BUa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -623,7 +688,7 @@
                         <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
                     </tabBarItem>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="mYd-fN-efX">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="mYd-fN-efX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
