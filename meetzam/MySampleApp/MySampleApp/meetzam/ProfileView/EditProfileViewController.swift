@@ -228,7 +228,6 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
         let arn = UserProfileToDB().getDeviceArn(userID: dbID)
         print("device arn is \(arn ?? "no arn")")
         */
-        
         //reset so that it will not upload pic too many times
         uploadingFileURL = nil
         //deleteProfileImage()
