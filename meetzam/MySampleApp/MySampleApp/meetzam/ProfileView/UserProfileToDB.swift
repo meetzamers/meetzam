@@ -446,7 +446,35 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         return matchedUserProfiles
     }
     
-    
+    func getAllUserIDs() -> [String]
+    {
+        print("===== getAllUserIDs =====")
+        let mapper = AWSDynamoDBObjectMapper.default()
+        let scanExpression = AWSDynamoDBScanExpression()
+        var allUserIDs: Array = [String]()
+        var dummynum: Int = 0
+        mapper.scan(UserProfileToDB.self, expression: scanExpression).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            if let user_profile = task.result {
+                for item in user_profile.items as! [UserProfileToDB] {
+                    allUserIDs.append(item.userId!)
+                }
+            }
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            //self.tableView.reloadData()
+            if let error = task.error as NSError? {
+                print("Error: \(error)")
+                
+            }
+            dummynum = 6
+            return nil
+        })
+        var wait = 0
+        while (dummynum != 6)
+        {
+            wait = 1
+        }
+        return allUserIDs
+    }
     
     //JUNPU: let it busy waiting for now
     func likeOneUser(key: String, likedUserID: String)

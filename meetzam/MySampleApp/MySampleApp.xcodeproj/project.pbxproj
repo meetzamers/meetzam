@@ -14,6 +14,7 @@
 		1B46BF821E96D75000FEADD0 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B46BF811E96D75000FEADD0 /* UserNotifications.framework */; };
 		1B98C6A41E99239900A804BE /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B98C6A31E99239900A804BE /* API.swift */; };
 		362A26BA1E902ED3008BA57E /* HistoryMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362A26B91E902ED3008BA57E /* HistoryMovie.swift */; };
+		36EC6BF51EA19F0C001FC4E3 /* ConversationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EC6BF41EA19F0C001FC4E3 /* ConversationModel.swift */; };
 		5DD94CEB1E66149500B7DD80 /* LikedMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD94CEA1E66149500B7DD80 /* LikedMoviesView.swift */; };
 		5DD94CED1E6614F800B7DD80 /* MovieCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD94CEC1E6614F800B7DD80 /* MovieCollectionCell.swift */; };
 		5DD94CEF1E67288F00B7DD80 /* TopThreeMovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD94CEE1E67288F00B7DD80 /* TopThreeMovieCell.swift */; };
@@ -211,6 +212,7 @@
 		1DD70E29FDA0BE4900000000 /* AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.h; path = MySampleApp/AmazonAws/Api/AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.h; sourceTree = SOURCE_ROOT; };
 		1DD70E29FE33984F00000000 /* AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.m; path = MySampleApp/AmazonAws/Api/AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.m; sourceTree = SOURCE_ROOT; };
 		362A26B91E902ED3008BA57E /* HistoryMovie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryMovie.swift; sourceTree = "<group>"; };
+		36EC6BF41EA19F0C001FC4E3 /* ConversationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConversationModel.swift; path = MySampleApp/ConversationModel.swift; sourceTree = SOURCE_ROOT; };
 		5DD94CEA1E66149500B7DD80 /* LikedMoviesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LikedMoviesView.swift; path = MySampleApp/meetzam/ProfileView/LikedMoviesView.swift; sourceTree = SOURCE_ROOT; };
 		5DD94CEC1E6614F800B7DD80 /* MovieCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MovieCollectionCell.swift; path = MySampleApp/meetzam/ProfileView/MovieCollectionCell.swift; sourceTree = SOURCE_ROOT; };
 		5DD94CEE1E67288F00B7DD80 /* TopThreeMovieCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TopThreeMovieCell.swift; path = MySampleApp/meetzam/ProfileView/TopThreeMovieCell.swift; sourceTree = SOURCE_ROOT; };
@@ -560,6 +562,7 @@
 			children = (
 				18FC3D8A1E980CF70091B37F /* ChatRoomModel.swift */,
 				C40661BC1E5CBC85005D2145 /* ChatViewController.swift */,
+				36EC6BF41EA19F0C001FC4E3 /* ConversationModel.swift */,
 			);
 			name = ChatView;
 			sourceTree = "<group>";
@@ -787,6 +790,7 @@
 				E7A30F04BE9D922C00000000 /* ConversationTable.swift in Sources */,
 				1B98C6A41E99239900A804BE /* API.swift in Sources */,
 				E7A30F0441E4A73C00000000 /* UserProfileTable.swift in Sources */,
+				36EC6BF51EA19F0C001FC4E3 /* ConversationModel.swift in Sources */,
 				E7A30F045ABE0B1B00000000 /* NoSQLTableFactory.swift in Sources */,
 				E7A30F0491953CE700000000 /* UserProfile.swift in Sources */,
 				E7A30F04677133E600000000 /* AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.m in Sources */,
