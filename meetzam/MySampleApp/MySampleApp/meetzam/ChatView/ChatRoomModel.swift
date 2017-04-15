@@ -48,7 +48,7 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         queryExpression.expressionAttributeValues = [":userId": AWSIdentityManager.default().identityId!]
         var roomList = Set<ChatRoomModel>()
         
-        dynamoDBObjectMapper.scan(SingleMovie.self, expression: queryExpression).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+        dynamoDBObjectMapper.scan(ChatRoomModel.self, expression: queryExpression).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
         
             if let paginatedOutput = task.result {
                 for item in paginatedOutput.items as! [ChatRoomModel] {

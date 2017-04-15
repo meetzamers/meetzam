@@ -38,6 +38,11 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         super.viewDidLoad()
         // Let self be the delegate and dataSource
         
+        let conv = ConversationModel().getMessagesGivenKeys(userId: "1", chatRoomId: "3")
+        for item in conv
+        {
+            print("conversation# is \(item.conversationId)")
+        }
         print("wiew did load")
         
         self.delegate = self
