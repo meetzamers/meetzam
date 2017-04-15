@@ -9,11 +9,14 @@
 import UIKit
 import AWSMobileHubHelper
 
-class ContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    var displayNames: [String]!
-    var profilePics: [UIImage]!
+class ContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchResultsUpdating {
+    
+    var contacts = [contact]()
     
     @IBOutlet weak var contactTable: UITableView!
+    
+    
+    var resultsController = UISearchController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,62 +25,98 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     
         loadContact()
 
+        //set search bar
+        self.resultsController = UISearchController(searchResultsController: nil)
+        self.resultsController.searchResultsUpdater = self
+        
+        self.resultsController.dimsBackgroundDuringPresentation = false
+        self.resultsController.searchBar.sizeToFit()
+        
+        self.contactTable.tableHeaderView = self.resultsController.searchBar
+        contactTable.reloadData()
+        
+        definesPresentationContext = true
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        contactTable.reloadData()
+    }
+    
+    //what happen when seach happens
+    var filteredNames = [contact]()
+    func updateSearchResults(for searchController: UISearchController) {
+        //filter throught the names
+        filteredNames.removeAll(keepingCapacity: false)
+        
+        //let searchPredicate = NSPredicate(format:"SELF CONTAINS[c] %@", searchController.searchBar.text!)
+        
+        filteredNames = contacts.filter{ person in
+            return person.displayName.lowercased().contains(searchController.searchBar.text!.lowercased())
+        }
+        
+        
+        self.contactTable.reloadData()
+        
+
+    }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        //let matchedUserIDs = UserProfileToDB().getMatchedUserIDs(key: AWSIdentityManager.default().identityId!)
-        //return matchedUserIDs.count;
-        
-        return profilePics.count
+
+        if self.resultsController.isActive {
+            return self.filteredNames.count
+        } else {
+            return contacts.count
+        }
     }
-    
     
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath) as! ContactCell
-
-        cell.profilePicture.image = profilePics[indexPath.row]
-        cell.displayName.text = displayNames[indexPath.row]
         cell.displayName.font = UIFont(name: "HelveticaNeue-Light", size: 22)
-
-        return cell
         
+        if (!self.resultsController.isActive) {
+            cell.profilePicture.image = contacts[indexPath.row].profilePic
+            cell.displayName.text = contacts[indexPath.row].displayName
+        } else {
+            cell.profilePicture.image = filteredNames[indexPath.row].profilePic
+            cell.displayName.text = filteredNames[indexPath.row].displayName
+        }
+        return cell
     }
     
     func loadContact() {
-        displayNames = [String]()
-        profilePics = [UIImage]()
 
-        let matchedUserIDs = UserProfileToDB().getMatchedUserIDs(key: AWSIdentityManager.default().identityId!)
-        let matchedUsers = UserProfileToDB().getMatchedUserProfiles(userIDs: matchedUserIDs)
+        let matchedUserIDs = UserProfileToDB().getPotentialUserIDs(key: AWSIdentityManager.default().identityId!)
+        let matchedUsers = UserProfileToDB().getUserProfileByIds(userIDs: matchedUserIDs)
         
         for matchedUser in matchedUsers
         {
-            //add names to displayNames
-            displayNames.append(matchedUser.displayName!)
+            let newContact = contact()
             
-            loadProfile(userId: matchedUser.userId!)
+            
+            //add names to the new contact
+            newContact.displayName = matchedUser.displayName!
+            //add profile pic to new contact
+            newContact.profilePic = getProfilePic(userId: matchedUser.userId!)
+            
+            //add new contact to contacs
+            contacts.append(newContact)
             
         }
         
-        //delete later
-        displayNames = ["user1", "user2", "user3","user1", "user2","user1", "user2","user1", "user2","user1"]
-        profilePics = [#imageLiteral(resourceName: "emptyMovie"),#imageLiteral(resourceName: "emptyMovie"),#imageLiteral(resourceName: "emptyMovie"),#imageLiteral(resourceName: "emptyMovie"),#imageLiteral(resourceName: "emptyMovie"),#imageLiteral(resourceName: "emptyMovie"),#imageLiteral(resourceName: "emptyMovie"),#imageLiteral(resourceName: "emptyMovie"),#imageLiteral(resourceName: "emptyMovie"),#imageLiteral(resourceName: "emptyMovie")]
-        
     }
     
-    func loadProfile(userId: String) {
+    func getProfilePic(userId: String)->UIImage {
         let URLString = UserProfileToDB().downloadUserIcon(userID: userId).path
-        print("the local directory is \(URLString)")
+        
         if FileManager.default.fileExists(atPath: URLString) {
             print("The file exists!! \(userId)")
             let profileURL = URL(fileURLWithPath: URLString)
-            profilePics.append(UIImage(contentsOfFile: profileURL.path)!)
+            return UIImage(contentsOfFile: profileURL.path)!
         } else {
-            profilePics.append(#imageLiteral(resourceName: "emptyMovie"))
+            return #imageLiteral(resourceName: "emptyMovie")
         }
     }
     
@@ -96,15 +135,19 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         let vc = segue.destination as! ContactProfile
         
         // load everything in profile page!
-        vc.displayName.text = displayNames[indexPath]
-        
+        vc.displayName.text = contacts[indexPath].displayName
+        vc.userPicField.image = contacts[indexPath].profilePic
+        //vc.userBioField.text =
+        //vc.moviePic1.image = #imageLiteral(resourceName: "split")
+        //vc.moviePic2.image = #imageLiteral(resourceName: "split")
+        //vc.moviePic3.image = #imageLiteral(resourceName: "split")
+        //vc.moviePic4.image = #imageLiteral(resourceName: "split")
         
     }
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCellEditingStyle.delete
         {
-            self.profilePics.remove(at:indexPath.row)
-            self.displayNames.remove(at:indexPath.row)
+            self.contacts.remove(at:indexPath.row)
             
             //call DB function to delete the contact
             // XXXXXX
@@ -114,6 +157,9 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     
+}
 
-    
+class contact {
+    var displayName = String()
+    var profilePic = UIImage()
 }

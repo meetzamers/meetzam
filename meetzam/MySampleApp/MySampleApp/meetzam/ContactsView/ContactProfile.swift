@@ -12,51 +12,56 @@ class ContactProfile: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        // background
+        self.view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
+        self.mainScrollView.backgroundColor = UIColor.clear
+        self.mainView.backgroundColor = UIColor.clear
 
+        
         //profile picture
-        self.view.addSubview(userPicField)
+        self.mainView.addSubview(userPicField)
         
         // user name
         displayName.frame = CGRect(x: 20, y: userPicField.frame.height + 5, width: UIScreen.main.bounds.width, height: 30)
         displayName.font = UIFont(name: "HelveticaNeue-Light", size: 25)
-        self.view.addSubview(displayName)
+        self.mainView.addSubview(displayName)
         
         // user bio
         userBioField.frame = CGRect(x: 20, y: userPicField.frame.height + 35, width: UIScreen.main.bounds.width, height: 20)
         userBioField.font = UIFont(name: "HelveticaNeue-Thin", size: 15)
         userBioField.textColor = UIColor.gray
-        self.view.addSubview(userBioField)
+        self.mainView.addSubview(userBioField)
         
         // also liked
         alsoLiked.text = "Liked"
         alsoLiked.frame = CGRect(x: 25, y: userPicField.frame.height + 70, width: UIScreen.main.bounds.width, height: 20)
         alsoLiked.font = UIFont(name: "HelveticaNeue-Thin", size: 18)
         alsoLiked.textColor = UIColor.darkGray
-        self.view.addSubview(alsoLiked)
+        self.mainView.addSubview(alsoLiked)
         
         
         // liked movie backgroundLabel
-        backgroundLabel.frame = CGRect(x: 0, y: UIScreen.main.bounds.width + 70, width: UIScreen.main.bounds.width, height: 140)
+        backgroundLabel.frame = CGRect(x: 0, y: UIScreen.main.bounds.width + 100, width: UIScreen.main.bounds.width, height: 140)
         backgroundLabel.text = ""
         backgroundLabel.backgroundColor = UIColor.init(red: 173/255, green: 173/255, blue: 173/255, alpha: 1)
-        self.view.addSubview(backgroundLabel)
+        self.mainView.addSubview(backgroundLabel)
         
         
         // movies
-        moviePic1.frame = CGRect(x: 0, y: UIScreen.main.bounds.width + 70, width: (UIScreen.main.bounds.width-30)/4, height: 140)
+        moviePic1.frame = CGRect(x: 0, y: UIScreen.main.bounds.width + 100, width: (UIScreen.main.bounds.width-30)/4, height: 140)
         moviePic2.contentMode = .scaleToFill
         
-        moviePic2.frame = CGRect(x: moviePic1.frame.width, y: UIScreen.main.bounds.width + 70, width: (UIScreen.main.bounds.width)/4, height: 140)
+        moviePic2.frame = CGRect(x: moviePic1.frame.width, y: UIScreen.main.bounds.width + 100, width: (UIScreen.main.bounds.width)/4, height: 140)
         
-        moviePic3.frame = CGRect(x: moviePic1.frame.width*2, y: UIScreen.main.bounds.width + 70, width: (UIScreen.main.bounds.width)/4, height: 140)
+        moviePic3.frame = CGRect(x: moviePic1.frame.width*2, y: UIScreen.main.bounds.width + 100, width: (UIScreen.main.bounds.width)/4, height: 140)
         
-        moviePic4.frame = CGRect(x: moviePic1.frame.width*3, y: UIScreen.main.bounds.width + 70, width: (UIScreen.main.bounds.width)/4, height: 140)
+        moviePic4.frame = CGRect(x: moviePic1.frame.width*3, y: UIScreen.main.bounds.width + 100, width: (UIScreen.main.bounds.width)/4, height: 140)
         
         
-        self.view.addSubview(moviePic1)
-        self.view.addSubview(moviePic2)
-        self.view.addSubview(moviePic3)
-        self.view.addSubview(moviePic4)
+        self.mainView.addSubview(moviePic1)
+        self.mainView.addSubview(moviePic2)
+        self.mainView.addSubview(moviePic3)
+        self.mainView.addSubview(moviePic4)
 
     }
 
@@ -84,4 +89,6 @@ class ContactProfile: UIViewController {
     
     var moviePic4 = UIImageView()
 
+    @IBOutlet weak var mainScrollView: UIScrollView!
+    @IBOutlet weak var mainView: UIView!
 }
