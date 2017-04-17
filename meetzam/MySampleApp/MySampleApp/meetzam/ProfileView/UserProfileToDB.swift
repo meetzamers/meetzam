@@ -6,6 +6,7 @@
 //  update:bug fixed related to movie count in saving edited profile
 //  
 //  add device in line: 104, 204, 278, 475, 619
+//  testing method in line 426
 //
 // Copyright 2017 Amazon.com, Inc. or its affiliates (Amazon). All Rights Reserved.
 //
@@ -357,7 +358,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         print("     before load!!")
         
         mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
-            if let error = task.error as? NSError {
+            if let error = task.error as NSError? {
                 print("InsertError: \(error)")
             } else if let user_profile_addTo = task.result as? UserProfileToDB {
                 if (user_profile_addTo.currentLikedMovie.count != 0 && user_profile_addTo.movieCount == 0) {
@@ -422,10 +423,33 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         
         for userID in userIDs
         {
+            /*
+            //test create chat room (create current->recipient & recipient->current pair of chat rooms)
+            ChatRoomModel().createChatRoom(recipient: userID)
+ 
+            //test get list of chatroom of current user
+            let test_get = ChatRoomModel().getChatRoomList()
+            print(test_get.description)
+            
+            //test sort by time stamp
+            let sorted = ChatRoomModel().sortByTime(roomList: test_get)
+            print(sorted.description)
+            
+            
+            //test get chatroom id when specifying sender and recipient
+            let test_getRoomId = ChatRoomModel().getChatRoomId(userId: AWSIdentityManager.default().identityId!, recipientId: userID)
+            print(test_getRoomId)
+ 
+            //test update latest activity time of chatroom
+            let test_room = ChatRoomModel().getSingleChatRoom(userId: AWSIdentityManager.default().identityId!, recipientId: userID)
+            //print(test_room.description);
+            test_room.updateTimeStamp();
+            */
+            
             dummynum = 0
             print("userid is \(userID)")
             mapper.load(UserProfileToDB.self, hashKey: userID, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
-                if let error = task.error as? NSError {
+                if let error = task.error as NSError? {
                     print("InsertError: \(error)")
                 }
                 else if let userProfile = task.result as? UserProfileToDB {

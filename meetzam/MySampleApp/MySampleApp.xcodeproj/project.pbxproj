@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		136D68631E82F1C2004E96CA /* MovieAndList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136D68621E82F1C2004E96CA /* MovieAndList.swift */; };
+		185099741EA1B8B0001FA648 /* NSDate+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185099731EA1B8B0001FA648 /* NSDate+Util.swift */; };
 		18FC3D8B1E980CF70091B37F /* ChatRoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FC3D8A1E980CF70091B37F /* ChatRoomModel.swift */; };
 		1B2F3E701E95581A00417F6B /* AWSLambda.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2F3E6F1E95581A00417F6B /* AWSLambda.framework */; };
 		1B2F3E711E95581A00417F6B /* AWSLambda.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2F3E6F1E95581A00417F6B /* AWSLambda.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -135,6 +136,7 @@
 
 /* Begin PBXFileReference section */
 		136D68621E82F1C2004E96CA /* MovieAndList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MovieAndList.swift; path = MySampleApp/meetzam/HomeView/MovieAndList.swift; sourceTree = SOURCE_ROOT; };
+		185099731EA1B8B0001FA648 /* NSDate+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDate+Util.swift"; path = "MySampleApp/meetzam/NSDate+Util.swift"; sourceTree = SOURCE_ROOT; };
 		18FC3D8A1E980CF70091B37F /* ChatRoomModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatRoomModel.swift; path = MySampleApp/meetzam/ChatView/ChatRoomModel.swift; sourceTree = SOURCE_ROOT; };
 		1B2F3E6F1E95581A00417F6B /* AWSLambda.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSLambda.framework; sourceTree = "<group>"; };
 		1B46BF811E96D75000FEADD0 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
@@ -280,6 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				1B98C6A31E99239900A804BE /* API.swift */,
+				185099731EA1B8B0001FA648 /* NSDate+Util.swift */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -806,6 +809,7 @@
 				E7A30F0441798FFD00000000 /* NoSQLSampleDataGenerator.swift in Sources */,
 				E7A30F04A2C572B800000000 /* UtilityFunctions.swift in Sources */,
 				E7A30F04F01DFC3F00000000 /* NoSQLTableViewController.swift in Sources */,
+				185099741EA1B8B0001FA648 /* NSDate+Util.swift in Sources */,
 				E7A30F042D45845500000000 /* DemoViewController.swift in Sources */,
 				C41A646B1E92210D004239CB /* FirstTimeUserViewController.swift in Sources */,
 				E7A30F046F849B0700000000 /* ChatRoomTable.swift in Sources */,
