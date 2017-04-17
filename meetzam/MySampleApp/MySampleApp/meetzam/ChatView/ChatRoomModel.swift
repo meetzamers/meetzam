@@ -102,6 +102,7 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
     */
     func updateTimeStamp() {
         API().updateTimeStamp(chatRoomId: self.chatRoomId!, timeStamp: Date().iso8601)
+        //API().updateTimeStamp(chatRoomId: "test", timeStamp: "mushroom30")
     }
     
     func getChatRoomList() -> [ChatRoomModel] {
@@ -123,7 +124,7 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                 for item in paginatedOutput.items as! [ChatRoomModel] {
                     
                     roomList.append(item)
-                    print("getting room \(item.chatRoomId ?? "no Room") of user \(item.userId ?? "no ID")")
+                    //print("getting room \(item.chatRoomId ?? "no Room") of user \(item.userId ?? "no ID")")
                 }
                 
             }
@@ -142,7 +143,7 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         {
             waiting = 1
         }
-        print(roomList.description)
+        //print(roomList.description)
         print("got \(roomList.count) chatrooms")
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
@@ -167,7 +168,7 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                 for item in paginatedOutput.items as! [ChatRoomModel] {
                     
                     roomList.insert(item)
-                    print("getting room \(item.chatRoomId ?? "no Room") of user \(item.userId ?? "no ID")")
+                    //print("getting room \(item.chatRoomId ?? "no Room") of user \(item.userId ?? "no ID")")
                 }
                 
             }
@@ -186,7 +187,7 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         {
             waiting = 1
         }
-        print(roomList.description)
+        //print(roomList.description)
         print("got \(roomList.count) chatrooms")
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
@@ -236,7 +237,7 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                 for item in paginatedOutput.items as! [ChatRoomModel] {
                     
                     roomList.insert(item)
-                    print("getting room \(item.chatRoomId ?? "no Room") of user \(item.userId ?? "no ID")")
+                    //print("getting room \(item.chatRoomId ?? "no Room") of user \(item.userId ?? "no ID")")
                 }
                 
             }
@@ -255,7 +256,7 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         {
             waiting = 1
         }
-        print(roomList.description)
+        //print(roomList.description)
         print("got \(roomList.count) chatrooms")
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
@@ -263,8 +264,8 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         
     }
     
-    func sortByTime(roomList: [ChatRoomModel]) {
-        roomList.sorted(by: { $0.timeStamp > $1.timeStamp })
+    func sortByTime(roomList: [ChatRoomModel]) -> [ChatRoomModel] {
+        return roomList.sorted(by: { $0.timeStamp?.compare($1.timeStamp!) == .orderedDescending })
     }
     
     

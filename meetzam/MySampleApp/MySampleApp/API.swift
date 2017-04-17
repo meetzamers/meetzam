@@ -25,7 +25,7 @@ class API {
     }
     
     private func timeStampPOSTUrl(chatRoomId: String, timeStamp: String) -> String {
-        return rootUrl + "/chatroom/time?" + "chatRoomId=" + chatRoomId + "&timeSample=" + timeStamp
+        return rootUrl + "/chatroom/time?" + "chatRoomId=" + chatRoomId + "&timeStamp=" + timeStamp
     }
 
     private func httpRequest(url: String, method: String) {

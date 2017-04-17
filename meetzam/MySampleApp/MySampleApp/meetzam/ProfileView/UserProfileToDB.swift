@@ -426,17 +426,25 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             /*
             //test create chat room (create current->recipient & recipient->current pair of chat rooms)
             ChatRoomModel().createChatRoom(recipient: userID)
+ 
             //test get list of chatroom of current user
             let test_get = ChatRoomModel().getChatRoomList()
             print(test_get.description)
+            
+            //test sort by time stamp
+            let sorted = ChatRoomModel().sortByTime(roomList: test_get)
+            print(sorted.description)
+            
+            
             //test get chatroom id when specifying sender and recipient
             let test_getRoomId = ChatRoomModel().getChatRoomId(userId: AWSIdentityManager.default().identityId!, recipientId: userID)
-            */
+            print(test_getRoomId)
+ 
             //test update latest activity time of chatroom
             let test_room = ChatRoomModel().getSingleChatRoom(userId: AWSIdentityManager.default().identityId!, recipientId: userID)
             //print(test_room.description);
             test_room.updateTimeStamp();
-            
+            */
             
             dummynum = 0
             print("userid is \(userID)")
