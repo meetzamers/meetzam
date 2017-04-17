@@ -134,7 +134,7 @@ class MatchViewController: UIViewController {
         print("downloaded url is \(url)")*/
         
         /* Set up the numebr of cards to load here.
-        let matchedUserIDs = UserProfileToDB().getMatchedUserIDs(key: AWSIdentityManager.default().identityId!)
+        let matchedUserIDs = UserProfileToDB().getPotentialUserIDs(key: AWSIdentityManager.default().identityId!)
         if (matchedUserIDs.count <= 3){
             swipeableView.numberOfActiveView = UInt(matchedUserIDs.count)
         } else {
@@ -242,8 +242,8 @@ class MatchViewController: UIViewController {
         movies3 = [UIImage]()
         profilePics = [UIImage]()
         
-        let matchedUserIDs = UserProfileToDB().getMatchedUserIDs(key: AWSIdentityManager.default().identityId!)
-        let matchedUsers = UserProfileToDB().getMatchedUserProfiles(userIDs: matchedUserIDs)
+        let matchedUserIDs = UserProfileToDB().getPotentialUserIDs(key: AWSIdentityManager.default().identityId!)
+        let matchedUsers = UserProfileToDB().getUserProfileByIds(userIDs: matchedUserIDs)
         
         likedUserIds = UserProfileToDB().getLikedUserIDs(key: AWSIdentityManager.default().identityId!)
         

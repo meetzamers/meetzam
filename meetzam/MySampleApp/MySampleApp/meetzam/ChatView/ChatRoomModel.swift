@@ -115,9 +115,10 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         
         queryExpression.filterExpression = "userId = :userId";
         queryExpression.expressionAttributeValues = [":userId": AWSIdentityManager.default().identityId!]
- 
+      
         var roomList = [ChatRoomModel]()
         var dummynum = 0
+
         dynamoDBObjectMapper.scan(ChatRoomModel.self, expression: queryExpression).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
         
             if let paginatedOutput = task.result {

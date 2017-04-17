@@ -346,10 +346,10 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     //JUNPU: async dependency in the code, busy waiting still exist
     //JUNPU: most of the latency comes from this function
     //JUNPU: working
-    func getMatchedUserIDs(key: String) -> [String]
+    func getPotentialUserIDs(key: String) -> [String]
     {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        print("===== getMatchedUserIDs =====")
+        print("===== getPotentialUserIDs =====")
         let mapper = AWSDynamoDBObjectMapper.default()
         var currentLikedMovie = Set<String>()
         let userProfile = UserProfileToDB()
@@ -407,16 +407,16 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 waiting = 1
             }
         }
-        print("getMatchedUserIDs SUCCESS")
+        print("getPotentialUserIDs SUCCESS")
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         return matchedUserIDs
     }
     
     //JUNPU: async dependency in the code, busy waiting still exist
     //JUNPU: Tried but did not fix. I'll come back to this
-    func getMatchedUserProfiles(userIDs: [String]) -> [UserProfileToDB]
+    func getUserProfileByIds(userIDs: [String]) -> [UserProfileToDB]
     {
-        print("===== getMatchedUserProfiles =====")
+        print("===== getUserProfileByIds =====")
         var matchedUserProfiles: Array = [UserProfileToDB]()
         let mapper = AWSDynamoDBObjectMapper.default()
         var dummynum: Int = 0
@@ -466,11 +466,39 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 waiting = 1
             }
         }
-        print("getMatchedUserProfiles SUCCESS")
+        print("getUserProfileByIds SUCCESS")
         return matchedUserProfiles
     }
     
-    
+    func getAllUserIDs() -> [String]
+    {
+        print("===== getAllUserIDs =====")
+        let mapper = AWSDynamoDBObjectMapper.default()
+        let scanExpression = AWSDynamoDBScanExpression()
+        var allUserIDs: Array = [String]()
+        var dummynum: Int = 0
+        mapper.scan(UserProfileToDB.self, expression: scanExpression).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            if let user_profile = task.result {
+                for item in user_profile.items as! [UserProfileToDB] {
+                    allUserIDs.append(item.userId!)
+                }
+            }
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            //self.tableView.reloadData()
+            if let error = task.error as NSError? {
+                print("Error: \(error)")
+                
+            }
+            dummynum = 6
+            return nil
+        })
+        var wait = 0
+        while (dummynum != 6)
+        {
+            wait = 1
+        }
+        return allUserIDs
+    }
     
     //JUNPU: let it busy waiting for now
     func likeOneUser(key: String, likedUserID: String)
@@ -584,6 +612,43 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         print("getLikedUserIDs SUCCESS")
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         return likedUserIDs
+    }
+    
+    func getMatchedUserIDs(key: String) -> [String]
+    {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        print("===== getMatchedUserIDs =====")
+        let mapper = AWSDynamoDBObjectMapper.default()
+        var matchedUserArr = Set<String>()
+        var matchedUserIDs: Array = [String]()
+        var dummynum: Int = 0
+        
+        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil).continueWith(executor: AWSExecutor.immediate(), block: { (task: AWSTask!) -> AnyObject! in
+            if let error = task.error as NSError? {
+                print("Error: \(error)")
+            }
+            else if let user_profile = task.result as? UserProfileToDB {
+                matchedUserArr = user_profile.matchedUsers
+            }
+            
+            dummynum = 6
+            return nil
+        })
+        
+        var waiting = 0
+        while (dummynum == 0)
+        {
+            waiting = 1
+        }
+        for user in matchedUserArr
+        {
+            matchedUserIDs.append(user)
+        }
+        
+        print(matchedUserIDs)
+        print("getMatchedUserIDs SUCCESS")
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        return matchedUserIDs
     }
     
     // Call this twice!
