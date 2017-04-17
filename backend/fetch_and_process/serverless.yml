@@ -22,16 +22,8 @@ provider:
 custom: ${file(./credentials.json)}
 
 functions:
-
-  markAllMovieAsHistory:
-    handler: markAllMovieAsHistory.handler
-    name: markAllMovieAsHistory-${self:provider.stage}
-    description: Scheduled to run at 10:00am (UTC) everyday, scan movie_table and mark every movie as 'history'.
-    runtime: nodejs6.10
-    memorySize: 128
-    timeout: 6
-    events: 
-      - schedule: cron(0 10 * * ? *)
+  
+  # getters
 
   getLocalMovies:
     handler: getLocalMovies.handler
@@ -42,6 +34,58 @@ functions:
     timeout: 6
     environment:
       Gracenote_API_key: ${self:custom.Gracenote_API_key}
+
+  getOneMovie:
+    handler: getOneMovie.handler
+    name: getOneMovie-${self:provider.stage}
+    description: this function calls TMDB api search/movie pass movie title and release year as parameters and fetch general data about the movie.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    environment:
+      TMDB_API_key: ${self:custom.TMDB_API_key}    
+
+  getTrailer:   
+    handler: getTrailer.handler
+    name: getTrailer-${self:provider.stage}
+    description: this function calls TMDB api movie/video pass imdb_id as parameter and fetch movie trailer data about movie.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    environment:
+      TMDB_API_key: ${self:custom.TMDB_API_key} 
+
+  getMovieComments:
+    handler: getMovieComments.handler
+    name: getMovieComments-${self:provider.stage}
+    description: fetch movie's public reviews for movies
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    environment:
+      TMDB_API_key: ${self:custom.TMDB_API_key} 
+
+  getUpcomingMovies:
+    handler: getUpcomingMovies.handler
+    name: getUpcomingMovies-${self:provider.stage}
+    description: Get a list of upcoming movies in theatres. This is a release type query that looks for all movies that have a release type of 2 or 3 within the specified date range.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    environment:
+      TMDB_API_key: ${self:custom.TMDB_API_key}  
+
+  # database operations
+
+  markAllMovieAsHistory:
+    handler: markAllMovieAsHistory.handler
+    name: markAllMovieAsHistory-${self:provider.stage}
+    description: Scheduled to run at 10:00am (UTC) everyday, scan movie_table and mark every movie as 'history'.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events: 
+      - schedule: cron(0 10 * * ? *)
 
   updateCurrentPlayingMovie:
     handler: updateCurrentPlayingMovie.handler
@@ -73,18 +117,6 @@ functions:
     events: 
       - schedule: cron(3 10 * * ? *)
 
-
-
-  getOneMovie:
-    handler: getOneMovie.handler
-    name: getOneMovie-${self:provider.stage}
-    description: this function calls TMDB api search/movie pass movie title and release year as parameters and fetch general data about the movie.
-    runtime: nodejs6.10
-    memorySize: 128
-    timeout: 6
-    environment:
-      TMDB_API_key: ${self:custom.TMDB_API_key}
-
   addTmdbidAndPosterPath:
     handler: addTmdbidAndPosterPath.handler
     name: addTmdbidAndPosterPath-${self:provider.stage}
@@ -115,18 +147,6 @@ functions:
     events: 
       - schedule: cron(6 10 * * ? *)      
 
-
-
-  getTrailer:   
-    handler: getTrailer.handler
-    name: getTrailer-${self:provider.stage}
-    description: this function calls TMDB api movie/video pass imdb_id as parameter and fetch movie trailer data about movie.
-    runtime: nodejs6.10
-    memorySize: 128
-    timeout: 6
-    environment:
-      TMDB_API_key: ${self:custom.TMDB_API_key} 
-
   addTrailerKey:
     handler: addTrailerKey.handler
     name: addTrailerKey-${self:provider.stage}
@@ -146,6 +166,20 @@ functions:
     timeout: 6
     events: 
       - schedule: cron(8 10 * * ? *)
+
+  # controllers
+
+  eventController:
+    handler: eventController.handler
+    name: eventController-${self:provider.stage}
+    description: a testing function for control code.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    
+
+
+
 
 
 
