@@ -10,18 +10,23 @@ import Foundation
 import AWSDynamoDB
 import AWSMobileHubHelper
 
-let AWSDynamoDBChatroom = "meetzam-mobilehub-1569925313-ChatRoom"//"meetzam-mobilehub-1569925313-Movie"
+let AWSDynamoDBChatroom = "chatroom"
 class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
     
     var userId: String?
     var chatRoomId: String?
-    var lastActivated: String?
+    //var lastActivated: String?
     var recipientId: String?
+    var timeStamp: String?
     
     class func dynamoDBTableName() -> String {
         return AWSDynamoDBChatroom
     }
     
+    class func hashKeyAttribute() -> String {
+        return "chatRoomId"
+    }
+    /*
     class func hashKeyAttribute() -> String {
         return "userId"
     }
@@ -30,26 +35,134 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         return "chatRoomId"
     }
     
-    /*
+    
     class func ignoreAttributes() -> [String] {
         return ["internalName", "internalState"]
     }
     */
     
-    func getChatRoomList() -> Set<ChatRoomModel> {
+    func createChatRoom(recipient: String) {
+        
+        print("===== Create Chat Room =====")
+        print("create for current")
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
+        let mapper = AWSDynamoDBObjectMapper.default()
+        
+        let chatRoom = ChatRoomModel()
+        
+        chatRoom?.chatRoomId = UUID().uuidString
+        chatRoom?.timeStamp = Date().iso8601
+        chatRoom?.userId = AWSIdentityManager.default().identityId!
+        chatRoom?.recipientId = recipient
+
+        mapper.save(chatRoom!) .continueWith(block: { (task: AWSTask!) -> AnyObject! in
+            if ((task.error) != nil) {
+                NSLog("Failed")
+                print("Error: \(String(describing: task.error))")
+            }
+            else {
+                print("SUCCESS")
+            }
+
+            return nil
+        })
+        
+        print("create for recipient")
+        
+        let mapper2 = AWSDynamoDBObjectMapper.default()
+        
+        let chatRoom2 = ChatRoomModel()
+        
+        chatRoom2?.chatRoomId = UUID().uuidString
+        chatRoom2?.timeStamp = Date().iso8601
+        chatRoom2?.userId = recipient
+        chatRoom2?.recipientId = AWSIdentityManager.default().identityId!
+        
+        mapper2.save(chatRoom2!) .continueWith(block: { (task: AWSTask!) -> AnyObject! in
+            if ((task.error) != nil) {
+                NSLog("Failed")
+                print("Error: \(String(describing: task.error))")
+            }
+            else {
+                print("SUCCESS")
+            }
+            
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            
+            return nil
+        })
+
+        
+    }
+    /*
+    func updateTimeStamp(chatRoomId: String) {
+        API().updateTimeStamp(chatRoomId: chatRoomId, timeStamp: Date().iso8601)
+    }
+    */
+    func updateTimeStamp() {
+        API().updateTimeStamp(chatRoomId: self.chatRoomId!, timeStamp: Date().iso8601)
+    }
+    
+    func getChatRoomList() -> [ChatRoomModel] {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         print("===== getChatRoomList =====")
         
         let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.default()
         let queryExpression = AWSDynamoDBScanExpression()
-
+        
         queryExpression.filterExpression = "userId = :userId";
         queryExpression.expressionAttributeValues = [":userId": AWSIdentityManager.default().identityId!]
+ 
+        var roomList = [ChatRoomModel]()
+        var dummynum = 0
+        dynamoDBObjectMapper.scan(ChatRoomModel.self, expression: queryExpression).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+        
+            if let paginatedOutput = task.result {
+                for item in paginatedOutput.items as! [ChatRoomModel] {
+                    
+                    roomList.append(item)
+                    print("getting room \(item.chatRoomId ?? "no Room") of user \(item.userId ?? "no ID")")
+                }
+                
+            }
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            //self.tableView.reloadData()
+            if let error = task.error as NSError? {
+                print("Error: \(error)")
+                
+            }
+            dummynum = 6
+            print("get list of chatroom: SUCCESS")
+            return nil
+        })
+        var waiting = 0
+        while (dummynum != 6)
+        {
+            waiting = 1
+        }
+        print(roomList.description)
+        print("got \(roomList.count) chatrooms")
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        
+        return roomList
+    }
+   
+    func getChatRoomId(userId: String, recipientId: String) -> String{
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true;
+        print("===== getChatRoomId =====")
+        
+        
+        let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.default()
+        let queryExpression = AWSDynamoDBScanExpression()
+        queryExpression.filterExpression = "userId = :userId AND recipientId = :recipientId";
+        queryExpression.expressionAttributeValues = [":userId": AWSIdentityManager.default().identityId!, ":recipientId": recipientId]
+        
         var roomList = Set<ChatRoomModel>()
-        
-        dynamoDBObjectMapper.scan(SingleMovie.self, expression: queryExpression).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
-        
+        var dummynum = 0
+        dynamoDBObjectMapper.scan(ChatRoomModel.self, expression: queryExpression).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            
             if let paginatedOutput = task.result {
                 for item in paginatedOutput.items as! [ChatRoomModel] {
                     
@@ -64,24 +177,31 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                 print("Error: \(error)")
                 
             }
-            
+            dummynum = 6
             print("get list of chatroom: SUCCESS")
             return nil
         })
+        var waiting = 0
+        while (dummynum != 6)
+        {
+            waiting = 1
+        }
         print(roomList.description)
         print("got \(roomList.count) chatrooms")
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
-        return roomList
+        return roomList.first!.chatRoomId!
+
     }
-   
-    func getSingleChatRoom(_chatRoomId: String) -> ChatRoomModel {
+    
+    /*
+    func getSingleChatRoom(chatRoomId: String) -> ChatRoomModel {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         print("===== getSingleChatRoom =====")
         let mapper = AWSDynamoDBObjectMapper.default()
         var getted_chatroom = ChatRoomModel()
-        mapper.load(ChatRoomModel.self, hashKey: AWSIdentityManager.default().identityId!, rangeKey: _chatRoomId) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+        mapper.load(ChatRoomModel.self, hashKey: chatRoomId, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as NSError? {
                 print("get single chatroom Error: \(error)")
                 getted_chatroom = nil
@@ -96,6 +216,55 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         print("getting room \(getted_chatroom?.chatRoomId ?? "no Room") of user \(getted_chatroom?.userId ?? "no ID")")
         return getted_chatroom!
         
+    }
+ */
+    func getSingleChatRoom(userId: String, recipientId: String) -> ChatRoomModel{
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true;
+        print("===== getSingleChatRoom =====")
+        
+        
+        let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.default()
+        let queryExpression = AWSDynamoDBScanExpression()
+        queryExpression.filterExpression = "userId = :userId AND recipientId = :recipientId";
+        queryExpression.expressionAttributeValues = [":userId": AWSIdentityManager.default().identityId!, ":recipientId": recipientId]
+        
+        var roomList = Set<ChatRoomModel>()
+        var dummynum = 0
+        dynamoDBObjectMapper.scan(ChatRoomModel.self, expression: queryExpression).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            
+            if let paginatedOutput = task.result {
+                for item in paginatedOutput.items as! [ChatRoomModel] {
+                    
+                    roomList.insert(item)
+                    print("getting room \(item.chatRoomId ?? "no Room") of user \(item.userId ?? "no ID")")
+                }
+                
+            }
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            //self.tableView.reloadData()
+            if let error = task.error as NSError? {
+                print("Error: \(error)")
+                
+            }
+            dummynum = 6
+            print("get list of chatroom: SUCCESS")
+            return nil
+        })
+        var waiting = 0
+        while (dummynum != 6)
+        {
+            waiting = 1
+        }
+        print(roomList.description)
+        print("got \(roomList.count) chatrooms")
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        
+        return roomList.first!
+        
+    }
+    
+    func sortByTime(roomList: [ChatRoomModel]) {
+        roomList.sorted(by: { $0.timeStamp > $1.timeStamp })
     }
     
     

@@ -23,6 +23,10 @@ class API {
     private func matchPOSTUrl(userId: String) -> String {
         return rootUrl + "/match?" + "userId=" + userId
     }
+    
+    private func timeStampPOSTUrl(chatRoomId: String, timeStamp: String) -> String {
+        return rootUrl + "/chatroom/time?" + "chatRoomId=" + chatRoomId + "&timeSample=" + timeStamp
+    }
 
     private func httpRequest(url: String, method: String) {
         let request = NSMutableURLRequest(url: NSURL(string: url)! as URL,
@@ -74,4 +78,7 @@ class API {
         httpRequest(url: matchPOSTUrl(userId: userId), method: "POST")
     }
     
+    func updateTimeStamp(chatRoomId: String, timeStamp: String) {
+        httpRequest(url: timeStampPOSTUrl(chatRoomId: chatRoomId, timeStamp: timeStamp), method: "POST")
+    }
 }

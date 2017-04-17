@@ -4,12 +4,33 @@
 //
 //  Created by mushroom on 4/14/17.
 //
-//  ??: chatRoom._chatRoomId = UUID().uuidString
-//  eg. set的时候：chatRoom._createdAt = Date().formattedISO8601
-//      get的时候：Date().formattedISO8601Date(item1._createdAt!)
+//  eg. set的时候：stringFromDate = Date().iso8601
+//      opt: converting back to Date type
+//          dateFromString = stringFromDate.dateFromISO8601
 //
 
+extension Formatter {
+    static let iso8601: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.calendar = Calendar(identifier: .iso8601)
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSXXXXX"
+        return formatter
+    }()
+}
+extension Date {
+    var iso8601: String {
+        return Formatter.iso8601.string(from: self)
+    }
+}
 
+extension String {
+    var dateFromISO8601: Date? {
+        return Formatter.iso8601.date(from: self)   // "Mar 22, 2017, 10:22 AM"
+    }
+}
+/*
 let ISO8601DateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
 
 import Foundation
@@ -25,11 +46,6 @@ extension Foundation.Date {
             dateFormatter.dateFormat = ISO8601DateFormat
             dateFormatter.timeZone = TimeZone(identifier: "UTC")
             
-            //            let formatter = NSDateFormatter()
-            //            formatter.calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierISO8601)
-            //            formatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-            //            formatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
-            //            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSX"
             return dateFormatter
         }()
     }
@@ -45,6 +61,7 @@ extension Foundation.Date {
         dateFormatter.locale = enUSPosixLocale
         return  dateFormatter.date(from: iso8601String)!
     }
+ 
     
     func chatRoomFormatted(_ iso8601String:String) -> String {
         
@@ -92,9 +109,24 @@ extension Foundation.Date {
         return dateFormatter.string(from: date!)
         
     }
-    
-    
+ 
+    func TimeFormatted(_ iso8601String:String) -> String {
+        
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = ISO8601DateFormat
+        let enUSPosixLocale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.locale = enUSPosixLocale
+        let date = dateFormatter.date(from: iso8601String)
+        
+        dateFormatter.dateFormat = "MMM dd, hh:mm a"
+        dateFormatter.timeZone = TimeZone.current
+        return dateFormatter.string(from: date!)
+        
+    }
+
 }
+*/
 
 
 
