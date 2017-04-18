@@ -304,7 +304,7 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         let movie = SingleMovie()
         
         mapper.load(SingleMovie.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
-            if let error = task.error as? NSError {
+            if let error = task.error as NSError? {
                 print("InsertError: \(error)")
             } else if let movie_addTo = task.result as? SingleMovie {
                 
@@ -380,7 +380,7 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         let movie = SingleMovie()
         
         mapper.load(SingleMovie.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
-            if let error = task.error as? NSError {
+            if let error = task.error as NSError? {
                 print("InsertError: \(error)")
             } else if let movie_addTo = task.result as? SingleMovie {
                 

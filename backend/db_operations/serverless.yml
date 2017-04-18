@@ -18,6 +18,10 @@ provider:
     - Effect: Allow
       Action: "DynamoDB:*"
       Resource: "arn:aws:dynamodb:us-east-1:397508666882:table/movie_history" 
+      
+    - Effect: Allow
+      Action: "DynamoDB:*"
+      Resource: "arn:aws:dynamodb:us-east-1:397508666882:table/chatroom" 
 
 
 functions:
@@ -26,6 +30,14 @@ functions:
     handler: addDeviceARN.handler
     name: addDeviceARN-${self:provider.stage}
     description: this function add deviceARN to userProfile table
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+
+  updateTimeStamp:
+    handler: updateTimeStamp.handler
+    name: updateTimeStamp-${self:provider.stage}
+    description: this function update timeStamp in chatroom table
     runtime: nodejs6.10
     memorySize: 128
     timeout: 6
