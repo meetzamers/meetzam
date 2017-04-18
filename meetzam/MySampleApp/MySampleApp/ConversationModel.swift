@@ -31,6 +31,22 @@ class ConversationModel: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         return "conversationId"
     }
     
+    // Usage: it adds a new conversation to DB
+    func addConversation(_userId: String, _chatRoomId: String, _message: String)
+    {
+        print("===== addConversation =====")
+        let mapper = AWSDynamoDBObjectMapper.default()
+        let newConversation = ConversationModel()
+        newConversation?.userId = _userId
+        newConversation?.conversationId = UUID().uuidString
+        newConversation?.chatRoomId = _chatRoomId
+        newConversation?.createdAt = Date().iso8601
+        newConversation?.message = _message
+        mapper.save(newConversation!)
+        print("successfully added conversation to DB")
+    }
+    
+    // Usage: it returns all messages given the userid and chatroomid
     func getMessagesGivenKeys(userId: String, chatRoomId: String) -> [ConversationModel]
     {
         print("===== getMessageGivenKeys =====")
@@ -38,16 +54,13 @@ class ConversationModel: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         let queryExpression = AWSDynamoDBScanExpression()
         var conversationArray: Array = [ConversationModel]()
         var dummynum: Int = 0
-        queryExpression.filterExpression = "userId = :userId"
-        queryExpression.expressionAttributeValues = [":userId": userId]
-        queryExpression.filterExpression = "chatRoomId = :chatRoomId"
-        queryExpression.expressionAttributeValues = [":chatRoomId": chatRoomId]
+        queryExpression.filterExpression = "userId = :userId AND chatRoomId = :chatRoomId"
+        queryExpression.expressionAttributeValues = [":userId": userId, ":chatRoomId": chatRoomId]
         
         mapper.scan(ConversationModel.self, expression: queryExpression).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
             if let conversations = task.result {
                 for item in conversations.items as! [ConversationModel] {
                     conversationArray.append(item)
-                    print("getting conversation \(item.conversationId ?? "no such conversation"): \(item.userId ?? "no ID")")
                 }
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
@@ -58,10 +71,37 @@ class ConversationModel: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             dummynum = 6
             return nil
         })
+        var waiting: Int = 0
         while (dummynum != 6)
         {
-            print("getMessagesGivenKeys waiting")
+            waiting = 1
+        }
+        for item in conversationArray
+        {
+            print("the conversation by given key has # \(item.conversationId)")
         }
         return conversationArray
+    }
+    
+    func getHistoryRecords(userId_1: String, _chatRoomId_1: String, userId_2: String, _chatRoomId_2: String) -> [ConversationModel]
+    {
+        print("===== getHistoryRecords =====")
+        let record_1 = getMessagesGivenKeys(userId: userId_1, chatRoomId: _chatRoomId_1)
+        let record_2 = getMessagesGivenKeys(userId: userId_2, chatRoomId: _chatRoomId_2)
+        var totalConversation: Array = [ConversationModel]()
+        for item in record_1
+        {
+            totalConversation.append(item)
+        }
+        for item in record_2
+        {
+            totalConversation.append(item)
+        }
+        totalConversation.sorted(by: { $0.createdAt?.compare($1.createdAt!) == .orderedDescending })
+        for item in totalConversation
+        {
+            print("Get the history: conversation# \(item.conversationId)")
+        }
+        return totalConversation
     }
 }
