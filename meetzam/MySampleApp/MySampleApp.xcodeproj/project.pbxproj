@@ -15,7 +15,8 @@
 		1B46BF821E96D75000FEADD0 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B46BF811E96D75000FEADD0 /* UserNotifications.framework */; };
 		1B98C6A41E99239900A804BE /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B98C6A31E99239900A804BE /* API.swift */; };
 		362A26BA1E902ED3008BA57E /* HistoryMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362A26B91E902ED3008BA57E /* HistoryMovie.swift */; };
-		36EC6BF51EA19F0C001FC4E3 /* ConversationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36EC6BF41EA19F0C001FC4E3 /* ConversationModel.swift */; };
+		5D3257721EA178920048A866 /* ContactProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3257711EA178920048A866 /* ContactProfile.swift */; };
+		5DBFBF321EA16F490026FC19 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBFBF311EA16F490026FC19 /* ContactCell.swift */; };
 		5DD94CEB1E66149500B7DD80 /* LikedMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD94CEA1E66149500B7DD80 /* LikedMoviesView.swift */; };
 		5DD94CED1E6614F800B7DD80 /* MovieCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD94CEC1E6614F800B7DD80 /* MovieCollectionCell.swift */; };
 		5DD94CEF1E67288F00B7DD80 /* TopThreeMovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD94CEE1E67288F00B7DD80 /* TopThreeMovieCell.swift */; };
@@ -214,7 +215,8 @@
 		1DD70E29FDA0BE4900000000 /* AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.h; path = MySampleApp/AmazonAws/Api/AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.h; sourceTree = SOURCE_ROOT; };
 		1DD70E29FE33984F00000000 /* AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.m; path = MySampleApp/AmazonAws/Api/AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.m; sourceTree = SOURCE_ROOT; };
 		362A26B91E902ED3008BA57E /* HistoryMovie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryMovie.swift; sourceTree = "<group>"; };
-		36EC6BF41EA19F0C001FC4E3 /* ConversationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConversationModel.swift; path = MySampleApp/ConversationModel.swift; sourceTree = SOURCE_ROOT; };
+		5D3257711EA178920048A866 /* ContactProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactProfile.swift; path = MySampleApp/meetzam/ContactsView/ContactProfile.swift; sourceTree = SOURCE_ROOT; };
+		5DBFBF311EA16F490026FC19 /* ContactCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactCell.swift; path = MySampleApp/meetzam/ContactsView/ContactCell.swift; sourceTree = SOURCE_ROOT; };
 		5DD94CEA1E66149500B7DD80 /* LikedMoviesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LikedMoviesView.swift; path = MySampleApp/meetzam/ProfileView/LikedMoviesView.swift; sourceTree = SOURCE_ROOT; };
 		5DD94CEC1E6614F800B7DD80 /* MovieCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MovieCollectionCell.swift; path = MySampleApp/meetzam/ProfileView/MovieCollectionCell.swift; sourceTree = SOURCE_ROOT; };
 		5DD94CEE1E67288F00B7DD80 /* TopThreeMovieCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TopThreeMovieCell.swift; path = MySampleApp/meetzam/ProfileView/TopThreeMovieCell.swift; sourceTree = SOURCE_ROOT; };
@@ -599,6 +601,8 @@
 			isa = PBXGroup;
 			children = (
 				C412E6601E5C160C00BE8B61 /* ContactsViewController.swift */,
+				5DBFBF311EA16F490026FC19 /* ContactCell.swift */,
+				5D3257711EA178920048A866 /* ContactProfile.swift */,
 			);
 			name = ContactsView;
 			sourceTree = "<group>";
@@ -786,6 +790,7 @@
 				C412E6611E5C160C00BE8B61 /* ContactsViewController.swift in Sources */,
 				C42C56371E612F90005C6D66 /* NaviViewController.swift in Sources */,
 				5DD94CEB1E66149500B7DD80 /* LikedMoviesView.swift in Sources */,
+				5DBFBF321EA16F490026FC19 /* ContactCell.swift in Sources */,
 				E7A30F047458C05600000000 /* ContentDeliveryViewController.swift in Sources */,
 				E7A30F043CD1B25F00000000 /* CloudLogicAPIInvokeViewController.swift in Sources */,
 				E7A30F0495A1857C00000000 /* UserFilesViewController.swift in Sources */,
@@ -807,6 +812,7 @@
 				C40661BD1E5CBC85005D2145 /* ChatViewController.swift in Sources */,
 				C40661C21E5CBF52005D2145 /* SegueToptoBottom.swift in Sources */,
 				E7A30F0441798FFD00000000 /* NoSQLSampleDataGenerator.swift in Sources */,
+				5D3257721EA178920048A866 /* ContactProfile.swift in Sources */,
 				E7A30F04A2C572B800000000 /* UtilityFunctions.swift in Sources */,
 				E7A30F04F01DFC3F00000000 /* NoSQLTableViewController.swift in Sources */,
 				185099741EA1B8B0001FA648 /* NSDate+Util.swift in Sources */,
