@@ -74,7 +74,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath) as! ContactCell
-        cell.displayName.font = UIFont(name: "HelveticaNeue-Light", size: 22)
+        cell.displayName.font = UIFont(name: "HelveticaNeue-Light", size: 18)
         
         if (!self.resultsController.isActive) {
             cell.profilePicture.image = contacts[indexPath.row].profilePic
