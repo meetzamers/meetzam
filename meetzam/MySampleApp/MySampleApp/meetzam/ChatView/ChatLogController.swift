@@ -55,8 +55,10 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
             let option = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)
             let estimatedFrame = NSString(string: messageText).boundingRect(with: size, options: option, attributes: [NSFontAttributeName: UIFont(name: "HelveticaNeue-Light", size: 18)!], context: nil)
             
-            cell.messageTextView.frame = CGRect(x: 6 + 60, y: 0, width: estimatedFrame.width + 12, height: estimatedFrame.height + 18)
-            cell.textBubbleView.frame = CGRect(x: 60, y: 0, width: estimatedFrame.width + 12 + 12, height: estimatedFrame.height + 18)
+            cell.messageTextView.frame = CGRect(x: 6 + 65, y: 2.6, width: estimatedFrame.width + 12, height: estimatedFrame.height + 18)
+            cell.textBubbleView.frame = CGRect(x: 65, y: 0, width: estimatedFrame.width + 12 + 12, height: estimatedFrame.height + 18 + 5.2)
+            
+//            print(cell.textBubbleView.frame.height)
             
         }
 
@@ -73,7 +75,7 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
             return CGSize(width: view.frame.width, height: estimatedFrame.height + 18)
         }
         
-        return CGSize(width: view.frame.width, height: 40)
+        return CGSize(width: view.frame.width, height: 45)
     }
     
     // add an edge on the top of the collection view
@@ -123,8 +125,8 @@ class ChatLogMessageCell: BaseCell {
         addSubview(messageTextView)
         addSubview(profileImageView)
         
-        addConstraintsWithFormat(format: "H:|-10-[v0(40)]", views: profileImageView)
-        addConstraintsWithFormat(format: "V:[v0(40)]|", views: profileImageView)
+        addConstraintsWithFormat(format: "H:|-10-[v0(45)]", views: profileImageView)
+        addConstraintsWithFormat(format: "V:|[v0(45)]", views: profileImageView)
         
     }
     
