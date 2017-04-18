@@ -48,21 +48,16 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         //filter throught the names
         filteredNames.removeAll(keepingCapacity: false)
         
-        //let searchPredicate = NSPredicate(format:"SELF CONTAINS[c] %@", searchController.searchBar.text!)
-        
         filteredNames = contacts.filter{ person in
             return person.displayName.lowercased().contains(searchController.searchBar.text!.lowercased())
         }
         
-        
         self.contactTable.reloadData()
-        
 
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-
         if self.resultsController.isActive {
             return self.filteredNames.count
         } else {
@@ -88,18 +83,19 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     
     func loadContact() {
 
-        let matchedUserIDs = UserProfileToDB().getPotentialUserIDs(key: AWSIdentityManager.default().identityId!)
+        let matchedUserIDs = UserProfileToDB().getMatchedUserIDs(key: AWSIdentityManager.default().identityId!)
         let matchedUsers = UserProfileToDB().getUserProfileByIds(userIDs: matchedUserIDs)
         
         for matchedUser in matchedUsers
         {
             let newContact = contact()
             
-            
             //add names to the new contact
             newContact.displayName = matchedUser.displayName!
             //add profile pic to new contact
             newContact.profilePic = getProfilePic(userId: matchedUser.userId!)
+            //add userId
+            newContact.userId = matchedUser.userId!
             
             //add new contact to contacs
             contacts.append(newContact)
@@ -137,13 +133,42 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         // load everything in profile page!
         vc.displayName.text = contacts[indexPath].displayName
         vc.userPicField.image = contacts[indexPath].profilePic
-        //vc.userBioField.text =
+        
+        let matchedUsers = UserProfileToDB().getUserProfileByIds(userIDs: [contacts[indexPath].userId])
+        
+        vc.userBioField.text = matchedUsers[0].bio
         //vc.moviePic1.image = #imageLiteral(resourceName: "split")
         //vc.moviePic2.image = #imageLiteral(resourceName: "split")
         //vc.moviePic3.image = #imageLiteral(resourceName: "split")
         //vc.moviePic4.image = #imageLiteral(resourceName: "split")
         
+        
+        //load movies
+        let imagesURLs = SingleMovie().getLikedMoviePosters(key: contacts[indexPath].userId)
+        
+        var count = 0;
+        if (imagesURLs.count <= 3) {
+            count = imagesURLs.count
+        } else {
+            count = 3
+        }
+        
+        for var i in (0..<count) {
+            let path = "https://image.tmdb.org/t/p/w154" + imagesURLs[i]
+            let pathURL = URL(string: path)
+            let imageData = try! Data(contentsOf: pathURL!)
+            
+            if (i==0) {
+                vc.moviePic1.image = (UIImage(data: imageData)!)
+            } else if (i==1){
+                vc.moviePic2.image = (UIImage(data: imageData)!)
+            } else if (i==2){
+                vc.moviePic3.image = (UIImage(data: imageData)!)
+            }
+        }
+        
     }
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCellEditingStyle.delete
         {
@@ -162,4 +187,5 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
 class contact {
     var displayName = String()
     var profilePic = UIImage()
+    var userId = String()
 }
