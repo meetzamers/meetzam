@@ -53,9 +53,26 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
         return 0
     }
     
+    // to chat log (the real chat room)
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let layout = UICollectionViewFlowLayout()
+        let controller = ChatLogController(collectionViewLayout: layout)
+        controller.contact = messages?[indexPath.item].contact
+        
+        navigationController?.pushViewController(controller, animated: true)
+        
+    }
+    
+    
 }
 
 class MessageCell: BaseCell {
+    
+    override var isHighlighted: Bool {
+        didSet {
+            backgroundColor = isHighlighted ? UIColor.init(red: 176/255, green: 176/255, blue: 176/255, alpha: 0.6) : UIColor.white
+        }
+    }
     
     var message: Message? {
         didSet {
@@ -68,7 +85,17 @@ class MessageCell: BaseCell {
             contactMsgLabel.text = message?.text
             if let msg_date = message?.date {
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "hh:mm"
+                dateFormatter.dateFormat = "HH:mm"
+                
+                let elapsedTimeinSec = NSDate().timeIntervalSince(msg_date as Date)
+                
+                // if the time is greater than a day(24 hrs) or a week, change date format
+                if (elapsedTimeinSec > (60*60*24*7)) {
+                    dateFormatter.dateFormat = "MM/dd/yy"
+                }
+                else if (elapsedTimeinSec > (60*60*24)) {
+                    dateFormatter.dateFormat = "EEE"
+                }
                 
                 timeLabel.text = dateFormatter.string(from: msg_date as Date)
             }
@@ -117,7 +144,7 @@ class MessageCell: BaseCell {
     
     let timeLabel: UILabel = {
         let tlabel = UILabel()
-        tlabel.frame = CGRect(x: UIScreen.main.bounds.width - 130, y: 5, width: 40, height: 18)
+        tlabel.frame = CGRect(x: UIScreen.main.bounds.width - 160, y: 5, width: 70, height: 18)
         tlabel.font = UIFont(name: "HelveticaNeue-Light", size: 15)
         tlabel.textColor = UIColor.gray
         tlabel.textAlignment = .right
