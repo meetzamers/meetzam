@@ -47,7 +47,7 @@ extension ChatViewController {
             let jack = NSEntityDescription.insertNewObject(forEntityName: "Contact", into: context) as! Contact
             jack.name = "Jack"
             jack.profileImageName = "profile1"
-            createMessagewithText(text: "Message content testing here this is wayyyyyyyyyyyyy tooooo loong", contact: jack, minutesAgo: 60 * 24 * 8, context: context)
+            createMessagewithText(text: "Message content testing here this is wayyyyyyyyyyyyy tooooo loong and we are try to display it", contact: jack, minutesAgo: 60 * 24 * 8, context: context)
             
             // Ryan
             let ryan = NSEntityDescription.insertNewObject(forEntityName: "Contact", into: context) as! Contact

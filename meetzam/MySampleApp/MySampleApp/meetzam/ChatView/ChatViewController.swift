@@ -16,7 +16,9 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        collectionView?.backgroundColor = UIColor.white
+//        collectionView?.backgroundColor = UIColor.white
+        collectionView?.backgroundColor = UIColor.init(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
+        
         collectionView?.alwaysBounceVertical = true
         
         collectionView?.register(MessageCell.self, forCellWithReuseIdentifier: cellID)
@@ -70,7 +72,7 @@ class MessageCell: BaseCell {
     
     override var isHighlighted: Bool {
         didSet {
-            backgroundColor = isHighlighted ? UIColor.init(red: 176/255, green: 176/255, blue: 176/255, alpha: 0.6) : UIColor.white
+            backgroundColor = isHighlighted ? UIColor.init(red: 176/255, green: 176/255, blue: 176/255, alpha: 0.6) : UIColor.clear
         }
     }
     
@@ -153,7 +155,7 @@ class MessageCell: BaseCell {
     }()
     
     override func setupViews() {
-        backgroundColor = UIColor.white
+        backgroundColor = UIColor.clear
         
         addSubview(contactProfileImageView)
         addSubview(dividerLineView)
