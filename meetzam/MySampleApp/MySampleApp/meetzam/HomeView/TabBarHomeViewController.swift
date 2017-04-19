@@ -42,11 +42,11 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         ConversationModel().addConversation(_userId: "1", _chatRoomId: "3", _message: "This is second in 13")
         ConversationModel().addConversation(_userId: "1", _chatRoomId: "3", _message: "This is third in 13")
         ConversationModel().addConversation(_userId: "2", _chatRoomId: "4", _message: "This is first in 24")*/
-        let m = ConversationModel().getMessagesGivenKeys(userId: "1", chatRoomId: "3")
-        for item in m
-        {
-            print("given key, get conversation# \(item.conversationId)")
-        }
+        //let m = ConversationModel().getMessagesGivenKeys(userId: "1", chatRoomId: "3")
+        //for item in m
+        //{
+        //    print("given key, get conversation# \(item.conversationId)")
+        //}
         //ConversationModel().getHistoryRecords(userId_1: "1", _chatRoomId_1: "3", userId_2: "2", _chatRoomId_2: "4")
         print("wiew did load")
         
