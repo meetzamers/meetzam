@@ -20,7 +20,6 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
             
             // sort messages for all contacts in order
             messages = messages?.sorted(by: {$0.date!.compare($1.date! as Date) == .orderedAscending})
-            
         }
     }
     
@@ -28,6 +27,7 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
     // ============================================================
     // input views
     var bottomConstraint: NSLayoutConstraint?
+    var keyboardHeight: CGFloat?
     
     let messageInputContainerView: UIView = {
         let view = UIView()
@@ -95,7 +95,18 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
             let cell = collectionView?.cellForItem(at: insertionIndexPath) as! ChatLogMessageCell
             cell.textBubbleTailRev.alpha = 0.85
             cell.textBubbleTail.alpha = 0
-            collectionView?.scrollToItem(at: insertionIndexPath, at: .bottom, animated: true)
+            
+            print((self.collectionView?.contentSize.height)!)
+            print((self.collectionView?.frame.size.height)! - keyboardHeight! - cell.frame.height - 110)
+            
+            if (self.collectionView?.contentSize.height)! > ((self.collectionView?.frame.size.height)! - keyboardHeight! - cell.frame.height - 110) {
+                 collectionView?.setContentOffset(CGPoint(x: CGFloat(0), y: CGFloat((self.collectionView?.contentSize.height)! - (self.collectionView?.frame.size.height)! + keyboardHeight! + cell.frame.height) + 60), animated: true)
+            }
+            else {
+                self.collectionView?.scrollToItem(at: insertionIndexPath, at: .bottom, animated: true)
+            }
+            
+           
             inputTextField.text = nil
             
         } catch let err {
@@ -107,6 +118,7 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
     func handleKeyboardNoti(notification: NSNotification) {
         if let userInfo = notification.userInfo {
             let keyboardFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+            keyboardHeight = keyboardFrame.height
             
             let isKeyboardShowing = notification.name == .UIKeyboardWillShow
             
@@ -116,8 +128,14 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
                 self.view.layoutIfNeeded()
             }, completion: {(completed) in
                 if isKeyboardShowing {
-                    let indexpath = IndexPath.init(row: self.messages!.count - 1, section: 0)
-                    self.collectionView?.scrollToItem(at: indexpath, at: .bottom, animated: true)
+                    if (self.collectionView?.contentSize.height)! > (self.collectionView?.frame.size.height)! {
+                        self.collectionView?.setContentOffset(CGPoint(x: CGFloat(0), y: CGFloat((self.collectionView?.contentSize.height)! - (self.collectionView?.frame.size.height)! + keyboardFrame.height) + 50), animated: true)
+                    }
+                    else {
+                        let indexpath = IndexPath.init(row: self.messages!.count - 1, section: 0)
+                        self.collectionView?.scrollToItem(at: indexpath, at: .bottom, animated: true)
+
+                    }
                 }
             })
         }
@@ -205,7 +223,7 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
     
     // add an edge on the top of the collection view
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsetsMake(10, 0, 0, 0)
+        return UIEdgeInsetsMake(15, 0, 15, 0)
     }
     
     // resize the cell spacing
