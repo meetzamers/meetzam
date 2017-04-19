@@ -138,11 +138,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         let matchedUsers = UserProfileToDB().getUserProfileByIds(userIDs: [contacts[indexPath].userId])
         
         vc.userBioField.text = matchedUsers[0].bio
-        //vc.moviePic1.image = #imageLiteral(resourceName: "split")
-        //vc.moviePic2.image = #imageLiteral(resourceName: "split")
-        //vc.moviePic3.image = #imageLiteral(resourceName: "split")
-        vc.moviePic4.image = #imageLiteral(resourceName: "Dot")
-        
         
         //load movies
         let imagesURLs = SingleMovie().getLikedMoviePosters(key: contacts[indexPath].userId)

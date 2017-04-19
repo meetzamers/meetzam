@@ -57,6 +57,7 @@ class ContactProfile: UIViewController {
         
         moviePic4.frame = CGRect(x: moviePic1.frame.width*4-20, y: UIScreen.main.bounds.width + 150, width: 30, height: 50)
         moviePic4.contentMode = UIViewContentMode.scaleAspectFit
+        moviePic4.image = #imageLiteral(resourceName: "Dot")
         
         self.mainView.addSubview(moviePic1)
         self.mainView.addSubview(moviePic2)
