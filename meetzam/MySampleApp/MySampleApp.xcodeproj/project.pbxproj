@@ -33,7 +33,6 @@
 		C421A4571EA4C2AE002416FF /* Contact+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C421A4531EA4C2AE002416FF /* Contact+CoreDataClass.swift */; };
 		C421A4581EA4C2AE002416FF /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C421A4541EA4C2AE002416FF /* Contact+CoreDataProperties.swift */; };
 		C421A4591EA4C2AE002416FF /* Message+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C421A4551EA4C2AE002416FF /* Message+CoreDataClass.swift */; };
-		C421A45A1EA4C2AE002416FF /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C421A4561EA4C2AE002416FF /* Message+CoreDataProperties.swift */; };
 		C421A47F1EA56F8A002416FF /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C421A47E1EA56F8A002416FF /* ChatLogController.swift */; };
 		C42C56301E6126FA005C6D66 /* ZLSwipeableViewSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C42C562F1E6126FA005C6D66 /* ZLSwipeableViewSwift.framework */; };
 		C42C56331E6127D2005C6D66 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C56321E6127D2005C6D66 /* CardView.swift */; };
@@ -46,6 +45,7 @@
 		C4A86E601E8617A20066B6F9 /* NVActivityIndicatorView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4A86E5F1E8617A20066B6F9 /* NVActivityIndicatorView.framework */; };
 		C4BF9C411E5B61A500C73405 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4BF9C401E5B61A500C73405 /* Main.storyboard */; };
 		C4BF9C441E5B643C00C73405 /* TabBarHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF9C431E5B643C00C73405 /* TabBarHomeViewController.swift */; };
+		C4C1B6F71EA7010900CF1CBA /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C1B6F61EA7010900CF1CBA /* Message+CoreDataProperties.swift */; };
 		E7A30F04077D295600000000 /* SignIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1DD70E29F31C638F00000000 /* SignIn.storyboard */; };
 		E7A30F0407CAE03600000000 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DD70E29EBA6D9AE00000000 /* CFNetwork.framework */; };
 		E7A30F040C06D8D800000000 /* ColorThemeSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD70E2965E3B84100000000 /* ColorThemeSettings.swift */; };
@@ -237,7 +237,6 @@
 		C421A4531EA4C2AE002416FF /* Contact+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Contact+CoreDataClass.swift"; path = "MySampleApp/meetzam/ChatView/Contact+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
 		C421A4541EA4C2AE002416FF /* Contact+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Contact+CoreDataProperties.swift"; path = "MySampleApp/meetzam/ChatView/Contact+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		C421A4551EA4C2AE002416FF /* Message+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Message+CoreDataClass.swift"; path = "MySampleApp/meetzam/ChatView/Message+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
-		C421A4561EA4C2AE002416FF /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Message+CoreDataProperties.swift"; path = "MySampleApp/meetzam/ChatView/Message+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 		C421A47E1EA56F8A002416FF /* ChatLogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatLogController.swift; path = MySampleApp/meetzam/ChatView/ChatLogController.swift; sourceTree = SOURCE_ROOT; };
 		C42C562F1E6126FA005C6D66 /* ZLSwipeableViewSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZLSwipeableViewSwift.framework; path = Carthage/Build/iOS/ZLSwipeableViewSwift.framework; sourceTree = "<group>"; };
 		C42C56321E6127D2005C6D66 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardView.swift; path = MySampleApp/meetzam/MatchView/CardView.swift; sourceTree = SOURCE_ROOT; };
@@ -251,6 +250,7 @@
 		C4A86E611E8617B00066B6F9 /* Lottie.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lottie.framework; path = Carthage/Build/iOS/Lottie.framework; sourceTree = "<group>"; };
 		C4BF9C401E5B61A500C73405 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = MySampleApp/meetzam/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		C4BF9C431E5B643C00C73405 /* TabBarHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarHomeViewController.swift; path = MySampleApp/meetzam/HomeView/TabBarHomeViewController.swift; sourceTree = SOURCE_ROOT; };
+		C4C1B6F61EA7010900CF1CBA /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Message+CoreDataProperties.swift"; path = "MySampleApp/meetzam/ChatView/Message+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -630,7 +630,7 @@
 				C421A4531EA4C2AE002416FF /* Contact+CoreDataClass.swift */,
 				C421A4541EA4C2AE002416FF /* Contact+CoreDataProperties.swift */,
 				C421A4551EA4C2AE002416FF /* Message+CoreDataClass.swift */,
-				C421A4561EA4C2AE002416FF /* Message+CoreDataProperties.swift */,
+				C4C1B6F61EA7010900CF1CBA /* Message+CoreDataProperties.swift */,
 				C45EC6301EA4BF39005C6F4A /* ChatViewModel.xcdatamodeld */,
 			);
 			name = ModelFiles;
@@ -818,7 +818,6 @@
 				1B98C6A41E99239900A804BE /* API.swift in Sources */,
 				E7A30F0441E4A73C00000000 /* UserProfileTable.swift in Sources */,
 				E7A30F045ABE0B1B00000000 /* NoSQLTableFactory.swift in Sources */,
-				C421A45A1EA4C2AE002416FF /* Message+CoreDataProperties.swift in Sources */,
 				E7A30F0491953CE700000000 /* UserProfile.swift in Sources */,
 				E7A30F04677133E600000000 /* AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.m in Sources */,
 				5DD94CED1E6614F800B7DD80 /* MovieCollectionCell.swift in Sources */,
@@ -833,6 +832,7 @@
 				C40661C21E5CBF52005D2145 /* SegueToptoBottom.swift in Sources */,
 				E7A30F0441798FFD00000000 /* NoSQLSampleDataGenerator.swift in Sources */,
 				E7A30F04A2C572B800000000 /* UtilityFunctions.swift in Sources */,
+				C4C1B6F71EA7010900CF1CBA /* Message+CoreDataProperties.swift in Sources */,
 				E7A30F04F01DFC3F00000000 /* NoSQLTableViewController.swift in Sources */,
 				E7A30F042D45845500000000 /* DemoViewController.swift in Sources */,
 				C41A646B1E92210D004239CB /* FirstTimeUserViewController.swift in Sources */,

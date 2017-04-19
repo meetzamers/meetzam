@@ -2,7 +2,7 @@
 //  Message+CoreDataProperties.swift
 //  MySampleApp
 //
-//  Created by ZuYuan Fan on 4/17/17.
+//  Created by ZuYuan Fan on 4/18/17.
 //
 //
 
@@ -17,6 +17,7 @@ extension Message {
     }
 
     @NSManaged public var date: NSDate?
+    @NSManaged public var isSender: Bool
     @NSManaged public var text: String?
     @NSManaged public var contact: Contact?
 

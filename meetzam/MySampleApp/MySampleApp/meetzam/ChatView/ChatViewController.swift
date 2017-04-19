@@ -16,14 +16,15 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        collectionView?.backgroundColor = UIColor.white
         collectionView?.backgroundColor = UIColor.init(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
-        
         collectionView?.alwaysBounceVertical = true
-        
         collectionView?.register(MessageCell.self, forCellWithReuseIdentifier: cellID)
         
         setupData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     // return number of sections in this collection view
@@ -47,7 +48,7 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
     
     // resize cell
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width, height: 80)
+        return CGSize(width: view.frame.width, height: 70)
     }
     
     // resize the cell spacing
@@ -65,14 +66,19 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
         
     }
     
-    
 }
 
 class MessageCell: BaseCell {
     
     override var isHighlighted: Bool {
         didSet {
-            backgroundColor = isHighlighted ? UIColor.init(red: 176/255, green: 176/255, blue: 176/255, alpha: 0.6) : UIColor.clear
+            backgroundColor = isHighlighted ? UIColor(white: 0.5, alpha: 0.5) : UIColor.clear
+        }
+    }
+    
+    override var isSelected: Bool {
+        didSet {
+            backgroundColor = isSelected ? UIColor(white: 0.5, alpha: 0.5) : UIColor.clear
         }
     }
     
@@ -108,7 +114,7 @@ class MessageCell: BaseCell {
     let contactProfileImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-        iv.frame = CGRect(x: 10, y: 10, width: 60, height: 60)
+        iv.frame = CGRect(x: 10, y: 7.5, width: 55, height: 55)
         iv.layer.cornerRadius = 5
         iv.layer.masksToBounds = true
         
@@ -118,7 +124,7 @@ class MessageCell: BaseCell {
     let dividerLineView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(white: 0.5, alpha: 0.5)
-        view.frame = CGRect(x: 10, y: 79, width: UIScreen.main.bounds.width, height: 1)
+        view.frame = CGRect(x: 10, y: 69.5, width: UIScreen.main.bounds.width, height: 0.5)
         
         return view
     }()
@@ -165,7 +171,7 @@ class MessageCell: BaseCell {
     
     private func setupContainerView() {
         let cv = UIView()
-        cv.frame = CGRect(x: 80, y: 10, width: UIScreen.main.bounds.width - 90, height: 60)
+        cv.frame = CGRect(x: 75, y: 5, width: UIScreen.main.bounds.width - 95, height: 60)
         
         cv.addSubview(contactNameLabel)
         cv.addSubview(contactMsgLabel)
