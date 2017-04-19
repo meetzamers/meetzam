@@ -96,10 +96,13 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
             cell.textBubbleTailRev.alpha = 0.85
             cell.textBubbleTail.alpha = 0
             
-            print((self.collectionView?.contentSize.height)!)
-            print((self.collectionView?.frame.size.height)! - keyboardHeight! - cell.frame.height - 110)
+            let contentH = (self.collectionView?.contentSize.height)!
+            let orgH = (self.collectionView?.frame.size.height)! - keyboardHeight! - cell.frame.height - 110
             
-            if (self.collectionView?.contentSize.height)! > ((self.collectionView?.frame.size.height)! - keyboardHeight! - cell.frame.height - 110) {
+            print(contentH)
+            print(orgH)
+            
+            if (contentH > orgH) {
                  collectionView?.setContentOffset(CGPoint(x: CGFloat(0), y: CGFloat((self.collectionView?.contentSize.height)! - (self.collectionView?.frame.size.height)! + keyboardHeight! + cell.frame.height) + 60), animated: true)
             }
             else {
@@ -128,7 +131,10 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
                 self.view.layoutIfNeeded()
             }, completion: {(completed) in
                 if isKeyboardShowing {
-                    if (self.collectionView?.contentSize.height)! > (self.collectionView?.frame.size.height)! {
+                    let contentH = (self.collectionView?.contentSize.height)!
+                    let orgH = (self.collectionView?.frame.size.height)! - keyboardFrame.height - 110
+                    
+                    if (contentH > orgH) {
                         self.collectionView?.setContentOffset(CGPoint(x: CGFloat(0), y: CGFloat((self.collectionView?.contentSize.height)! - (self.collectionView?.frame.size.height)! + keyboardFrame.height) + 50), animated: true)
                     }
                     else {
