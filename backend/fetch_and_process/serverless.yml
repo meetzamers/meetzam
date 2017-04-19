@@ -13,7 +13,11 @@ provider:
 
     - Effect: Allow
       Action: "DynamoDB:*"
-      Resource: "arn:aws:dynamodb:us-east-1:397508666882:table/test_history"   
+      Resource: "arn:aws:dynamodb:us-east-1:397508666882:table/test_history"  
+
+    - Effect: Allow
+      Action: "DynamoDB:*"
+      Resource: "arn:aws:dynamodb:us-east-1:397508666882:table/movie_upcoming"    
 
     - Effect: Allow
       Action: "DynamoDB:*"
@@ -195,6 +199,29 @@ functions:
     timeout: 6
     events:  
       - schedule: cron(8 10 * * ? *)
+
+  # Step 10 
+  addUpcoming:    
+    handler: addUpcoming.handler
+    name: addUpcoming-${self:provider.stage}
+    description: update upcomming movies in movie_upcoming table
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events:  
+      - schedule: cron(9 10 * * ? *) 
+
+  # Step 11
+  addUpcomingTrailerKey:
+    handler: addUpcomingTrailerKey.handler
+    name: addUpcomingTrailerKey-${self:provider.stage}
+    description: update movie_upcming for trailer_key.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events:  
+      - schedule: cron(10 10 * * ? *) 
+
 
 
 

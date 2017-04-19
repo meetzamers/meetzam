@@ -28,6 +28,26 @@ function deleteHistoryMoviesFromMovieTable (event, context, callback) {
         }); 
     });
 
+    const deleteHistory = (items) => {
+        return new Promise((resolve, reject) => {
+            if (items) {
+                console.log("===== deleteHistory ====> BEGIN");
+                let promises = [];
+                items.forEach((item) => {
+                    var history = item.isHistory.BOOL;
+                    if (history === true) 
+                        promises.push(deleteOne(item));
+                });
+                Promise.all(promises)
+                    .then(fulfilled => {
+                        console.log("===== deleteHistory ====> COMPLETE");
+                        resolve("===== deleteHistory ====> RESOLVED");
+                    })
+                    .catch(error => reject(error));
+            } else reject("items is undefined");
+        });
+    };
+
     const deleteOne = (item) => {
         return new Promise((resolve, reject) => {
             if (item) {
@@ -49,26 +69,6 @@ function deleteHistoryMoviesFromMovieTable (event, context, callback) {
                     }
                 });
             } else reject("item is undefined");
-        });
-    };
-
-    const deleteHistory = (items) => {
-        return new Promise((resolve, reject) => {
-            if (items) {
-                console.log("===== deleteHistory ====> BEGIN");
-                let promises = [];
-                items.forEach((item) => {
-                    var history = item.isHistory.BOOL;
-                    if (history === true) 
-                        promises.push(deleteOne(item));
-                });
-                Promise.all(promises)
-                    .then(fulfilled => {
-                        console.log("===== deleteHistory ====> COMPLETE");
-                        resolve("===== deleteHistory ====> RESOLVED");
-                    })
-                    .catch(error => reject(error));
-            } else reject("items is undefined");
         });
     };
 

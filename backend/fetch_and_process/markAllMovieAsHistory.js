@@ -71,7 +71,6 @@ function scan_and_mark_history (event, context, callback) {
 					promises.push(mark(item));
 				});
 				Promise.all(promises)
-					.then(invoker("updateCurrentPlayingMovie-dev"))
 					.then(fulfilled => {
 						console.log("===== markHistory ====> COMPLETE");
 						resolve("===== markHistory ====> RESOLVED");
@@ -81,48 +80,9 @@ function scan_and_mark_history (event, context, callback) {
 		});
 	};
 
-	const invoker = (name) => {
-		return new Promise((resolve, reject) => {
-			console.log("=====> invoking function <" + name + ">");
-			let params = {
-	            FunctionName: "arn:aws:lambda:us-east-1:397508666882:function:" + name,
-	            InvocationType: "RequestResponse"
-	        };
-	        lambda.invoke(params, (err, data) => {
-	            if (err) {
-	                console.error(err, err.stack);
-	                reject(err);
-	            }
-	            else  {
-	                console.log("=====> function <" + name + "> => SUCCESS");
-	                resolve("=====> function <" + name + "> => SUCCESS");
-	            }           
-	        });
-		});
-	};
-
 	const run = () => {
 		scanTable
 			.then(markHistory)
-			.then(() => {
-				return new Promise((resolve, reject) => {
-					console.log("=====> invoking function updateCurrentPlayingMovie-dev");
-					let params = {
-			            FunctionName: "arn:aws:lambda:us-east-1:397508666882:function:updateCurrentPlayingMovie-dev",
-			            InvocationType: "RequestResponse"
-			        };
-			        lambda.invoke(params, (err, data) => {
-			            if (err) {
-			                console.error(err, err.stack);
-			                reject(err);
-			            }
-			            else  {
-			                console.log("=====> function <updateCurrentPlayingMovie-dev> => SUCCESS");
-			                resolve("=====> function <updateCurrentPlayingMovie-dev> => SUCCESS");
-			            }           
-			        });
-				});
-			})
 			.then(fulfilled => callback(null, fulfilled))
 			.catch(error => callback(error.message));
 	};
@@ -130,17 +90,5 @@ function scan_and_mark_history (event, context, callback) {
 	run();
 }
 
-	// const run = () => {
-	//     first
-	//         .then(invoker("updateCurrentPlayingMovie-dev"))
-	//         .then(invoker("addHistoryMoviesToMovieHistoryTable-dev"))
-	//         .then(invoker("deleteHistoryMovies-dev"))
-	//         .then(invoker("addTmdbidAndPosterPath-dev"))
-	//         .then(invoker("deleteIdLessMovies-dev"))
-	//         .then(invoker("deletePosterLessMovies-dev"))
-	//         .then(invoker("addTrailerKey-dev"))
-	//         .then(invoker("checkTrailerKeyAvailability-dev"))
-	//         .then(fulfilled => callback(null, fulfilled))
-	// 	    .catch(error => callback(error));
-	// };
+
 

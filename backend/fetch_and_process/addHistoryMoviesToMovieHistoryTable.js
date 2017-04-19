@@ -49,7 +49,7 @@ function addHistoryMoviesToMovieHistoryTable (event, context, callback) {
 		            	}
 		        	},
 		        	ExpressionAttributeNames: {
-		                "#shortDescription": "shortDescriptiontle",
+		                "#shortDescription": "shortDescription",
 		                "#longDescription": "longDescription",
 		                "#genres": "genres",
 		                "#topCast": "topCast",
