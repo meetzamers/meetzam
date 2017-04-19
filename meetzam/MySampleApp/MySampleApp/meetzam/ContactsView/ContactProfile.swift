@@ -65,6 +65,11 @@ class ContactProfile: UIViewController {
         self.mainView.addSubview(moviePic4)
 
     }
+    
+    // report button
+    @IBAction func reportButton(_ sender: Any) {
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -89,7 +94,7 @@ class ContactProfile: UIViewController {
     var moviePic3 = UIImageView()
     
     var moviePic4 = UIImageView()
-
+    
     @IBOutlet weak var mainScrollView: UIScrollView!
     @IBOutlet weak var mainView: UIView!
 }

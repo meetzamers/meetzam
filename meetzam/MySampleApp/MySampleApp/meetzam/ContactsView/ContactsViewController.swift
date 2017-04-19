@@ -117,6 +117,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
+    // sean
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: "showProfile", sender: self)
     }
