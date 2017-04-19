@@ -9,6 +9,18 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action: "DynamoDB:*"
+      Resource: "arn:aws:dynamodb:us-east-1:397508666882:table/test_table" 
+
+    - Effect: Allow
+      Action: "DynamoDB:*"
+      Resource: "arn:aws:dynamodb:us-east-1:397508666882:table/test_history"  
+
+    - Effect: Allow
+      Action: "DynamoDB:*"
+      Resource: "arn:aws:dynamodb:us-east-1:397508666882:table/movie_upcoming"    
+
+    - Effect: Allow
+      Action: "DynamoDB:*"
       Resource: "arn:aws:dynamodb:us-east-1:397508666882:table/movie_table" 
 
     - Effect: Allow
@@ -22,16 +34,8 @@ provider:
 custom: ${file(./credentials.json)}
 
 functions:
-
-  markAllMovieAsHistory:
-    handler: markAllMovieAsHistory.handler
-    name: markAllMovieAsHistory-${self:provider.stage}
-    description: Scheduled to run at 10:00am (UTC) everyday, scan movie_table and mark every movie as 'history'.
-    runtime: nodejs6.10
-    memorySize: 128
-    timeout: 6
-    events: 
-      - schedule: cron(0 10 * * ? *)
+  
+  # getters
 
   getLocalMovies:
     handler: getLocalMovies.handler
@@ -43,38 +47,6 @@ functions:
     environment:
       Gracenote_API_key: ${self:custom.Gracenote_API_key}
 
-  updateCurrentPlayingMovie:
-    handler: updateCurrentPlayingMovie.handler
-    name: updateCurrentPlayingMovie-${self:provider.stage}
-    description: Scheduled to run at 10:01am (UTC) everyday, invoke getLocalMovies and update movie_table.
-    runtime: nodejs6.10
-    memorySize: 128
-    timeout: 6
-    events: 
-      - schedule: cron(1 10 * * ? *)
-
-  addHistoryMoviesToMovieHistoryTable:     
-    handler: addHistoryMoviesToMovieHistoryTable.handler
-    name: addHistoryMoviesToMovieHistoryTable-${self:provider.stage}
-    description: Scheduled to run at 10:02am (UTC) everyday, add history movies to movie_history table.
-    runtime: nodejs6.10
-    memorySize: 128
-    timeout: 6
-    events: 
-      - schedule: cron(2 10 * * ? *)
-
-  deleteHistoryMovies:    
-    handler: deleteHistoryMovies.handler
-    name: deleteHistoryMovies-${self:provider.stage}
-    description: Scheduled to run at 10:03am (UTC) everyday, delete history movies from movie_table.
-    runtime: nodejs6.10
-    memorySize: 128
-    timeout: 6
-    events: 
-      - schedule: cron(3 10 * * ? *)
-
-
-
   getOneMovie:
     handler: getOneMovie.handler
     name: getOneMovie-${self:provider.stage}
@@ -83,39 +55,7 @@ functions:
     memorySize: 128
     timeout: 6
     environment:
-      TMDB_API_key: ${self:custom.TMDB_API_key}
-
-  addTmdbidAndPosterPath:
-    handler: addTmdbidAndPosterPath.handler
-    name: addTmdbidAndPosterPath-${self:provider.stage}
-    description: Scheduled to run at 10:04am (UTC) everyday, update movie_table for tmdb_id and poster_path.
-    runtime: nodejs6.10
-    memorySize: 128
-    timeout: 6
-    events: 
-      - schedule: cron(4 10 * * ? *)
-
-  deleteIdLessMovies:
-    handler: deleteIdLessMovies.handler   
-    name: deleteIdLessMovies-${self:provider.stage}
-    description: Scheduled to run at 10:05am (UTC) everyday, scan movie_table and delete movies that doesn't have tmdb_id.
-    runtime: nodejs6.10
-    memorySize: 128
-    timeout: 6
-    events: 
-      - schedule: cron(5 10 * * ? *)     
-
-  deletePosterLessMovies:
-    handler: deletePosterLessMovies.handler   
-    name: deletePosterLessMovies-${self:provider.stage}
-    description: Scheduled to run at 10:06am (UTC) everyday, scan movie_table and delete movies that doesn't have poster_path.
-    runtime: nodejs6.10
-    memorySize: 128
-    timeout: 6
-    events: 
-      - schedule: cron(6 10 * * ? *)      
-
-
+      TMDB_API_key: ${self:custom.TMDB_API_key}    
 
   getTrailer:   
     handler: getTrailer.handler
@@ -127,25 +67,172 @@ functions:
     environment:
       TMDB_API_key: ${self:custom.TMDB_API_key} 
 
+  getMovieComments:
+    handler: getMovieComments.handler
+    name: getMovieComments-${self:provider.stage}
+    description: fetch movie's public reviews for movies
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    environment:
+      TMDB_API_key: ${self:custom.TMDB_API_key} 
+
+  getUpcomingMovies:
+    handler: getUpcomingMovies.handler
+    name: getUpcomingMovies-${self:provider.stage}
+    description: Get a list of upcoming movies in theatres. This is a release type query that looks for all movies that have a release type of 2 or 3 within the specified date range.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    environment:
+      TMDB_API_key: ${self:custom.TMDB_API_key}  
+
+  # database operations
+
+  # Step 1
+  markAllMovieAsHistory:
+    handler: markAllMovieAsHistory.handler
+    name: markAllMovieAsHistory-${self:provider.stage}
+    description: scan movie_table and mark every movie as 'history'.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events:  
+      - schedule: cron(0 10 * * ? *)
+
+  # Step 2
+  updateCurrentPlayingMovie:
+    handler: updateCurrentPlayingMovie.handler
+    name: updateCurrentPlayingMovie-${self:provider.stage}
+    description: invoke getLocalMovies and update movie_table.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events:  
+      - schedule: cron(1 10 * * ? *)
+
+  # Step 3
+  addHistoryMoviesToMovieHistoryTable:     
+    handler: addHistoryMoviesToMovieHistoryTable.handler
+    name: addHistoryMoviesToMovieHistoryTable-${self:provider.stage}
+    description: add history movies to movie_history table.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events:  
+      - schedule: cron(2 10 * * ? *)
+
+  # Step 4
+  deleteHistoryMovies:    
+    handler: deleteHistoryMovies.handler
+    name: deleteHistoryMovies-${self:provider.stage}
+    description: delete history movies from movie_table.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events:  
+      - schedule: cron(3 10 * * ? *)
+
+  # Step 5
+  addTmdbidAndPosterPath:
+    handler: addTmdbidAndPosterPath.handler
+    name: addTmdbidAndPosterPath-${self:provider.stage}
+    description: update movie_table for tmdb_id and poster_path.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events:  
+      - schedule: cron(4 10 * * ? *)
+
+  # Step 6
+  deleteIdLessMovies:
+    handler: deleteIdLessMovies.handler   
+    name: deleteIdLessMovies-${self:provider.stage}
+    description: scan movie_table and delete movies that doesn't have tmdb_id.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events:  
+      - schedule: cron(5 10 * * ? *)
+    
+  # Step 7
+  deletePosterLessMovies:
+    handler: deletePosterLessMovies.handler   
+    name: deletePosterLessMovies-${self:provider.stage}
+    description: scan movie_table and delete movies that doesn't have poster_path.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6    
+    events:  
+      - schedule: cron(6 10 * * ? *)
+
+  # Step 8, note: this can be executed in parallel with Step 7.
   addTrailerKey:
     handler: addTrailerKey.handler
     name: addTrailerKey-${self:provider.stage}
-    description: Scheduled to run at 10:07am (UTC) everyday, update movie_table for trailer_key.
+    description: update movie_table for trailer_key.
     runtime: nodejs6.10
     memorySize: 128
     timeout: 6
-    events: 
-      - schedule: cron(7 10 * * ? *) 
+    events:  
+      - schedule: cron(7 10 * * ? *)
 
+  # Step 9
+  
+  addComments:    
+    handler: addComments.handler
+    name: addComments-${self:provider.stage}
+    description: update movie_table for movie comments
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events:  
+      - schedule: cron(7 10 * * ? *)
+
+  # Step 9
   checkTrailerKeyAvailability:
     handler: checkTrailerKeyAvailability.handler
     name: checkTrailerKeyAvailability-${self:provider.stage}
-    description: Scheduled to run at 10:08am (UTC) everyday, scan movie_table and check availability of trailer_key. For those movies that doesn't have a trailer_key, mark trailer_key as "unavailable".
+    description: scan movie_table and check availability of trailer_key. For those movies that doesn't have a trailer_key, mark trailer_key as "unavailable".
     runtime: nodejs6.10
     memorySize: 128
     timeout: 6
-    events: 
+    events:  
       - schedule: cron(8 10 * * ? *)
+
+  # Step 10 
+  addUpcoming:    
+    handler: addUpcoming.handler
+    name: addUpcoming-${self:provider.stage}
+    description: update upcomming movies in movie_upcoming table
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events:  
+      - schedule: cron(9 10 * * ? *) 
+
+  # Step 11
+  addUpcomingTrailerKey:
+    handler: addUpcomingTrailerKey.handler
+    name: addUpcomingTrailerKey-${self:provider.stage}
+    description: update movie_upcming for trailer_key.
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    events:  
+      - schedule: cron(10 10 * * ? *) 
+
+
+
+
+
+  
+
+
+    
+
+
+
 
 
 
