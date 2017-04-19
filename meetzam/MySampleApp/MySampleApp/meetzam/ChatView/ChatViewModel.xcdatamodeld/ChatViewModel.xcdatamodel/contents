@@ -12,7 +12,7 @@
         <relationship name="contact" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Contact" inverseName="messages" inverseEntity="Contact" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Contact" positionX="-767" positionY="-738" width="128" height="88"/>
+        <element name="Contact" positionX="-767" positionY="-738" width="128" height="90"/>
         <element name="Message" positionX="-432" positionY="-450" width="128" height="105"/>
     </elements>
 </model>

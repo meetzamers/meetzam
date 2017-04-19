@@ -75,47 +75,49 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard)))
         
     }
-    
     // ============================================================
     // view helper functions
     func handleSend() {
-        let delegate = UIApplication.shared.delegate as? AppDelegate
-        let context = delegate?.persistentContainer.viewContext
-        let msg = ChatViewController.createMessagewithText(text: inputTextField.text!, contact: contact!, minutesAgo: 0, context: context!, issender: true)
-        
-        print("sender send text: " + inputTextField.text!)
-        
-        do {
-            try context?.save()
-            messages?.append(msg)
+        if (inputTextField.text != "") {
             
-            let item = messages!.count - 1
-            let insertionIndexPath = IndexPath.init(item: item, section: 0)
-            collectionView?.insertItems(at: [insertionIndexPath])
-            let cell = collectionView?.cellForItem(at: insertionIndexPath) as! ChatLogMessageCell
-            cell.textBubbleTailRev.alpha = 0.85
-            cell.textBubbleTail.alpha = 0
+            let delegate = UIApplication.shared.delegate as? AppDelegate
+            let context = delegate?.persistentContainer.viewContext
+            let msg = ChatViewController.createMessagewithText(text: inputTextField.text!, contact: contact!, minutesAgo: 0, context: context!, issender: true)
             
-            let contentH = (self.collectionView?.contentSize.height)!
-            let orgH = (self.collectionView?.frame.size.height)! - keyboardHeight! - cell.frame.height - 110
+            print("sender send text: " + inputTextField.text!)
             
-            print(contentH)
-            print(orgH)
-            
-            if (contentH > orgH) {
-                 collectionView?.setContentOffset(CGPoint(x: CGFloat(0), y: CGFloat((self.collectionView?.contentSize.height)! - (self.collectionView?.frame.size.height)! + keyboardHeight! + cell.frame.height) + 60), animated: true)
+            do {
+                try context?.save()
+                messages?.append(msg)
+                
+                let item = messages!.count - 1
+                let insertionIndexPath = IndexPath.init(item: item, section: 0)
+                collectionView?.insertItems(at: [insertionIndexPath])
+                let cell = collectionView?.cellForItem(at: insertionIndexPath) as! ChatLogMessageCell
+                cell.textBubbleTailRev.alpha = 0.85
+                cell.textBubbleTail.alpha = 0
+                
+                let contentH = (self.collectionView?.contentSize.height)!
+                let orgH = (self.collectionView?.frame.size.height)! - keyboardHeight! - cell.frame.height - 110
+                
+                print(contentH)
+                print(orgH)
+                
+                if (contentH > orgH) {
+                    collectionView?.setContentOffset(CGPoint(x: CGFloat(0), y: CGFloat((self.collectionView?.contentSize.height)! - (self.collectionView?.frame.size.height)! + keyboardHeight! + cell.frame.height) + 60), animated: true)
+                }
+                else {
+                    self.collectionView?.scrollToItem(at: insertionIndexPath, at: .bottom, animated: true)
+                }
+                
+                
+                inputTextField.text = nil
+                
+            } catch let err {
+                print(err)
             }
-            else {
-                self.collectionView?.scrollToItem(at: insertionIndexPath, at: .bottom, animated: true)
-            }
-            
-           
-            inputTextField.text = nil
-            
-        } catch let err {
-            print(err)
+
         }
-        
     }
     
     func handleKeyboardNoti(notification: NSNotification) {
@@ -187,7 +189,7 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
             
             if (!msg.isSender) {
                 cell.messageTextView.frame = CGRect(x: 6 + 72.5, y: 2.6, width: estimatedFrame.width + 10, height: estimatedFrame.height + 18)
-                cell.textBubbleView.frame = CGRect(x: 72.5, y: 0, width: estimatedFrame.width + 12 + 10, height: estimatedFrame.height + 18 + 5.2)
+                cell.textBubbleView.frame = CGRect(x: 72.5, y: 0, width: estimatedFrame.width + 10 + 10, height: estimatedFrame.height + 18 + 5.2)
                 cell.textBubbleTail.frame = CGRect(x: 56, y: 30, width: 15, height: 15)
                 
                 cell.profileImageView.isHidden = false
@@ -199,7 +201,7 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
             else {
                 // sender's message
                 cell.messageTextView.frame = CGRect(x: view.frame.width - estimatedFrame.width - 10 - 6 - 10 - 15, y: 2.6, width: estimatedFrame.width + 12, height: estimatedFrame.height + 18)
-                cell.textBubbleView.frame = CGRect(x: view.frame.width - estimatedFrame.width - 12 - 10 - 10 - 15, y: 0, width: estimatedFrame.width + 12 + 12, height: estimatedFrame.height + 18 + 5.2)
+                cell.textBubbleView.frame = CGRect(x: view.frame.width - estimatedFrame.width - 10 - 10 - 10 - 15, y: 0, width: estimatedFrame.width + 10 + 10, height: estimatedFrame.height + 18 + 5.2)
                 cell.textBubbleTailRev.frame = CGRect(x: view.frame.width - 21, y: 30, width: 15, height: 15)
                 
                 cell.profileImageView.isHidden = true
