@@ -39,6 +39,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        loadContact()
         contactTable.reloadData()
     }
     
@@ -82,7 +83,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func loadContact() {
-
+        contacts.removeAll()
         let matchedUserIDs = UserProfileToDB().getMatchedUserIDs(key: AWSIdentityManager.default().identityId!)
         let matchedUsers = UserProfileToDB().getUserProfileByIds(userIDs: matchedUserIDs)
         
@@ -140,7 +141,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         //vc.moviePic1.image = #imageLiteral(resourceName: "split")
         //vc.moviePic2.image = #imageLiteral(resourceName: "split")
         //vc.moviePic3.image = #imageLiteral(resourceName: "split")
-        //vc.moviePic4.image = #imageLiteral(resourceName: "split")
+        vc.moviePic4.image = #imageLiteral(resourceName: "Dot")
         
         
         //load movies
