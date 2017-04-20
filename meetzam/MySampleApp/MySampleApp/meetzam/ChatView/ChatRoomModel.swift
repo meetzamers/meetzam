@@ -105,6 +105,11 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         //API().updateTimeStamp(chatRoomId: "test", timeStamp: "mushroom30")
     }
     
+    
+    func deleteRoom(roomId: String) {
+        API().deleteChatRoom(chatRoomId: roomId)
+    }
+    
     func getChatRoomList() -> [ChatRoomModel] {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
@@ -268,6 +273,5 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
     func sortByTime(roomList: [ChatRoomModel]) -> [ChatRoomModel] {
         return roomList.sorted(by: { $0.timeStamp?.compare($1.timeStamp!) == .orderedDescending })
     }
-    
     
 }
