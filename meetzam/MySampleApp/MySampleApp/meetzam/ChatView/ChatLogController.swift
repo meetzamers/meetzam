@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import AWSMobileHubHelper
 
 class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {
     
@@ -132,10 +133,16 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
     // view helper functions
     func handleSend() {
         if (inputTextField.text != "") {
-            
             let delegate = UIApplication.shared.delegate as? AppDelegate
             let context = delegate?.persistentContainer.viewContext
-            ChatViewController.createMessagewithText(text: inputTextField.text!, contact: contact!, minutesAgo: 0, context: context!, issender: true)
+            ChatViewController.createMessagewithText(text: inputTextField.text!, contact: contact!, minutesAgo: Date.init(timeIntervalSinceNow: 0), context: context!, issender: true)
+            
+            let myID = AWSIdentityManager.default().identityId
+            let msg = fetchResultController.fetchedObjects?.first as! Message
+            let yourID = msg.contact?.userID
+            
+            let chatRoomID = ChatRoomModel().getChatRoomId(userId: myID!, recipientId: yourID!)
+            ConversationModel().addConversation(_userId: myID!, _chatRoomId: chatRoomID, _message: inputTextField.text!)
             
             print("sender send text: " + inputTextField.text!)
             
@@ -210,7 +217,10 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
         cell.messageTextView.text = msg.text
         
         if let messageText = msg.text, let profileImageName = msg.contact?.profileImageName {
-            cell.profileImageView.image = UIImage(named: profileImageName)
+            if FileManager.default.fileExists(atPath: profileImageName) {
+                let profileURL = URL(fileURLWithPath: profileImageName)
+                cell.profileImageView.image = UIImage(contentsOfFile: profileURL.path)!
+            }
             
             let size = CGSize(width: 250, height: 1000)
             let option = NSStringDrawingOptions.usesFontLeading.union(.usesLineFragmentOrigin)

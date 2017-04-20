@@ -65,6 +65,9 @@ class MatchViewController: UIViewController {
                         API().pushMatchNotification(userId: userB)
                         self.pushInAppNF()
                         // ================== push notification ======================================
+                            
+                        ChatRoomModel().createChatRoom(recipient: self.userIds[self.lablecount-self.cardsToLoad])
+                            
                         }
                     }
                 }

@@ -154,12 +154,12 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
     func getChatRoomId(userId: String, recipientId: String) -> String{
         UIApplication.shared.isNetworkActivityIndicatorVisible = true;
         print("===== getChatRoomId =====")
-        
+        print("of \(userId) and \(recipientId)")
         
         let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.default()
         let queryExpression = AWSDynamoDBScanExpression()
         queryExpression.filterExpression = "userId = :userId AND recipientId = :recipientId";
-        queryExpression.expressionAttributeValues = [":userId": AWSIdentityManager.default().identityId!, ":recipientId": recipientId]
+        queryExpression.expressionAttributeValues = [":userId": userId, ":recipientId": recipientId]
         
         var roomList = Set<ChatRoomModel>()
         var dummynum = 0

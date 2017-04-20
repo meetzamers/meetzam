@@ -126,8 +126,11 @@ class MessageCell: BaseCell {
         didSet {
             contactNameLabel.text = message?.contact?.name
             contactNameLabel.sizeToFit()
-            if let current_img_name = message?.contact?.profileImageName {
-                contactProfileImageView.image = UIImage(named: current_img_name)
+            if let current_img_name = self.message?.contact?.profileImageName {
+                if FileManager.default.fileExists(atPath: current_img_name) {
+                    let profileURL = URL(fileURLWithPath: current_img_name)
+                    self.contactProfileImageView.image = UIImage(contentsOfFile: profileURL.path)!
+                }
             }
             
             contactMsgLabel.text = message?.text

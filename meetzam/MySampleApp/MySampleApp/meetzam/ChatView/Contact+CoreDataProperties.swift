@@ -2,7 +2,7 @@
 //  Contact+CoreDataProperties.swift
 //  MySampleApp
 //
-//  Created by ZuYuan Fan on 4/19/17.
+//  Created by ZuYuan Fan on 4/20/17.
 //
 //
 
@@ -18,6 +18,7 @@ extension Contact {
 
     @NSManaged public var name: String?
     @NSManaged public var profileImageName: String?
+    @NSManaged public var userID: String?
     @NSManaged public var messages: NSSet?
     @NSManaged public var lastMessage: Message?
 

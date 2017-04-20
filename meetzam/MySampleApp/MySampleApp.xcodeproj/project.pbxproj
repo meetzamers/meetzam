@@ -639,11 +639,11 @@
 		C45EC6171EA4BCCE005C6F4A /* ModelFiles */ = {
 			isa = PBXGroup;
 			children = (
+				C45EC6301EA4BF39005C6F4A /* ChatViewModel.xcdatamodeld */,
 				C421A4531EA4C2AE002416FF /* Contact+CoreDataClass.swift */,
 				C421A4541EA4C2AE002416FF /* Contact+CoreDataProperties.swift */,
 				C421A4551EA4C2AE002416FF /* Message+CoreDataClass.swift */,
 				C4C1B6F61EA7010900CF1CBA /* Message+CoreDataProperties.swift */,
-				C45EC6301EA4BF39005C6F4A /* ChatViewModel.xcdatamodeld */,
 			);
 			name = ModelFiles;
 			sourceTree = "<group>";
