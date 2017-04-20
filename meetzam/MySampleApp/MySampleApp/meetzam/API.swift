@@ -24,10 +24,22 @@ class API {
         return rootUrl + "/match?" + "userId=" + userId
     }
     
+    private func messagePOSTUrl(userId: String, message: String) -> String {
+        return rootUrl + "/device/message?" + "userId=" + userId + "&message=" + message
+    }
+
     private func timeStampPOSTUrl(chatRoomId: String, timeStamp: String) -> String {
         return rootUrl + "/chatroom/time?" + "chatRoomId=" + chatRoomId + "&timeStamp=" + timeStamp
     }
-
+    
+    private func deleteRoomDELETEUrl(chatRoomId: String) -> String {
+        return rootUrl + "/chatroom?" + "chatRoomId=" + chatRoomId
+    }
+    
+    private func deleteConversationDELETEUrl(chatRoomId: String) -> String {
+        return rootUrl + "/conversation?" + "chatRoomId=" + chatRoomId
+    }
+ 
     private func httpRequest(url: String, method: String) {
         let request = NSMutableURLRequest(url: NSURL(string: url)! as URL,
                                           cachePolicy: .useProtocolCachePolicy,
@@ -68,8 +80,6 @@ class API {
     }
     
 
-    
-    
     /*
         sends a push notification to a user's device, the user is identified by userId
         userId: unique identifier of a user, which is the receiver of the push notification
@@ -78,7 +88,29 @@ class API {
         httpRequest(url: matchPOSTUrl(userId: userId), method: "POST")
     }
     
+    /*
+     sends a message in a form of push notification to a user's device, the user is identified by userId
+     userId: unique identifier of a user, which is the receiver of the push notification
+     message: the message to send
+     */
+    func sendMessage(userId: String, message: String) {
+        httpRequest(url: messagePOSTUrl(userId: userId, message: message), method: "POST")
+    }
+    
+    
+    
+    
+    
     func updateTimeStamp(chatRoomId: String, timeStamp: String) {
         httpRequest(url: timeStampPOSTUrl(chatRoomId: chatRoomId, timeStamp: timeStamp), method: "POST")
     }
+    
+    func deleteChatRoom (chatRoomId: String) {
+        httpRequest(url: deleteRoomDELETEUrl(chatRoomId: chatRoomId), method: "DELETE")
+    }
+    
+    func deleteConversation (chatRoomId: String) {
+        httpRequest(url: deleteConversationDELETEUrl(chatRoomId: chatRoomId), method: "DELETE")
+    }
+ 
 }

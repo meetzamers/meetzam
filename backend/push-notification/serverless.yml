@@ -28,3 +28,11 @@ functions:
     runtime: nodejs6.10
     memorySize: 128
     timeout: 6
+
+  sendMessage:
+    handler: sendMessage.handler
+    name: sendMessage-${self:provider.stage}
+    description: sends mmessage as a push notification to one user's endpoint, this function takes user_id and message string as parameter
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6  
