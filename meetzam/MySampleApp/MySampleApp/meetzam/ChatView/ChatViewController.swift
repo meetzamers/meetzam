@@ -7,11 +7,43 @@
 //
 
 import UIKit
+import CoreData
 
-class ChatViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class ChatViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {
 
     private let cellID = "cellID"
-    var messages: [Message]?
+//    var messages: [Message]?
+    
+    lazy var fetchedResultsController: NSFetchedResultsController = { () -> NSFetchedResultsController<NSFetchRequestResult> in 
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "Contact")
+        fetchRequest.sortDescriptors = [NSSortDescriptor.init(key: "lastMessage.date", ascending: false)]
+        fetchRequest.predicate = NSPredicate.init(format: "lastMessage != nil")
+        let delegate = UIApplication.shared.delegate as? AppDelegate
+        let context = delegate?.persistentContainer.viewContext
+        let frc = NSFetchedResultsController.init(fetchRequest: fetchRequest, managedObjectContext: context!, sectionNameKeyPath: nil, cacheName: nil)
+        frc.delegate = self
+        return frc
+    }()
+    
+    var blockOperations = [BlockOperation]()
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.collectionView?.performBatchUpdates({
+            for operation in self.blockOperations {
+                operation.start()
+            }
+        }, completion: { (completed) in
+            
+        })
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        if type == .insert {
+            blockOperations.append(BlockOperation.init(block: {
+                self.collectionView?.insertItems(at: [newIndexPath!])
+            }))
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,15 +53,23 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
         collectionView?.register(MessageCell.self, forCellWithReuseIdentifier: cellID)
         
         setupData()
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch let err {
+            print(err)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
+        
+        self.collectionView?.reloadData()
     }
     
     // return number of sections in this collection view
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let count = messages?.count {
+        if let count = fetchedResultsController.sections?[section].numberOfObjects {
             return count
         }
         return 0
@@ -38,10 +78,8 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
     // return cell
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MessageCell
-        
-        if let msg = messages?[indexPath.item] {
-            cell.message = msg
-        }
+        let contact = fetchedResultsController.object(at: indexPath) as! Contact
+        cell.message = contact.lastMessage
         
         return cell
     }
@@ -60,7 +98,9 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let layout = UICollectionViewFlowLayout()
         let controller = ChatLogController(collectionViewLayout: layout)
-        controller.contact = messages?[indexPath.item].contact
+        
+        let contact = fetchedResultsController.object(at: indexPath) as! Contact
+        controller.contact = contact
         
         navigationController?.pushViewController(controller, animated: true)
         

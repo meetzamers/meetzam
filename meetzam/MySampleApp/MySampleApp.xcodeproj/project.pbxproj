@@ -583,8 +583,8 @@
 			children = (
 				18D8DE301EA7D7D400FD2197 /* ConversationModel.swift */,
 				18FC3D8A1E980CF70091B37F /* ChatRoomModel.swift */,
-				C40661BC1E5CBC85005D2145 /* ChatViewController.swift */,
 				C45EC60C1EA4B8E4005C6F4A /* ChatContactControllerHelper.swift */,
+				C40661BC1E5CBC85005D2145 /* ChatViewController.swift */,
 				C421A47E1EA56F8A002416FF /* ChatLogController.swift */,
 				C45EC6171EA4BCCE005C6F4A /* ModelFiles */,
 			);
@@ -867,7 +867,6 @@
 				E7A30F04460EA60000000000 /* AWSConfiguration.swift in Sources */,
 				E7A30F0486375E6A00000000 /* AWSAPI_ADI48J5BXK_RequestSchema.m in Sources */,
 				C421A4581EA4C2AE002416FF /* Contact+CoreDataProperties.swift in Sources */,
-				362A26BA1E902ED3008BA57E /* HistoryMovie.swift in Sources */,
 				E7A30F04F85210F300000000 /* CloudLogicAPIListViewController.swift in Sources */,
 				C40661C01E5CBCBF005D2145 /* ProfileViewController.swift in Sources */,
 				C421A4571EA4C2AE002416FF /* Contact+CoreDataClass.swift in Sources */,

@@ -70,9 +70,7 @@ extension ChatViewController {
             }
             
         }
-        
-        // load the data
-        loadData()
+
     }
     
     // helper function to help create multiple contacts
@@ -92,59 +90,29 @@ extension ChatViewController {
         msg.date = NSDate().addingTimeInterval(-minutesAgo * 60)
         msg.isSender = issender
         
+        contact.lastMessage = msg
+        
         return msg
     }
     
-    // load data from core data
-    func loadData() {
-        let delegate = UIApplication.shared.delegate as? AppDelegate
-        if let context = delegate?.persistentContainer.viewContext {
-            
-            if let contacts = fetchContacts() {
-                messages = [Message]()
-                
-                for contact in contacts {
-                    print(contact.name as Any)
-                    
-                    let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Message")
-                    fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
-                    fetchRequest.predicate = NSPredicate(format: "contact.name = %@", contact.name!)
-                    fetchRequest.fetchLimit = 1
-                    
-                    do {
-                        let fetchedmsgs = try(context.fetch(fetchRequest)) as? [Message]
-                        messages?.append(contentsOf: fetchedmsgs!)
-                        
-                    } catch let err {
-                        print(err)
-                    }
-                    
-                }
-                
-                // sort messages for all contacts in order
-                messages = messages?.sorted(by: {$0.date!.compare($1.date! as Date) == .orderedDescending})
-                
-            }
-        }
-    }
     
-    // fetch all contacts
-    private func fetchContacts() -> [Contact]? {
-        let delegate = UIApplication.shared.delegate as? AppDelegate
-        if let context = delegate?.persistentContainer.viewContext {
-            
-            let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
-            
-            do {
-                return try(context.fetch(request)) as? [Contact]
-                
-            } catch let err {
-                print(err)
-            }
-            
-        }
-        
-        return nil
-    }
+//    // fetch all contacts
+//    private func fetchContacts() -> [Contact]? {
+//        let delegate = UIApplication.shared.delegate as? AppDelegate
+//        if let context = delegate?.persistentContainer.viewContext {
+//            
+//            let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
+//            
+//            do {
+//                return try(context.fetch(request)) as? [Contact]
+//                
+//            } catch let err {
+//                print(err)
+//            }
+//            
+//        }
+//        
+//        return nil
+//    }
     
 }
