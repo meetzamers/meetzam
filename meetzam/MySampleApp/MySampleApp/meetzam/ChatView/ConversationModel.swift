@@ -78,7 +78,7 @@ class ConversationModel: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         }
         for item in conversationArray
         {
-            print("the conversation by given key has # \(item.conversationId)")
+            print("the conversation by given key has # \(String(describing: item.conversationId))")
         }
         return conversationArray
     }
@@ -105,7 +105,4 @@ class ConversationModel: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         return totalConversation
     }
     
-    func deleteConversation(chatRoomId: String) {
-        
-    }
 }

@@ -23,6 +23,10 @@ provider:
       Action: "DynamoDB:*"
       Resource: "arn:aws:dynamodb:us-east-1:397508666882:table/chatroom" 
 
+    - Effect: Allow
+      Action: "DynamoDB:*"
+      Resource: "arn:aws:dynamodb:us-east-1:397508666882:table/meetzam-mobilehub-1569925313-Conversation" 
+
 
 functions:
 
@@ -54,6 +58,14 @@ functions:
     handler: getPotentialMatch.handler
     name: getPotentialMatch-${self:provider.stage}
     description: return potential match of a user based on the user's user_id
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+
+  batchDeleteConversation:
+    handler: batchDeleteConversation.handler
+    name: batchDeleteConversation-${self:provider.stage}
+    description: batch delete conversation
     runtime: nodejs6.10
     memorySize: 128
     timeout: 6
