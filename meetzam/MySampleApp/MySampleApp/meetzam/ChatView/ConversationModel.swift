@@ -104,4 +104,8 @@ class ConversationModel: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         }
         return totalConversation
     }
+    
+    func deleteConversation(chatRoomId: String) {
+        
+    }
 }

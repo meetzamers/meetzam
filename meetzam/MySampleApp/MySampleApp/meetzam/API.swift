@@ -27,7 +27,15 @@ class API {
     private func timeStampPOSTUrl(chatRoomId: String, timeStamp: String) -> String {
         return rootUrl + "/chatroom/time?" + "chatRoomId=" + chatRoomId + "&timeStamp=" + timeStamp
     }
-
+    
+    private func deleteRoomDELETEUrl(chatRoomId: String) -> String {
+        return rootUrl + "/chatroom?" + "chatRoomId=" + chatRoomId
+    }
+    /*
+    private func deleteConversationDELETEUrl(chatRoomId: String) -> String {
+        return
+    }
+    */
     private func httpRequest(url: String, method: String) {
         let request = NSMutableURLRequest(url: NSURL(string: url)! as URL,
                                           cachePolicy: .useProtocolCachePolicy,
@@ -81,4 +89,13 @@ class API {
     func updateTimeStamp(chatRoomId: String, timeStamp: String) {
         httpRequest(url: timeStampPOSTUrl(chatRoomId: chatRoomId, timeStamp: timeStamp), method: "POST")
     }
+    
+    func deleteChatRoom (chatRoomId: String) {
+        httpRequest(url: deleteRoomDELETEUrl(chatRoomId: chatRoomId), method: "DELETE")
+    }
+    /*
+    func deleteConversation (chatRoomId: String) {
+        httpRequest(url: deleteConversationDELETEUrl(chatRoomId: chatRoomId), method: "DELETE")
+    }
+ */
 }

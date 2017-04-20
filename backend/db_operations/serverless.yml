@@ -41,3 +41,20 @@ functions:
     runtime: nodejs6.10
     memorySize: 128
     timeout: 6
+
+  deleteChatRoom:
+    handler: deleteChatRoom.handler
+    name: deleteChatRoom-${self:provider.stage}
+    description: this function delete chatroom in chatroom table
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+
+  getPotentialMatch:
+    handler: getPotentialMatch.handler
+    name: getPotentialMatch-${self:provider.stage}
+    description: return potential match of a user based on the user's user_id
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+    

@@ -756,6 +756,66 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
 
     }
     
+    func deleteFromMatch(key: String, matchId: String)
+    {
+        //delete chatroom
+        let room1 = ChatRoomModel().getChatRoomId(userId: key, recipientId: matchId)
+        let room2 = ChatRoomModel().getChatRoomId(userId: key, recipientId: matchId)
+        ChatRoomModel().deleteRoom(roomId: room1)
+        ChatRoomModel().deleteRoom(roomId: room2)
+        //ConversationModel().delete
+        print("===== deleteFromMatch =====")
+        
+        let mapper = AWSDynamoDBObjectMapper.default()
+        
+        let userProfile = UserProfileToDB()
+        
+        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            if let error = task.error as NSError? {
+                print("loadError: \(error)")
+            } else if let user_profile_addTo = task.result as? UserProfileToDB {
+                userProfile?.userId=key
+                userProfile?.displayName = user_profile_addTo.displayName
+                userProfile?.bio = user_profile_addTo.bio
+                userProfile?.age = user_profile_addTo.age
+                userProfile?.gender = user_profile_addTo.gender
+                userProfile?.region = user_profile_addTo.region
+                userProfile?.device=user_profile_addTo.device
+                userProfile?.likedUsers = user_profile_addTo.likedUsers
+                if (user_profile_addTo.likedUsers.count == 0)
+                {
+                    userProfile?.likedUsers.insert("mushroom13")
+                }
+                userProfile?.matchedUsers = user_profile_addTo.matchedUsers
+                if (user_profile_addTo.matchedUsers.count == 0)
+                {
+                    userProfile?.matchedUsers.insert("mushroom13")
+                }
+                userProfile?.currentLikedMovie=user_profile_addTo.currentLikedMovie
+                userProfile?.movieCount = user_profile_addTo.movieCount
+                userProfile?.email = user_profile_addTo.email
+
+                if (!((userProfile?.matchedUsers.contains(matchId))!))
+                {
+                    print("error: delete a user not in user's matched list")
+                }
+                else {
+                    _ = userProfile?.likedUsers.remove(matchId)
+                    //userProfile?.movieCount = userProfile?.currentLikedMovie.count as NSNumber?
+                    //dummy string since empty string set not allowed
+                    if (userProfile?.matchedUsers.count == 0) {
+                        userProfile?.currentLikedMovie.insert("mushroom13")
+                    }
+                }
+
+                mapper.save(userProfile!)
+                print("deleteFrom match SUCCESS")
+            }
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            return nil
+        })
+    }
+
     func downloadUserIcon(userID: String) -> URL
     {
         print("===== downloadUserIcon =====")
@@ -794,4 +854,6 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         }
         return nil
     }
+    
+    
 }
