@@ -55,7 +55,7 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         chatRoom?.timeStamp = Date().iso8601
         chatRoom?.userId = AWSIdentityManager.default().identityId!
         chatRoom?.recipientId = recipient
-
+        var dummynum = 0
         mapper.save(chatRoom!) .continueWith(block: { (task: AWSTask!) -> AnyObject! in
             if ((task.error) != nil) {
                 NSLog("Failed")
@@ -64,9 +64,10 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             else {
                 print("SUCCESS")
             }
-
+            dummynum = 6
             return nil
         })
+        var dummynum2 = 0
         
         print("create for recipient")
         
@@ -89,10 +90,14 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             }
             
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            
+            dummynum2 = 7
             return nil
         })
-
+        var waiting = 0
+        while (dummynum != 6 || dummynum2 != 7)
+        {
+            waiting = 1
+        }
         
     }
     /*

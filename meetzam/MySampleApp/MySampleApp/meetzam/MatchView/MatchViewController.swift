@@ -66,7 +66,12 @@ class MatchViewController: UIViewController {
                         self.pushInAppNF()
                         // ================== push notification ======================================
                             
+                        let myID = AWSIdentityManager.default().identityId!
+                        let youID = self.userIds[self.lablecount-self.cardsToLoad]
                         ChatRoomModel().createChatRoom(recipient: self.userIds[self.lablecount-self.cardsToLoad])
+                            
+                        let chatRoomID = ChatRoomModel().getChatRoomId(userId: myID, recipientId: youID)
+                        ConversationModel().addConversation(_userId: myID, _chatRoomId: chatRoomID, _message: "Hello")
                             
                         }
                     }
