@@ -1,14 +1,13 @@
 'use strict';
 
-// scan entire movie_table. For each item, query 'tmdb_id' and invoke getTrailer function to get 'trailer_key', then update the item to include 'trailer_key'.
-module.exports.handler = scan_invoke_and_update_trailer_key;
+module.exports.handler = scan_invoke_and_update_comments;
 
 const AWS = require('aws-sdk');
 const lambda = new AWS.Lambda({apiVersion: '2015-03-31'});
 const dynamoDB = new AWS.DynamoDB({apiVersion: '2012-08-10'});
 const tableName = "movie_table";
 
-function scan_invoke_and_update_trailer_key (event, context, callback) {
+function scan_invoke_and_update_comments(event, context, callback) {
 
 	const scanTable = new Promise((resolve, reject) => {
         console.log("===== scanTable ====> BEGIN");
@@ -27,19 +26,18 @@ function scan_invoke_and_update_trailer_key (event, context, callback) {
         }); 
     });
 
-
-    const updateTrailerKeys = (items) => {
+    const updateComments = (items) => {
         return new Promise((resolve, reject) => {
             if (items) {
-                console.log("===== updateTrailerKeys ====> BEGIN");
+                console.log("===== updateComments ====> BEGIN");
                 let promises = [];
                 items.forEach((item) => {
                     promises.push(fetchOne(item));
                 });
                 Promise.all(promises)
                     .then(fulfilled => {
-                        console.log("===== updateTrailerKeys ====> COMPLETE");
-                        resolve("===== updateTrailerKeys ====> RESOLVED");
+                        console.log("===== updateComments ====> COMPLETE");
+                        resolve("===== updateComments ====> RESOLVED");
                     })
                     .catch(error => reject(error));
             } else reject("items is undefined");
@@ -51,13 +49,13 @@ function scan_invoke_and_update_trailer_key (event, context, callback) {
         return new Promise((resolve, reject) => {
             if (item) {
                 console.log("===== fetchOne ====> BEGIN");
-               var title = item.title.S;
-        		var id = item.tmdb_id.S;
-				let payload = {
+                const title = item.title.S;
+        		const id = item.tmdb_id.S;
+				const payload = {
 					"id": id
 				};
-				let tmdb_params = {
-					FunctionName: "arn:aws:lambda:us-east-1:397508666882:function:getTrailer-dev",
+				const tmdb_params = {
+					FunctionName: "arn:aws:lambda:us-east-1:397508666882:function:getMovieComments-dev",
 					InvocationType: "RequestResponse",
 					Payload: JSON.stringify(payload)
 				};
@@ -81,53 +79,57 @@ function scan_invoke_and_update_trailer_key (event, context, callback) {
         return new Promise((resolve, reject) => {
             if (title && Payload) {
                 console.log("===== updateOne ====> BEGIN");
-                var results = Payload.results;
-				var len = results.length;
-				for (var i = 0; i < len; i++) {
-					if (results[i].type == "Trailer" && results[i].site == "YouTube") {
-						var trailer_key = results[i].key;
-
-						var params = {
-							Key: {
-				            	"title": {
-				                	S: title
-				            	}
-				        	},
-				        	ExpressionAttributeNames: {
-				                "#trailer_key": "trailer_key"
-				        	},
-				        	ExpressionAttributeValues: {
-				                ":trailer_key": {
-				                	S: trailer_key
-				                }
-				        	},
-				        	ReturnValues: "ALL_NEW",
-				        	TableName: tableName,
-				      	 	UpdateExpression: "SET #trailer_key = :trailer_key" 
-						};
-						dynamoDB.updateItem(params, function(err, data) {
-				            if (err) {
-	                            console.error(err, null);
-	                            reject(err);
-	                        }
-	                        else {  
-	                            console.log("===== updateOne ====> COMPLETE");
-	                            resolve(true);
-                        	}     
-			    		});
-			    		break;
-					}
+                const results = Payload.results;
+				const len = results.length;
+				let comment_author = "unavailable";
+				let comment_body = "unavailable";
+				if (len > 0) {
+					comment_author = results[0].author;
+					comment_body = results[0].content;
 				}
+				const params = {
+					Key: {
+		            	"title": {
+		                	S: title
+		            	}
+		        	},
+		        	ExpressionAttributeNames: {
+		                "#comment_author": "comment_author",
+		                "#comment_body": "comment_body"
+		        	},
+		        	ExpressionAttributeValues: {
+		                ":comment_author": {
+		                	S: comment_author
+		                },
+		                ":comment_body": {
+		                	S: comment_body
+		                }
+		        	},
+		        	ReturnValues: "ALL_NEW",
+		        	TableName: tableName,
+		      	 	UpdateExpression: "SET #comment_author = :comment_author, #comment_body = :comment_body" 
+				};
+				dynamoDB.updateItem(params, function(err, data) {
+		            if (err) {
+                        console.error(err, null);
+                        reject(err);
+                    }
+                    else {  
+                        console.log("===== updateOne ====> COMPLETE");
+                        resolve(true);
+                	}     
+	    		});
             } else reject("title or Payload is undefined");
         });
     };
 
     const run = () => {
-        scanTable
-            .then(updateTrailerKeys)
-            .then(fulfilled => callback(null, fulfilled))
-            .catch(error => callback(error.message));
-    };
+		scanTable
+			.then(updateComments)
+			.then(fulfilled => callback(null, fulfilled))
+			.catch(error => callback(error.message));
+	};
 
-    run();
+	run();
 }
+

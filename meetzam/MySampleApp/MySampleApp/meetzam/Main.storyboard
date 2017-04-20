@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kPB-Rz-uBK">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="kPB-Rz-uBK">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -21,13 +21,107 @@
                     <view key="view" contentMode="scaleToFill" id="KT1-V1-ewX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="62" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="aUv-Co-VfX">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="contactCell" rowHeight="62" id="En7-Xk-xG3" customClass="ContactCell" customModule="MySampleApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="62"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="En7-Xk-xG3" id="3ZP-w6-CEE">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="61.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D2o-nD-z9t">
+                                                    <rect key="frame" x="16" y="6" width="51" height="51"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fko-pz-Bsr">
+                                                    <rect key="frame" x="77" y="0.0" width="298" height="62"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="displayName" destination="Fko-pz-Bsr" id="5El-aW-VMQ"/>
+                                            <outlet property="profilePicture" destination="D2o-nD-z9t" id="Mgw-Ox-P3A"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="s7B-no-7ow" id="8qn-fA-wxD"/>
+                                    <outlet property="delegate" destination="s7B-no-7ow" id="S7k-Hd-Qzq"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aUv-Co-VfX" firstAttribute="leading" secondItem="KT1-V1-ewX" secondAttribute="leading" id="WSn-Pz-qpw"/>
+                            <constraint firstAttribute="bottom" secondItem="aUv-Co-VfX" secondAttribute="bottom" id="ZJI-sa-bDI"/>
+                            <constraint firstItem="aUv-Co-VfX" firstAttribute="top" secondItem="KT1-V1-ewX" secondAttribute="top" id="eAV-YU-MPM"/>
+                            <constraint firstAttribute="trailing" secondItem="aUv-Co-VfX" secondAttribute="trailing" id="fXb-x0-6CQ"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Contacts" id="YM5-De-hKQ"/>
+                    <connections>
+                        <outlet property="contactTable" destination="aUv-Co-VfX" id="u4I-ac-uzB"/>
+                        <segue destination="WTO-Za-ess" kind="show" identifier="showProfile" id="7f2-pT-Fl6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wGP-DG-ye4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="988" y="-564"/>
+            <point key="canvasLocation" x="988" y="-564.46776611694156"/>
+        </scene>
+        <!--Contact Profile-->
+        <scene sceneID="Zmc-6q-tPT">
+            <objects>
+                <viewController id="WTO-Za-ess" customClass="ContactProfile" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qGG-OK-IqN"/>
+                        <viewControllerLayoutGuide type="bottom" id="sIL-iB-w8t"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sdx-y3-0nD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kpk-a1-kDx">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cbf-cQ-UMW">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="Cbf-cQ-UMW" secondAttribute="trailing" id="Cm6-2q-BXf"/>
+                                    <constraint firstItem="Cbf-cQ-UMW" firstAttribute="leading" secondItem="Kpk-a1-kDx" secondAttribute="leading" id="Dgq-Oq-2eM"/>
+                                    <constraint firstAttribute="bottom" secondItem="Cbf-cQ-UMW" secondAttribute="bottom" id="IPL-LS-YbU"/>
+                                    <constraint firstItem="Cbf-cQ-UMW" firstAttribute="centerX" secondItem="Kpk-a1-kDx" secondAttribute="centerX" id="aOU-LL-mEi"/>
+                                    <constraint firstItem="Cbf-cQ-UMW" firstAttribute="top" secondItem="Kpk-a1-kDx" secondAttribute="top" id="f1H-g5-hlJ"/>
+                                    <constraint firstItem="Cbf-cQ-UMW" firstAttribute="centerY" secondItem="Kpk-a1-kDx" secondAttribute="centerY" id="uU9-a8-Opf"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="Kpk-a1-kDx" secondAttribute="trailing" id="0eJ-0Z-CcU"/>
+                            <constraint firstItem="Kpk-a1-kDx" firstAttribute="leading" secondItem="sdx-y3-0nD" secondAttribute="leading" id="5U6-6f-qLV"/>
+                            <constraint firstItem="Kpk-a1-kDx" firstAttribute="top" secondItem="sdx-y3-0nD" secondAttribute="top" id="gPb-xy-iDj"/>
+                            <constraint firstAttribute="bottom" secondItem="Kpk-a1-kDx" secondAttribute="bottom" id="njy-sU-Kt1"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="mainScrollView" destination="Kpk-a1-kDx" id="7qF-zz-Z7f"/>
+                        <outlet property="mainView" destination="Cbf-cQ-UMW" id="ydQ-wY-HhQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nWU-Dy-jSS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1692" y="-564.46776611694156"/>
         </scene>
         <!--Tab Bar Home View Controller-->
         <scene sceneID="QRX-ic-pJf">

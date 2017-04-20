@@ -6,7 +6,7 @@ module.exports.handler = scan_invoke_and_update_trailer_key;
 const AWS = require('aws-sdk');
 const lambda = new AWS.Lambda({apiVersion: '2015-03-31'});
 const dynamoDB = new AWS.DynamoDB({apiVersion: '2012-08-10'});
-const tableName = "movie_table";
+const tableName = "movie_upcoming";
 
 function scan_invoke_and_update_trailer_key (event, context, callback) {
 
