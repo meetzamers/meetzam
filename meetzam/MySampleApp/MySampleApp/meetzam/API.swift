@@ -31,11 +31,11 @@ class API {
     private func deleteRoomDELETEUrl(chatRoomId: String) -> String {
         return rootUrl + "/chatroom?" + "chatRoomId=" + chatRoomId
     }
-    /*
+    
     private func deleteConversationDELETEUrl(chatRoomId: String) -> String {
-        return
+        return rootUrl + "/conversation?" + "chatRoomId=" + chatRoomId
     }
- */
+ 
     private func httpRequest(url: String, method: String) {
         let request = NSMutableURLRequest(url: NSURL(string: url)! as URL,
                                           cachePolicy: .useProtocolCachePolicy,
@@ -93,9 +93,9 @@ class API {
     func deleteChatRoom (chatRoomId: String) {
         httpRequest(url: deleteRoomDELETEUrl(chatRoomId: chatRoomId), method: "DELETE")
     }
-    /*
+    
     func deleteConversation (chatRoomId: String) {
         httpRequest(url: deleteConversationDELETEUrl(chatRoomId: chatRoomId), method: "DELETE")
     }
- */
+ 
 }

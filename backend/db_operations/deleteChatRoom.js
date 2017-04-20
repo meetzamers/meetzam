@@ -12,7 +12,9 @@ function deleteChatRoom (event, context, callback) {
     dynamoDB.deleteItem({
         TableName: "chatroom", 
         Key : {
-            "chatRoomId": event.chatRoomId
+            "chatRoomId": {
+                S: event.chatRoomId
+            } 
         }
         //"ReturnValues": "ALL_OLD"
     }, function (err, data) {
