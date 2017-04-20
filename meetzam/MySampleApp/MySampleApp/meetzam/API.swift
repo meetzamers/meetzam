@@ -35,7 +35,7 @@ class API {
     private func deleteConversationDELETEUrl(chatRoomId: String) -> String {
         return
     }
-    */
+ */
     private func httpRequest(url: String, method: String) {
         let request = NSMutableURLRequest(url: NSURL(string: url)! as URL,
                                           cachePolicy: .useProtocolCachePolicy,
