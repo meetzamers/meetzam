@@ -54,24 +54,24 @@ class MatchViewController: UIViewController {
                     if (UserProfileToDB().findIsMatched(key: AWSIdentityManager.default().identityId!, userID: self.userIds[self.lablecount-self.cardsToLoad])) {
                         if (UserProfileToDB().findIsMatched(key: self.userIds[self.lablecount-self.cardsToLoad], userID: AWSIdentityManager.default().identityId!)) {
                             
-                        UserProfileToDB().insertToMatchedUser(key: AWSIdentityManager.default().identityId!, userID: self.userIds[self.lablecount-self.cardsToLoad])
-                        
-                        UserProfileToDB().insertToMatchedUser(key: self.userIds[self.lablecount-self.cardsToLoad], userID: AWSIdentityManager.default().identityId!)
-                        
-                        print("Congradulations!! You have a new match!! with \(self.displayNames[self.lablecount-self.cardsToLoad])")
-                        
-                        // ================== push notification ======================================
-                        let userB: String = self.userIds[self.lablecount-self.cardsToLoad]
-                        API().pushMatchNotification(userId: userB)
-                        self.pushInAppNF()
-                        // ================== push notification ======================================
+                            UserProfileToDB().insertToMatchedUser(key: AWSIdentityManager.default().identityId!, userID: self.userIds[self.lablecount-self.cardsToLoad])
                             
-                        let myID = AWSIdentityManager.default().identityId!
-                        let youID = self.userIds[self.lablecount-self.cardsToLoad]
-                        ChatRoomModel().createChatRoom(recipient: self.userIds[self.lablecount-self.cardsToLoad])
+                            UserProfileToDB().insertToMatchedUser(key: self.userIds[self.lablecount-self.cardsToLoad], userID: AWSIdentityManager.default().identityId!)
                             
-                        let chatRoomID = ChatRoomModel().getChatRoomId(userId: myID, recipientId: youID)
-                        ConversationModel().addConversation(_userId: myID, _chatRoomId: chatRoomID, _message: "Hello")
+                            print("Congradulations!! You have a new match!! with \(self.displayNames[self.lablecount-self.cardsToLoad])")
+                            
+                            // ================== push notification ======================================
+                            let userB: String = self.userIds[self.lablecount-self.cardsToLoad]
+                            API().pushMatchNotification(userId: userB)
+                            self.pushInAppNF()
+                            // ================== push notification ======================================
+                                
+                            let myID = AWSIdentityManager.default().identityId!
+                            let youID = self.userIds[self.lablecount-self.cardsToLoad]
+                            ChatRoomModel().createChatRoom(recipient: self.userIds[self.lablecount-self.cardsToLoad])
+                                
+                            let chatRoomID = ChatRoomModel().getChatRoomId(userId: myID, recipientId: youID)
+                            ConversationModel().addConversation(_userId: myID, _chatRoomId: chatRoomID, _message: "Hello")
                             
                         }
                     }

@@ -141,8 +141,10 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
             let msg = fetchResultController.fetchedObjects?.first as! Message
             let yourID = msg.contact?.userID
             
+            // backend send message
             let chatRoomID = ChatRoomModel().getChatRoomId(userId: myID!, recipientId: yourID!)
             ConversationModel().addConversation(_userId: myID!, _chatRoomId: chatRoomID, _message: inputTextField.text!)
+            API().sendMessage(userId: yourID!, message: inputTextField.text!)
             
             print("sender send text: " + inputTextField.text!)
             
