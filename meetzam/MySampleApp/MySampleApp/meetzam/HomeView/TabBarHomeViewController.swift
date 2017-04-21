@@ -37,17 +37,6 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         // Let self be the delegate and dataSource
-        
-        /*ConversationModel().addConversation(_userId: "1", _chatRoomId: "3", _message: "This is first in 13")
-        ConversationModel().addConversation(_userId: "1", _chatRoomId: "3", _message: "This is second in 13")
-        ConversationModel().addConversation(_userId: "1", _chatRoomId: "3", _message: "This is third in 13")
-        ConversationModel().addConversation(_userId: "2", _chatRoomId: "4", _message: "This is first in 24")*/
-        //let m = ConversationModel().getMessagesGivenKeys(userId: "1", chatRoomId: "3")
-        //for item in m
-        //{
-        //    print("given key, get conversation# \(item.conversationId)")
-        //}
-        //ConversationModel().getHistoryRecords(userId_1: "1", _chatRoomId_1: "3", userId_2: "2", _chatRoomId_2: "4")
         print("wiew did load")
         
         self.delegate = self
@@ -77,7 +66,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         perform(#selector(popSignInViewController), with: nil, afterDelay: 0)
         
         // 1.5 attempt to pop first time user view controller
-//        perform(#selector(popFirstUserViewController), with: nil, afterDelay: 0)
+        perform(#selector(popFirstUserViewController), with: nil, afterDelay: 0)
         
         // 2. signinObserver: need to figure it out.
         new_signinObserver = NotificationCenter.default.addObserver(

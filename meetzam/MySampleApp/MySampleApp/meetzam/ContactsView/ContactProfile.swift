@@ -34,7 +34,7 @@ class ContactProfile: UIViewController {
         
         // also liked
         alsoLiked.text = "Liked"
-        alsoLiked.frame = CGRect(x: 25, y: userPicField.frame.height + 70, width: UIScreen.main.bounds.width, height: 20)
+        alsoLiked.frame = CGRect(x: 20, y: userPicField.frame.height + 70, width: UIScreen.main.bounds.width, height: 20)
         alsoLiked.font = UIFont(name: "HelveticaNeue-Thin", size: 18)
         alsoLiked.textColor = UIColor.darkGray
         self.mainView.addSubview(alsoLiked)
@@ -55,9 +55,10 @@ class ContactProfile: UIViewController {
         
         moviePic3.frame = CGRect(x: moviePic1.frame.width*2, y: UIScreen.main.bounds.width + 100, width: (UIScreen.main.bounds.width)/4, height: 140)
         
-        moviePic4.frame = CGRect(x: moviePic1.frame.width*4-20, y: UIScreen.main.bounds.width + 150, width: 30, height: 50)
+        moviePic4.frame = CGRect(x: moviePic1.frame.width*4-10, y: UIScreen.main.bounds.width + 150, width: 30, height: 50)
         moviePic4.contentMode = UIViewContentMode.scaleAspectFit
         moviePic4.image = #imageLiteral(resourceName: "Dot")
+        moviePic4.alpha = 0.8
         
         self.mainView.addSubview(moviePic1)
         self.mainView.addSubview(moviePic2)

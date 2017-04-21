@@ -156,7 +156,7 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
     func getChatRoomId(userId: String, recipientId: String) -> String{
         UIApplication.shared.isNetworkActivityIndicatorVisible = true;
         print("===== getChatRoomId =====")
-        
+        print("of \(userId) and \(recipientId)")
         
         let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.default()
         let queryExpression = AWSDynamoDBScanExpression()

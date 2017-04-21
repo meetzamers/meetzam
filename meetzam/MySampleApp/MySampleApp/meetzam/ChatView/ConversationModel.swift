@@ -97,7 +97,7 @@ class ConversationModel: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         {
             totalConversation.append(item)
         }
-        totalConversation.sorted(by: { $0.createdAt?.compare($1.createdAt!) == .orderedDescending })
+        totalConversation = totalConversation.sorted(by: { $0.createdAt?.compare($1.createdAt!) == .orderedAscending })
         for item in totalConversation
         {
             print("Get the history: conversation# \(item.conversationId)")

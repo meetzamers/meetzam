@@ -98,7 +98,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     // Function used in change profile picture button
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
             profilePicture.image = image
             //getting details of image
             let uploadFileURL = info[UIImagePickerControllerReferenceURL] as! NSURL
@@ -150,7 +150,6 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             waiting = 1
         }
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        
         
     }
     

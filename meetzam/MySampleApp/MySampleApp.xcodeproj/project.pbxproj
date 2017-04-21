@@ -34,15 +34,22 @@
 		C41A64741E922393004239CB /* Comfortaa-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C41A64711E922393004239CB /* Comfortaa-Regular.ttf */; };
 		C41A64751E922393004239CB /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C41A64721E922393004239CB /* Nunito-Regular.ttf */; };
 		C41A64761E922393004239CB /* Raleway-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C41A64731E922393004239CB /* Raleway-Light.ttf */; };
+		C421A4571EA4C2AE002416FF /* Contact+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C421A4531EA4C2AE002416FF /* Contact+CoreDataClass.swift */; };
+		C421A4581EA4C2AE002416FF /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C421A4541EA4C2AE002416FF /* Contact+CoreDataProperties.swift */; };
+		C421A4591EA4C2AE002416FF /* Message+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C421A4551EA4C2AE002416FF /* Message+CoreDataClass.swift */; };
+		C421A47F1EA56F8A002416FF /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C421A47E1EA56F8A002416FF /* ChatLogController.swift */; };
 		C42C56301E6126FA005C6D66 /* ZLSwipeableViewSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C42C562F1E6126FA005C6D66 /* ZLSwipeableViewSwift.framework */; };
 		C42C56331E6127D2005C6D66 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C56321E6127D2005C6D66 /* CardView.swift */; };
 		C42C56351E612CF3005C6D66 /* SegueFromRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C56341E612CF3005C6D66 /* SegueFromRight.swift */; };
 		C42C56371E612F90005C6D66 /* NaviViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42C56361E612F90005C6D66 /* NaviViewController.swift */; };
+		C45EC60D1EA4B8E4005C6F4A /* ChatContactControllerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45EC60C1EA4B8E4005C6F4A /* ChatContactControllerHelper.swift */; };
+		C45EC6321EA4BF39005C6F4A /* ChatViewModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C45EC6301EA4BF39005C6F4A /* ChatViewModel.xcdatamodeld */; };
 		C4678C4B1E64E17900CA385F /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4678C4A1E64E17900CA385F /* MainViewController.swift */; };
 		C4678C4D1E64E1C800CA385F /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4678C4C1E64E1C800CA385F /* SettingViewController.swift */; };
 		C4A86E601E8617A20066B6F9 /* NVActivityIndicatorView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4A86E5F1E8617A20066B6F9 /* NVActivityIndicatorView.framework */; };
 		C4BF9C411E5B61A500C73405 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C4BF9C401E5B61A500C73405 /* Main.storyboard */; };
 		C4BF9C441E5B643C00C73405 /* TabBarHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BF9C431E5B643C00C73405 /* TabBarHomeViewController.swift */; };
+		C4C1B6F71EA7010900CF1CBA /* Message+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C1B6F61EA7010900CF1CBA /* Message+CoreDataProperties.swift */; };
 		E7A30F04077D295600000000 /* SignIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1DD70E29F31C638F00000000 /* SignIn.storyboard */; };
 		E7A30F0407CAE03600000000 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DD70E29EBA6D9AE00000000 /* CFNetwork.framework */; };
 		E7A30F040C06D8D800000000 /* ColorThemeSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD70E2965E3B84100000000 /* ColorThemeSettings.swift */; };
@@ -235,16 +242,23 @@
 		C41A64711E922393004239CB /* Comfortaa-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Comfortaa-Regular.ttf"; path = "MySampleApp/meetzam/Font/Comfortaa-Regular.ttf"; sourceTree = SOURCE_ROOT; };
 		C41A64721E922393004239CB /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Nunito-Regular.ttf"; path = "MySampleApp/meetzam/Font/Nunito-Regular.ttf"; sourceTree = SOURCE_ROOT; };
 		C41A64731E922393004239CB /* Raleway-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Raleway-Light.ttf"; path = "MySampleApp/meetzam/Font/Raleway-Light.ttf"; sourceTree = SOURCE_ROOT; };
+		C421A4531EA4C2AE002416FF /* Contact+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Contact+CoreDataClass.swift"; path = "MySampleApp/meetzam/ChatView/Contact+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		C421A4541EA4C2AE002416FF /* Contact+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Contact+CoreDataProperties.swift"; path = "MySampleApp/meetzam/ChatView/Contact+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
+		C421A4551EA4C2AE002416FF /* Message+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Message+CoreDataClass.swift"; path = "MySampleApp/meetzam/ChatView/Message+CoreDataClass.swift"; sourceTree = SOURCE_ROOT; };
+		C421A47E1EA56F8A002416FF /* ChatLogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatLogController.swift; path = MySampleApp/meetzam/ChatView/ChatLogController.swift; sourceTree = SOURCE_ROOT; };
 		C42C562F1E6126FA005C6D66 /* ZLSwipeableViewSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZLSwipeableViewSwift.framework; path = Carthage/Build/iOS/ZLSwipeableViewSwift.framework; sourceTree = "<group>"; };
 		C42C56321E6127D2005C6D66 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CardView.swift; path = MySampleApp/meetzam/MatchView/CardView.swift; sourceTree = SOURCE_ROOT; };
 		C42C56341E612CF3005C6D66 /* SegueFromRight.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SegueFromRight.swift; path = MySampleApp/meetzam/Animation/SegueFromRight.swift; sourceTree = SOURCE_ROOT; };
 		C42C56361E612F90005C6D66 /* NaviViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NaviViewController.swift; path = MySampleApp/meetzam/Animation/NaviViewController.swift; sourceTree = SOURCE_ROOT; };
+		C45EC60C1EA4B8E4005C6F4A /* ChatContactControllerHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatContactControllerHelper.swift; path = MySampleApp/meetzam/ChatView/ChatContactControllerHelper.swift; sourceTree = SOURCE_ROOT; };
+		C45EC6311EA4BF39005C6F4A /* ChatViewModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ChatViewModel.xcdatamodel; sourceTree = "<group>"; };
 		C4678C4A1E64E17900CA385F /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = MySampleApp/meetzam/MainViewController.swift; sourceTree = SOURCE_ROOT; };
 		C4678C4C1E64E1C800CA385F /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingViewController.swift; path = MySampleApp/meetzam/ProfileView/SettingViewController.swift; sourceTree = SOURCE_ROOT; };
 		C4A86E5F1E8617A20066B6F9 /* NVActivityIndicatorView.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NVActivityIndicatorView.framework; path = Carthage/Build/iOS/NVActivityIndicatorView.framework; sourceTree = "<group>"; };
 		C4A86E611E8617B00066B6F9 /* Lottie.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lottie.framework; path = Carthage/Build/iOS/Lottie.framework; sourceTree = "<group>"; };
 		C4BF9C401E5B61A500C73405 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = MySampleApp/meetzam/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		C4BF9C431E5B643C00C73405 /* TabBarHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TabBarHomeViewController.swift; path = MySampleApp/meetzam/HomeView/TabBarHomeViewController.swift; sourceTree = SOURCE_ROOT; };
+		C4C1B6F61EA7010900CF1CBA /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Message+CoreDataProperties.swift"; path = "MySampleApp/meetzam/ChatView/Message+CoreDataProperties.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -569,7 +583,10 @@
 			children = (
 				18D8DE301EA7D7D400FD2197 /* ConversationModel.swift */,
 				18FC3D8A1E980CF70091B37F /* ChatRoomModel.swift */,
+				C45EC60C1EA4B8E4005C6F4A /* ChatContactControllerHelper.swift */,
 				C40661BC1E5CBC85005D2145 /* ChatViewController.swift */,
+				C421A47E1EA56F8A002416FF /* ChatLogController.swift */,
+				C45EC6171EA4BCCE005C6F4A /* ModelFiles */,
 			);
 			name = ChatView;
 			sourceTree = "<group>";
@@ -617,6 +634,18 @@
 				C41A64731E922393004239CB /* Raleway-Light.ttf */,
 			);
 			name = Font;
+			sourceTree = "<group>";
+		};
+		C45EC6171EA4BCCE005C6F4A /* ModelFiles */ = {
+			isa = PBXGroup;
+			children = (
+				C45EC6301EA4BF39005C6F4A /* ChatViewModel.xcdatamodeld */,
+				C421A4531EA4C2AE002416FF /* Contact+CoreDataClass.swift */,
+				C421A4541EA4C2AE002416FF /* Contact+CoreDataProperties.swift */,
+				C421A4551EA4C2AE002416FF /* Message+CoreDataClass.swift */,
+				C4C1B6F61EA7010900CF1CBA /* Message+CoreDataProperties.swift */,
+			);
+			name = ModelFiles;
 			sourceTree = "<group>";
 		};
 		C4BF9C3F1E5B618900C73405 /* meetzam */ = {
@@ -796,6 +825,7 @@
 				E7A30F047458C05600000000 /* ContentDeliveryViewController.swift in Sources */,
 				E7A30F043CD1B25F00000000 /* CloudLogicAPIInvokeViewController.swift in Sources */,
 				E7A30F0495A1857C00000000 /* UserFilesViewController.swift in Sources */,
+				C45EC6321EA4BF39005C6F4A /* ChatViewModel.xcdatamodeld in Sources */,
 				E7A30F04A21C25E100000000 /* NoSQLTableListViewController.swift in Sources */,
 				E7A30F04BE9D922C00000000 /* ConversationTable.swift in Sources */,
 				E7A30F0441E4A73C00000000 /* UserProfileTable.swift in Sources */,
@@ -803,6 +833,7 @@
 				E7A30F0491953CE700000000 /* UserProfile.swift in Sources */,
 				E7A30F04677133E600000000 /* AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.m in Sources */,
 				5DD94CED1E6614F800B7DD80 /* MovieCollectionCell.swift in Sources */,
+				C45EC60D1EA4B8E4005C6F4A /* ChatContactControllerHelper.swift in Sources */,
 				E7A30F04879C1BE100000000 /* AppDelegate.swift in Sources */,
 				E7A30F04414FEBE400000000 /* AWSAPI_ADI48J5BXK_ResponseSchema.m in Sources */,
 				E7A30F04EC8865D000000000 /* UserDataStorageViewController.swift in Sources */,
@@ -814,6 +845,7 @@
 				E7A30F0441798FFD00000000 /* NoSQLSampleDataGenerator.swift in Sources */,
 				5D3257721EA178920048A866 /* ContactProfile.swift in Sources */,
 				E7A30F04A2C572B800000000 /* UtilityFunctions.swift in Sources */,
+				C4C1B6F71EA7010900CF1CBA /* Message+CoreDataProperties.swift in Sources */,
 				E7A30F04F01DFC3F00000000 /* NoSQLTableViewController.swift in Sources */,
 				185099741EA1B8B0001FA648 /* NSDate+Util.swift in Sources */,
 				E7A30F042D45845500000000 /* DemoViewController.swift in Sources */,
@@ -823,17 +855,21 @@
 				E7A30F04559CB61500000000 /* CloudLogicAPI.swift in Sources */,
 				E7A30F04B9F764D000000000 /* NoSQLQueryResultViewController.swift in Sources */,
 				E7A30F04FDE8AC3000000000 /* CloudLogicAPIOperationsViewController.swift in Sources */,
+				C421A4591EA4C2AE002416FF /* Message+CoreDataClass.swift in Sources */,
 				E7A30F04F461178300000000 /* SignInViewController.swift in Sources */,
 				C40661BA1E5CBC58005D2145 /* MatchViewController.swift in Sources */,
 				8B84DB6B1E6904A600C2941F /* UserProfileToDB.swift in Sources */,
+				C421A47F1EA56F8A002416FF /* ChatLogController.swift in Sources */,
 				E7A30F04A4541E2800000000 /* CloudLogicAPIFactory.swift in Sources */,
 				E7A30F04195B4B7F00000000 /* UserSettingsViewController.swift in Sources */,
 				E7A30F0491170EF700000000 /* Conversation.swift in Sources */,
 				18D8DE311EA7D7D400FD2197 /* ConversationModel.swift in Sources */,
 				E7A30F04460EA60000000000 /* AWSConfiguration.swift in Sources */,
 				E7A30F0486375E6A00000000 /* AWSAPI_ADI48J5BXK_RequestSchema.m in Sources */,
+				C421A4581EA4C2AE002416FF /* Contact+CoreDataProperties.swift in Sources */,
 				E7A30F04F85210F300000000 /* CloudLogicAPIListViewController.swift in Sources */,
 				C40661C01E5CBCBF005D2145 /* ProfileViewController.swift in Sources */,
+				C421A4571EA4C2AE002416FF /* Contact+CoreDataClass.swift in Sources */,
 				136D68631E82F1C2004E96CA /* MovieAndList.swift in Sources */,
 				18D8DE2F1EA7D7A200FD2197 /* API.swift in Sources */,
 				E7A30F04EF181B5600000000 /* NoSQLModelHelpers.swift in Sources */,
@@ -1023,6 +1059,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		C45EC6301EA4BF39005C6F4A /* ChatViewModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C45EC6311EA4BF39005C6F4A /* ChatViewModel.xcdatamodel */,
+			);
+			currentVersion = C45EC6311EA4BF39005C6F4A /* ChatViewModel.xcdatamodel */;
+			name = ChatViewModel.xcdatamodeld;
+			path = ../MySampleApp/meetzam/ChatView/ChatViewModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 96C847930000000000000000 /* Project object */;
 }
