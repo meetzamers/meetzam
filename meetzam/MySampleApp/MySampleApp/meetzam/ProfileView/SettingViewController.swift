@@ -43,7 +43,7 @@ class SettingViewController: UIViewController {
         pushNFNextImage.frame = CGRect(x: UIScreen.main.bounds.width - 41, y: 9.5, width: 31, height: 31)
         pushNFNextImage.image = UIImage(named: "Next")
         pushNFNextImage.contentMode = .scaleAspectFit
-        pushNFNextImage.alpha = 0.5
+        pushNFNextImage.alpha = 0.35
         pushNFCell.addSubview(pushNFNextImage)
         
         self.view.addSubview(pushNFCell)

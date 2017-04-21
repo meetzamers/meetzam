@@ -9,8 +9,12 @@
 import UIKit
 import LTMorphingLabel
 import TextFieldEffects
+import NVActivityIndicatorView
+import AWSMobileHubHelper
+import AWSS3
+import FBSDKCoreKit
 
-class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     var currentPage = 0
     // Page 1
@@ -43,6 +47,15 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     // Page 4
     let profilePicPageLabel = UILabel()
+    let profilePicView = UIImageView()
+    let profilePicUploadButton = UIButton(type: .system)
+    var isGoPopUp: Bool = false
+    var uploadFileURL: NSURL?
+    var uploadingFileURL: URL?
+    
+    let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.regular)
+    var blurEffectView: UIVisualEffectView?
+    let loadingIndicator = NVActivityIndicatorView(frame: CGRect(x: UIScreen.main.bounds.width/2 - 30, y: UIScreen.main.bounds.height/2 - 30, width: 60, height: 60), type: .ballRotateChase, color: UIColor.darkGray, padding: CGFloat(0))
     
     // Page 5
     var endingText = LTMorphingLabel()
@@ -53,19 +66,24 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
     let goAppButton = UIButton()
     
     override func viewWillAppear(_ animated: Bool) {
-        UIView.animate(withDuration: 0, delay: 0, options: .curveEaseOut, animations: {
-            self.view.addSubview(self.welcomeLabel1)
-            self.view.addSubview(self.welcomeLabel2)
-        }, completion: { _ in
-            UIView.animate(withDuration: 0.2, delay: 1, options: .curveEaseOut, animations: {
-                self.welcomeLabel2.alpha = 1
+        if (!isGoPopUp) {
+            UIView.animate(withDuration: 0, delay: 0, options: .curveEaseOut, animations: {
+                self.view.addSubview(self.welcomeLabel1)
+                self.view.addSubview(self.welcomeLabel2)
             }, completion: { _ in
-                self.view.addSubview(self.welcomeButton)
-                UIView.animate(withDuration: 0.2, delay: 0.5, options: .curveEaseOut, animations: {
-                    self.welcomeButton.alpha = 1
-                }, completion: nil)
+                UIView.animate(withDuration: 0.2, delay: 1, options: .curveEaseOut, animations: {
+                    self.welcomeLabel2.alpha = 1
+                }, completion: { _ in
+                    self.view.addSubview(self.welcomeButton)
+                    UIView.animate(withDuration: 0.2, delay: 0.5, options: .curveEaseOut, animations: {
+                        self.welcomeButton.alpha = 1
+                    }, completion: nil)
+                })
             })
-        })
+        }
+        else {
+            isGoPopUp = false
+        }
     }
     
     override func viewDidLoad() {
@@ -131,6 +149,7 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         nameTextField.autocorrectionType = .no
         nameTextField.alpha = 0
         nameTextField.delegate = self
+        nameTextField.tag = 0
         
         // No 2
         emailTextField.frame = CGRect(x: UIScreen.main.bounds.width * 0.15, y: 250 + 5, width: UIScreen.main.bounds.width * 0.7, height: 50)
@@ -144,6 +163,7 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         emailTextField.autocorrectionType = .no
         emailTextField.alpha = 0
         emailTextField.delegate = self
+        emailTextField.tag = 1
         
         // No 3
         ageTextField.frame = CGRect(x: UIScreen.main.bounds.width * 0.15, y: 305 + 5, width: UIScreen.main.bounds.width * 0.7, height: 50)
@@ -155,6 +175,7 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         ageTextField.keyboardType = .asciiCapableNumberPad
         ageTextField.alpha = 0
         ageTextField.delegate = self
+        ageTextField.tag = 2
         
         // No 4
         genderTextField.frame = CGRect(x: UIScreen.main.bounds.width * 0.15, y: 360 + 5, width: UIScreen.main.bounds.width * 0.7, height: 50)
@@ -168,6 +189,7 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         genderPicker.dataSource = self
         genderTextField.inputView = genderPicker
         genderTextField.delegate = self
+        genderTextField.tag = 3
         
         // No 5
         regionTextField.frame = CGRect(x: UIScreen.main.bounds.width * 0.15, y: 415 + 5, width: UIScreen.main.bounds.width * 0.7, height: 50)
@@ -179,6 +201,7 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         regionTextField.autocapitalizationType = .words
         regionTextField.alpha = 0
         regionTextField.delegate = self
+        regionTextField.tag = 4
         
         // No 6
         basicInfoButton.frame = CGRect(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height - 50, width: UIScreen.main.bounds.width/2, height: 50)
@@ -259,6 +282,18 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         profilePicPageLabel.textAlignment = .left
         profilePicPageLabel.alpha = 0
         
+        // No 1
+        profilePicView.frame = CGRect(x: UIScreen.main.bounds.width * 0.15, y: 200, width: UIScreen.main.bounds.width * 0.7, height: UIScreen.main.bounds.width * 0.7)
+        profilePicView.image = UIImage(named: "defaultProfilePic")
+        profilePicView.contentMode = .scaleAspectFill
+        profilePicView.alpha = 0
+        
+        // No 2
+        let new_y = 200 + (UIScreen.main.bounds.width * 0.7) + 20
+        profilePicUploadButton.frame = CGRect(x: UIScreen.main.bounds.width * 0.15, y: new_y, width: UIScreen.main.bounds.width * 0.7, height: 50)
+        profilePicUploadButton.setTitle("Change Profile Photo", for: .normal)
+        profilePicUploadButton.addTarget(self, action: #selector(uploadPicButtonAction), for: .touchUpInside)
+        profilePicUploadButton.alpha = 0
         
         // ============================================================
         // Last Page
@@ -412,86 +447,171 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
             UIView.animate(withDuration: 0.2, animations: {() -> Void in
                 self.thirdPageLabel.alpha = 0
                 self.bioTextField.alpha = 0
-                self.basicInfoButton.alpha = 0
-                self.backButton.alpha = 0
+                
             }, completion: {(finished: Bool) in
-                // Page 2+3
-                self.secondPageLabel.removeFromSuperview()
-                self.nameTextField.removeFromSuperview()
-                self.emailTextField.removeFromSuperview()
-                self.ageTextField.removeFromSuperview()
-                self.genderTextField.removeFromSuperview()
-                self.regionTextField.removeFromSuperview()
-                self.basicInfoButton.removeFromSuperview()
-                self.backButton.removeFromSuperview()
-                self.genderPicker.removeFromSuperview()
-                self.bioTextField.removeFromSuperview()
-                self.thirdPageLabel.removeFromSuperview()
-                // Page 4
-                // No 1
-                self.endingText = LTMorphingLabel()
-                self.endingText.frame = CGRect(x: 0, y: 150, width: UIScreen.main.bounds.width, height: 50)
-                self.endingText.textAlignment = .center
-                self.endingText.font = UIFont(name: "Comfortaa-Regular", size: 35)
-                self.endingText.text = "Congratulations!"
-                self.endingText.morphingEffect = .scale
-                self.endingText.morphingDuration = 1
-                self.view.addSubview(self.endingText)
-                
-                self.view.addSubview(self.endingText2)
-                UIView.animate(withDuration: 0.2, delay: 1, options: .curveEaseOut, animations: {
-                    self.endingText2.alpha = 1
-                }, completion: nil)
-                
-                self.view.addSubview(self.goAppButton)
-                UIView.animate(withDuration: 0.2, delay: 1.5, options: .curveEaseOut, animations: {
-                    self.goAppButton.alpha = 1
-                }, completion: nil)
+                self.view.addSubview(self.profilePicPageLabel)
+                self.profilePicPageLabel.alpha = 1
+                self.view.addSubview(self.profilePicView)
+                self.profilePicView.alpha = 1
+                self.view.addSubview(self.profilePicUploadButton)
+                self.profilePicUploadButton.alpha = 1
                 
                 self.currentPage = 4
             })
         }
-        
-        // TODO
+    
         // current page is 4
         else if (self.currentPage == 4) {
-            UIView.animate(withDuration: 0.2, animations: {() -> Void in
-                self.thirdPageLabel.alpha = 0
-                self.bioTextField.alpha = 0
+            blurEffectView = UIVisualEffectView(effect: blurEffect)
+            blurEffectView?.frame = UIScreen.main.bounds
+            blurEffectView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            blurEffectView?.alpha = 0
+            self.view.addSubview(blurEffectView!)
+            
+            loadingIndicator.startAnimating()
+            self.view.window!.addSubview(loadingIndicator)
+            
+            UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut, animations: {
+                self.blurEffectView!.alpha = 0.98
                 
-            }, completion: {(finished: Bool) in
-                // Page 2+3
-                self.thirdPageLabel.removeFromSuperview()
-                self.bioTextField.removeFromSuperview()
-                
-                // Page 5
-                // No 1
-                self.endingText = LTMorphingLabel()
-                self.endingText.frame = CGRect(x: 0, y: 150, width: UIScreen.main.bounds.width, height: 50)
-                self.endingText.textAlignment = .center
-                self.endingText.font = UIFont(name: "Comfortaa-Regular", size: 35)
-                self.endingText.text = "Congratulations!"
-                self.endingText.morphingEffect = .scale
-                self.endingText.morphingDuration = 1
-                self.view.addSubview(self.endingText)
-                
-                self.view.addSubview(self.endingText2)
-                UIView.animate(withDuration: 0.2, delay: 1, options: .curveEaseOut, animations: {
-                    self.endingText2.alpha = 1
-                }, completion: nil)
-                
-                self.view.addSubview(self.goAppButton)
-                UIView.animate(withDuration: 0.2, delay: 1.5, options: .curveEaseOut, animations: {
-                    self.goAppButton.alpha = 1
-                }, completion: nil)
-                
+            }, completion: {_ in
+                UIView.animate(withDuration: 0.2, animations: {() -> Void in
+                    self.basicInfoButton.alpha = 0
+                    self.backButton.alpha = 0
+                    self.profilePicPageLabel.alpha = 0
+                    self.profilePicView.alpha = 0
+                    self.profilePicUploadButton.alpha = 0
+                    
+                }, completion: {(finished: Bool) in
+                    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                    // Send the profiles to DB
+                    let myId = AWSIdentityManager.default().identityId!
+                    var name = self.nameTextField.text
+                    var bio = self.bioTextField.text
+                    var age = self.ageTextField.text
+                    var gender = self.genderTextField.text
+                    var region = self.regionTextField.text
+                    var email = self.emailTextField.text
+                    
+                    // check nil string
+                    if name == "" {
+                        name = "Unknown Name"
+                    }
+                    if bio == "" {
+                        bio = "Unknown Bio"
+                    }
+                    if age == "" {
+                        age = "Unknown Age"
+                    }
+                    if gender == "" {
+                        gender = "Unknown Gender"
+                    }
+                    if region == "" {
+                        region = "Unknown Region"
+                    }
+                    if email == "" {
+                        email = "Unknown Email"
+                    }
+                    
+                    UserProfileToDB().insertProfile(_userId: myId, _displayName: name!, _bio: bio!, _age: age!, _gender: gender!, _region: region!, _email: email!)
+                    
+                    // create a temp pic
+                    if self.profilePicView.image == #imageLiteral(resourceName: "defaultProfilePic") {
+                        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+                        if let image = self.profilePicView.image {
+                            let fileURL = documentsURL.appendingPathComponent("ryan19.jpg")
+                            if let jpgImageData = UIImageJPEGRepresentation(image, 1) {
+                                do {
+                                    try jpgImageData.write(to: fileURL)
+                                    self.uploadFileURL = fileURL as NSURL
+                                    
+                                } catch let err {
+                                    print(err)
+                                }
+                            }
+                        }
+                        
+                    }
+                    //getting details of image
+                    let imageName = self.uploadFileURL?.lastPathComponent
+                    let documentDirectory = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first! as String
+
+                    // getting local path
+                    let localPath = (documentDirectory as NSString).appendingPathComponent(imageName!)
+                    self.uploadingFileURL = URL(fileURLWithPath: localPath)
+                    
+                    //getting actual image
+                    if let safe_image = self.profilePicView.image {
+                        let data = UIImageJPEGRepresentation(safe_image, 0)
+                        do {
+                            try data?.write(to: self.uploadingFileURL!)
+                            
+                        } catch let err {
+                            print(err)
+                        }
+                    }
+
+                    self.uploadProfileImage()
+                    
+                    // delete the temp pic
+                    let fileManager = FileManager.default
+                    let documentsURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+                    let fileURL = documentsURL.appendingPathComponent("ryan19.jpg")
+                    if (fileManager.fileExists(atPath: fileURL.path)) {
+                        do {
+                            try fileManager.removeItem(atPath: fileURL.path)
+                        } catch let error {
+                            print("Ooops! Something went wrong: \(error)")
+                        }
+                    }
+                    else {
+                        print("ryan19.jpg not found")
+                    }
+                    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                    
+                    // Page 2+3+4
+                    self.secondPageLabel.removeFromSuperview()
+                    self.nameTextField.removeFromSuperview()
+                    self.emailTextField.removeFromSuperview()
+                    self.ageTextField.removeFromSuperview()
+                    self.genderTextField.removeFromSuperview()
+                    self.regionTextField.removeFromSuperview()
+                    self.basicInfoButton.removeFromSuperview()
+                    self.backButton.removeFromSuperview()
+                    self.genderPicker.removeFromSuperview()
+                    self.bioTextField.removeFromSuperview()
+                    self.thirdPageLabel.removeFromSuperview()
+                    self.profilePicPageLabel.removeFromSuperview()
+                    self.profilePicView.removeFromSuperview()
+                    self.profilePicUploadButton.removeFromSuperview()
+    
+                    // Page 5
+                    // No 1
+                    self.endingText = LTMorphingLabel()
+                    self.endingText.frame = CGRect(x: 0, y: 150, width: UIScreen.main.bounds.width, height: 50)
+                    self.endingText.textAlignment = .center
+                    self.endingText.font = UIFont(name: "Comfortaa-Regular", size: 35)
+                    self.endingText.text = "Congratulations!"
+                    self.endingText.morphingEffect = .scale
+                    self.endingText.morphingDuration = 1
+                    self.view.addSubview(self.endingText)
+                    
+                    self.view.addSubview(self.endingText2)
+                    UIView.animate(withDuration: 0.2, delay: 1, options: .curveEaseOut, animations: {
+                        self.endingText2.alpha = 1
+                    }, completion: nil)
+                    
+                    self.view.addSubview(self.goAppButton)
+                    UIView.animate(withDuration: 0.2, delay: 1.5, options: .curveEaseOut, animations: {
+                        self.goAppButton.alpha = 1
+                    }, completion: nil)
+    
+                    self.currentPage = -1
+                })
+
             })
             
-            
-            self.currentPage = -1
         }
-        
-        // TODO: send the strings to DB
         
     }
     
@@ -556,6 +676,24 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
             })
         }
         
+        else if (self.currentPage == 4) {
+            UIView.animate(withDuration: 0.2, animations: {() -> Void in
+                // Fourth page
+                self.profilePicPageLabel.alpha = 0
+                self.profilePicView.alpha = 0
+                self.profilePicUploadButton.alpha = 0
+                
+                
+            }, completion: {(finished: Bool) in
+                // Thrid Page
+                self.thirdPageLabel.alpha = 1
+                self.bioTextField.alpha = 1
+                
+                self.currentPage = 3
+            })
+
+        }
+        
     }
     
     // Go app button action
@@ -603,6 +741,79 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         })
     }
     
+    // Upload profile pic button action
+    func uploadPicButtonAction(sender: UIButton!) {
+        let popUpMenu = UIAlertController.init(title: "Change Profile Photo", message: nil, preferredStyle: .actionSheet)
+        let cancelAction = UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil)
+        let albumAction = UIAlertAction.init(title: "Choose from Library", style: .default, handler: libraryHandler)
+        let fbAction = UIAlertAction.init(title: "Use Facebook Profile Picture", style: .default, handler: fbHandler)
+        
+        popUpMenu.addAction(albumAction)
+        popUpMenu.addAction(fbAction)
+        popUpMenu.addAction(cancelAction)
+        
+        self.present(popUpMenu, animated: true, completion: nil)
+        
+    }
+    
+    // Choose from library action
+    func libraryHandler(alert: UIAlertAction!) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.allowsEditing = true
+        
+        isGoPopUp = true
+        self.present(imagePicker, animated: true, completion: nil)
+    }
+    
+    // Choose facebook profile picture
+    func fbHandler(alert: UIAlertAction!) {
+        var largeImageURL = ""
+        let fbid = FBSDKAccessToken.current().userID
+        if (fbid != nil) {
+            largeImageURL = "https://graph.facebook.com/" + fbid! + "/picture?type=large&redirect=true&width=720&height=720"
+            if let imageURL = URL(string: largeImageURL) {
+                let imageData = try! Data(contentsOf: imageURL)
+                if let profileImage = UIImage(data: imageData) {
+                    self.profilePicView.image = profileImage
+                    // create a temp pic
+                    let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+                    if let image = self.profilePicView.image {
+                        let fileURL = documentsURL.appendingPathComponent("ryan19.jpg")
+                        if let jpgImageData = UIImageJPEGRepresentation(image, 1) {
+                            do {
+                                try jpgImageData.write(to: fileURL)
+                                self.uploadFileURL = fileURL as NSURL
+                                
+                            } catch let err {
+                                print(err)
+                            }
+                        }
+                    }
+                    // create a temp pic
+                }
+            }
+        }
+        
+    }
+    
+    // after finish picking photo
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let ogImage = info[UIImagePickerControllerEditedImage] as? UIImage {
+            self.profilePicView.image = ogImage
+            
+            self.uploadFileURL = info[UIImagePickerControllerReferenceURL] as? NSURL
+            
+        }
+        else {
+            print("error picking image")
+        }
+        
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
     // Gender Picker
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
@@ -649,6 +860,55 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         self.animateTextField(textField: textField, up:false)
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        // Try to find next responder
+        if let nextField = textField.superview?.viewWithTag(textField.tag + 1) as? UITextField {
+            nextField.becomeFirstResponder()
+        } else {
+            // Not found, so remove keyboard.
+            textField.resignFirstResponder()
+        }
+        return false
+    }
+    
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    // mush S3 funciton
+    func uploadProfileImage() {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
+        print("===== uploadProfileImage =====")
+        var waiting = 0
+        var dummy = 0
+        let transferManager = AWSS3TransferManager.default()
+        //let testFileURL1 = uploadingFileURL
+        let uploadRequest1 : AWSS3TransferManagerUploadRequest = AWSS3TransferManagerUploadRequest()
+        uploadRequest1.bucket = "testprofile-meetzam"
+        uploadRequest1.key =  AWSIdentityManager.default().identityId! + ".jpeg"
+        uploadRequest1.body = uploadingFileURL!
+        transferManager.upload(uploadRequest1).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            if let error = task.error as NSError? {
+                print("Upload Error: \(error)")
+            }
+            else {
+                print("SUCCESS")
+            }
+            dummy = 6
+            return nil
+        })
+        while (dummy != 6) {
+            waiting = 1
+        }
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            self.blurEffectView?.alpha = 0
+            self.loadingIndicator.stopAnimating()
+        }, completion: { _ in
+            self.blurEffectView?.removeFromSuperview()
+            self.loadingIndicator.removeFromSuperview()
+        })
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 }
 
 extension UIViewController {

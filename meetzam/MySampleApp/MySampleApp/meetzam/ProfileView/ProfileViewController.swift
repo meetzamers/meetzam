@@ -136,6 +136,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         
     }
     
+    @IBOutlet weak var toLikeButton: UIButton!
     
     // Go to all movies I liked
     @IBAction func toLikedMovies(_ sender: Any) {
