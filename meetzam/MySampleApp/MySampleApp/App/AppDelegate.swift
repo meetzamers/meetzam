@@ -15,7 +15,7 @@ import UIKit
 import UserNotifications
     
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     
     var window: UIWindow?
     
@@ -42,7 +42,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // change title color
         navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.init(red: 252/255, green: 252/255, blue: 252/255, alpha: 1), NSFontAttributeName: UIFont.init(name: "HelveticaNeue", size: 19) as Any]
-                
+        
+        // inApp notification
+        let center = UNUserNotificationCenter.current()
+        center.delegate = self
+        center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
+            // Enable or disable features based on authorization.
+        }
+        
         // ====================================
         
         return AWSMobileClient.sharedInstance.didFinishLaunching(application, withOptions: launchOptions)
@@ -95,9 +102,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
-        
         completionHandler(UNNotificationPresentationOptions.alert)
     }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        // pull out the buried userInfo dictionary
+        let userInfo = response.notification.request.content.userInfo
+        
+        if let customData = userInfo["customData"] as? String {
+            print("Custom data received: \(customData)")
+            
+            switch response.actionIdentifier {
+            case UNNotificationDefaultActionIdentifier:
+                // the user swiped to unlock
+                print("Default identifier")
+                
+            case "show":
+                // the user tapped our "show more info…" button
+                print("Show more information…")
+                break
+                
+            default:
+                break
+            }
+        }
+        
+        // you must call the completion handler when you're done
+        completionHandler()
+    }
+    
+    // =======================================================================
+    
     
     // MARK: - Core Data stack
     

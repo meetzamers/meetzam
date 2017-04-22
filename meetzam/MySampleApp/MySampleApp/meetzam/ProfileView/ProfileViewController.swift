@@ -10,12 +10,47 @@ import UIKit
 import Foundation
 import AWSMobileHubHelper
 import FBSDKCoreKit
+import NVActivityIndicatorView
 
 class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     @IBOutlet weak var mainScrollView: UIScrollView!
     @IBOutlet weak var TopThreeMovieCollectionView: UICollectionView!
     @IBOutlet weak var profileMainBodyView: UIView!
+    
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.regular)
+    var blurEffectView: UIVisualEffectView?
+    let loadingIndicator = NVActivityIndicatorView(frame: CGRect(x: UIScreen.main.bounds.width/2 - 30, y: UIScreen.main.bounds.height/2 - 30, width: 60, height: 60), type: .ballRotateChase, color: UIColor.darkGray, padding: CGFloat(0))
+    
+    func startAnimateWaiting() {
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView?.frame = UIScreen.main.bounds
+        blurEffectView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurEffectView?.alpha = 0
+        self.view.addSubview(blurEffectView!)
+        
+        loadingIndicator.startAnimating()
+        self.view.window!.addSubview(loadingIndicator)
+        
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut, animations: {
+            self.blurEffectView!.alpha = 0.98
+            
+        }, completion: {_ in
+            
+        })
+    }
+    
+    func endAnimateWaiting() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.blurEffectView?.alpha = 0
+            self.loadingIndicator.stopAnimating()
+        }, completion: { _ in
+            self.blurEffectView?.removeFromSuperview()
+            self.loadingIndicator.removeFromSuperview()
+        })
+    }
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
     
     //declare profile picture field

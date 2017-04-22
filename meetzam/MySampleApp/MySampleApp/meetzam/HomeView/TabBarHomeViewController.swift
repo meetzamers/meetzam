@@ -129,18 +129,23 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
-    var times = 0 // delete it
+//    var times = 0 // delete it
+//            if (times == 0) {
+//            }
+//            times += 1
     // display first time view controller
     func popFirstUserViewController() {
         // ======================================================================================================
         // TODO: check if this is new user:
         if (AWSIdentityManager.default().isLoggedIn) {
-            if (times == 0) {
-                let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
-                let viewController = storyboard.instantiateViewController(withIdentifier: "FirstTimeUser")
-                self.present(viewController, animated: false, completion: nil)
+            if let myID = AWSIdentityManager.default().identityId {
+                if (!UserProfileToDB().isUserIDinTable(_userId: myID)) {
+                    print("First Time User")
+                    let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
+                    let viewController = storyboard.instantiateViewController(withIdentifier: "FirstTimeUser")
+                    self.present(viewController, animated: false, completion: nil)
+                }
             }
-            times += 1
         }
     }
     

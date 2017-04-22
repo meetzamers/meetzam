@@ -47,6 +47,34 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         return "userId"
     }
     
+    
+    // Ryan: check first time user ID
+    func isUserIDinTable(_userId: String) -> Bool {
+        let mapper = AWSDynamoDBObjectMapper.default()
+        var result: Bool = false
+        var userIDInTable: Array = [String]()
+        let scanExpression = AWSDynamoDBScanExpression()
+        
+        mapper.scan(UserProfileToDB.self, expression: scanExpression).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            if let error = task.error as NSError? {
+                print("The request failed. Error: \(error)")
+            } else if let allUsers = task.result {
+                for user in allUsers.items as! [UserProfileToDB] {
+                    userIDInTable.append(user.userId!)
+                }
+            }
+            if (userIDInTable.contains(_userId)) {
+                print("found user in the table")
+                result = true
+            }
+            
+            return nil
+        }).waitUntilFinished()
+
+        return result
+    }
+    
+    
     // function to add/update user info into database
     // argument: dbName...
     //JUNPU: fixed busy waiting
