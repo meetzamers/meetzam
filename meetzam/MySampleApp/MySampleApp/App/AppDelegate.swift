@@ -102,6 +102,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let realC = ChatViewController()
         realC.incomingData()
         
+        let mainVC = UIApplication.shared.keyWindow?.rootViewController
+        if mainVC is MainViewController {
+            (mainVC as! MainViewController).viewControllers?[3].tabBarItem.badgeValue = " "
+        }
+        
 //        if let mainVC = UIApplication.shared.keyWindow?.rootViewController {
 //            if mainVC is MainViewController {
 //                if let selectedVC = (mainVC as! MainViewController).selectedViewController {

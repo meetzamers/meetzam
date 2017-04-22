@@ -43,6 +43,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         super.viewDidLoad()
         
         didLoad = true
+        print("didload and start animate")
         self.startAnimateWaiting()
         
         downloadProfileImage()
@@ -127,6 +128,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         super.viewWillAppear(animated)
         
         if (!didLoad) {
+            print("viewAppear and start animate")
             self.startAnimateWaiting()
             
             downloadProfileImage()
@@ -282,6 +284,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     public func endAnimateWaiting() {
+        print("end animate")
+        
         UIView.animate(withDuration: 0.2, animations: {
             self.blurEffectView?.alpha = 0
             self.loadingIndicator.stopAnimating()

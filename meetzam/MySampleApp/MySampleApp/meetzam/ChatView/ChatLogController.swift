@@ -110,7 +110,7 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
             print(err)
         }
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Simulate", style: .plain, target: self, action: #selector(simul))
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Simulate", style: .plain, target: self, action: #selector(simul))
         
         self.tabBarController?.tabBar.isHidden = true
         
@@ -147,20 +147,6 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
     func simul() {
         let cv = ChatViewController()
         cv.incomingData()
-//        let name = "mushroom1313"
-//        let text = "Test Notification"
-//        
-//        let chatvc = ChatViewController()
-//        let frc = chatvc.fetchedResultsController
-//        let chatLogvc = ChatLogController()
-//        
-//        let contactArr = frc.fetchedObjects as? [Contact]
-//        for i_contact in contactArr! {
-//            if (i_contact.name == name) {
-//                print("fond" + name)
-//                chatLogvc.notificationMsg(new_Contact: i_contact, text: text)
-//            }
-//        }
     }
     
     // ============================================================

@@ -168,15 +168,32 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         print("===== getProfileForDisplay =====")
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         let mapper = AWSDynamoDBObjectMapper.default()
-        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask!) -> AnyObject! in
+        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil).continueWith(executor: AWSExecutor.mainThread(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as? NSError {
                 print("Error: \(error)")
             } else if let user_profile = task.result as? UserProfileToDB {
                 displayname.text = user_profile.displayName
                 bio.text = user_profile.bio
                 print("getProfileForDisplay SUCCESS")
+                
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            return nil
+        }).continueWith(block: { (task:AWSTask!) -> AnyObject! in
+            // DO NOT DELETE IT DO NOT DELETE IT DO NOT DELETE IT DO NOT DELETE IT DO NOT DELETE IT
+            if let mainVC = UIApplication.shared.keyWindow?.rootViewController {
+                if mainVC is MainViewController {
+                    if let selectedVC = (mainVC as! MainViewController).selectedViewController {
+                        if selectedVC is UINavigationController {
+                            let finalVC = selectedVC as? UINavigationController
+                            if finalVC?.visibleViewController is ProfileViewController {
+                                (finalVC?.visibleViewController as! ProfileViewController).endAnimateWaiting()
+                            }
+                        }
+                    }
+                }
+            }
+            // DO NOT DELETE IT DO NOT DELETE IT DO NOT DELETE IT DO NOT DELETE IT DO NOT DELETE IT
             return nil
         })
         

@@ -97,18 +97,33 @@ extension ChatViewController {
                 for singleChatRoom in chatRoomList {
                     // DB
                     let contactID = singleChatRoom.recipientId!
-//                    let contactName = UserProfileToDB().getUserProfileByIds(userIDs: [contactID])[0].displayName
-//                    let imagePath_string = UserProfileToDB().downloadUserIcon(userID: contactID).path
+                    let contactName = UserProfileToDB().getUserProfileByIds(userIDs: [contactID])[0].displayName
+                    let imagePath_string = UserProfileToDB().downloadUserIcon(userID: contactID).path
                     let chatRoomID_2 = ChatRoomModel().getChatRoomId(userId: contactID, recipientId: singleChatRoom.userId!)
                     
                     // Local
-//                    let localContact = self.createContactwithName(name: contactName!, profileimageName: imagePath_string, context: context, userID: contactID)
                     let allMessages = ConversationModel().getHistoryRecords(userId_1: singleChatRoom.userId!, _chatRoomId_1: singleChatRoom.chatRoomId!, userId_2: contactID, _chatRoomId_2: chatRoomID_2)
-
+                    
+                    // Update contact
+                    // TODO TODO TODO test this function
+                    let newrequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
+                    newrequest.predicate = NSPredicate(format: "userID = %@", contactID)
+                    newrequest.fetchLimit = 1
+                    do {
+                        let contact = try context.fetch(newrequest) as! [Contact]
+                        if contact.count == 0 {
+                            self.createContactwithName(name: contactName!, profileimageName: imagePath_string, context: context, userID: contactID)
+                        }
+                    } catch let err {
+                        print(err)
+                    }
+                    // TODO TODO TODO test this function
+                    
+                    
+                    // Update new message
                     let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
                     request.predicate = NSPredicate(format: "lastMessage.text == %@", (allMessages.last?.message)!)
                     request.fetchLimit = 1
-                    print(allMessages.last?.message!)
                     
                     do {
                         let fetchResults = try context.fetch(request)
@@ -127,6 +142,13 @@ extension ChatViewController {
                         print(err)
                     }
                 }
+            }
+            
+            // save these data into context(core data)
+            do {
+                try(context.save())
+            } catch let error {
+                print(error)
             }
             
         }

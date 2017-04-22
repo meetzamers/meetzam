@@ -35,7 +35,6 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
                 operation.start()
             }
         }, completion: nil)
-//        { (completed) in }
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
@@ -47,12 +46,16 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
                 self.collectionView?.insertItems(at: [newIndexPath!])
             }))
         }
-        
-        else if type == .move {
+            
+        else if type == .move || type == .update {
             DispatchQueue.main.async {
                 self.collectionView?.performBatchUpdates({
                     self.collectionView?.reloadSections(NSIndexSet(index: 0) as IndexSet)
-                    }, completion: { (finished: Bool) -> Void in
+                }, completion: { (finished: Bool) -> Void in
+//                    if (newIndexPath != nil) {
+//                        let cell = self.collectionView?.cellForItem(at: newIndexPath!) as! MessageCell
+//                        cell.addSubview(cell.badgeView)
+//                    }
                 })
             }
         }
@@ -112,6 +115,12 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
     
     // to chat log (the real chat room)
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let cell = collectionView.cellForItem(at: indexPath) as! MessageCell
+//        if cell.badgeView.alpha == 1 {
+//            print("badge1")
+//            cell.badgeView.alpha = 0
+//        }
+        
         let layout = UICollectionViewFlowLayout()
         let controller = ChatLogController(collectionViewLayout: layout)
         
@@ -137,6 +146,16 @@ class MessageCell: BaseCell {
             backgroundColor = isSelected ? UIColor(white: 0.5, alpha: 0.5) : UIColor.clear
         }
     }
+    
+    let badgeView: UIView = {
+        let view = UIView()
+        view.frame = CGRect(x: 10 - 4, y: 7.5 - 4, width: 16, height: 16)
+        view.layer.cornerRadius = 8
+        view.backgroundColor = UIColor.red
+        view.alpha = 1
+        
+        return view
+    }()
     
     var message: Message? {
         didSet {

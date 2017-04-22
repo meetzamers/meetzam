@@ -86,7 +86,13 @@ class SignInViewController: UIViewController {
                 DispatchQueue.main.async(execute: {
                     // ======================================================================================================
                     // Original dismiss
-                    self.presentingViewController?.dismiss(animated: true, completion: nil)
+                    self.presentingViewController?.dismiss(animated: true, completion: { _ in
+                        let mainVC = UIApplication.shared.keyWindow?.rootViewController
+                        print(mainVC)
+//                        if mainVC is MainViewController {
+//                            (mainVC as! MainViewController).viewControllers?[3].tabBarItem.badgeValue = " "
+//                        }
+                    })
                 })
                 
                 
