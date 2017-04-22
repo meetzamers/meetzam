@@ -19,37 +19,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var profileMainBodyView: UIView!
     
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-    let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.regular)
+    let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
     var blurEffectView: UIVisualEffectView?
     let loadingIndicator = NVActivityIndicatorView(frame: CGRect(x: UIScreen.main.bounds.width/2 - 30, y: UIScreen.main.bounds.height/2 - 30, width: 60, height: 60), type: .ballRotateChase, color: UIColor.darkGray, padding: CGFloat(0))
-    
-    func startAnimateWaiting() {
-        blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView?.frame = UIScreen.main.bounds
-        blurEffectView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        blurEffectView?.alpha = 0
-        self.view.addSubview(blurEffectView!)
-        
-        loadingIndicator.startAnimating()
-        self.view.window!.addSubview(loadingIndicator)
-        
-        UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut, animations: {
-            self.blurEffectView!.alpha = 0.98
-            
-        }, completion: {_ in
-            
-        })
-    }
-    
-    func endAnimateWaiting() {
-        UIView.animate(withDuration: 0.2, animations: {
-            self.blurEffectView?.alpha = 0
-            self.loadingIndicator.stopAnimating()
-        }, completion: { _ in
-            self.blurEffectView?.removeFromSuperview()
-            self.loadingIndicator.removeFromSuperview()
-        })
-    }
+    var didLoad = false
     // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
     
@@ -68,12 +41,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     //************************** VIEW DID LOAD ********************************************//
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        didLoad = true
+        self.startAnimateWaiting()
+        
         downloadProfileImage()
-        /*
-        DispatchQueue.main.async {
-            self.TopThreeMovieCollectionView.reloadData()
-        }
-        */
         UserProfileToDB().getProfileForDisplay(key: AWSIdentityManager.default().identityId!, user_profile: user_profile, displayname: displayName, bio: userBioField)
         
         //======================== formatting background==========================\\
@@ -153,20 +125,27 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     //********************* VIEW WILL APPEAR ***********************************************//
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        downloadProfileImage()
         
-        /* get name and bio from database */
-        UserProfileToDB().getProfileForDisplay(key: AWSIdentityManager.default().identityId!, user_profile: user_profile, displayname: displayName, bio: userBioField)
-        
-        /* format name and bio */
-        displayName.textAlignment = .center
-        userBioField.textAlignment = .center
-        
-        self.profileMainBodyView.addSubview(displayName)
-        self.profileMainBodyView.addSubview(userBioField)
-        
-        DispatchQueue.main.async {
-            self.TopThreeMovieCollectionView.reloadData()
+        if (!didLoad) {
+            self.startAnimateWaiting()
+            
+            downloadProfileImage()
+            /* get name and bio from database */
+            UserProfileToDB().getProfileForDisplay(key: AWSIdentityManager.default().identityId!, user_profile: user_profile, displayname: displayName, bio: userBioField)
+            
+            /* format name and bio */
+            displayName.textAlignment = .center
+            userBioField.textAlignment = .center
+            
+            self.profileMainBodyView.addSubview(displayName)
+            self.profileMainBodyView.addSubview(userBioField)
+            
+            DispatchQueue.main.async {
+                self.TopThreeMovieCollectionView.reloadData()
+            }
+        }
+        else {
+            didLoad = false
         }
         
     }
@@ -282,6 +261,36 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         return false
     }
     
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public func startAnimateWaiting() {
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView?.frame = UIScreen.main.bounds
+        blurEffectView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurEffectView?.alpha = 0
+        
+        blurEffectView?.addSubview(loadingIndicator)
+        self.view.addSubview(blurEffectView!)
+        
+        loadingIndicator.startAnimating()
+        
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut, animations: {
+            self.blurEffectView!.alpha = 0.98
+            
+        }, completion: { _ in
+            
+        })
+    }
+    
+    public func endAnimateWaiting() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.blurEffectView?.alpha = 0
+            self.loadingIndicator.stopAnimating()
+        }, completion: { _ in
+            self.blurEffectView?.removeFromSuperview()
+            self.loadingIndicator.removeFromSuperview()
+        })
+    }
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 }
 
 

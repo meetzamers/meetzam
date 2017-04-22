@@ -13,8 +13,9 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
 
     private let cellID = "cellID"
 //    var messages: [Message]?
+    var setUPtimes = 0
     
-    lazy var fetchedResultsController: NSFetchedResultsController = { () -> NSFetchedResultsController<NSFetchRequestResult> in 
+    lazy var fetchedResultsController: NSFetchedResultsController = { () -> NSFetchedResultsController<NSFetchRequestResult> in
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "Contact")
         fetchRequest.sortDescriptors = [NSSortDescriptor.init(key: "lastMessage.date", ascending: false)]
         fetchRequest.predicate = NSPredicate.init(format: "lastMessage != nil")
@@ -28,21 +29,34 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
     var blockOperations = [BlockOperation]()
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        print("didchange")
         self.collectionView?.performBatchUpdates({
             for operation in self.blockOperations {
                 operation.start()
             }
-        }, completion: { (completed) in
-            
-        })
+        }, completion: nil)
+//        { (completed) in }
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        
+        print("controller")
+        
         if type == .insert {
             blockOperations.append(BlockOperation.init(block: {
                 self.collectionView?.insertItems(at: [newIndexPath!])
             }))
         }
+        
+        else if type == .move {
+            DispatchQueue.main.async {
+                self.collectionView?.performBatchUpdates({
+                    self.collectionView?.reloadSections(NSIndexSet(index: 0) as IndexSet)
+                    }, completion: { (finished: Bool) -> Void in
+                })
+            }
+        }
+        
     }
     
     override func viewDidLoad() {
@@ -62,6 +76,8 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        print("Chat will Appear")
+        
         self.tabBarController?.tabBar.isHidden = false
         
         self.collectionView?.reloadData()

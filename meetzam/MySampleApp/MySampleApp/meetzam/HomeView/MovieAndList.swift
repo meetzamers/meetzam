@@ -160,13 +160,13 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
-        })
+        }).waitUntilFinished()
         
-        var fakenode0 = 0
-        while (userProfile?.displayName==nil)
-        {
-            fakenode0 = 1
-        }
+//        var fakenode0 = 0
+//        while (userProfile?.displayName==nil)
+//        {
+//            fakenode0 = 1
+//        }
         
         var MoviesPosterURL:Array = [String]()
         var dummynum: Int = 0
@@ -182,13 +182,13 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 dummynum = 6
                 return nil
-            })
+            }).waitUntilFinished()
             
-            var fakenode1 = 0
-            while (dummynum != 6)
-            {
-                fakenode1 = 1
-            }
+//            var fakenode1 = 0
+//            while (dummynum != 6)
+//            {
+//                fakenode1 = 1
+//            }
         }
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
@@ -219,13 +219,13 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
-        })
+        }).waitUntilFinished()
         
-        var fakenode0 = 0
-        while (userProfile?.displayName==nil)
-        {
-            fakenode0 = 1
-        }
+//        var fakenode0 = 0
+//        while (userProfile?.displayName==nil)
+//        {
+//            fakenode0 = 1
+//        }
         
         var currentLikedMoviesArr:Array = [SingleMovie]()
         var dummynum: Int = 0
@@ -241,13 +241,13 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 dummynum = 6
                 return nil
-            })
+            }).waitUntilFinished()
             
-            var fakenode1 = 0
-            while (dummynum != 6)
-            {
-                fakenode1 = 1
-            }
+//            var fakenode1 = 0
+//            while (dummynum != 6)
+//            {
+//                fakenode1 = 1
+//            }
         }
         
 
@@ -277,13 +277,13 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
-        })
+        }).waitUntilFinished()
         
-        var fakenode0 = 0
-        while (dummynum != 6)
-        {
-            fakenode0 = 1
-        }
+//        var fakenode0 = 0
+//        while (dummynum != 6)
+//        {
+//            fakenode0 = 1
+//        }
         if (currentMovieTitles.contains(title))
         {
             result = true

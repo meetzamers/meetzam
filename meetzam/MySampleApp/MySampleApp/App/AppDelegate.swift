@@ -30,11 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // change nav bar color
         navigationBarAppearace.tintColor = UIColor.init(red: 252/255, green: 252/255, blue: 252/255, alpha: 1)
         
-        // 1. Light orange
-        //navigationBarAppearace.barTintColor = UIColor.init(red: 253/255, green: 115/255, blue: 24/255, alpha: 1)
-        // 3. Dark orange 2
-        //navigationBarAppearace.barTintColor = UIColor.init(red: 254/255, green: 84/255, blue: 48/255, alpha: 1)
-        // 4. Gulf orange
+        // Gulf orange
         navigationBarAppearace.barTintColor = UIColor.init(red: 242/255, green: 92/255, blue: 0/255, alpha: 1)
         
         // change bar to translucent
@@ -98,37 +94,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         AWSMobileClient.sharedInstance.application(application, didReceiveRemoteNotification: userInfo , fetchCompletionHandler: completionHandler)
+        
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
+        let realC = ChatViewController()
+        realC.incomingData()
+        
+//        if let mainVC = UIApplication.shared.keyWindow?.rootViewController {
+//            if mainVC is MainViewController {
+//                if let selectedVC = (mainVC as! MainViewController).selectedViewController {
+//                    if selectedVC is UINavigationController {
+//                        let finalVC = selectedVC as? UINavigationController
+//                        if finalVC?.visibleViewController is ChatViewController {
+//                            (finalVC?.visibleViewController as! ChatViewController).viewWillAppear(true)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+        
+        
+//        if let mainVC = UIApplication.shared.keyWindow?.rootViewController {
+//            if mainVC is MainViewController {
+//                if let selectedVC = (mainVC as! MainViewController).selectedViewController {
+//                    if selectedVC is UINavigationController {
+//                        let finalVC = selectedVC as? UINavigationController
+//                        if finalVC?.visibleViewController is ChatLogController {
+////                            (finalVC?.visibleViewController as? ChatLogController)?.notificationMsg(new_Contact: , text: text)
+//                        }
+//                        else if finalVC?.visibleViewController is ChatViewController {
+//                            (finalVC?.visibleViewController as! ChatViewController).viewWillAppear(true)
+//                        }
+//                    }
+//                }
+//            }
+//        }
+        
         completionHandler(UNNotificationPresentationOptions.alert)
-    }
-    
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        // pull out the buried userInfo dictionary
-        let userInfo = response.notification.request.content.userInfo
-        
-        if let customData = userInfo["customData"] as? String {
-            print("Custom data received: \(customData)")
-            
-            switch response.actionIdentifier {
-            case UNNotificationDefaultActionIdentifier:
-                // the user swiped to unlock
-                print("Default identifier")
-                
-            case "show":
-                // the user tapped our "show more info…" button
-                print("Show more information…")
-                break
-                
-            default:
-                break
-            }
-        }
-        
-        // you must call the completion handler when you're done
-        completionHandler()
     }
     
     // =======================================================================

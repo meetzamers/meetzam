@@ -70,12 +70,12 @@ class ConversationModel: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             print("get requested conversations: SUCCESS")
             dummynum = 6
             return nil
-        })
-        var waiting: Int = 0
-        while (dummynum != 6)
-        {
-            waiting = 1
-        }
+        }).waitUntilFinished()
+//        var waiting: Int = 0
+//        while (dummynum != 6)
+//        {
+//            waiting = 1
+//        }
         for item in conversationArray
         {
             print("the conversation by given key has # \(String(describing: item.conversationId))")

@@ -50,6 +50,8 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     
     // Ryan: check first time user ID
     func isUserIDinTable(_userId: String) -> Bool {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
         let mapper = AWSDynamoDBObjectMapper.default()
         var result: Bool = false
         var userIDInTable: Array = [String]()
@@ -71,6 +73,7 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             return nil
         }).waitUntilFinished()
 
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         return result
     }
     
@@ -200,7 +203,21 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 //print(bio.text)
                 print("SUCCESS")
             }
+            return nil
             
+        }).continueWith(block: { _ in
+            if let mainVC = UIApplication.shared.keyWindow?.rootViewController {
+                if mainVC is MainViewController {
+                    if let selectedVC = (mainVC as! MainViewController).selectedViewController {
+                        if selectedVC is UINavigationController {
+                            let finalVC = selectedVC as? UINavigationController
+                            if finalVC?.visibleViewController is ProfileViewController {
+                                (finalVC?.visibleViewController as! ProfileViewController).endAnimateWaiting()
+                            }
+                        }
+                    }
+                }
+            }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
         })
@@ -398,13 +415,13 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 userProfile?.displayName=user_profile_addTo.displayName
             }
             return nil
-        })
+        }).waitUntilFinished()
         
-        waiting = 0
-        while (userProfile?.displayName == nil)
-        {
-            waiting = 1
-        }
+//        waiting = 0
+//        while (userProfile?.displayName == nil)
+//        {
+//            waiting = 1
+//        }
 
         print("     next step")
         var matchedUserIDs: Array = [String]()
@@ -429,11 +446,11 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 }
                 dummynum = 6
                 return nil
-            })
-            while (dummynum != 6)
-            {
-                waiting = 1
-            }
+            }).waitUntilFinished()
+//            while (dummynum != 6)
+//            {
+//                waiting = 1
+//            }
         }
         print("getPotentialUserIDs SUCCESS")
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
@@ -487,12 +504,12 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 dummynum = 6
                 return nil
-            })
-            var waiting = 0
-            while (dummynum != 6)
-            {
-                waiting = 1
-            }
+            }).waitUntilFinished()
+//            var waiting = 0
+//            while (dummynum != 6)
+//            {
+//                waiting = 1
+//            }
         }
         print("getUserProfileByIds SUCCESS")
         return matchedUserProfiles
@@ -519,12 +536,12 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             }
             dummynum = 6
             return nil
-        })
-        var wait = 0
-        while (dummynum != 6)
-        {
-            wait = 1
-        }
+        }).waitUntilFinished()
+//        var wait = 0
+//        while (dummynum != 6)
+//        {
+//            wait = 1
+//        }
         return allUserIDs
     }
     
@@ -579,13 +596,13 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             }
             dummynum = 6
             return nil
-        })
+        }).waitUntilFinished()
         
-        var waiting = 0
-        while (dummynum != 6)
-        {
-            waiting = 1
-        }
+//        var waiting = 0
+//        while (dummynum != 6)
+//        {
+//            waiting = 1
+//        }
         
 
 //        print("SHOULD BE AFTER LOAD: displayname is \(userProfile?.displayName)")
@@ -624,13 +641,13 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
 
             dummynum = 6
             return nil
-        })
+        }).waitUntilFinished()
         
-        var waiting = 0
-        while (dummynum == 0)
-        {
-            waiting = 1
-        }
+//        var waiting = 0
+//        while (dummynum == 0)
+//        {
+//            waiting = 1
+//        }
         for user in likedUserArr
         {
             likedUserIDs.append(user)
@@ -661,13 +678,13 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             
             dummynum = 6
             return nil
-        })
+        }).waitUntilFinished()
         
-        var waiting = 0
-        while (dummynum == 0)
-        {
-            waiting = 1
-        }
+//        var waiting = 0
+//        while (dummynum == 0)
+//        {
+//            waiting = 1
+//        }
         for user in matchedUserArr
         {
             matchedUserIDs.append(user)
@@ -703,13 +720,13 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             dummynum = 6
             return nil
-        })
+        }).waitUntilFinished()
         
-        var waiting = 0
-        while (dummynum == 0)
-        {
-            waiting = 1
-        }
+//        var waiting = 0
+//        while (dummynum == 0)
+//        {
+//            waiting = 1
+//        }
         print("findIsMatched SUCCESS. result = \(result)")
         return result
     }

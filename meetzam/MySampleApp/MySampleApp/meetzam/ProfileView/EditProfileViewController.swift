@@ -145,10 +145,10 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             }
             dummy = 6
             return nil
-        })
-        while (dummy != 6) {
-            waiting = 1
-        }
+        }).waitUntilFinished()
+//        while (dummy != 6) {
+//            waiting = 1
+//        }
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
     }

@@ -78,12 +78,12 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             dummynum2 = 7
             return nil
-        })
-        var waiting = 0
-        while (dummynum != 6 || dummynum2 != 7)
-        {
-            waiting = 1
-        }
+        }).waitUntilFinished()
+//        var waiting = 0
+//        while (dummynum != 6 || dummynum2 != 7)
+//        {
+//            waiting = 1
+//        }
         
     }
     /*
@@ -140,12 +140,12 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             dummynum = 6
             print("get list of chatroom: SUCCESS")
             return nil
-        })
-        var waiting = 0
-        while (dummynum != 6)
-        {
-            waiting = 1
-        }
+        }).waitUntilFinished()
+//        var waiting = 0
+//        while (dummynum != 6)
+//        {
+//            waiting = 1
+//        }
         //print(roomList.description)
         print("got \(roomList.count) chatrooms")
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
@@ -184,12 +184,12 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             dummynum = 6
             print("get list of chatroom: SUCCESS")
             return nil
-        })
-        var waiting = 0
-        while (dummynum != 6)
-        {
-            waiting = 1
-        }
+        }).waitUntilFinished()
+//        var waiting = 0
+//        while (dummynum != 6)
+//        {
+//            waiting = 1
+//        }
         //print(roomList.description)
         print("got \(roomList.count) chatrooms")
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
@@ -217,12 +217,12 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             dummynum = 6
             return nil
-        })
-        var waiting = 0
-        while (dummynum != 6)
-        {
-            waiting = 1
-        }
+        }).waitUntilFinished()
+//        var waiting = 0
+//        while (dummynum != 6)
+//        {
+//            waiting = 1
+//        }
         print("getting room \(getted_chatroom?.chatRoomId ?? "no Room") of user \(getted_chatroom?.userId ?? "no ID")")
         return getted_chatroom!
         
@@ -267,12 +267,12 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             dummynum = 6
             print("get list of chatroom: SUCCESS")
             return nil
-        })
-        var waiting = 0
-        while (dummynum != 6)
-        {
-            waiting = 1
-        }
+        }).waitUntilFinished()
+//        var waiting = 0
+//        while (dummynum != 6)
+//        {
+//            waiting = 1
+//        }
         //print(roomList.description)
         print("got \(roomList.count) chatrooms")
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
