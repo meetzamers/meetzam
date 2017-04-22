@@ -31,14 +31,13 @@ class HistoryMovie: AWSDynamoDBObjectModel, AWSDynamoDBModeling
         return "title"
     }
     
-    //JUNPU: async dependency in the code, busy waiting still exist
+    //JUNPU: fixed
     func getAllHistoryMovieTitles() -> [String]
     {
         print("===== getAllHistoryMovies =====")
         var historyMovieTitles: Array = [String]()
         let mapper = AWSDynamoDBObjectMapper.default()
         let scanExpression = AWSDynamoDBScanExpression()
-        var dummynum: Int = 0
         
         mapper.scan(HistoryMovie.self, expression: scanExpression).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as? NSError {
@@ -47,30 +46,20 @@ class HistoryMovie: AWSDynamoDBObjectModel, AWSDynamoDBModeling
                 for history_movie in allHistoryMovies.items as! [HistoryMovie] {
                     historyMovieTitles.append(history_movie.title)
                 }
-                dummynum = 6
             }
             return nil
-        })
-        
-        
-        var waiting = 0
-        while (dummynum != 6)
-        {
-            waiting = 1
-        }
+        }).waitUntilFinished()
+        print("getAllHistoryMovies SUCCESS")
         return historyMovieTitles
     }
     
-    //JUNPU: async dependency in the code, busy waiting still exist
+    //JUNPU: fixed
     func getAllLikedMovieTitles(userID: String) -> [String]
     {
         print("===== getAllLikedMovieTitles =====")
         let mapper = AWSDynamoDBObjectMapper.default()
         var currentLikedMovie = Set<String>()
         let userProfile = UserProfileToDB()
-        var dummynum: Int = 0
-        
-        print("     before load!!")
         mapper.load(UserProfileToDB.self, hashKey: userID, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as? NSError {
                 print("InsertError: \(error)")
@@ -81,35 +70,28 @@ class HistoryMovie: AWSDynamoDBObjectModel, AWSDynamoDBModeling
                 else {
                     currentLikedMovie=user_profile_addTo.currentLikedMovie
                 }
-                dummynum = 6
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
-        })
-        
-        
-        var waiting = 0
-        while (dummynum != 6)
-        {
-            waiting = 1
-        }
+        }).waitUntilFinished()
+
         var allLikedMovieTitles: Array = [String]()
         for movie in currentLikedMovie
         {
             allLikedMovieTitles.append(movie)
         }
+        print("getAllLikedMovieTitles SUCCESS")
         return allLikedMovieTitles
     }
     
     
-    //JUNPU: async dependency in the code, busy waiting still exist
+    //JUNPU: fixed
     func userLikedHistoryMovies(_userID: String) -> [HistoryMovie]
     {
         print("===== userLikedHistoryMovies =====")
         var historyTitles: Array = [String]()
         var historyResult: Array = [HistoryMovie]()
         let mapper = AWSDynamoDBObjectMapper.default()
-        var dummynum: Int = 0
         let all_history_titles = HistoryMovie().getAllHistoryMovieTitles()
         let all_liked_titles = HistoryMovie().getAllLikedMovieTitles(userID: _userID)
         for movie_title in all_liked_titles
@@ -121,7 +103,6 @@ class HistoryMovie: AWSDynamoDBObjectModel, AWSDynamoDBModeling
         }
         for history_title in historyTitles
         {
-            dummynum = 0
             mapper.load(HistoryMovie.self, hashKey: history_title, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
                 if let error = task.error as? NSError {
                     print("InsertError: \(error)")
@@ -129,16 +110,11 @@ class HistoryMovie: AWSDynamoDBObjectModel, AWSDynamoDBModeling
                     historyResult.append(history_movie)
                 }
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                dummynum = 6
                 return nil
-            })
-            
-            var waiting = 0
-            while (dummynum != 6)
-            {
-                waiting = 1
-            }
+            }).waitUntilFinished()
+
         }
+        print("userLikedHistoryMovies SUCCESS")
         return historyResult
     }
 }
