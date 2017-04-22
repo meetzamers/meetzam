@@ -50,6 +50,8 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
     
     // Ryan: check first time user ID
     func isUserIDinTable(_userId: String) -> Bool {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
         let mapper = AWSDynamoDBObjectMapper.default()
         var result: Bool = false
         var userIDInTable: Array = [String]()

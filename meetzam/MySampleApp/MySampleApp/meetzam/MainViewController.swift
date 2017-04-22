@@ -13,6 +13,16 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
+        
+        // preload Chat
+        self.viewControllers?.forEach {
+            if $0 is NaviViewController {
+                let navVC = $0 as! NaviViewController
+                if navVC.topViewController is ChatViewController {
+                    navVC.topViewController?.view
+                }
+            }
+        }
     }
     
     // Tab bar style
