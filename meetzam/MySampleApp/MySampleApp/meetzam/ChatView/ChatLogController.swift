@@ -13,18 +13,18 @@ import AWSMobileHubHelper
 class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {
     
     private let cellID = "cellID"
+    
     // ============================================================
     var contact: Contact? {
         didSet {
             navigationItem.title = contact?.name
-            
         }
     }
     
     // ============================================================
     // input views
     var bottomConstraint: NSLayoutConstraint?
-    var keyboardHeight: CGFloat?
+    var keyboardHeight: CGFloat = 0
     
     lazy var fetchResultController: NSFetchedResultsController = { () -> NSFetchedResultsController<NSFetchRequestResult> in
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "Message")
@@ -54,9 +54,9 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
             cell.textBubbleTail.alpha = 0
             
             let contentH = (self.collectionView?.contentSize.height)!
-            let orgH = (self.collectionView?.frame.size.height)! - self.keyboardHeight! - 110
+            let orgH = (self.collectionView?.frame.size.height)! - self.keyboardHeight - 110
             if (contentH > orgH) {
-                self.collectionView?.setContentOffset(CGPoint(x: CGFloat(0), y: CGFloat((self.collectionView?.contentSize.height)! - (self.collectionView?.frame.size.height)! + self.keyboardHeight!) + 46), animated: true)
+                self.collectionView?.setContentOffset(CGPoint(x: CGFloat(0), y: CGFloat((self.collectionView?.contentSize.height)! - (self.collectionView?.frame.size.height)! + self.keyboardHeight) + 46), animated: true)
             }
             else {
                 self.collectionView?.scrollToItem(at: indexPath, at: .bottom, animated: true)
@@ -111,6 +111,8 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
             print(err)
         }
         
+//        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Simulate", style: .plain, target: self, action: #selector(simul))
+        
         self.tabBarController?.tabBar.isHidden = true
         
         collectionView?.backgroundColor = UIColor.init(red: 242/255, green: 240/255, blue: 234/255, alpha: 1)
@@ -129,6 +131,44 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard)))
         
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = true
+        
+        // auto go bottom
+        let lastItem = (self.fetchResultController.sections?[0].numberOfObjects)! - 1
+        let indexPath = IndexPath.init(row: lastItem, section: 0)
+        
+        let contentH = (self.collectionView?.contentSize.height)!
+        let orgH = (self.collectionView?.frame.size.height)! - 110
+        if (contentH > orgH) {
+            self.collectionView?.setContentOffset(CGPoint(x: CGFloat(0), y: CGFloat((self.collectionView?.contentSize.height)! - (self.collectionView?.frame.size.height)!) + 46), animated: true)
+        }
+        else {
+            self.collectionView?.scrollToItem(at: indexPath, at: .bottom, animated: true)
+        }
+        
+    }
+    
+    
+    func notificationMsg(new_Contact: Contact, text: String) {
+        let delegate = UIApplication.shared.delegate as? AppDelegate
+        let context = delegate?.persistentContainer.viewContext
+        
+        ChatViewController.createMessagewithText(text: text, contact: new_Contact, minutesAgo: Date.init(timeIntervalSinceNow: 0), context: context!)
+        
+        do {
+            try context?.save()
+        } catch let err {
+            print(err)
+        }
+    }
+    
+    func simul() {
+        let cv = ChatViewController()
+        cv.incomingData()
+    }
+    
     // ============================================================
     // view helper functions
     func handleSend() {

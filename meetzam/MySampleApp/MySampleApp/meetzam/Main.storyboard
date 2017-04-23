@@ -79,7 +79,7 @@
         <!--Contact Profile-->
         <scene sceneID="Zmc-6q-tPT">
             <objects>
-                <viewController id="WTO-Za-ess" customClass="ContactProfile" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="WTO-Za-ess" customClass="ContactProfile" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qGG-OK-IqN"/>
                         <viewControllerLayoutGuide type="bottom" id="sIL-iB-w8t"/>

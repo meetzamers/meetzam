@@ -37,11 +37,8 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         // Let self be the delegate and dataSource
-        print("wiew did load")
-        
         self.delegate = self
         self.dataSource = self
-        
         
         AWSLogger.default().logLevel = .none
         
@@ -51,13 +48,11 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         }
         
         // change background color to grey
-        //        view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
         view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
         
         let frameVC = movieView
         let viewControllers = [frameVC]
         
-        // let viewControllers = [movieView]
         setViewControllers(viewControllers, direction: .forward, animated: true, completion: nil)
         
         // ============================================
@@ -129,18 +124,19 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
-    var times = 0 // delete it
     // display first time view controller
     func popFirstUserViewController() {
         // ======================================================================================================
         // TODO: check if this is new user:
         if (AWSIdentityManager.default().isLoggedIn) {
-            if (times == 0) {
-                let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
-                let viewController = storyboard.instantiateViewController(withIdentifier: "FirstTimeUser")
-                self.present(viewController, animated: false, completion: nil)
+            if let myID = AWSIdentityManager.default().identityId {
+                if (!UserProfileToDB().isUserIDinTable(_userId: myID)) {
+                    print("First Time User")
+                    let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
+                    let viewController = storyboard.instantiateViewController(withIdentifier: "FirstTimeUser")
+                    self.present(viewController, animated: false, completion: nil)
+                }
             }
-            times += 1
         }
     }
     

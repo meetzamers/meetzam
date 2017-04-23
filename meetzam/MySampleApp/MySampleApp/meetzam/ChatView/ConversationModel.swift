@@ -53,7 +53,6 @@ class ConversationModel: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         let mapper = AWSDynamoDBObjectMapper.default()
         let queryExpression = AWSDynamoDBScanExpression()
         var conversationArray: Array = [ConversationModel]()
-        var dummynum: Int = 0
         queryExpression.filterExpression = "userId = :userId AND chatRoomId = :chatRoomId"
         queryExpression.expressionAttributeValues = [":userId": userId, ":chatRoomId": chatRoomId]
         
@@ -68,14 +67,8 @@ class ConversationModel: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
                 print("Error: \(error)")
             }
             print("get requested conversations: SUCCESS")
-            dummynum = 6
             return nil
-        })
-        var waiting: Int = 0
-        while (dummynum != 6)
-        {
-            waiting = 1
-        }
+        }).waitUntilFinished()
         for item in conversationArray
         {
             print("the conversation by given key has # \(String(describing: item.conversationId))")

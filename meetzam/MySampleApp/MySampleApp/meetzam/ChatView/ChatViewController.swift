@@ -12,9 +12,10 @@ import CoreData
 class ChatViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {
 
     private let cellID = "cellID"
+    var didSelectContactNameFromContact = ""
 //    var messages: [Message]?
     
-    lazy var fetchedResultsController: NSFetchedResultsController = { () -> NSFetchedResultsController<NSFetchRequestResult> in 
+    lazy var fetchedResultsController: NSFetchedResultsController = { () -> NSFetchedResultsController<NSFetchRequestResult> in
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "Contact")
         fetchRequest.sortDescriptors = [NSSortDescriptor.init(key: "lastMessage.date", ascending: false)]
         fetchRequest.predicate = NSPredicate.init(format: "lastMessage != nil")
@@ -28,21 +29,37 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
     var blockOperations = [BlockOperation]()
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        print("didchange")
         self.collectionView?.performBatchUpdates({
             for operation in self.blockOperations {
                 operation.start()
             }
-        }, completion: { (completed) in
-            
-        })
+        }, completion: nil)
     }
     
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        
+        print("controller")
+        
         if type == .insert {
             blockOperations.append(BlockOperation.init(block: {
                 self.collectionView?.insertItems(at: [newIndexPath!])
             }))
         }
+            
+        else if type == .move || type == .update {
+            DispatchQueue.main.async {
+                self.collectionView?.performBatchUpdates({
+                    self.collectionView?.reloadSections(NSIndexSet(index: 0) as IndexSet)
+                }, completion: { (finished: Bool) -> Void in
+//                    if (newIndexPath != nil) {
+//                        let cell = self.collectionView?.cellForItem(at: newIndexPath!) as! MessageCell
+//                        cell.addSubview(cell.badgeView)
+//                    }
+                })
+            }
+        }
+        
     }
     
     override func viewDidLoad() {
@@ -62,11 +79,33 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        print("Chat will Appear")
         self.tabBarController?.tabBar.isHidden = false
         
         self.collectionView?.reloadData()
+        
+        print("didSelectContactNameFromContact")
+        print(didSelectContactNameFromContact)
+        
+        if didSelectContactNameFromContact != "" {
+            let col = self.collectionView
+            col?.layoutIfNeeded()
+            let pathArr = col?.indexPathsForVisibleItems
+            for path in pathArr! {
+                let name = (col?.cellForItem(at: path) as! MessageCell).contactNameLabel.text
+                if name == didSelectContactNameFromContact {
+                    // Thread safety :)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
+                        self.didSelectContactNameFromContact = ""
+                        self.collectionView(col!, didSelectItemAt: path)
+                    })
+                }
+            }
+        }
     }
-    
+
     // return number of sections in this collection view
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let count = fetchedResultsController.sections?[section].numberOfObjects {
@@ -96,6 +135,11 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
     
     // to chat log (the real chat room)
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let cell = collectionView.cellForItem(at: indexPath) as! MessageCell
+//        if cell.badgeView.alpha == 1 {
+//            print("badge1")
+//            cell.badgeView.alpha = 0
+//        }
         let layout = UICollectionViewFlowLayout()
         let controller = ChatLogController(collectionViewLayout: layout)
         
@@ -121,6 +165,16 @@ class MessageCell: BaseCell {
             backgroundColor = isSelected ? UIColor(white: 0.5, alpha: 0.5) : UIColor.clear
         }
     }
+    
+//    let badgeView: UIView = {
+//        let view = UIView()
+//        view.frame = CGRect(x: 10 - 4, y: 7.5 - 4, width: 16, height: 16)
+//        view.layer.cornerRadius = 8
+//        view.backgroundColor = UIColor.red
+//        view.alpha = 1
+//        
+//        return view
+//    }()
     
     var message: Message? {
         didSet {

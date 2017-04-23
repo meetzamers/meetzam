@@ -7,12 +7,28 @@
 //
 
 import UIKit
+import AWSMobileHubHelper
+import NVActivityIndicatorView
 
 class MainViewController: UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
+        
+        // preload chat
+        if AWSIdentityManager.default().isLoggedIn {
+            self.viewControllers?.forEach {
+                if $0 is NaviViewController {
+                    let navVC = $0 as! NaviViewController
+                    if navVC.topViewController is ChatViewController {
+                        navVC.topViewController?.view
+                        
+                    }
+                }
+            }
+        }
+        
     }
     
     // Tab bar style
@@ -37,7 +53,7 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
     //sean:
     func setBadge() {
         //tab bar, chat icon, set badge value(for notification of new match)
-        self.tabBar.items?[3].badgeValue = "·"
+        self.tabBar.items?[3].badgeValue = " "
     }
     
     // tap match pop up.
@@ -54,6 +70,10 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
             self.present(viewController, animated: true, completion: nil)
             
             return false
+        }
+        
+        if (toIndex == 3) {
+            self.tabBar.items?[3].badgeValue = nil
         }
         
         return true
