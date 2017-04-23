@@ -13,6 +13,7 @@ import AWSMobileHubHelper
 class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {
     
     private let cellID = "cellID"
+    
     // ============================================================
     var contact: Contact? {
         didSet {
@@ -130,6 +131,25 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
         view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard)))
         
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = true
+        
+        // auto go bottom
+        let lastItem = (self.fetchResultController.sections?[0].numberOfObjects)! - 1
+        let indexPath = IndexPath.init(row: lastItem, section: 0)
+        
+        let contentH = (self.collectionView?.contentSize.height)!
+        let orgH = (self.collectionView?.frame.size.height)! - 110
+        if (contentH > orgH) {
+            self.collectionView?.setContentOffset(CGPoint(x: CGFloat(0), y: CGFloat((self.collectionView?.contentSize.height)! - (self.collectionView?.frame.size.height)!) + 46), animated: true)
+        }
+        else {
+            self.collectionView?.scrollToItem(at: indexPath, at: .bottom, animated: true)
+        }
+        
+    }
+    
     
     func notificationMsg(new_Contact: Contact, text: String) {
         let delegate = UIApplication.shared.delegate as? AppDelegate

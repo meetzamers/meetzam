@@ -129,10 +129,6 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
-//    var times = 0 // delete it
-//            if (times == 0) {
-//            }
-//            times += 1
     // display first time view controller
     func popFirstUserViewController() {
         // ======================================================================================================

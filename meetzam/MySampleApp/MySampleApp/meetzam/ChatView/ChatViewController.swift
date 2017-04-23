@@ -13,7 +13,6 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
 
     private let cellID = "cellID"
 //    var messages: [Message]?
-    var setUPtimes = 0
     
     lazy var fetchedResultsController: NSFetchedResultsController = { () -> NSFetchedResultsController<NSFetchRequestResult> in
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "Contact")
@@ -81,6 +80,14 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
     override func viewWillAppear(_ animated: Bool) {
         print("Chat will Appear")
         
+//        // background recived notification then refresh data
+//        if UIApplication.shared.applicationIconBadgeNumber > 0 {
+//            DispatchQueue.main.async {
+//                self.incomingData()
+//            }
+//            UIApplication.shared.applicationIconBadgeNumber = 0
+//        }
+        
         self.tabBarController?.tabBar.isHidden = false
         
         self.collectionView?.reloadData()
@@ -147,15 +154,15 @@ class MessageCell: BaseCell {
         }
     }
     
-    let badgeView: UIView = {
-        let view = UIView()
-        view.frame = CGRect(x: 10 - 4, y: 7.5 - 4, width: 16, height: 16)
-        view.layer.cornerRadius = 8
-        view.backgroundColor = UIColor.red
-        view.alpha = 1
-        
-        return view
-    }()
+//    let badgeView: UIView = {
+//        let view = UIView()
+//        view.frame = CGRect(x: 10 - 4, y: 7.5 - 4, width: 16, height: 16)
+//        view.layer.cornerRadius = 8
+//        view.backgroundColor = UIColor.red
+//        view.alpha = 1
+//        
+//        return view
+//    }()
     
     var message: Message? {
         didSet {

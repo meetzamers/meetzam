@@ -894,10 +894,10 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
             }
             dummy = 6
             return nil
-        })
-        while (dummy != 6) {
-            waiting = 1
-        }
+        }).waitUntilFinished()
+//        while (dummy != 6) {
+//            waiting = 1
+//        }
         
         UIView.animate(withDuration: 0.2, animations: {
             self.blurEffectView?.alpha = 0

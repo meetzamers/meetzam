@@ -44,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         center.delegate = self
         center.requestAuthorization(options: [.alert, .sound]) { (granted, error) in
             // Enable or disable features based on authorization.
+            
         }
         
         // ====================================
@@ -64,12 +65,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
     }
     
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         AWSMobileClient.sharedInstance.applicationDidBecomeActive(application)
+        
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
@@ -79,8 +82,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
         
-        // Clear the badge icon when you open the app.
-        UIApplication.shared.applicationIconBadgeNumber = 0
+        if UIApplication.shared.applicationIconBadgeNumber > 0 {
+            let realC = ChatViewController()
+            DispatchQueue.main.async {
+                realC.incomingData()
+            }
+            
+            let mainVC = UIApplication.shared.keyWindow?.rootViewController
+            if mainVC is MainViewController {
+                (mainVC as! MainViewController).viewControllers?[3].tabBarItem.badgeValue = " "
+            }
+            UIApplication.shared.applicationIconBadgeNumber = 0
+        }
+        
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
@@ -98,7 +112,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        
         let realC = ChatViewController()
         realC.incomingData()
         
@@ -106,6 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if mainVC is MainViewController {
             (mainVC as! MainViewController).viewControllers?[3].tabBarItem.badgeValue = " "
         }
+//        completionHandler(UNNotificationPresentationOptions.badge)
         
 //        if let mainVC = UIApplication.shared.keyWindow?.rootViewController {
 //            if mainVC is MainViewController {
@@ -136,8 +150,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //                }
 //            }
 //        }
-        
-        completionHandler(UNNotificationPresentationOptions.alert)
     }
     
     // =======================================================================

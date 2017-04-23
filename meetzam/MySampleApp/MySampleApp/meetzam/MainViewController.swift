@@ -22,6 +22,7 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
                     let navVC = $0 as! NaviViewController
                     if navVC.topViewController is ChatViewController {
                         navVC.topViewController?.view
+                        
                     }
                 }
             }

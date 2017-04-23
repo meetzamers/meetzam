@@ -64,6 +64,9 @@ class ContactProfile: UIViewController {
         self.mainView.addSubview(moviePic2)
         self.mainView.addSubview(moviePic3)
         self.mainView.addSubview(moviePic4)
+        
+        // Go Chat button
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Simulate", image: UIImage.init(named: "Chat"), style: .plain, target: self, action: #selector(simul))
 
     }
 
