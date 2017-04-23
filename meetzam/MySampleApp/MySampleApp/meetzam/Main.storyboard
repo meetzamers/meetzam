@@ -79,7 +79,7 @@
         <!--Contact Profile-->
         <scene sceneID="Zmc-6q-tPT">
             <objects>
-                <viewController id="WTO-Za-ess" customClass="ContactProfile" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="WTO-Za-ess" customClass="ContactProfile" customModule="MySampleApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qGG-OK-IqN"/>
                         <viewControllerLayoutGuide type="bottom" id="sIL-iB-w8t"/>
@@ -712,7 +712,7 @@
                         <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
                     </tabBarItem>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="joM-tj-XfO">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="joM-tj-XfO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

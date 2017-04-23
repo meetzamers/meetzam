@@ -37,11 +37,8 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         // Let self be the delegate and dataSource
-        print("wiew did load")
-        
         self.delegate = self
         self.dataSource = self
-        
         
         AWSLogger.default().logLevel = .none
         
@@ -51,13 +48,11 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         }
         
         // change background color to grey
-        //        view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
         view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
         
         let frameVC = movieView
         let viewControllers = [frameVC]
         
-        // let viewControllers = [movieView]
         setViewControllers(viewControllers, direction: .forward, animated: true, completion: nil)
         
         // ============================================

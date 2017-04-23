@@ -12,6 +12,7 @@ import CoreData
 class ChatViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {
 
     private let cellID = "cellID"
+    var didSelectContactNameFromContact = ""
 //    var messages: [Message]?
     
     lazy var fetchedResultsController: NSFetchedResultsController = { () -> NSFetchedResultsController<NSFetchRequestResult> in
@@ -78,21 +79,33 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         print("Chat will Appear")
-        
-//        // background recived notification then refresh data
-//        if UIApplication.shared.applicationIconBadgeNumber > 0 {
-//            DispatchQueue.main.async {
-//                self.incomingData()
-//            }
-//            UIApplication.shared.applicationIconBadgeNumber = 0
-//        }
-        
         self.tabBarController?.tabBar.isHidden = false
         
         self.collectionView?.reloadData()
+        
+        print("didSelectContactNameFromContact")
+        print(didSelectContactNameFromContact)
+        
+        if didSelectContactNameFromContact != "" {
+            let col = self.collectionView
+            col?.layoutIfNeeded()
+            let pathArr = col?.indexPathsForVisibleItems
+            for path in pathArr! {
+                let name = (col?.cellForItem(at: path) as! MessageCell).contactNameLabel.text
+                if name == didSelectContactNameFromContact {
+                    // Thread safety :)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
+                        self.didSelectContactNameFromContact = ""
+                        self.collectionView(col!, didSelectItemAt: path)
+                    })
+                }
+            }
+        }
     }
-    
+
     // return number of sections in this collection view
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let count = fetchedResultsController.sections?[section].numberOfObjects {
@@ -127,7 +140,6 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
 //            print("badge1")
 //            cell.badgeView.alpha = 0
 //        }
-        
         let layout = UICollectionViewFlowLayout()
         let controller = ChatLogController(collectionViewLayout: layout)
         

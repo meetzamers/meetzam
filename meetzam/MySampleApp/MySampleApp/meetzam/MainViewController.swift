@@ -8,6 +8,7 @@
 
 import UIKit
 import AWSMobileHubHelper
+import NVActivityIndicatorView
 
 class MainViewController: UITabBarController, UITabBarControllerDelegate {
     
@@ -15,7 +16,7 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
         super.viewDidLoad()
         self.delegate = self
         
-        // preload Chat
+        // preload chat
         if AWSIdentityManager.default().isLoggedIn {
             self.viewControllers?.forEach {
                 if $0 is NaviViewController {
@@ -27,6 +28,7 @@ class MainViewController: UITabBarController, UITabBarControllerDelegate {
                 }
             }
         }
+        
     }
     
     // Tab bar style
