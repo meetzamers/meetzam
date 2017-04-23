@@ -1,7 +1,7 @@
 
 service: dataFetching
 
-frameworkVersion: "=1.10.1"
+frameworkVersion: "=1.11.0"
 
 provider:
   name: aws

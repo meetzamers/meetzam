@@ -30,14 +30,18 @@ function publishNotificationToEndpoint (event, context, callback) {
             console.log("Endpoint: " + deviceARN);
 
             var push_param = {
-                Message: event.message,
-                MessageAttributes: {
-                    someKey: {
-                        DataType: 'String', /* required */
-                        StringValue: 'STRING_VALUE'
-                    },
-                },
-                Subject: "Message",
+                MessageStructure: "json",
+                Message: JSON.stringify({
+                default: event.message,
+                APNS: JSON.stringify({
+                      aps: {
+                        alert: event.message,
+                        badge: 1
+                      }
+                    }),
+                //APNS_SANDBOX: apnsString
+              }),
+                // Subject: "Message",
                 TargetArn: deviceARN
             };
 
