@@ -25,7 +25,12 @@ class API {
     }
     
     private func messagePOSTUrl(userId: String, message: String) -> String {
-        return rootUrl + "/device/message?" + "userId=" + userId + "&message=" + message
+        var spaceFreeMsg: String?
+        spaceFreeMsg = message.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        var urlToPost = rootUrl + "/device/message?"
+        urlToPost += "userId=" + userId
+        urlToPost += "&message=" + spaceFreeMsg!
+        return urlToPost
     }
 
     private func timeStampPOSTUrl(chatRoomId: String, timeStamp: String) -> String {

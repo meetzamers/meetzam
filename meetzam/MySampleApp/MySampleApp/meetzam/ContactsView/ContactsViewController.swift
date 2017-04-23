@@ -21,7 +21,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
+//        view.backgroundColor = UIColor.init(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
     
         loadContact()
 
@@ -33,6 +33,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         self.resultsController.searchBar.sizeToFit()
         
         self.contactTable.tableHeaderView = self.resultsController.searchBar
+        contactTable.backgroundColor = UIColor.init(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
         contactTable.reloadData()
         
         definesPresentationContext = true
@@ -71,6 +72,11 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     {
         let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath) as! ContactCell
         cell.displayName.font = UIFont(name: "HelveticaNeue-Light", size: 18)
+        // rounded corner & color update below
+        cell.backgroundColor = UIColor.init(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
+        cell.profilePicture.layer.cornerRadius = 5
+        cell.profilePicture.layer.masksToBounds = true
+        // rounded corner & color update above
         
         if (!self.resultsController.isActive) {
             cell.profilePicture.image = contacts[indexPath.row].profilePic

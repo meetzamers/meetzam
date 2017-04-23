@@ -49,9 +49,10 @@ class CardView: UIView{
         
         // also liked
         alsoLiked.text = "Liked"
-        alsoLiked.frame = CGRect(x: 25, y: userPicField.frame.height + 70, width: UIScreen.main.bounds.width-30, height: 20)
+        alsoLiked.frame = CGRect(x: 20, y: userPicField.frame.height + 70, width: UIScreen.main.bounds.width - 60, height: 20)
         alsoLiked.font = UIFont(name: "HelveticaNeue-Thin", size: 18)
         alsoLiked.textColor = UIColor.darkGray
+        alsoLiked.textAlignment = .left
         self.addSubview(alsoLiked)
         
         

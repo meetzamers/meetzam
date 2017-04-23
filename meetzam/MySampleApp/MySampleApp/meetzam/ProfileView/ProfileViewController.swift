@@ -10,12 +10,20 @@ import UIKit
 import Foundation
 import AWSMobileHubHelper
 import FBSDKCoreKit
+import NVActivityIndicatorView
 
 class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     @IBOutlet weak var mainScrollView: UIScrollView!
     @IBOutlet weak var TopThreeMovieCollectionView: UICollectionView!
     @IBOutlet weak var profileMainBodyView: UIView!
+    
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.extraLight)
+    var blurEffectView: UIVisualEffectView?
+    let loadingIndicator = NVActivityIndicatorView(frame: CGRect(x: UIScreen.main.bounds.width/2 - 30, y: UIScreen.main.bounds.height/2 - 30, width: 60, height: 60), type: .ballRotateChase, color: UIColor.darkGray, padding: CGFloat(0))
+    var didLoad = false
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     
     
     //declare profile picture field
@@ -33,12 +41,12 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     //************************** VIEW DID LOAD ********************************************//
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        didLoad = true
+        print("didload and start animate")
+        self.startAnimateWaiting()
+        
         downloadProfileImage()
-        /*
-        DispatchQueue.main.async {
-            self.TopThreeMovieCollectionView.reloadData()
-        }
-        */
         UserProfileToDB().getProfileForDisplay(key: AWSIdentityManager.default().identityId!, user_profile: user_profile, displayname: displayName, bio: userBioField)
         
         //======================== formatting background==========================\\
@@ -118,24 +126,33 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     //********************* VIEW WILL APPEAR ***********************************************//
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        downloadProfileImage()
         
-        /* get name and bio from database */
-        UserProfileToDB().getProfileForDisplay(key: AWSIdentityManager.default().identityId!, user_profile: user_profile, displayname: displayName, bio: userBioField)
-        
-        /* format name and bio */
-        displayName.textAlignment = .center
-        userBioField.textAlignment = .center
-        
-        self.profileMainBodyView.addSubview(displayName)
-        self.profileMainBodyView.addSubview(userBioField)
-        
-        DispatchQueue.main.async {
-            self.TopThreeMovieCollectionView.reloadData()
+        if (!didLoad) {
+            print("viewAppear and start animate")
+            self.startAnimateWaiting()
+            
+            downloadProfileImage()
+            /* get name and bio from database */
+            UserProfileToDB().getProfileForDisplay(key: AWSIdentityManager.default().identityId!, user_profile: user_profile, displayname: displayName, bio: userBioField)
+            
+            /* format name and bio */
+            displayName.textAlignment = .center
+            userBioField.textAlignment = .center
+            
+            self.profileMainBodyView.addSubview(displayName)
+            self.profileMainBodyView.addSubview(userBioField)
+            
+            DispatchQueue.main.async {
+                self.TopThreeMovieCollectionView.reloadData()
+            }
+        }
+        else {
+            didLoad = false
         }
         
     }
     
+    @IBOutlet weak var toLikeButton: UIButton!
     
     // Go to all movies I liked
     @IBAction func toLikedMovies(_ sender: Any) {
@@ -246,6 +263,38 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         return false
     }
     
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    public func startAnimateWaiting() {
+        blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView?.frame = UIScreen.main.bounds
+        blurEffectView?.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        blurEffectView?.alpha = 0
+        
+        blurEffectView?.addSubview(loadingIndicator)
+        self.view.addSubview(blurEffectView!)
+        
+        loadingIndicator.startAnimating()
+        
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseOut, animations: {
+            self.blurEffectView!.alpha = 0.98
+            
+        }, completion: { _ in
+            
+        })
+    }
+    
+    public func endAnimateWaiting() {
+        print("end animate")
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            self.blurEffectView?.alpha = 0
+            self.loadingIndicator.stopAnimating()
+        }, completion: { _ in
+            self.blurEffectView?.removeFromSuperview()
+            self.loadingIndicator.removeFromSuperview()
+        })
+    }
+    // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 }
 
 

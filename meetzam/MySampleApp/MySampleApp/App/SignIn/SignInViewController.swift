@@ -86,7 +86,16 @@ class SignInViewController: UIViewController {
                 DispatchQueue.main.async(execute: {
                     // ======================================================================================================
                     // Original dismiss
-                    self.presentingViewController?.dismiss(animated: true, completion: nil)
+                    self.presentingViewController?.dismiss(animated: true, completion: { _ in
+                        let mainVC = UIApplication.shared.keyWindow?.rootViewController
+                        if mainVC is MainViewController {
+//                            mainVC?.viewDidLoad()
+                            let tabBarHome = (mainVC as! MainViewController).viewControllers?.first
+                            if tabBarHome is TabBarHomeViewController {
+                                tabBarHome?.viewDidLoad()
+                            }
+                        }
+                    })
                 })
                 
                 

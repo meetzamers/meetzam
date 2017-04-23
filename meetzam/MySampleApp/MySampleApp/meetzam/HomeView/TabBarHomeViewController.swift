@@ -37,22 +37,8 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         // Let self be the delegate and dataSource
-        
-        /*ConversationModel().addConversation(_userId: "1", _chatRoomId: "3", _message: "This is first in 13")
-        ConversationModel().addConversation(_userId: "1", _chatRoomId: "3", _message: "This is second in 13")
-        ConversationModel().addConversation(_userId: "1", _chatRoomId: "3", _message: "This is third in 13")
-        ConversationModel().addConversation(_userId: "2", _chatRoomId: "4", _message: "This is first in 24")*/
-        //let m = ConversationModel().getMessagesGivenKeys(userId: "1", chatRoomId: "3")
-        //for item in m
-        //{
-        //    print("given key, get conversation# \(item.conversationId)")
-        //}
-        //ConversationModel().getHistoryRecords(userId_1: "1", _chatRoomId_1: "3", userId_2: "2", _chatRoomId_2: "4")
-        print("wiew did load")
-        
         self.delegate = self
         self.dataSource = self
-        
         
         AWSLogger.default().logLevel = .none
         
@@ -62,13 +48,11 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         }
         
         // change background color to grey
-        //        view.backgroundColor = UIColor.init(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
         view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
         
         let frameVC = movieView
         let viewControllers = [frameVC]
         
-        // let viewControllers = [movieView]
         setViewControllers(viewControllers, direction: .forward, animated: true, completion: nil)
         
         // ============================================
@@ -77,7 +61,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         perform(#selector(popSignInViewController), with: nil, afterDelay: 0)
         
         // 1.5 attempt to pop first time user view controller
-//        perform(#selector(popFirstUserViewController), with: nil, afterDelay: 0)
+        perform(#selector(popFirstUserViewController), with: nil, afterDelay: 0)
         
         // 2. signinObserver: need to figure it out.
         new_signinObserver = NotificationCenter.default.addObserver(
@@ -140,18 +124,19 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
     
-    var times = 0 // delete it
     // display first time view controller
     func popFirstUserViewController() {
         // ======================================================================================================
         // TODO: check if this is new user:
         if (AWSIdentityManager.default().isLoggedIn) {
-            if (times == 0) {
-                let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
-                let viewController = storyboard.instantiateViewController(withIdentifier: "FirstTimeUser")
-                self.present(viewController, animated: false, completion: nil)
+            if let myID = AWSIdentityManager.default().identityId {
+                if (!UserProfileToDB().isUserIDinTable(_userId: myID)) {
+                    print("First Time User")
+                    let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
+                    let viewController = storyboard.instantiateViewController(withIdentifier: "FirstTimeUser")
+                    self.present(viewController, animated: false, completion: nil)
+                }
             }
-            times += 1
         }
     }
     

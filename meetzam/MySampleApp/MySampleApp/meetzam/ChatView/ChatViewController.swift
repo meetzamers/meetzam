@@ -7,226 +7,289 @@
 //
 
 import UIKit
+import CoreData
 
-class ChatViewController: UIViewController {
+class ChatViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, NSFetchedResultsControllerDelegate {
 
+    private let cellID = "cellID"
+    var didSelectContactNameFromContact = ""
+//    var messages: [Message]?
+    
+    lazy var fetchedResultsController: NSFetchedResultsController = { () -> NSFetchedResultsController<NSFetchRequestResult> in
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>.init(entityName: "Contact")
+        fetchRequest.sortDescriptors = [NSSortDescriptor.init(key: "lastMessage.date", ascending: false)]
+        fetchRequest.predicate = NSPredicate.init(format: "lastMessage != nil")
+        let delegate = UIApplication.shared.delegate as? AppDelegate
+        let context = delegate?.persistentContainer.viewContext
+        let frc = NSFetchedResultsController.init(fetchRequest: fetchRequest, managedObjectContext: context!, sectionNameKeyPath: nil, cacheName: nil)
+        frc.delegate = self
+        return frc
+    }()
+    
+    var blockOperations = [BlockOperation]()
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        print("didchange")
+        self.collectionView?.performBatchUpdates({
+            for operation in self.blockOperations {
+                operation.start()
+            }
+        }, completion: nil)
+    }
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        
+        print("controller")
+        
+        if type == .insert {
+            blockOperations.append(BlockOperation.init(block: {
+                self.collectionView?.insertItems(at: [newIndexPath!])
+            }))
+        }
+            
+        else if type == .move || type == .update {
+            DispatchQueue.main.async {
+                self.collectionView?.performBatchUpdates({
+                    self.collectionView?.reloadSections(NSIndexSet(index: 0) as IndexSet)
+                }, completion: { (finished: Bool) -> Void in
+//                    if (newIndexPath != nil) {
+//                        let cell = self.collectionView?.cellForItem(at: newIndexPath!) as! MessageCell
+//                        cell.addSubview(cell.badgeView)
+//                    }
+                })
+            }
+        }
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        ChatRoomModel().deleteRoom(roomId: "test")
+
+        collectionView?.backgroundColor = UIColor.init(red: 240/255, green: 240/255, blue: 240/255, alpha: 1)
+        collectionView?.alwaysBounceVertical = true
+        collectionView?.register(MessageCell.self, forCellWithReuseIdentifier: cellID)
         
-        view.backgroundColor = UIColor.init(red: 233/255, green: 233/255, blue: 233/255, alpha: 1)
+        setupData()
         
+        do {
+            try fetchedResultsController.performFetch()
+        } catch let err {
+            print(err)
+        }
     }
     
-    //
-    /*
-    @IBAction func sendMessage(_ sender: AnyObject) {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        if self.sendTextField.text?.isEmpty == true {
-            return
+        print("Chat will Appear")
+        self.tabBarController?.tabBar.isHidden = false
+        
+        self.collectionView?.reloadData()
+        
+        print("didSelectContactNameFromContact")
+        print(didSelectContactNameFromContact)
+        
+        if didSelectContactNameFromContact != "" {
+            let col = self.collectionView
+            col?.layoutIfNeeded()
+            let pathArr = col?.indexPathsForVisibleItems
+            for path in pathArr! {
+                let name = (col?.cellForItem(at: path) as! MessageCell).contactNameLabel.text
+                if name == didSelectContactNameFromContact {
+                    // Thread safety :)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
+                        self.didSelectContactNameFromContact = ""
+                        self.collectionView(col!, didSelectItemAt: path)
+                    })
+                }
+            }
         }
-        
-        
-        let conversation = self.createConversation()
-        
-        // a field in conversation view controller
-        self.conversationDataSource.append(conversation)
-        
-        // any function that update the ui
-        self.updateUIAfterMessageSent()
-        
-        //line 43
-        self.sendMessageToServer(conversation)
-        
     }
 
-    
-    func sendMessageToServer(_ conversation:Conversation) {
-     
-        // any function that send conversation to db
-        chatServices.sendMessage(conversation).continue { (task) -> AnyObject? in
-            
-            if let _result = task.result {
-                
-*****************| push conversation |************************************
-                //line 66
-                self.sendPush(conversation)
-                print(_result)
-            }
-            
-            return nil
-            
+    // return number of sections in this collection view
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let count = fetchedResultsController.sections?[section].numberOfObjects {
+            return count
         }
+        return 0
+    }
+    
+    // return cell
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! MessageCell
+        let contact = fetchedResultsController.object(at: indexPath) as! Contact
+        cell.message = contact.lastMessage
         
+        return cell
+    }
+    
+    // resize cell
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: 70)
+    }
+    
+    // resize the cell spacing
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    // to chat log (the real chat room)
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let cell = collectionView.cellForItem(at: indexPath) as! MessageCell
+//        if cell.badgeView.alpha == 1 {
+//            print("badge1")
+//            cell.badgeView.alpha = 0
+//        }
+        let layout = UICollectionViewFlowLayout()
+        let controller = ChatLogController(collectionViewLayout: layout)
         
+        let contact = fetchedResultsController.object(at: indexPath) as! Contact
+        controller.contact = contact
         
+        navigationController?.pushViewController(controller, animated: true)
         
     }
     
+}
+
+class MessageCell: BaseCell {
     
-    func sendPush(_ conversation:Conversation) {
-        
-        //"us-east-1:bdad4021-75b8-44c1-a079-3b6e9e565b47"
-        let poolID = Bundle.getPoolId()
-        
-        
-        let credentialsProvider = AWSCognitoCredentialsProvider(regionType:regionType(Bundle.getRegionFromCreadentialProvider()),
-                                                                identityPoolId:poolID)
-        
-        let configuration = AWSServiceConfiguration(region:regionType(Bundle.getRegionFromPushManager()), credentialsProvider:credentialsProvider)
-        
-        AWSServiceManager.default().defaultServiceConfiguration = configuration
-        
-        //start pushing the message
-        for userProfile in recipientUsers {
-            
-            //skip to current user
-            if userProfile._userId == AWSIdentityManager.defaultIdentityManager().identityId {
-                
-                continue
+    override var isHighlighted: Bool {
+        didSet {
+            backgroundColor = isHighlighted ? UIColor(white: 0.5, alpha: 0.5) : UIColor.clear
+        }
+    }
+    
+    override var isSelected: Bool {
+        didSet {
+            backgroundColor = isSelected ? UIColor(white: 0.5, alpha: 0.5) : UIColor.clear
+        }
+    }
+    
+//    let badgeView: UIView = {
+//        let view = UIView()
+//        view.frame = CGRect(x: 10 - 4, y: 7.5 - 4, width: 16, height: 16)
+//        view.layer.cornerRadius = 8
+//        view.backgroundColor = UIColor.red
+//        view.alpha = 1
+//        
+//        return view
+//    }()
+    
+    var message: Message? {
+        didSet {
+            contactNameLabel.text = message?.contact?.name
+            contactNameLabel.sizeToFit()
+            if let current_img_name = self.message?.contact?.profileImageName {
+                if FileManager.default.fileExists(atPath: current_img_name) {
+                    let profileURL = URL(fileURLWithPath: current_img_name)
+                    self.contactProfileImageView.image = UIImage(contentsOfFile: profileURL.path)!
+                }
             }
             
-            if let targetArns = userProfile._pushTargetArn {
+            contactMsgLabel.text = message?.text
+            if let msg_date = message?.date {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "HH:mm"
                 
+                let elapsedTimeinSec = NSDate().timeIntervalSince(msg_date as Date)
                 
-                for deviceTargetArn in targetArns {
-                    
-                    do {
-     *****************************************************************************************
-                        //send json here
-     
-                        let sns = AWSSNS.default()
-                        let request = AWSSNSPublishInput()
-                        request.messageStructure = "json"
-                        
-                        
-                        let senderName = AWSIdentityManager.defaultIdentityManager().userName
-                        
-                        //let defaultMessageFormat = "Message sent by \(senderName!)"
-                        //let dataFormat = "\"chatRoomId\":\"\(conversation._chatRoomId!)\""
-                        
-                        let devicePayLoad = ["default": "Message sent by \(senderName!)", "APNS_SANDBOX": "{\"aps\":{\"alert\": \"Message sent by \(senderName!)\",\"sound\":\"default\", \"badge\":\"1\"}, \"chatRoomId\":\"\(conversation._chatRoomId!)\" }","APNS": "{\"aps\":{\"alert\": \"Message sent by \(senderName!)\"}, \"chatRoomId\":\"\(conversation._chatRoomId!)\" }","GCM":"{\"data\":{\"message\":\"Message sent by \(senderName!)\", \"chatRoomId\":\"\(conversation._chatRoomId!)\"}}"]
-                        
-                        
-                        
-                        let jsonData = try JSONSerialization.data(withJSONObject: devicePayLoad, options: JSONSerialization.WritingOptions.init(rawValue: 0))
-     
-                        
-                        request.subject = "Message Sent By \(senderName)"
-                        request.message = NSString(data: jsonData, encoding: String.Encoding.utf8) as? String
-                        
-                        request.targetArn = deviceTargetArn
-                        
-                        
-                        sns.publish(request).continue { (task) -> AnyObject! in
-                            print("error \(task.error), result:; \(task.result)")
-                            return nil
-                        }
-                        
-                        
-                    } catch let parseError {
-                        print(parseError)                                                          // Log the error thrown by `JSONObjectWithData`
-                    }
-                    
+                // if the time is greater than a day(24 hrs) or a week, change date format
+                if (elapsedTimeinSec > (60*60*24*7)) {
+                    dateFormatter.dateFormat = "MM/dd/yy"
+                }
+                else if (elapsedTimeinSec > (60*60*24)) {
+                    dateFormatter.dateFormat = "EEE"
                 }
                 
+                timeLabel.text = dateFormatter.string(from: msg_date as Date)
             }
             
-            
-        }
-        
-        
-    }
-    
-//app delegate start
-     
-     
-     /**
-     * Handles a received push notification.
-     * - parameter userInfo: push notification contents
-     */
-     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
-         /**
-         Intercepts the `- application:didReceiveRemoteNotification:` application delegate.
-         
-         @param application The app object that received the remote notification.
-         @param userInfo    A dictionary that contains information related to the remote notification, potentially including a badge number for the app icon, an alert sound, an alert message to display to the user, a notification identifier, and custom data. The provider originates it as a JSON-defined dictionary that iOS converts to an `NSDictionary` object; the dictionary may contain only property-list objects plus `NSNull`.
-         */
-        AWSPushManager.defaultPushManager().interceptApplication(application, didReceiveRemoteNotification: userInfo)
-     }
-     
-     
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
-        
-        AWSMobileClient.sharedInstance.application(application, didReceiveRemoteNotification: userInfo)
-        
-        //userInfo is holds the json
-        if let chatRoomId = userInfo["chatRoomId"] as? String {
-            
-            print(chatRoomId)
-            
-            
-            ChatDynamoDBServices().getChatRoomWithChatRoomId(chatRoomId).continue({ (task) -> AnyObject? in
-                
-                
-                if let chatRoom = task.result as? ChatRoom {
-                    
-                    print(chatRoom)
-     
-                    var defaultMessage = ""
-                    
-                    if let _defaultMessage = userInfo["aps"]!["alert"]! as String! {
-                        
-                        defaultMessage = _defaultMessage
-                        
-                    }
-                    
-                    self.showMessageInConversation(chatRoom,defaultMessage: defaultMessage)
-     
-                }
-                
-                return nil
-            })
         }
     }
     
-    func showMessageInConversation(_ chatRoom:ChatRoom , defaultMessage:String) {
+    let contactProfileImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.frame = CGRect(x: 10, y: 7.5, width: 55, height: 55)
+        iv.layer.cornerRadius = 5
+        iv.layer.masksToBounds = true
         
+        return iv
+    }()
+    
+    let dividerLineView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(white: 0.5, alpha: 0.5)
+        view.frame = CGRect(x: 10, y: 69.5, width: UIScreen.main.bounds.width, height: 0.5)
         
-        guard let _navigationController = self.window?.rootViewController as? UINavigationController else{
-            
-            showPushAlert(defaultMessage)
-            return
-        }
+        return view
+    }()
+    
+    let contactNameLabel: UILabel = {
+        let namelabel = UILabel()
+        namelabel.frame = CGRect(x: 0, y: 5, width: 100, height: 25)
+        namelabel.font = UIFont(name: "HelveticaNeue-Light", size: 20)
+        namelabel.textAlignment = .left
+//        namelabel.sizeToFit()
         
+        return namelabel
+    }()
+    
+    let contactMsgLabel: UILabel = {
+        let msglabel = UILabel()
+        msglabel.frame = CGRect(x: 0, y: 36, width: UIScreen.main.bounds.width - 90, height: 19)
+        msglabel.font = UIFont(name: "HelveticaNeue-Light", size: 16)
+        msglabel.textColor = UIColor.gray
+        msglabel.textAlignment = .left
+        msglabel.lineBreakMode = .byTruncatingTail
         
-        guard let conversationVC = _navigationController.topViewController as? ConversationViewController where conversationVC.selectedChatRoom!._chatRoomId == chatRoom._chatRoomId else{
-            
-            showPushAlert(defaultMessage)
-            return
-        }
+        return msglabel
+    }()
+    
+    let timeLabel: UILabel = {
+        let tlabel = UILabel()
+        tlabel.frame = CGRect(x: UIScreen.main.bounds.width - 160, y: 5, width: 70, height: 18)
+        tlabel.font = UIFont(name: "HelveticaNeue-Light", size: 15)
+        tlabel.textColor = UIColor.gray
+        tlabel.textAlignment = .right
         
+        return tlabel
+    }()
+    
+    override func setupViews() {
+        backgroundColor = UIColor.clear
         
-        conversationVC.selectedChatRoom = chatRoom
+        addSubview(contactProfileImageView)
+        addSubview(dividerLineView)
         
-        conversationVC.loadRecipientsAndConversations(false)
-        
-        print(conversationVC)
-        
-        
+        setupContainerView()
     }
     
-    func showPushAlert(_ defaultMessage:String) {
+    private func setupContainerView() {
+        let cv = UIView()
+        cv.frame = CGRect(x: 75, y: 5, width: UIScreen.main.bounds.width - 95, height: 60)
         
-        DispatchQueue.main.async(execute: {
-            
-            let alertController = UIAlertController(title: "Message", message: defaultMessage, preferredStyle: .alert)
-            let doneAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-            alertController.addAction(doneAction)
-            self.window?.rootViewController?.present(alertController, animated: true, completion: nil)
-            
-        })
+        cv.addSubview(contactNameLabel)
+        cv.addSubview(contactMsgLabel)
+        cv.addSubview(timeLabel)
+        addSubview(cv)
     }
-//app delegate end
-*/
+    
+}
+
+class BaseCell: UICollectionViewCell {
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupViews()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupViews() {
+//        backgroundColor = UIColor.blue
+    }
 }

@@ -98,7 +98,7 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     
     // Function used in change profile picture button
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
+        if let image = info[UIImagePickerControllerEditedImage] as? UIImage {
             profilePicture.image = image
             //getting details of image
             let uploadFileURL = info[UIImagePickerControllerReferenceURL] as! NSURL
@@ -124,11 +124,10 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
     }
     
     //mush
+    //JUNPU: fixed
     func uploadProfileImage() {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         print("===== uploadProfileImage =====")
-        var waiting = 0
-        var dummy = 0
         let transferManager = AWSS3TransferManager.default()
         //let testFileURL1 = uploadingFileURL
         let uploadRequest1 : AWSS3TransferManagerUploadRequest = AWSS3TransferManagerUploadRequest()
@@ -139,19 +138,11 @@ class EditProfileViewController: UIViewController, UIImagePickerControllerDelega
             if let error = task.error as NSError? {
                 print("Upload Error: \(error)")
             } else {
-                print("SUCCESS")
-                
-               
+                print("uploadProfileImage SUCCESS")
             }
-            dummy = 6
             return nil
-        })
-        while (dummy != 6) {
-            waiting = 1
-        }
+        }).waitUntilFinished()
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        
-        
     }
     
     func downloadProfileImage() {

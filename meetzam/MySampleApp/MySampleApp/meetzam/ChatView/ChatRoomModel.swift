@@ -41,7 +41,6 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         chatRoom?.timeStamp = Date().iso8601
         chatRoom?.userId = AWSIdentityManager.default().identityId!
         chatRoom?.recipientId = recipient
-        var dummynum = 0
         mapper.save(chatRoom!) .continueWith(block: { (task: AWSTask!) -> AnyObject! in
             if ((task.error) != nil) {
                 NSLog("Failed")
@@ -50,10 +49,8 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             else {
                 print("SUCCESS")
             }
-            dummynum = 6
             return nil
-        })
-        var dummynum2 = 0
+        }).waitUntilFinished()
         
         print("create for recipient")
         
@@ -76,24 +73,12 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             }
             
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            dummynum2 = 7
             return nil
-        })
-        var waiting = 0
-        while (dummynum != 6 || dummynum2 != 7)
-        {
-            waiting = 1
-        }
-        
+        }).waitUntilFinished()
     }
-    /*
-    func updateTimeStamp(chatRoomId: String) {
-        API().updateTimeStamp(chatRoomId: chatRoomId, timeStamp: Date().iso8601)
-    }
-    */
+
     func updateTimeStamp() {
         API().updateTimeStamp(chatRoomId: self.chatRoomId!, timeStamp: Date().iso8601)
-        //API().updateTimeStamp(chatRoomId: "test", timeStamp: "mushroom30")
     }
     
     
@@ -119,8 +104,6 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         queryExpression.expressionAttributeValues = [":userId": AWSIdentityManager.default().identityId!]
       
         var roomList = [ChatRoomModel]()
-        var dummynum = 0
-
         dynamoDBObjectMapper.scan(ChatRoomModel.self, expression: queryExpression).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
         
             if let paginatedOutput = task.result {
@@ -137,16 +120,9 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                 print("Error: \(error)")
                 
             }
-            dummynum = 6
             print("get list of chatroom: SUCCESS")
             return nil
-        })
-        var waiting = 0
-        while (dummynum != 6)
-        {
-            waiting = 1
-        }
-        //print(roomList.description)
+        }).waitUntilFinished()
         print("got \(roomList.count) chatrooms")
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
@@ -156,7 +132,7 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
     func getChatRoomId(userId: String, recipientId: String) -> String{
         UIApplication.shared.isNetworkActivityIndicatorVisible = true;
         print("===== getChatRoomId =====")
-        
+        print("of \(userId) and \(recipientId)")
         
         let dynamoDBObjectMapper = AWSDynamoDBObjectMapper.default()
         let queryExpression = AWSDynamoDBScanExpression()
@@ -164,7 +140,6 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         queryExpression.expressionAttributeValues = [":userId": userId, ":recipientId": recipientId]
         
         var roomList = Set<ChatRoomModel>()
-        var dummynum = 0
         dynamoDBObjectMapper.scan(ChatRoomModel.self, expression: queryExpression).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
             
             if let paginatedOutput = task.result {
@@ -181,15 +156,9 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                 print("Error: \(error)")
                 
             }
-            dummynum = 6
             print("get list of chatroom: SUCCESS")
             return nil
-        })
-        var waiting = 0
-        while (dummynum != 6)
-        {
-            waiting = 1
-        }
+        }).waitUntilFinished()
         //print(roomList.description)
         print("got \(roomList.count) chatrooms")
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
@@ -205,7 +174,6 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         print("===== getSingleChatRoom of \(chatRoomId) =====")
         let mapper = AWSDynamoDBObjectMapper.default()
         var getted_chatroom = ChatRoomModel()
-        var dummynum = 0
         mapper.load(ChatRoomModel.self, hashKey: chatRoomId, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as NSError? {
                 print("get single chatroom Error: \(error)")
@@ -215,14 +183,8 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
             }
             
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            dummynum = 6
             return nil
-        })
-        var waiting = 0
-        while (dummynum != 6)
-        {
-            waiting = 1
-        }
+        }).waitUntilFinished()
         print("getting room \(getted_chatroom?.chatRoomId ?? "no Room") of user \(getted_chatroom?.userId ?? "no ID")")
         return getted_chatroom!
         
@@ -247,7 +209,6 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         queryExpression.expressionAttributeValues = [":userId": userId, ":recipientId": recipientId]
         
         var roomList = Set<ChatRoomModel>()
-        var dummynum = 0
         dynamoDBObjectMapper.scan(ChatRoomModel.self, expression: queryExpression).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
             
             if let paginatedOutput = task.result {
@@ -264,16 +225,9 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                 print("Error: \(error)")
                 
             }
-            dummynum = 6
             print("get list of chatroom: SUCCESS")
             return nil
-        })
-        var waiting = 0
-        while (dummynum != 6)
-        {
-            waiting = 1
-        }
-        //print(roomList.description)
+        }).waitUntilFinished()
         print("got \(roomList.count) chatrooms")
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         
