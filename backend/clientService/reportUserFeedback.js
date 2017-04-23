@@ -24,6 +24,7 @@ function sendDefaultReponseToReporter(event, context, callback) {
        else     console.log(data);           // successful response
        
        var emailAddress = data.Item.email.S;
+       var displayName = data.Item.displayName.S;
        if (emailAddress) {
             console.log("target Email: " + emailAddress);
 
@@ -38,7 +39,7 @@ function sendDefaultReponseToReporter(event, context, callback) {
                   Body: {
                     Html: {
                      Charset: "UTF-8", 
-                     Data: "<h1>Thank you for your feedback</h1><h3>Meetzam team will be looking into this matter</h3>"
+                     Data: "<h3>Dear " + displayName + ",</h3>" + "<p>Thank you for being open and honest about your experience. We truly appreciate your report on helping us improve our product/service even further. Our team is working hard to make sure that this doesn’t happen again. If you don’t mind I would be happy to keep you updated about our improvement.</p><p>Cheers,</p><p>Meetzam team</p>"
                     }, 
                   Text: {
                      Charset: "UTF-8", 
