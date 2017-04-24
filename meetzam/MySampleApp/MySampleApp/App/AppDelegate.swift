@@ -86,12 +86,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             let realC = ChatViewController()
             realC.incomingData()
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                 let mainVC = UIApplication.shared.keyWindow?.rootViewController
                 if mainVC is MainViewController {
                     (mainVC as! MainViewController).viewControllers?[3].tabBarItem.badgeValue = " "
                 }
-                UIApplication.shared.applicationIconBadgeNumber = 0
+//                UIApplication.shared.applicationIconBadgeNumber = 0
             })
         }
         
@@ -113,12 +113,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
+        print(UIApplication.shared.applicationIconBadgeNumber)
         
-        if UIApplication.shared.applicationIconBadgeNumber == 1 {
+        if UIApplication.shared.applicationIconBadgeNumber == 2 {
             let realC = ChatViewController()
             realC.incomingData()
         }
-        else if UIApplication.shared.applicationIconBadgeNumber == 2 {
+        else if UIApplication.shared.applicationIconBadgeNumber == 1 {
             let mainVC = UIApplication.shared.keyWindow?.rootViewController
             if mainVC is MainViewController {
                 let navVC = (mainVC as! MainViewController).viewControllers?[3]
