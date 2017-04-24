@@ -84,15 +84,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         if UIApplication.shared.applicationIconBadgeNumber > 0 {
             let realC = ChatViewController()
-            DispatchQueue.main.async {
-                realC.incomingData()
-            }
+            realC.incomingData()
             
-            let mainVC = UIApplication.shared.keyWindow?.rootViewController
-            if mainVC is MainViewController {
-                (mainVC as! MainViewController).viewControllers?[3].tabBarItem.badgeValue = " "
-            }
-            UIApplication.shared.applicationIconBadgeNumber = 0
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                let mainVC = UIApplication.shared.keyWindow?.rootViewController
+                if mainVC is MainViewController {
+                    (mainVC as! MainViewController).viewControllers?[3].tabBarItem.badgeValue = " "
+                }
+//                UIApplication.shared.applicationIconBadgeNumber = 0
+            })
         }
         
     }
@@ -112,8 +112,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        let realC = ChatViewController()
-        realC.incomingData()
+        
+        print(UIApplication.shared.applicationIconBadgeNumber)
+        
+        if UIApplication.shared.applicationIconBadgeNumber == 2 {
+            let realC = ChatViewController()
+            realC.incomingData()
+        }
+        else if UIApplication.shared.applicationIconBadgeNumber == 1 {
+            let mainVC = UIApplication.shared.keyWindow?.rootViewController
+            if mainVC is MainViewController {
+                let navVC = (mainVC as! MainViewController).viewControllers?[3]
+                if navVC is NaviViewController {
+                    let chatVC = (navVC as! NaviViewController).topViewController
+                    if chatVC is ChatViewController {
+                        (chatVC as! ChatViewController).incomingContact()
+                    }
+                }
+            }
+        }
+        
         
         let mainVC = UIApplication.shared.keyWindow?.rootViewController
         if mainVC is MainViewController {
@@ -121,35 +139,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
 //        completionHandler(UNNotificationPresentationOptions.badge)
         
-//        if let mainVC = UIApplication.shared.keyWindow?.rootViewController {
-//            if mainVC is MainViewController {
-//                if let selectedVC = (mainVC as! MainViewController).selectedViewController {
-//                    if selectedVC is UINavigationController {
-//                        let finalVC = selectedVC as? UINavigationController
-//                        if finalVC?.visibleViewController is ChatViewController {
-//                            (finalVC?.visibleViewController as! ChatViewController).viewWillAppear(true)
-//                        }
-//                    }
-//                }
-//            }
-//        }
-        
-        
-//        if let mainVC = UIApplication.shared.keyWindow?.rootViewController {
-//            if mainVC is MainViewController {
-//                if let selectedVC = (mainVC as! MainViewController).selectedViewController {
-//                    if selectedVC is UINavigationController {
-//                        let finalVC = selectedVC as? UINavigationController
-//                        if finalVC?.visibleViewController is ChatLogController {
-////                            (finalVC?.visibleViewController as? ChatLogController)?.notificationMsg(new_Contact: , text: text)
-//                        }
-//                        else if finalVC?.visibleViewController is ChatViewController {
-//                            (finalVC?.visibleViewController as! ChatViewController).viewWillAppear(true)
-//                        }
-//                    }
-//                }
-//            }
-//        }
     }
     
     // =======================================================================

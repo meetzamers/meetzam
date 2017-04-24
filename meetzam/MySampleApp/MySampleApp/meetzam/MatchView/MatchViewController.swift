@@ -71,7 +71,24 @@ class MatchViewController: UIViewController {
                             ChatRoomModel().createChatRoom(recipient: self.userIds[self.lablecount-self.cardsToLoad])
                                 
                             let chatRoomID = ChatRoomModel().getChatRoomId(userId: myID, recipientId: youID)
+                            let yourchatRoomID = ChatRoomModel().getChatRoomId(userId: youID, recipientId: myID)
                             ConversationModel().addConversation(_userId: myID, _chatRoomId: chatRoomID, _message: "Hello")
+                            ConversationModel().addConversation(_userId: youID, _chatRoomId: yourchatRoomID, _message: "Hello")
+                            
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
+                                let mainVC = UIApplication.shared.keyWindow?.rootViewController
+                                if mainVC is MainViewController {
+                                    let navVC = (mainVC as! MainViewController).viewControllers?[3]
+                                    if navVC is NaviViewController {
+                                        let chatVC = (navVC as! NaviViewController).topViewController
+                                        if chatVC is ChatViewController {
+                                            (chatVC as! ChatViewController).incomingContact()
+                                        }
+                                    }
+                                }
+                            })
+                            
                             
                         }
                     }
@@ -89,9 +106,9 @@ class MatchViewController: UIViewController {
   
     func pushInAppNF() {
         // ========================================================================================
-        let application = UIApplication.shared
-        application.applicationIconBadgeNumber += 1
-        
+//        let application = UIApplication.shared
+//        application.applicationIconBadgeNumber += 1
+//        
         let inAppNotificationWindow = UIView()
         inAppNotificationWindow.backgroundColor = UIColor.gray
         inAppNotificationWindow.frame = CGRect(x: 0 ,y: -100, width: UIScreen.main.bounds.width, height: 100)

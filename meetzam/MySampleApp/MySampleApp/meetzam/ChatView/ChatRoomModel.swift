@@ -162,9 +162,11 @@ class ChatRoomModel : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         //print(roomList.description)
         print("got \(roomList.count) chatrooms")
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        
         if (roomList.count < 1) {
             return ""
         }
+        
         return roomList.first!.chatRoomId!
 
     }

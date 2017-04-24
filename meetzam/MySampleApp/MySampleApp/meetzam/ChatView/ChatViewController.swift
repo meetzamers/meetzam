@@ -42,12 +42,14 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
         print("controller")
         
         if type == .insert {
+            print("insert")
             blockOperations.append(BlockOperation.init(block: {
                 self.collectionView?.insertItems(at: [newIndexPath!])
             }))
         }
             
         else if type == .move || type == .update {
+            print("move/update")
             DispatchQueue.main.async {
                 self.collectionView?.performBatchUpdates({
                     self.collectionView?.reloadSections(NSIndexSet(index: 0) as IndexSet)
@@ -58,6 +60,13 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
 //                    }
                 })
             }
+        }
+        
+        else if type == .delete {
+            print("delete")
+            blockOperations.append(BlockOperation.init(block: {
+                self.collectionView?.deleteItems(at: [indexPath!])
+            }))
         }
         
     }
@@ -76,6 +85,9 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
         } catch let err {
             print(err)
         }
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Simulate", style: .plain, target: self, action: #selector(simulate))
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -85,9 +97,6 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
         self.tabBarController?.tabBar.isHidden = false
         
         self.collectionView?.reloadData()
-        
-        print("didSelectContactNameFromContact")
-        print(didSelectContactNameFromContact)
         
         if didSelectContactNameFromContact != "" {
             let col = self.collectionView
@@ -104,6 +113,31 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
                 }
             }
         }
+    }
+    
+    
+    func simulate() {
+//        print("Insert Test Cell")
+//        let delegate = UIApplication.shared.delegate as? AppDelegate
+//        let context = delegate?.persistentContainer.viewContext
+//        let testContact = ChatViewController.createContactwithName(name: "Test Contact", profileimageName: "alskdjaksld", context: context!, userID: "asdjaskldjaslkd")
+//        ChatViewController.createMessagewithText(text: "Test Msg", contact: testContact, minutesAgo: Date.init(timeIntervalSinceNow: 0), context: context!)
+//        do {
+//            try(context?.save())
+//        } catch let error {
+//            print(error)
+//        }
+//        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
+//            print("Delete Test Cell")
+//            self.deleteData(userID: "asdjaskldjaslkd")
+//            do {
+//                try(context?.save())
+//            } catch let error {
+//                print(error)
+//            }
+//        })
+        self.incomingContact()
     }
 
     // return number of sections in this collection view
