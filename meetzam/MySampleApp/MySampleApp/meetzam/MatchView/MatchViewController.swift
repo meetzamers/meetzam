@@ -75,9 +75,6 @@ class MatchViewController: UIViewController {
                             ConversationModel().addConversation(_userId: myID, _chatRoomId: chatRoomID, _message: "Hello")
                             ConversationModel().addConversation(_userId: youID, _chatRoomId: yourchatRoomID, _message: "Hello")
                             
-                            // send myself a notification to refersh data in chat view
-                            API().pushMatchNotification(userId: AWSIdentityManager.default().identityId!)
-                            
                         }
                     }
                 }

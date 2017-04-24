@@ -117,26 +117,27 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
     
     
     func simulate() {
-        print("Insert Test Cell")
-        let delegate = UIApplication.shared.delegate as? AppDelegate
-        let context = delegate?.persistentContainer.viewContext
-        let testContact = ChatViewController.createContactwithName(name: "Test Contact", profileimageName: "alskdjaksld", context: context!, userID: "asdjaskldjaslkd")
-        ChatViewController.createMessagewithText(text: "Test Msg", contact: testContact, minutesAgo: Date.init(timeIntervalSinceNow: 0), context: context!)
-        do {
-            try(context?.save())
-        } catch let error {
-            print(error)
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
-            print("Delete Test Cell")
-            self.deleteData(userID: "asdjaskldjaslkd")
-            do {
-                try(context?.save())
-            } catch let error {
-                print(error)
-            }
-        })
+//        print("Insert Test Cell")
+//        let delegate = UIApplication.shared.delegate as? AppDelegate
+//        let context = delegate?.persistentContainer.viewContext
+//        let testContact = ChatViewController.createContactwithName(name: "Test Contact", profileimageName: "alskdjaksld", context: context!, userID: "asdjaskldjaslkd")
+//        ChatViewController.createMessagewithText(text: "Test Msg", contact: testContact, minutesAgo: Date.init(timeIntervalSinceNow: 0), context: context!)
+//        do {
+//            try(context?.save())
+//        } catch let error {
+//            print(error)
+//        }
+//        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5, execute: {
+//            print("Delete Test Cell")
+//            self.deleteData(userID: "asdjaskldjaslkd")
+//            do {
+//                try(context?.save())
+//            } catch let error {
+//                print(error)
+//            }
+//        })
+        self.incomingContact()
     }
 
     // return number of sections in this collection view

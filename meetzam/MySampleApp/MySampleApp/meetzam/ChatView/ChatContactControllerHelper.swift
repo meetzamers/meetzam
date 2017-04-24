@@ -87,6 +87,28 @@ extension ChatViewController {
 
     }
     
+    func incomingContact() {
+        let col = self.collectionView
+        col?.layoutIfNeeded()
+        let pathArr = col?.indexPathsForVisibleItems
+        for path in pathArr! {
+            print("here")
+            (col?.cellForItem(at: path) as! MessageCell).contactProfileImageView.image = nil
+            (col?.cellForItem(at: path) as! MessageCell).contactMsgLabel.text = nil
+            (col?.cellForItem(at: path) as! MessageCell).contactNameLabel.text = nil
+            (col?.cellForItem(at: path) as! MessageCell).timeLabel.text = nil
+            print("here11111")
+        }
+        print("here73423742374234")
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+            print("here222222")
+            self.setupData()
+            print("here8888888")
+        })
+        
+    }
+    
     func incomingData() {
         let delegate = UIApplication.shared.delegate as? AppDelegate
         if let context = delegate?.persistentContainer.viewContext {
@@ -104,31 +126,31 @@ extension ChatViewController {
                     // Local
                     let allMessages = ConversationModel().getHistoryRecords(userId_1: singleChatRoom.userId!, _chatRoomId_1: singleChatRoom.chatRoomId!, userId_2: contactID, _chatRoomId_2: chatRoomID_2)
                     
-                    // Update contact
-                    print("Updating new contact")
-                    let newrequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
-                    newrequest.predicate = NSPredicate(format: "userID = %@", contactID)
-                    newrequest.fetchLimit = 1
-                    do {
-                        let contact = try context.fetch(newrequest) as! [Contact]
-                        if contact.count == 0 {
-                            let thislocalContact = ChatViewController.createContactwithName(name: contactName!, profileimageName: imagePath_string, context: context, userID: contactID)
-                            ChatViewController.createMessagewithText(text: "Hello", contact: thislocalContact, minutesAgo: Date.init(timeIntervalSinceNow: 0), context: context)
-                            ChatViewController.createMessagewithText(text: "Hello", contact: thislocalContact, minutesAgo: Date.init(timeIntervalSinceNow: 0), context: context, issender: true)
-                            
-                            print("create new contact success")
-                            do {
-                                try(context.save())
-                                print("save???")
-                            } catch let error {
-                                print(error)
-                            }
-                            return
-                        }
-                    } catch let err {
-                        print(err)
-                    }
-                    // TODO TODO TODO test this function
+//                    // Update contact
+//                    print("Updating new contact")
+//                    let newrequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
+//                    newrequest.predicate = NSPredicate(format: "userID = %@", contactID)
+//                    newrequest.fetchLimit = 1
+//                    do {
+//                        let contact = try context.fetch(newrequest) as! [Contact]
+//                        if contact.count == 0 {
+//                            let thislocalContact = ChatViewController.createContactwithName(name: contactName!, profileimageName: imagePath_string, context: context, userID: contactID)
+//                            ChatViewController.createMessagewithText(text: "Hello", contact: thislocalContact, minutesAgo: Date.init(timeIntervalSinceNow: 0), context: context)
+//                            ChatViewController.createMessagewithText(text: "Hello", contact: thislocalContact, minutesAgo: Date.init(timeIntervalSinceNow: 0), context: context, issender: true)
+//                            
+//                            print("create new contact success")
+//                            do {
+//                                try(context.save())
+//                                print("save???")
+//                            } catch let error {
+//                                print(error)
+//                            }
+//                            break
+//                        }
+//                    } catch let err {
+//                        print(err)
+//                    }
+//                    // TODO TODO TODO test this function
                     
                     print("Updating new message")
                     // Update new message

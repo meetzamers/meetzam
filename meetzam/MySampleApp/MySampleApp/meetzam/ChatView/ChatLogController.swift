@@ -189,9 +189,24 @@ class ChatLogController: UICollectionViewController, UICollectionViewDelegateFlo
             let yourID = msg.contact?.userID
             
             // backend send message
+            print("enter chat room")
             let chatRoomID = ChatRoomModel().getChatRoomId(userId: myID!, recipientId: yourID!)
-            ConversationModel().addConversation(_userId: myID!, _chatRoomId: chatRoomID, _message: inputTextField.text!)
-            API().sendMessage(userId: yourID!, message: inputTextField.text!)
+            if chatRoomID == "" {
+                print("no Chatroom")
+                let alertView = UIAlertController(title: "Sorry", message: "This person unmatched you", preferredStyle: .alert)
+                let cancelAction = UIAlertAction.init(title: "Cancel", style: .cancel, handler: nil)
+                
+                alertView.addAction(cancelAction)
+                
+                self.present(alertView, animated: true, completion: nil)
+                
+            }
+            else {
+                print("enter conversation")
+                ConversationModel().addConversation(_userId: myID!, _chatRoomId: chatRoomID, _message: inputTextField.text!)
+                print("enter API")
+                API().sendMessage(userId: yourID!, message: inputTextField.text!)
+            }
             
             print("sender send text: " + inputTextField.text!)
             
