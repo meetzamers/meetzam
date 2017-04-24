@@ -27,6 +27,8 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
     var trailer_key: String?
     var currentLikedUser = Set<String>()
     var userCount: NSNumber?
+    var comment_author: String?
+    var comment_body: String?
     
     
     //var image: UIImage?
@@ -338,6 +340,7 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         })
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
     }
+    
 }
 
 class MovieList {

@@ -73,13 +73,6 @@ class UpcomMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         
     }
     
-    func addUserToUpcoming(userId: String) {
-    
-    }
-    
-    func removeUserFromUpcoming(userId: String) {
-        
-    }
     /*
     //JUNPU: fixed
     func getLikedMoviePosters(key: String) -> [String]
