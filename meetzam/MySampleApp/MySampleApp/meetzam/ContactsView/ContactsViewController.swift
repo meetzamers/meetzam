@@ -145,13 +145,11 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         
         vc.userBioField.text = matchedUsers[0].bio
         
-        vc.userId = contacts[indexPath].userId
-        
         //load movies
         let imagesURLs = SingleMovie().getLikedMoviePosters(key: contacts[indexPath].userId)
         
         var count = 0;
-        if (imagevarLs.count <= 3) {
+        if (imagesURLs.count <= 3) {
             count = imagesURLs.count
         } else {
             count = 3

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AWSMobileHubHelper
 
 class ContactProfile: UIViewController {
 
@@ -117,15 +118,13 @@ class ContactProfile: UIViewController {
     
     func goReport(alert: UIAlertAction!) {
         print("Clicked Report")
-        API().reportUser(AWSIdentityManager.default().identityId)
+        API().reportUser(userId: AWSIdentityManager.default().identityId!)
     }
     
     
     var userPicField = UIImageView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width))
     
     let displayName = UILabel()
-    
-    let userId = String()
     
     let userBioField = UILabel()
     
