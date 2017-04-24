@@ -76,6 +76,7 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
         } catch let err {
             print(err)
         }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -85,9 +86,6 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
         self.tabBarController?.tabBar.isHidden = false
         
         self.collectionView?.reloadData()
-        
-        print("didSelectContactNameFromContact")
-        print(didSelectContactNameFromContact)
         
         if didSelectContactNameFromContact != "" {
             let col = self.collectionView

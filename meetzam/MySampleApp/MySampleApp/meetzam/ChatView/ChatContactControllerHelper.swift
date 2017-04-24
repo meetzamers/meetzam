@@ -56,7 +56,7 @@ extension ChatViewController {
                     let chatRoomID_2 = ChatRoomModel().getChatRoomId(userId: contactID, recipientId: singleChatRoom.userId!)
                     
                     // Local
-                    let localContact = self.createContactwithName(name: contactName!, profileimageName: imagePath_string, context: context, userID: contactID)
+                    let localContact = ChatViewController.createContactwithName(name: contactName!, profileimageName: imagePath_string, context: context, userID: contactID)
                     let allMessages = ConversationModel().getHistoryRecords(userId_1: singleChatRoom.userId!, _chatRoomId_1: singleChatRoom.chatRoomId!, userId_2: contactID, _chatRoomId_2: chatRoomID_2)
                     
                     for singleMessage in allMessages {
@@ -105,21 +105,25 @@ extension ChatViewController {
                     let allMessages = ConversationModel().getHistoryRecords(userId_1: singleChatRoom.userId!, _chatRoomId_1: singleChatRoom.chatRoomId!, userId_2: contactID, _chatRoomId_2: chatRoomID_2)
                     
                     // Update contact
-                    // TODO TODO TODO test this function
+                    print("Updating new contact")
                     let newrequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
                     newrequest.predicate = NSPredicate(format: "userID = %@", contactID)
                     newrequest.fetchLimit = 1
                     do {
                         let contact = try context.fetch(newrequest) as! [Contact]
                         if contact.count == 0 {
-                            self.createContactwithName(name: contactName!, profileimageName: imagePath_string, context: context, userID: contactID)
+                            let thislocalContact = ChatViewController.createContactwithName(name: contactName!, profileimageName: imagePath_string, context: context, userID: contactID)
+                            ChatViewController.createMessagewithText(text: "Hello", contact: thislocalContact, minutesAgo: Date.init(timeIntervalSinceNow: 0), context: context)
+                            ChatViewController.createMessagewithText(text: "Hello", contact: thislocalContact, minutesAgo: Date.init(timeIntervalSinceNow: 0), context: context, issender: true)
+                            print("create new contact success")
+                            break
                         }
                     } catch let err {
                         print(err)
                     }
                     // TODO TODO TODO test this function
                     
-                    
+                    print("Updating new message")
                     // Update new message
                     let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
                     request.predicate = NSPredicate(format: "lastMessage.text == %@", (allMessages.last?.message)!)
@@ -155,7 +159,7 @@ extension ChatViewController {
     }
     
     // helper function to help create multiple contacts
-    private func createContactwithName(name: String, profileimageName: String, context: NSManagedObjectContext, userID: String) -> Contact {
+    static func createContactwithName(name: String, profileimageName: String, context: NSManagedObjectContext, userID: String) -> Contact {
         let cont = NSEntityDescription.insertNewObject(forEntityName: "Contact", into: context) as! Contact
         cont.name = name
         cont.profileImageName = profileimageName

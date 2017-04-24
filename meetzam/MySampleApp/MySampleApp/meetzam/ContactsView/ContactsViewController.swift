@@ -172,13 +172,16 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.delete
-        {
-            self.contacts.remove(at:indexPath.row)
+        if editingStyle == UITableViewCellEditingStyle.delete {
+            // call DB function to delete the contact
+            let yourID = contacts[indexPath.row].userId
+            print("yourID: \(yourID)")
+            let myID = AWSIdentityManager.default().identityId
+            let roomID = ChatRoomModel().getChatRoomId(userId: myID!, recipientId: yourID)
+//            ChatRoomModel().deleteRoom(roomId: roomID)
             
-            //call DB function to delete the contact
-            // XXXXXX
             
+            self.contacts.remove(at: indexPath.row)
             contactTable.reloadData()
         }
     }

@@ -121,35 +121,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
 //        completionHandler(UNNotificationPresentationOptions.badge)
         
-//        if let mainVC = UIApplication.shared.keyWindow?.rootViewController {
-//            if mainVC is MainViewController {
-//                if let selectedVC = (mainVC as! MainViewController).selectedViewController {
-//                    if selectedVC is UINavigationController {
-//                        let finalVC = selectedVC as? UINavigationController
-//                        if finalVC?.visibleViewController is ChatViewController {
-//                            (finalVC?.visibleViewController as! ChatViewController).viewWillAppear(true)
-//                        }
-//                    }
-//                }
-//            }
-//        }
-        
-        
-//        if let mainVC = UIApplication.shared.keyWindow?.rootViewController {
-//            if mainVC is MainViewController {
-//                if let selectedVC = (mainVC as! MainViewController).selectedViewController {
-//                    if selectedVC is UINavigationController {
-//                        let finalVC = selectedVC as? UINavigationController
-//                        if finalVC?.visibleViewController is ChatLogController {
-////                            (finalVC?.visibleViewController as? ChatLogController)?.notificationMsg(new_Contact: , text: text)
-//                        }
-//                        else if finalVC?.visibleViewController is ChatViewController {
-//                            (finalVC?.visibleViewController as! ChatViewController).viewWillAppear(true)
-//                        }
-//                    }
-//                }
-//            }
-//        }
     }
     
     // =======================================================================
