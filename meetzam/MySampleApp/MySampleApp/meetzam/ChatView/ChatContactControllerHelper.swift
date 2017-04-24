@@ -117,7 +117,13 @@ extension ChatViewController {
                             ChatViewController.createMessagewithText(text: "Hello", contact: thislocalContact, minutesAgo: Date.init(timeIntervalSinceNow: 0), context: context, issender: true)
                             
                             print("create new contact success")
-                            break
+                            do {
+                                try(context.save())
+                                print("save???")
+                            } catch let error {
+                                print(error)
+                            }
+                            return
                         }
                     } catch let err {
                         print(err)
@@ -149,6 +155,7 @@ extension ChatViewController {
                 }
             }
             
+            print("context.save")
             // save these data into context(core data)
             do {
                 try(context.save())
@@ -181,6 +188,7 @@ extension ChatViewController {
                 print(err)
             }
         }
+        
     }
     
     // helper function to help create multiple contacts

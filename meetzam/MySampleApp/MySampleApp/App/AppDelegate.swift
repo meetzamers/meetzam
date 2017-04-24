@@ -84,15 +84,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         if UIApplication.shared.applicationIconBadgeNumber > 0 {
             let realC = ChatViewController()
-            DispatchQueue.main.async {
-                realC.incomingData()
-            }
+            realC.incomingData()
             
-            let mainVC = UIApplication.shared.keyWindow?.rootViewController
-            if mainVC is MainViewController {
-                (mainVC as! MainViewController).viewControllers?[3].tabBarItem.badgeValue = " "
-            }
-            UIApplication.shared.applicationIconBadgeNumber = 0
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+                let mainVC = UIApplication.shared.keyWindow?.rootViewController
+                if mainVC is MainViewController {
+                    (mainVC as! MainViewController).viewControllers?[3].tabBarItem.badgeValue = " "
+                }
+                UIApplication.shared.applicationIconBadgeNumber = 0
+            })
         }
         
     }
