@@ -154,7 +154,7 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         // No 2
         emailTextField.frame = CGRect(x: UIScreen.main.bounds.width * 0.15, y: 250 + 5, width: UIScreen.main.bounds.width * 0.7, height: 50)
         emailTextField.placeholderColor = .gray
-        emailTextField.placeholder = "Email"
+        emailTextField.placeholder = "Email *"
         emailTextField.borderInactiveColor = UIColor.darkGray
         emailTextField.borderActiveColor = UIColor.init(red: 242/255, green: 92/255, blue: 0/255, alpha: 0.8)
         emailTextField.font = UIFont(name: "Raleway-Light", size: 18)
@@ -180,7 +180,7 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         // No 4
         genderTextField.frame = CGRect(x: UIScreen.main.bounds.width * 0.15, y: 360 + 5, width: UIScreen.main.bounds.width * 0.7, height: 50)
         genderTextField.placeholderColor = .gray
-        genderTextField.placeholder = "Gender *"
+        genderTextField.placeholder = "Gender"
         genderTextField.borderInactiveColor = UIColor.darkGray
         genderTextField.borderActiveColor = UIColor.init(red: 242/255, green: 92/255, blue: 0/255, alpha: 0.8)
         genderTextField.font = UIFont(name: "Raleway-Light", size: 18)
@@ -248,7 +248,7 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
         emptyWarningLabel.alpha = 0
         
         // Warning label2
-        emptyWarningLabel2.frame = CGRect(x: UIScreen.main.bounds.width * 0.15, y: 415, width: UIScreen.main.bounds.width * 0.7, height: 12)
+        emptyWarningLabel2.frame = CGRect(x: UIScreen.main.bounds.width * 0.15, y: 305, width: UIScreen.main.bounds.width * 0.7, height: 12)
         emptyWarningLabel2.text = "You can't leave this empty."
         emptyWarningLabel2.textAlignment = .right
         emptyWarningLabel2.textColor = UIColor.red
@@ -396,11 +396,11 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
                 self.emptyWarningLabel.removeFromSuperview()
             }
             
-            if (genderTextField.text == "") {
+            if (emailTextField.text == "") {
                 isempty = true
                 UIView.animate(withDuration: 0.1, animations: {
-                    self.genderTextField.placeholderColor = UIColor.red
-                    self.genderTextField.borderInactiveColor = UIColor.red
+                    self.emailTextField.placeholderColor = UIColor.red
+                    self.emailTextField.borderInactiveColor = UIColor.red
                     
                     self.emptyWarningLabel2.alpha = 1
                     self.view.addSubview(self.emptyWarningLabel2)
@@ -415,9 +415,9 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
             if (isempty == false) {
                 self.nameTextField.placeholderColor = .gray
                 self.nameTextField.borderInactiveColor = UIColor.darkGray
+                self.emailTextField.placeholderColor = .gray
                 self.emailTextField.borderInactiveColor = UIColor.darkGray
                 self.ageTextField.borderInactiveColor = UIColor.darkGray
-                self.genderTextField.placeholderColor = .gray
                 self.genderTextField.borderInactiveColor = UIColor.darkGray
                 self.regionTextField.borderInactiveColor = UIColor.darkGray
                 

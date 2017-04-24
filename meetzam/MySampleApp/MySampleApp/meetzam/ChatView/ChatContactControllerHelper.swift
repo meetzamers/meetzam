@@ -115,6 +115,7 @@ extension ChatViewController {
                             let thislocalContact = ChatViewController.createContactwithName(name: contactName!, profileimageName: imagePath_string, context: context, userID: contactID)
                             ChatViewController.createMessagewithText(text: "Hello", contact: thislocalContact, minutesAgo: Date.init(timeIntervalSinceNow: 0), context: context)
                             ChatViewController.createMessagewithText(text: "Hello", contact: thislocalContact, minutesAgo: Date.init(timeIntervalSinceNow: 0), context: context, issender: true)
+                            
                             print("create new contact success")
                             break
                         }
@@ -151,10 +152,34 @@ extension ChatViewController {
             // save these data into context(core data)
             do {
                 try(context.save())
+                
             } catch let error {
                 print(error)
             }
             
+        }
+    }
+    
+    func deleteData(userID: String) {
+        let delegate = UIApplication.shared.delegate as? AppDelegate
+        if let context = delegate?.persistentContainer.viewContext {
+            
+            do {
+                // find contact
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
+                fetchRequest.predicate = NSPredicate(format: "userID = %@", userID)
+                let objects = try(context.fetch(fetchRequest)) as? [NSManagedObject]
+                
+                for obj in objects! {
+                    let c = obj as! Contact
+                    print(c.name)
+                    context.delete(obj)
+                }
+                
+                try(context.save())
+            } catch let err {
+                print(err)
+            }
         }
     }
     

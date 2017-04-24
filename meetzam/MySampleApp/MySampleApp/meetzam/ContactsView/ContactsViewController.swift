@@ -178,11 +178,18 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
             print("yourID: \(yourID)")
             let myID = AWSIdentityManager.default().identityId
             let roomID = ChatRoomModel().getChatRoomId(userId: myID!, recipientId: yourID)
-//            ChatRoomModel().deleteRoom(roomId: roomID)
+            ChatRoomModel().deleteRoom(roomId: roomID)
+            API().deleteContact(userId: myID!, deleteContact: yourID)
+            API().deleteContact(userId: yourID, deleteContact: myID!)
             
+            let chatCV = ChatViewController()
+            chatCV.deleteData(userID: yourID)
             
             self.contacts.remove(at: indexPath.row)
             contactTable.reloadData()
+            
+            
+            
         }
     }
     
