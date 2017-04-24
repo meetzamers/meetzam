@@ -1,0 +1,150 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "The AWS CloudFormation template for this Serverless application",
+  "Resources": {
+    "ServerlessDeploymentBucket": {
+      "Type": "AWS::S3::Bucket"
+    },
+    "ReportUserFeedbackLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/lambda/reportUserFeedback-dev"
+      }
+    },
+    "IamRoleLambdaExecution": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
+              },
+              "Action": [
+                "sts:AssumeRole"
+              ]
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": {
+              "Fn::Join": [
+                "-",
+                [
+                  "dev",
+                  "clientService",
+                  "lambda"
+                ]
+              ]
+            },
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogStream"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/reportUserFeedback-dev:*"
+                    }
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::Sub": "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/reportUserFeedback-dev:*:*"
+                    }
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "DynamoDB:*",
+                  "Resource": "arn:aws:dynamodb:us-east-1:397508666882:table/meetzam-mobilehub-1569925313-UserProfile"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "ses:*",
+                  "Resource": "arn:aws:ses:us-east-1:397508666882:identity/meetzam@163.com"
+                }
+              ]
+            }
+          }
+        ],
+        "Path": "/",
+        "RoleName": {
+          "Fn::Join": [
+            "-",
+            [
+              "clientService",
+              "dev",
+              "us-east-1",
+              "lambdaRole"
+            ]
+          ]
+        }
+      }
+    },
+    "ReportUserFeedbackLambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ServerlessDeploymentBucket"
+          },
+          "S3Key": "serverless/clientService/dev/1493014134693-2017-04-24T06:08:54.693Z/clientService.zip"
+        },
+        "FunctionName": "reportUserFeedback-dev",
+        "Handler": "reportUserFeedback.handler",
+        "MemorySize": 128,
+        "Role": {
+          "Fn::GetAtt": [
+            "IamRoleLambdaExecution",
+            "Arn"
+          ]
+        },
+        "Runtime": "nodejs6.10",
+        "Timeout": 6,
+        "Description": "send email to user who reported other user as a default response."
+      },
+      "DependsOn": [
+        "ReportUserFeedbackLogGroup",
+        "IamRoleLambdaExecution"
+      ]
+    },
+    "ReportUserFeedbackLambdaVersionOZIAB9Z31iNxLGiLV24GdT7ESBKNq8P2WHNLXE2y34": {
+      "Type": "AWS::Lambda::Version",
+      "DeletionPolicy": "Retain",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "ReportUserFeedbackLambdaFunction"
+        },
+        "CodeSha256": "OZIAB9Z31iNxLGiLV2+4GdT7ESBKNq8P2WHNLXE2y34=",
+        "Description": "send email to user who reported other user as a default response."
+      }
+    }
+  },
+  "Outputs": {
+    "ServerlessDeploymentBucketName": {
+      "Value": {
+        "Ref": "ServerlessDeploymentBucket"
+      }
+    },
+    "ReportUserFeedbackLambdaFunctionQualifiedArn": {
+      "Description": "Current Lambda function version",
+      "Value": {
+        "Ref": "ReportUserFeedbackLambdaVersionOZIAB9Z31iNxLGiLV24GdT7ESBKNq8P2WHNLXE2y34"
+      }
+    }
+  }
+}

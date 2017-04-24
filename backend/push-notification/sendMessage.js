@@ -9,6 +9,16 @@ const sns = new AWS.SNS({apiVersion: '2010-03-31'});
 
 // function takes userId (event.userId) and (event.message) as parameters
 function publishNotificationToEndpoint (event, context, callback) {
+
+	// Ryan added below
+    var apnsJSON = {
+	aps: {
+		    alert: event.message,
+ 		    badge: 2
+	    }
+    };
+    var apnsString = JSON.stringify(apnsJSON);
+    // Ryan added above
  
     var db_param = {
       Key: {
@@ -32,16 +42,10 @@ function publishNotificationToEndpoint (event, context, callback) {
             var push_param = {
                 MessageStructure: "json",
                 Message: JSON.stringify({
-                default: event.message,
-                APNS: JSON.stringify({
-                      aps: {
-                        alert: event.message,
-                        badge: 1
-                      }
-                    }),
-                //APNS_SANDBOX: apnsString
-              }),
-                // Subject: "Message",
+		            default: event.message,
+		            APNS: apnsString,
+		            APNS_SANDBOX: apnsString
+	            }),
                 TargetArn: deviceARN
             };
 
