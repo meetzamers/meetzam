@@ -11,6 +11,16 @@ const sns = new AWS.SNS({apiVersion: '2010-03-31'});
 
 // function takes userId as parameter (event.userId)
 function publishMatchNotificationToEndpoint (event, context, callback) {
+
+  // Ryan added below
+    var apnsJSON = {
+  aps: {
+        alert: "We've got a match for you!!!",
+        badge: 1
+      }
+    };
+    var apnsString = JSON.stringify(apnsJSON);
+    // Ryan added above
  
     var db_param = {
       Key: {
@@ -32,14 +42,12 @@ function publishMatchNotificationToEndpoint (event, context, callback) {
             console.log("Endpoint: " + deviceARN);
 
             var push_param = {
-                Message: "We've got a match for you!!!",
-                MessageAttributes: {
-                    someKey: {
-                        DataType: 'String', /* required */
-                        StringValue: 'STRING_VALUE'
-                    },
-                },
-                Subject: "Match found!",
+                MessageStructure: "json",
+                Message: JSON.stringify({
+                default: "We've got a match for you!!!",
+                APNS: apnsString,
+                APNS_SANDBOX: apnsString
+              }),
                 TargetArn: deviceARN
             };
 
