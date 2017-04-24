@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AWSMobileHubHelper
 
 class ContactProfile: UIViewController {
 
@@ -117,6 +118,7 @@ class ContactProfile: UIViewController {
     
     func goReport(alert: UIAlertAction!) {
         print("Clicked Report")
+        API().reportUser(userId: AWSIdentityManager.default().identityId!)
     }
     
     
