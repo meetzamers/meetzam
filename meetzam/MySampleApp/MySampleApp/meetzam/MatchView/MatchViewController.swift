@@ -75,6 +75,21 @@ class MatchViewController: UIViewController {
                             ConversationModel().addConversation(_userId: myID, _chatRoomId: chatRoomID, _message: "Hello")
                             ConversationModel().addConversation(_userId: youID, _chatRoomId: yourchatRoomID, _message: "Hello")
                             
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.2, execute: {
+                                let mainVC = UIApplication.shared.keyWindow?.rootViewController
+                                if mainVC is MainViewController {
+                                    let navVC = (mainVC as! MainViewController).viewControllers?[3]
+                                    if navVC is NaviViewController {
+                                        let chatVC = (navVC as! NaviViewController).topViewController
+                                        if chatVC is ChatViewController {
+                                            (chatVC as! ChatViewController).incomingContact()
+                                        }
+                                    }
+                                }
+                            })
+                            
+                            
                         }
                     }
                 }

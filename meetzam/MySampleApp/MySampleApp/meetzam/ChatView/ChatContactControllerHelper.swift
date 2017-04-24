@@ -92,19 +92,14 @@ extension ChatViewController {
         col?.layoutIfNeeded()
         let pathArr = col?.indexPathsForVisibleItems
         for path in pathArr! {
-            print("here")
             (col?.cellForItem(at: path) as! MessageCell).contactProfileImageView.image = nil
             (col?.cellForItem(at: path) as! MessageCell).contactMsgLabel.text = nil
             (col?.cellForItem(at: path) as! MessageCell).contactNameLabel.text = nil
             (col?.cellForItem(at: path) as! MessageCell).timeLabel.text = nil
-            print("here11111")
         }
-        print("here73423742374234")
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-            print("here222222")
             self.setupData()
-            print("here8888888")
         })
         
     }

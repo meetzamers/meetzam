@@ -112,8 +112,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        let realC = ChatViewController()
-        realC.incomingData()
+        
+        
+        if UIApplication.shared.applicationIconBadgeNumber == 1 {
+            let realC = ChatViewController()
+            realC.incomingData()
+        }
+        else if UIApplication.shared.applicationIconBadgeNumber == 2 {
+            let mainVC = UIApplication.shared.keyWindow?.rootViewController
+            if mainVC is MainViewController {
+                let navVC = (mainVC as! MainViewController).viewControllers?[3]
+                if navVC is NaviViewController {
+                    let chatVC = (navVC as! NaviViewController).topViewController
+                    if chatVC is ChatViewController {
+                        (chatVC as! ChatViewController).incomingContact()
+                    }
+                }
+            }
+        }
+        
         
         let mainVC = UIApplication.shared.keyWindow?.rootViewController
         if mainVC is MainViewController {
