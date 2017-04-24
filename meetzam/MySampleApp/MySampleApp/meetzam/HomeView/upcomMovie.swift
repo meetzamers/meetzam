@@ -72,7 +72,7 @@ class UpcomMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         return upcoms
         
     }
-    
+    /*
     func addUserToUpcoming(userId: String) {
     
     }
@@ -80,219 +80,23 @@ class UpcomMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
     func removeUserFromUpcoming(userId: String) {
         
     }
-    /*
-    //JUNPU: fixed
-    func getLikedMoviePosters(key: String) -> [String]
-    {
-        print("===== getLikedMoviePosters =====")
-        
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        let mapper = AWSDynamoDBObjectMapper.default()
-        var currentLikedMovie = Set<String>()
-        let userProfile = UserProfileToDB()
-        
-        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
-            if let error = task.error as? NSError {
-                print("InsertError: \(error)")
-            } else if let user_profile_addTo = task.result as? UserProfileToDB {
-                if (user_profile_addTo.currentLikedMovie.count != 0 && user_profile_addTo.movieCount == 0) {
-                    print("dummy detected")
-                }
-                else {
-                    currentLikedMovie=user_profile_addTo.currentLikedMovie
-                }
-                userProfile?.displayName=user_profile_addTo.displayName
-            }
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            return nil
-        }).waitUntilFinished()
-        
-        var MoviesPosterURL:Array = [String]()
-        for movie in (currentLikedMovie) {
-            print("You Liked \(movie)")
-            mapper.load(SingleMovie.self, hashKey: movie, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
-                if let error = task.error as? NSError {
-                    print("InsertError: \(error)")
-                } else if let single_movie = task.result as? SingleMovie {
-                    MoviesPosterURL.append(single_movie.poster_path!)
-                }
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                return nil
-            }).waitUntilFinished()
-        }
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        return MoviesPosterURL
-    }
     
-    //JUNPU: fixed
-    func getCurrentLikedMovies(key: String) -> [SingleMovie]
-    {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        
-        print("===== getCurrentLikedMovies =====")
+    func getUpcom(title: String) -> SingleMovie {
+        print("===== getUpcom =====")
         let mapper = AWSDynamoDBObjectMapper.default()
-        var currentLikedMovie = Set<String>()
-        let userProfile = UserProfileToDB()
-        
-        mapper.load(UserProfileToDB.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
-            if let error = task.error as? NSError {
-                print("InsertError: \(error)")
-            } else if let user_profile_addTo = task.result as? UserProfileToDB {
-                if (user_profile_addTo.currentLikedMovie.count != 0 && user_profile_addTo.movieCount == 0) {
-                    print("dummy detected")
-                }
-                else {
-                    currentLikedMovie=user_profile_addTo.currentLikedMovie
-                }
-                userProfile?.displayName=user_profile_addTo.displayName
-            }
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            return nil
-        }).waitUntilFinished()
-        
-        var currentLikedMoviesArr:Array = [SingleMovie]()
-        for movie in (currentLikedMovie) {
-            print("You Liked \(movie)")
-            mapper.load(SingleMovie.self, hashKey: movie, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
-                if let error = task.error as? NSError {
-                    print("InsertError: \(error)")
-                } else if let single_movie = task.result as? SingleMovie {
-                    currentLikedMoviesArr.append(single_movie)
-                }
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
-                return nil
-            }).waitUntilFinished()
-            
-        }
-        
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        return currentLikedMoviesArr
-    }
-    
-    //JUNPU: fixed
-    func isCurrentMovie(title: String) -> Bool
-    {
-        print("===== isCurrentMovie =====")
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        var result: Bool = false
-        var currentMovieTitles: Array = [String]()
-        let mapper = AWSDynamoDBObjectMapper.default()
-        let scanExpression = AWSDynamoDBScanExpression()
-        
-        mapper.scan(SingleMovie.self, expression: scanExpression).continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
-            if let error = task.error as? NSError {
-                print("The request failed. Error: \(error)")
-            } else if let allCurrentMovie = task.result {
-                for current_movie in allCurrentMovie.items as! [SingleMovie] {
-                    currentMovieTitles.append(current_movie.title)
-                }
-            }
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            return nil
-        }).waitUntilFinished()
-        if (currentMovieTitles.contains(title))
-        {
-            result = true
-        }
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        return result
-    }
-    
-    //JUNPU: fixed busy waiting
-    func insertToCurrentLikedUser(key: String, userid: String)
-    {
-        print("===== insertToCurrentLikedUser =====")
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        
-        let mapper = AWSDynamoDBObjectMapper.default()
-        
-        let movie = SingleMovie()
-        
-        mapper.load(SingleMovie.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+        let converted_movie = SingleMovie()
+        mapper.load(UpcomMovie.self, hashKey: title, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
             if let error = task.error as NSError? {
-                print("InsertError: \(error)")
-            } else if let movie_addTo = task.result as? SingleMovie {
-                
-                movie?.title=key
-                movie?.directors = movie_addTo.directors
-                movie?.genres = movie_addTo.genres
-                movie?.longDescription = movie_addTo.longDescription
-                movie?.poster_path = movie_addTo.poster_path
-                movie?.releaseYear = movie_addTo.releaseYear
-                movie?.shortDescriptiontle = movie_addTo.shortDescriptiontle
-                movie?.tmdb_id = movie_addTo.tmdb_id
-                movie?.topCast = movie_addTo.topCast
-                movie?.currentLikedUser = movie_addTo.currentLikedUser
-                movie?.userCount = movie_addTo.userCount
-                movie?.trailer_key = movie_addTo.trailer_key
-                if (!((movie?.currentLikedUser.contains(userid))!))
-                {
-                    if (movie?.currentLikedUser.count != 0 && movie?.userCount == 0) {
-                        //dummy detected
-                        movie?.currentLikedUser.removeAll()
-                    }
-                    movie?.currentLikedUser.insert(userid)
-                    movie?.userCount = movie?.currentLikedUser.count as NSNumber?
-                }
-                mapper.save(movie!)
-                print("insertToCurrentLikedUser SUCCESS")
-                
+                print("get: \(error)")
+            } else if let gotten_movie = task.result as? UpcomMovie {
+                converted_movie?.title = gotten_movie.title
+                converted_movie?.poster_path = gotten_movie.poster_path
             }
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             return nil
-        })
+        }).waitUntilFinished()
+        print("converted \(String(describing: converted_movie?.title))")
+        return converted_movie!
     }
-    
-    //JUNPU: fixed busy waiting
-    func deleteFromCurrentLikedUser(key: String, userid: String)
-    {
-        print("===== deleteFromCurrentLikedUser =====")
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        let mapper = AWSDynamoDBObjectMapper.default()
-        
-        let movie = SingleMovie()
-        
-        mapper.load(SingleMovie.self, hashKey: key, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
-            if let error = task.error as NSError? {
-                print("InsertError: \(error)")
-            } else if let movie_addTo = task.result as? SingleMovie {
-                
-                movie?.title=key
-                movie?.directors = movie_addTo.directors
-                movie?.genres = movie_addTo.genres
-                movie?.longDescription = movie_addTo.longDescription
-                movie?.poster_path = movie_addTo.poster_path
-                movie?.releaseYear = movie_addTo.releaseYear
-                movie?.shortDescriptiontle = movie_addTo.shortDescriptiontle
-                movie?.tmdb_id = movie_addTo.tmdb_id
-                movie?.topCast = movie_addTo.topCast
-                movie?.currentLikedUser = movie_addTo.currentLikedUser
-                movie?.userCount = movie_addTo.userCount
-                movie?.trailer_key = movie_addTo.trailer_key
-                if ((movie?.currentLikedUser.contains(userid))!)
-                {
-                    _ = movie?.currentLikedUser.remove(userid)
-                    movie?.userCount = movie?.currentLikedUser.count as NSNumber?
-                    //dummy string since empty string set not allowed
-                    if (movie?.currentLikedUser.count == 0) {
-                        movie?.currentLikedUser.insert("mushroom13")
-                    }
-                }
-                else {
-                    print("error: remove a user that is not in the list")
-                }
-                mapper.save(movie!)
-                print("SUCCESS")
-                
-            }
-            return nil
-        })
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
-    }
-}
-
-class MovieList {
-    var tableRows:Array = [SingleMovie]()
-    
-*/
+ */
 }

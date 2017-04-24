@@ -51,7 +51,9 @@ extension ChatViewController {
                 for singleChatRoom in chatRoomList {
                     // DB
                     let contactID = singleChatRoom.recipientId!
-                    let contactName = UserProfileToDB().getUserProfileByIds(userIDs: [contactID])[0].displayName
+                    var contactIDs = [String]()
+                    contactIDs.append(contactID)
+                    let contactName = UserProfileToDB().getUserProfileByIds(userIDs: contactIDs)[0].displayName
                     let imagePath_string = UserProfileToDB().downloadUserIcon(userID: contactID).path
                     let chatRoomID_2 = ChatRoomModel().getChatRoomId(userId: contactID, recipientId: singleChatRoom.userId!)
                     
@@ -170,7 +172,6 @@ extension ChatViewController {
         msg.contact = contact
         msg.text = text
         msg.date = minutesAgo as NSDate
-//            NSDate().addingTimeInterval(-minutesAgo * 60)
         msg.isSender = issender
         
         contact.lastMessage = msg
