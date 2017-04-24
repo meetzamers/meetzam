@@ -77,3 +77,19 @@ functions:
     runtime: nodejs6.10
     memorySize: 128
     timeout: 6
+
+  addUserToUpMovie:
+    handler: addUserToUpMovie.handler
+    name: addUserToUpMovie-${self:provider.stage}
+    description: add liked user to upcoming movie
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6
+
+  deleteLikedUser:
+    handler: deleteLikedUser.handler
+    name: deleteLikedUser-${self:provider.stage}
+    description: delete liked user
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6

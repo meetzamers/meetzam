@@ -66,6 +66,10 @@ class API {
         return rootUrl + "/user/contact?" + "userId=" + userId + "&newMatched=" + deleteContact
     }
     
+    private func deleteLikedUserDELETEUrl(userId: String, deleteUser: String) -> String {
+        return rootUrl + "/user/likeduser?" + "userId=" + userId + "&newMatched=" + deleteUser
+    }
+    
     // ==================================================================================
     // private section end
     // ==================================================================================
@@ -125,6 +129,11 @@ class API {
     func deleteContact (userId: String, deleteContact: String) {
         print("==============deleteContact==============")
         httpRequest(url: deleteContactDELETEUrl(userId: userId, deleteContact: deleteContact), method: "DELETE")
+    }
+    
+    func deleteLiked (userId: String, deleteUser: String)
+    {
+        httpRequest(url: deleteLikedUserDELETEUrl(userId: userId, deleteUser: deleteUser), method: "DELETE")
     }
  
 }
