@@ -57,7 +57,49 @@ function sendDefaultReponseToReporter(event, context, callback) {
 
             ses.sendEmail(ses_param, function(err, data) {
                 if (err) console.log(err, err.stack); // an error occurred
-                else     console.log(data);           // successful response
+                else {
+
+                  console.log(data);           // successful response 
+                  var ses_param2 = { 
+                      Destination: { 
+                         ToAddresses: [  
+                            "junpufan@gmail.com" 
+                         ] 
+                      },  
+                      Message: { 
+                        Body: { 
+                          Html: { 
+                           Charset: "UTF-8",  
+                           Data: "<h3>User " + displayName + " just reported an event of inapporpriate bahavior while using Meetzam.</h3>" + "<p>Event: Reporting inapporprate behavior.</p>" 
+                          },  
+                        Text: { 
+                           Charset: "UTF-8",  
+                           Data: "This is the message body in text format." 
+                          } 
+                        },  
+                         Subject: { 
+                          Charset: "UTF-8",  
+                          Data: "User Feedback" 
+                         } 
+                      },  
+                      Source: "meetzam@163.com",  
+                      SourceArn: "arn:aws:ses:us-east-1:397508666882:identity/meetzam@163.com" 
+                }; 
+                  ses.sendEmail(ses_param2, function(err, data) { 
+                  if (err) console.log(err, err.stack); // an error occurred 
+                  else console.log(data);           // successful response 
+                });   
+
+
+
+
+
+
+                }
+
+
+
+
                 /*
                data = {
                 MessageId: "EXAMPLE78603177f-7a5433e7-8edb-42ae-af10-f0181f34d6ee-000000"

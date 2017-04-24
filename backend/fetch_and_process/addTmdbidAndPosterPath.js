@@ -89,6 +89,7 @@ function scan_invoke_and_update (event, context, callback) {
                 if (total > 0) {
                     var tmdb_id = results[0].id.toString();
                     var poster_path = results[0].poster_path;
+                    var popularity = results[0].popularity.toString();
                     var params = {
                         Key: {
                             "title": {
@@ -97,7 +98,8 @@ function scan_invoke_and_update (event, context, callback) {
                         },
                         ExpressionAttributeNames: {
                             "#tmdb_id": "tmdb_id",
-                            "#poster_path": "poster_path"
+                            "#poster_path": "poster_path",
+                            "#popularity": "popularity"
                         },
                         ExpressionAttributeValues: {
                             ":tmdb_id": {
@@ -105,11 +107,14 @@ function scan_invoke_and_update (event, context, callback) {
                             },
                             ":poster_path": {
                                 S: poster_path
+                            },
+                            ":popularity": {
+                                S: popularity
                             }
                         },
                         ReturnValues: "ALL_NEW",
                         TableName: tableName,
-                        UpdateExpression: "SET #tmdb_id = :tmdb_id, #poster_path = :poster_path" 
+                        UpdateExpression: "SET #tmdb_id = :tmdb_id, #poster_path = :poster_path, #popularity = :popularity" 
                     };
                     dynamoDB.updateItem(params, function(err, data) {
                         if (err) {
