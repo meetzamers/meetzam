@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		136D68631E82F1C2004E96CA /* MovieAndList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136D68621E82F1C2004E96CA /* MovieAndList.swift */; };
 		185099741EA1B8B0001FA648 /* NSDate+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185099731EA1B8B0001FA648 /* NSDate+Util.swift */; };
 		18D8DE2D1EA7D76E00FD2197 /* HistoryMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D8DE2C1EA7D76E00FD2197 /* HistoryMovie.swift */; };
 		18D8DE2F1EA7D7A200FD2197 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D8DE2E1EA7D7A200FD2197 /* API.swift */; };
 		18D8DE311EA7D7D400FD2197 /* ConversationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D8DE301EA7D7D400FD2197 /* ConversationModel.swift */; };
 		18D8DE331EAD75C300FD2197 /* upcomMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D8DE321EAD75C300FD2197 /* upcomMovie.swift */; };
+		18D8DE351EADDAC200FD2197 /* MovieAndList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D8DE341EADDAC200FD2197 /* MovieAndList.swift */; };
 		18FC3D8B1E980CF70091B37F /* ChatRoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18FC3D8A1E980CF70091B37F /* ChatRoomModel.swift */; };
 		1B2F3E701E95581A00417F6B /* AWSLambda.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2F3E6F1E95581A00417F6B /* AWSLambda.framework */; };
 		1B2F3E711E95581A00417F6B /* AWSLambda.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1B2F3E6F1E95581A00417F6B /* AWSLambda.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -145,12 +145,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		136D68621E82F1C2004E96CA /* MovieAndList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MovieAndList.swift; path = MySampleApp/meetzam/HomeView/MovieAndList.swift; sourceTree = SOURCE_ROOT; };
 		185099731EA1B8B0001FA648 /* NSDate+Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSDate+Util.swift"; path = "MySampleApp/meetzam/NSDate+Util.swift"; sourceTree = SOURCE_ROOT; };
 		18D8DE2C1EA7D76E00FD2197 /* HistoryMovie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HistoryMovie.swift; path = MySampleApp/meetzam/ProfileView/HistoryMovie.swift; sourceTree = SOURCE_ROOT; };
 		18D8DE2E1EA7D7A200FD2197 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = API.swift; path = MySampleApp/meetzam/API.swift; sourceTree = SOURCE_ROOT; };
 		18D8DE301EA7D7D400FD2197 /* ConversationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConversationModel.swift; path = MySampleApp/meetzam/ChatView/ConversationModel.swift; sourceTree = SOURCE_ROOT; };
 		18D8DE321EAD75C300FD2197 /* upcomMovie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = upcomMovie.swift; path = MySampleApp/meetzam/HomeView/upcomMovie.swift; sourceTree = SOURCE_ROOT; };
+		18D8DE341EADDAC200FD2197 /* MovieAndList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MovieAndList.swift; path = MySampleApp/meetzam/HomeView/MovieAndList.swift; sourceTree = SOURCE_ROOT; };
 		18FC3D8A1E980CF70091B37F /* ChatRoomModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatRoomModel.swift; path = MySampleApp/meetzam/ChatView/ChatRoomModel.swift; sourceTree = SOURCE_ROOT; };
 		1B2F3E6F1E95581A00417F6B /* AWSLambda.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSLambda.framework; sourceTree = "<group>"; };
 		1B46BF811E96D75000FEADD0 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
@@ -672,8 +672,8 @@
 		C4BF9C421E5B640900C73405 /* HomeView */ = {
 			isa = PBXGroup;
 			children = (
+				18D8DE341EADDAC200FD2197 /* MovieAndList.swift */,
 				C4BF9C431E5B643C00C73405 /* TabBarHomeViewController.swift */,
-				136D68621E82F1C2004E96CA /* MovieAndList.swift */,
 				18D8DE321EAD75C300FD2197 /* upcomMovie.swift */,
 			);
 			name = HomeView;
@@ -835,6 +835,7 @@
 				E7A30F045ABE0B1B00000000 /* NoSQLTableFactory.swift in Sources */,
 				E7A30F0491953CE700000000 /* UserProfile.swift in Sources */,
 				E7A30F04677133E600000000 /* AWSAPI_ADI48J5BXK_MeetzambackendMobileHubClient.m in Sources */,
+				18D8DE351EADDAC200FD2197 /* MovieAndList.swift in Sources */,
 				5DD94CED1E6614F800B7DD80 /* MovieCollectionCell.swift in Sources */,
 				C45EC60D1EA4B8E4005C6F4A /* ChatContactControllerHelper.swift in Sources */,
 				E7A30F04879C1BE100000000 /* AppDelegate.swift in Sources */,
@@ -874,7 +875,6 @@
 				E7A30F04F85210F300000000 /* CloudLogicAPIListViewController.swift in Sources */,
 				C40661C01E5CBCBF005D2145 /* ProfileViewController.swift in Sources */,
 				C421A4571EA4C2AE002416FF /* Contact+CoreDataClass.swift in Sources */,
-				136D68631E82F1C2004E96CA /* MovieAndList.swift in Sources */,
 				18D8DE2F1EA7D7A200FD2197 /* API.swift in Sources */,
 				E7A30F04EF181B5600000000 /* NoSQLModelHelpers.swift in Sources */,
 				E7A30F048E97A0BD00000000 /* APIPathSelectorViewController.swift in Sources */,
