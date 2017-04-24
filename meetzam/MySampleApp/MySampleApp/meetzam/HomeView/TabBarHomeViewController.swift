@@ -350,7 +350,7 @@ class FrameViewController: UIViewController {
             //remove user from movie's liked list
             SingleMovie().deleteFromCurrentLikedUser(key: movieTitle.text!, userid: AWSIdentityManager.default().identityId!)
         }
-        
+
         //remove movie from user's liked list
         UserProfileToDB().deleteFromCurrentLikedMovie(key: AWSIdentityManager.default().identityId!, movieTitle: movieTitle.text!)
         // unlike animation
@@ -377,7 +377,7 @@ class FrameViewController: UIViewController {
             //add user to movie's liked user list
             SingleMovie().insertToCurrentLikedUser(key: movieTitle.text!, userid: AWSIdentityManager.default().identityId!)
         }
-        
+
         //add movie to user's liked movie list
         UserProfileToDB().insertToCurrentLikedMovie(key: AWSIdentityManager.default().identityId!, movieTitle: movieTitle.text!)
         

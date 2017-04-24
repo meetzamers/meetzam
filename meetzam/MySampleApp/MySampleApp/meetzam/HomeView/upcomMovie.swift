@@ -72,31 +72,5 @@ class UpcomMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
         return upcoms
         
     }
-    /*
-    func addUserToUpcoming(userId: String) {
-    
-    }
-    
-    func removeUserFromUpcoming(userId: String) {
-        
-    }
-    
-    func getUpcom(title: String) -> SingleMovie {
-        print("===== getUpcom =====")
-        let mapper = AWSDynamoDBObjectMapper.default()
-        let converted_movie = SingleMovie()
-        mapper.load(UpcomMovie.self, hashKey: title, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
-            if let error = task.error as NSError? {
-                print("get: \(error)")
-            } else if let gotten_movie = task.result as? UpcomMovie {
-                converted_movie?.title = gotten_movie.title
-                converted_movie?.poster_path = gotten_movie.poster_path
-            }
-            UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            return nil
-        }).waitUntilFinished()
-        print("converted \(String(describing: converted_movie?.title))")
-        return converted_movie!
-    }
- */
+
 }
