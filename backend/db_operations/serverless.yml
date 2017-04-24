@@ -1,7 +1,7 @@
 
 service: dbOps
 
-frameworkVersion: "=1.10.1"
+frameworkVersion: "=1.11.0"
 
 provider:
   name: aws
@@ -69,4 +69,11 @@ functions:
     runtime: nodejs6.10
     memorySize: 128
     timeout: 6
-    
+
+  deleteContact:
+    handler: deleteContact.handler
+    name: deleteContact-${self:provider.stage}
+    description: delete contact
+    runtime: nodejs6.10
+    memorySize: 128
+    timeout: 6

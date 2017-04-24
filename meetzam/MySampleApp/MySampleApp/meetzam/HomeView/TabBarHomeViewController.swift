@@ -36,6 +36,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        API().deleteContact(userId: "us-east-1:996b6604-9bfb-4f74-8c89-882525ded18e", deleteContact: "us-east-1:b471f791-1b90-41a2-90d7-980a426261e2")
         // Let self be the delegate and dataSource
         self.delegate = self
         self.dataSource = self
