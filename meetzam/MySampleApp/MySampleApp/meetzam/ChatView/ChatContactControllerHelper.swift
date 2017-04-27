@@ -51,12 +51,14 @@ extension ChatViewController {
                 for singleChatRoom in chatRoomList {
                     // DB
                     let contactID = singleChatRoom.recipientId!
-                    let contactName = UserProfileToDB().getUserProfileByIds(userIDs: [contactID])[0].displayName
+                    var contactIDs = [String]()
+                    contactIDs.append(contactID)
+                    let contactName = UserProfileToDB().getUserProfileByIds(userIDs: contactIDs)[0].displayName
                     let imagePath_string = UserProfileToDB().downloadUserIcon(userID: contactID).path
                     let chatRoomID_2 = ChatRoomModel().getChatRoomId(userId: contactID, recipientId: singleChatRoom.userId!)
                     
                     // Local
-                    let localContact = self.createContactwithName(name: contactName!, profileimageName: imagePath_string, context: context, userID: contactID)
+                    let localContact = ChatViewController.createContactwithName(name: contactName!, profileimageName: imagePath_string, context: context, userID: contactID)
                     let allMessages = ConversationModel().getHistoryRecords(userId_1: singleChatRoom.userId!, _chatRoomId_1: singleChatRoom.chatRoomId!, userId_2: contactID, _chatRoomId_2: chatRoomID_2)
                     
                     for singleMessage in allMessages {
@@ -87,6 +89,23 @@ extension ChatViewController {
 
     }
     
+    func incomingContact() {
+        let col = self.collectionView
+        col?.layoutIfNeeded()
+        let pathArr = col?.indexPathsForVisibleItems
+        for path in pathArr! {
+            (col?.cellForItem(at: path) as! MessageCell).contactProfileImageView.image = nil
+            (col?.cellForItem(at: path) as! MessageCell).contactMsgLabel.text = nil
+            (col?.cellForItem(at: path) as! MessageCell).contactNameLabel.text = nil
+            (col?.cellForItem(at: path) as! MessageCell).timeLabel.text = nil
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+            self.setupData()
+        })
+        
+    }
+    
     func incomingData() {
         let delegate = UIApplication.shared.delegate as? AppDelegate
         if let context = delegate?.persistentContainer.viewContext {
@@ -104,22 +123,33 @@ extension ChatViewController {
                     // Local
                     let allMessages = ConversationModel().getHistoryRecords(userId_1: singleChatRoom.userId!, _chatRoomId_1: singleChatRoom.chatRoomId!, userId_2: contactID, _chatRoomId_2: chatRoomID_2)
                     
-                    // Update contact
-                    // TODO TODO TODO test this function
-                    let newrequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
-                    newrequest.predicate = NSPredicate(format: "userID = %@", contactID)
-                    newrequest.fetchLimit = 1
-                    do {
-                        let contact = try context.fetch(newrequest) as! [Contact]
-                        if contact.count == 0 {
-                            self.createContactwithName(name: contactName!, profileimageName: imagePath_string, context: context, userID: contactID)
-                        }
-                    } catch let err {
-                        print(err)
-                    }
-                    // TODO TODO TODO test this function
+//                    // Update contact
+//                    print("Updating new contact")
+//                    let newrequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
+//                    newrequest.predicate = NSPredicate(format: "userID = %@", contactID)
+//                    newrequest.fetchLimit = 1
+//                    do {
+//                        let contact = try context.fetch(newrequest) as! [Contact]
+//                        if contact.count == 0 {
+//                            let thislocalContact = ChatViewController.createContactwithName(name: contactName!, profileimageName: imagePath_string, context: context, userID: contactID)
+//                            ChatViewController.createMessagewithText(text: "Hello", contact: thislocalContact, minutesAgo: Date.init(timeIntervalSinceNow: 0), context: context)
+//                            ChatViewController.createMessagewithText(text: "Hello", contact: thislocalContact, minutesAgo: Date.init(timeIntervalSinceNow: 0), context: context, issender: true)
+//                            
+//                            print("create new contact success")
+//                            do {
+//                                try(context.save())
+//                                print("save???")
+//                            } catch let error {
+//                                print(error)
+//                            }
+//                            break
+//                        }
+//                    } catch let err {
+//                        print(err)
+//                    }
+//                    // TODO TODO TODO test this function
                     
-                    
+                    print("Updating new message")
                     // Update new message
                     let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
                     request.predicate = NSPredicate(format: "lastMessage.text == %@", (allMessages.last?.message)!)
@@ -144,9 +174,11 @@ extension ChatViewController {
                 }
             }
             
+            print("context.save")
             // save these data into context(core data)
             do {
                 try(context.save())
+                
             } catch let error {
                 print(error)
             }
@@ -154,8 +186,32 @@ extension ChatViewController {
         }
     }
     
+    func deleteData(userID: String) {
+        let delegate = UIApplication.shared.delegate as? AppDelegate
+        if let context = delegate?.persistentContainer.viewContext {
+            
+            do {
+                // find contact
+                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
+                fetchRequest.predicate = NSPredicate(format: "userID = %@", userID)
+                let objects = try(context.fetch(fetchRequest)) as? [NSManagedObject]
+                
+                for obj in objects! {
+                    let c = obj as! Contact
+                    print(c.name)
+                    context.delete(obj)
+                }
+                
+                try(context.save())
+            } catch let err {
+                print(err)
+            }
+        }
+        
+    }
+    
     // helper function to help create multiple contacts
-    private func createContactwithName(name: String, profileimageName: String, context: NSManagedObjectContext, userID: String) -> Contact {
+    static func createContactwithName(name: String, profileimageName: String, context: NSManagedObjectContext, userID: String) -> Contact {
         let cont = NSEntityDescription.insertNewObject(forEntityName: "Contact", into: context) as! Contact
         cont.name = name
         cont.profileImageName = profileimageName
@@ -170,7 +226,6 @@ extension ChatViewController {
         msg.contact = contact
         msg.text = text
         msg.date = minutesAgo as NSDate
-//            NSDate().addingTimeInterval(-minutesAgo * 60)
         msg.isSender = issender
         
         contact.lastMessage = msg

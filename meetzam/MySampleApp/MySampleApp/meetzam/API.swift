@@ -32,7 +32,7 @@ class API {
         urlToPost += "&message=" + spaceFreeMsg!
         return urlToPost
     }
-
+    
     private func timeStampPOSTUrl(chatRoomId: String, timeStamp: String) -> String {
         return rootUrl + "/chatroom/time?" + "chatRoomId=" + chatRoomId + "&timeStamp=" + timeStamp
     }
@@ -44,7 +44,7 @@ class API {
     private func deleteConversationDELETEUrl(chatRoomId: String) -> String {
         return rootUrl + "/conversation?" + "chatRoomId=" + chatRoomId
     }
- 
+    
     private func httpRequest(url: String, method: String) {
         let request = NSMutableURLRequest(url: NSURL(string: url)! as URL,
                                           cachePolicy: .useProtocolCachePolicy,
@@ -62,10 +62,22 @@ class API {
         dataTask.resume()
     }
     
+    private func deleteContactDELETEUrl(userId: String, deleteContact: String) -> String {
+        return rootUrl + "/user/contact?" + "userId=" + userId + "&newMatched=" + deleteContact
+    }
+    
+    private func deleteLikedUserDELETEUrl(userId: String, deleteUser: String) -> String {
+        return rootUrl + "/user/likeduser?" + "userId=" + userId + "&newMatched=" + deleteUser
+    }
+    
+    private func reportUserPOSTUrl(userId: String) -> String {
+        return rootUrl + "/clientservice/reportuser?" + "userId=" + userId
+    }
+    
     // ==================================================================================
     // private section end
     // ==================================================================================
-
+    
     
     
     
@@ -75,19 +87,19 @@ class API {
     
     
     
-    /* 
-        Adds deviceARN to a user in userProfile table identified by userId
-        userId: unique identifier of a user
-        deviceARN: the user's deviceARN to be added to the database
+    /*
+     Adds deviceARN to a user in userProfile table identified by userId
+     userId: unique identifier of a user
+     deviceARN: the user's deviceARN to be added to the database
      */
     func addDeviceARNtoDB(userId: String, deviceARN: String) {
         httpRequest(url: devicePOSTUrl(userId: userId, deviceARN: deviceARN), method: "POST")
     }
     
-
+    
     /*
-        sends a push notification to a user's device, the user is identified by userId
-        userId: unique identifier of a user, which is the receiver of the push notification
+     sends a push notification to a user's device, the user is identified by userId
+     userId: unique identifier of a user, which is the receiver of the push notification
      */
     func pushMatchNotification(userId: String) {
         httpRequest(url: matchPOSTUrl(userId: userId), method: "POST")
@@ -117,5 +129,20 @@ class API {
     func deleteConversation (chatRoomId: String) {
         httpRequest(url: deleteConversationDELETEUrl(chatRoomId: chatRoomId), method: "DELETE")
     }
- 
+    
+    func deleteContact (userId: String, deleteContact: String) {
+        print("==============deleteContact==============")
+        httpRequest(url: deleteContactDELETEUrl(userId: userId, deleteContact: deleteContact), method: "DELETE")
+    }
+    
+    func deleteLiked (userId: String, deleteUser: String)
+    {
+        httpRequest(url: deleteLikedUserDELETEUrl(userId: userId, deleteUser: deleteUser), method: "DELETE")
+    }
+    
+    func reportUser (userId: String)
+    {
+        httpRequest(url: reportUserPOSTUrl(userId: userId), method: "POST")
+    }
+    
 }

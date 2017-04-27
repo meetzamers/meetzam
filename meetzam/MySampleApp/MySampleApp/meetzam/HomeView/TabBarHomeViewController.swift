@@ -26,6 +26,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     var movielist = MovieList()
     var movieView = FrameViewController()
     var user_p = UserProfileToDB()
+    var uplist = [UpcomMovie]()
     
     // Variable ends here
     // ============================================
@@ -61,7 +62,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         perform(#selector(popSignInViewController), with: nil, afterDelay: 0)
         
         // 1.5 attempt to pop first time user view controller
-        perform(#selector(popFirstUserViewController), with: nil, afterDelay: 0)
+//        perform(#selector(popFirstUserViewController), with: nil, afterDelay: 0)
         
         // 2. signinObserver: need to figure it out.
         new_signinObserver = NotificationCenter.default.addObserver(
@@ -96,6 +97,8 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
             //we might be able to discard the movieView thingy
             //since without that the method will run asynchronizedly and return immediately
             SingleMovie().refreshList(movie_list: movielist, view: movieView, user_profile: user_p!)
+            uplist = UpcomMovie().upcomList();
+            //print(uplist.description)
         }
         
     }
@@ -144,15 +147,21 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
     // ============================================
     // Page view functions start here
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        var currentIndex: Int
+        if ((viewController as! FrameViewController).current) {
+            currentIndex = movielist.tableRows.index(of: (viewController as! FrameViewController).movie_info!)!
+        }
+        else {
+            currentIndex = movielist.tableRows.count + uplist.index(of: (viewController as! FrameViewController).up_movie_info!)!
+        }
         
-        let currentMovie = (viewController as! FrameViewController).movie_info
-        let currentIndex = movielist.tableRows.index(of: currentMovie!)
-        
-        if (currentIndex! < (movielist.tableRows.count) - 1) {
+        if (currentIndex < movielist.tableRows.count - 1) {
             let frameVC = FrameViewController()
-            frameVC.movie_info = movielist.tableRows[currentIndex! + 1]
-            print ("liked movies are " + (user_p?.currentLikedMovie.description)!)
-            print("next movie is" + (frameVC.movie_info?.title)!)
+            frameVC.current = true
+            frameVC.movie_info = movielist.tableRows[currentIndex + 1]
+            
+            print("next movie is of index \(currentIndex) with name " + (frameVC.movie_info?.title)!)
+            print("review \(String(describing: frameVC.movie_info?.comment_body))")
             //mush: like
             if (user_p?.currentLikedMovie.contains((frameVC.movie_info?.title)!))! {
                 print("swipe left:FOUND THE MOVIE IN LIKED LIST")
@@ -170,21 +179,50 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
             
             return frameVC
         }
+        else if (currentIndex - movielist.tableRows.count < uplist.count - 1) {
+            let frameVC = FrameViewController()
+            frameVC.current = false
+            frameVC.up_movie_info = uplist[currentIndex - movielist.tableRows.count + 1]
+            
+            print("next movie is \(currentIndex) with name " + (frameVC.up_movie_info?.title)!)
+            //mush: like
+            if (user_p?.currentLikedMovie.contains((frameVC.up_movie_info?.title)!))! {
+                print("swipe left:FOUND THE MOVIE IN LIKED LIST")
+                frameVC.like = true
+            }
+            else {
+                print("swipe left:NOT LIKED")
+            }
+            
+            // turn off isFirstMovieView
+            self.isFirstMovieView = false
+            
+            user_p?.currentLikedMovie.removeAll()
+            UserProfileToDB().getLikedMovies(userId: AWSIdentityManager.default().identityId!, user_profile: user_p!)
+            
+            return frameVC
+
+        }
         
         return nil
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        var currentIndex: Int
+        if ((viewController as! FrameViewController).current) {
+            currentIndex = movielist.tableRows.index(of: (viewController as! FrameViewController).movie_info!)!
+        }
+        else {
+            currentIndex = movielist.tableRows.count + uplist.index(of: (viewController as! FrameViewController).up_movie_info!)!
+        }
         
-        let currentMovie = (viewController as! FrameViewController).movie_info
-        let currentIndex = movielist.tableRows.index(of: currentMovie!)
-        
-        if (currentIndex! > 0) {
+        if (currentIndex > 0 && currentIndex < movielist.tableRows.count + 1) {
             let frameVC = FrameViewController()
-            frameVC.movie_info = movielist.tableRows[currentIndex! - 1]
+            frameVC.current = true
+            frameVC.movie_info = movielist.tableRows[currentIndex - 1]
             
-            print ("liked movies are " + (user_p?.currentLikedMovie.description)!)
-            print("next movie is" + (frameVC.movie_info?.title)!)
+            print("next movie is \(currentIndex) with name " + (frameVC.movie_info?.title)!)
+            print("review \(frameVC.movie_info?.comment_body)")
             //mush: like
             if (user_p?.currentLikedMovie.contains((frameVC.movie_info?.title)!))! {
                 print("swipe right:FOUND THE MOVIE IN LIKED LIST")
@@ -203,7 +241,30 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
             
             return frameVC
         }
+        else if (currentIndex > movielist.tableRows.count) {
+            let frameVC = FrameViewController()
+            frameVC.current = false
+            frameVC.up_movie_info = uplist[currentIndex - movielist.tableRows.count - 1]
         
+            print("next movie is \(currentIndex) with name " + (frameVC.up_movie_info?.title)!)
+            //mush: like
+            if (user_p?.currentLikedMovie.contains((frameVC.up_movie_info?.title)!))! {
+                print("swipe right:FOUND THE MOVIE IN LIKED LIST")
+                frameVC.like = true
+            }
+            else {
+                print("swipe right:NOT LIKED")
+            }
+            
+            
+            // turn off isFirstMovieView
+            self.isFirstMovieView = false
+            
+            user_p?.currentLikedMovie.removeAll()
+            UserProfileToDB().getLikedMovies(userId: AWSIdentityManager.default().identityId!, user_profile: user_p!)
+            
+            return frameVC
+        }
         return nil
         
     }
@@ -233,6 +294,8 @@ class FrameViewController: UIViewController {
     var like = false
     var movie_info = SingleMovie()
     var videoURL = ""
+    var up_movie_info = UpcomMovie()
+    var current = true
     
     // UI var
     let movieTitle = UILabel()
@@ -249,6 +312,9 @@ class FrameViewController: UIViewController {
     let movieRelease = UILabel()
     let movieDirector = UILabel()
     let movieContent = UIScrollView(frame: CGRect(x: 0, y: 22, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 46))
+    let upcomLabel = UILabel()
+    let review_author = UILabel()
+    let review_body = UITextView()
     
     // image view init
     var imageView: UIImageView = {
@@ -280,8 +346,11 @@ class FrameViewController: UIViewController {
     // ACTIONS:
     // Small heart button action (cancel like)
     func cancelLike() {
-        //remove user from movie's liked list
-        SingleMovie().deleteFromCurrentLikedUser(key: movieTitle.text!, userid: AWSIdentityManager.default().identityId!)
+        if (current) {
+            //remove user from movie's liked list
+            SingleMovie().deleteFromCurrentLikedUser(key: movieTitle.text!, userid: AWSIdentityManager.default().identityId!)
+        }
+
         //remove movie from user's liked list
         UserProfileToDB().deleteFromCurrentLikedMovie(key: AWSIdentityManager.default().identityId!, movieTitle: movieTitle.text!)
         // unlike animation
@@ -304,10 +373,13 @@ class FrameViewController: UIViewController {
     
     // Double Tap action
     func doubleTapAction() {
+        if (current) {
+            //add user to movie's liked user list
+            SingleMovie().insertToCurrentLikedUser(key: movieTitle.text!, userid: AWSIdentityManager.default().identityId!)
+        }
+
         //add movie to user's liked movie list
         UserProfileToDB().insertToCurrentLikedMovie(key: AWSIdentityManager.default().identityId!, movieTitle: movieTitle.text!)
-        //add user to movie's liked user list
-        SingleMovie().insertToCurrentLikedUser(key: movieTitle.text!, userid: AWSIdentityManager.default().identityId!)
         
         //        imageView.isUserInteractionEnabled = false // in case if the user trying to do multiple double tap in a short time
         let newX = imageView.bounds.width
@@ -370,18 +442,31 @@ class FrameViewController: UIViewController {
         self.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         self.view.backgroundColor = UIColor.clear
         //mush
-        //SingleMovie().getMovieForDisplay(key: imagekey!, movie_data: movie_info, movieTitle: movieTitle, movieTitleDetailed: movieDetailedInfo, imageView: imageView, moviePopInfo: moviePopInfo)
-        movieTitle.text = movie_info?.title
-        movieDetailedInfo.text = movie_info?.longDescription
-        
-        //mush
-        //imageView.image = movie_info?.image
-        //moviePopInfo.text = movie_info?.pop
-        if (movie_info?.poster_path != nil) {
-            let path = "https://image.tmdb.org/t/p/w780/" + (movie_info?.poster_path)!
-            imageView.loadImageUsingURLString(URLString: path)
+        if (current) {
+            movieTitle.text = movie_info?.title
+            movieDetailedInfo.text = movie_info?.longDescription
             
-            videoURL = "https://www.youtube.com/embed/" + (movie_info?.trailer_key!)! + "?rel=0&showinfo=0&autoplay=1"
+            //mush
+            //imageView.image = movie_info?.image
+            //moviePopInfo.text = movie_info?.pop
+            if (movie_info?.poster_path != nil) {
+                let path = "https://image.tmdb.org/t/p/w780/" + (movie_info?.poster_path)!
+                imageView.loadImageUsingURLString(URLString: path)
+                
+                videoURL = "https://www.youtube.com/embed/" + (movie_info?.trailer_key!)! + "?rel=0&showinfo=0&autoplay=1"
+            }
+        }
+        else {
+            movieTitle.text = up_movie_info?.title
+            movieDetailedInfo.text = up_movie_info?.overview
+            
+            if (up_movie_info?.poster_path != nil) {
+                let path = "https://image.tmdb.org/t/p/w780/" + (up_movie_info?.poster_path)!
+                imageView.loadImageUsingURLString(URLString: path)
+                
+                videoURL = "https://www.youtube.com/embed/" + (up_movie_info?.trailer_key!)! + "?rel=0&showinfo=0&autoplay=1"
+            }
+
         }
         
         // add scroll view
@@ -394,11 +479,14 @@ class FrameViewController: UIViewController {
         //        movieContent.contentSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height*1.775)
         
         // add image view to scroll view
-        imageView.isUserInteractionEnabled = true
-        let doubletap = UITapGestureRecognizer()
-        doubletap.numberOfTapsRequired = 2;
-        doubletap.addTarget(self, action: #selector(FrameViewController.doubleTapAction))
-        imageView.addGestureRecognizer(doubletap)
+        if (current) {
+            imageView.isUserInteractionEnabled = true
+            let doubletap = UITapGestureRecognizer()
+            doubletap.numberOfTapsRequired = 2;
+            doubletap.addTarget(self, action: #selector(FrameViewController.doubleTapAction))
+            imageView.addGestureRecognizer(doubletap)
+        }
+        
         movieContent.addSubview(imageView)
         
         // add movie title in to the scroll view
@@ -413,13 +501,22 @@ class FrameViewController: UIViewController {
         movieDetailedInfo.textColor = UIColor.black
         movieDetailedInfo.backgroundColor = UIColor.clear
         movieDetailedInfo.isEditable = false
+        movieDetailedInfo.sizeToFit()
         movieContent.addSubview(movieDetailedInfo)
-        
-        // resize the detailed info
-        if (movie_info?.longDescription != nil) {
-            movieDetailedInfo.frame = CGRect(x: 6, y: imageView.frame.height + movieTitle.frame.height + 5, width: UIScreen.main.bounds.width - 15, height: movieDetailedInfo.contentSize.height)
+        /*
+        if (current) {
+            // resize the detailed info
+            if (movie_info?.longDescription != nil) {
+                movieDetailedInfo.frame = CGRect(x: 6, y: imageView.frame.height + movieTitle.frame.height + 5, width: UIScreen.main.bounds.width - 15, height: movieDetailedInfo.contentSize.height)
+            }
         }
-        
+        else {
+            // resize the detailed info
+            if (up_movie_info?.overview != nil) {
+                movieDetailedInfo.frame = CGRect(x: 6, y: imageView.frame.height + movieTitle.frame.height + 5, width: UIScreen.main.bounds.width - 15, height: movieDetailedInfo.contentSize.height)
+            }
+
+        }*/
         // add movie trailer
         let htmlStyle = "<style> iframe { margin: 0px !important; padding: 0px !important; border: 0px !important; } html, body { margin: 0px !important; padding: 0px !important; border: 0px !important; width: 100%; height: 100%; } </style>"
         videoView.frame = CGRect(x: 6, y: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + 5, width: UIScreen.main.bounds.width - 15, height: (UIScreen.main.bounds.width - 15)/1.85)
@@ -429,29 +526,90 @@ class FrameViewController: UIViewController {
         // add movie release year in to the scroll view
         movieRelease.frame = CGRect(x: 10, y: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + videoView.frame.height + 10, width: UIScreen.main.bounds.width - 15, height: 23)
         movieRelease.textColor = UIColor.black
-        if (movie_info?.releaseYear != nil) {
-            let strText = NSMutableAttributedString(string: "RELEASE YEAR  " + (movie_info?.releaseYear!)!)
-            strText.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 15)!, range: NSRange(location: 0, length: 13))
-            strText.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Thin", size: 15)!, range: NSRange(location: 13, length: strText.length - 13))
-            movieRelease.attributedText = strText
-            
+        if (current) {
+            if (movie_info?.releaseYear != nil) {
+                let strText = NSMutableAttributedString(string: "RELEASE YEAR  " + (movie_info?.releaseYear!)!)
+                strText.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 15)!, range: NSRange(location: 0, length: 13))
+                strText.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Thin", size: 15)!, range: NSRange(location: 13, length: strText.length - 13))
+                movieRelease.attributedText = strText
+                
+            }
+
+        }
+        else {
+            if (up_movie_info?.release_date != nil) {
+                let strText = NSMutableAttributedString(string: "RELEASE DATE  " + (up_movie_info?.release_date!)!)
+                strText.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 15)!, range: NSRange(location: 0, length: 13))
+                strText.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Thin", size: 15)!, range: NSRange(location: 13, length: strText.length - 13))
+                movieRelease.attributedText = strText
+                
+            }
         }
         movieContent.addSubview(movieRelease)
         
-        // add movie director in to the scrool view
-        movieDirector.frame = CGRect(x: 10, y: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + videoView.frame.height + movieRelease.frame.height + 10, width: UIScreen.main.bounds.width - 15, height: 23)
-        movieDirector.textColor = UIColor.black
-        if (movie_info?.directors != nil) {
+        
+        if (current && (movie_info?.directors != nil)) {
+            // add movie director in to the scrool view
+            movieDirector.frame = CGRect(x: 10, y: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + videoView.frame.height + movieRelease.frame.height + 10, width: UIScreen.main.bounds.width - 15, height: 23)
+            movieDirector.textColor = UIColor.black
+            //if (movie_info?.directors != nil) {
+                
+                
+            //}
             let realDirector = movie_info?.directors.joined(separator: ", ")
             let strText1 = NSMutableAttributedString(string: "DIRECTOR  " + realDirector!)
             strText1.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 15)!, range: NSRange(location: 0, length: 10))
             strText1.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Thin", size: 15)!, range: NSRange(location: 10, length: strText1.length - 10))
             movieDirector.attributedText = strText1
-            
+        }
+        else {
+            movieDirector.frame = CGRect(x: 10, y: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + videoView.frame.height + movieRelease.frame.height, width: UIScreen.main.bounds.width - 15, height: 10)
         }
         movieContent.addSubview(movieDirector)
+
+        // add review author in to the scroll view
+        if (current && (movie_info?.comment_author != nil)) {
+            review_author.frame = CGRect(x: 10, y: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + videoView.frame.height + movieRelease.frame.height + movieDirector.frame.height + 10, width: UIScreen.main.bounds.width - 50, height: 30)
+            //review_author.font = UIFont(name: "HelveticaNeue-Light", size: 15)
+            review_author.textColor = UIColor.black
+            review_author.text = "Review: " + (movie_info?.comment_author!)!
+            
+            let strText = NSMutableAttributedString(string: "Review: " + (movie_info?.comment_author!)!)
+            strText.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Light", size: 15)!, range: NSRange(location: 0, length: 8))
+            strText.addAttribute(NSFontAttributeName, value: UIFont(name: "HelveticaNeue-Thin", size: 15)!, range: NSRange(location: 8, length: strText.length - 8))
+            review_author.attributedText = strText
+            
+            
+        }
+        else {
+            review_author.frame = CGRect(x: 10, y: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + videoView.frame.height + movieRelease.frame.height + movieDirector.frame.height + 10, width: UIScreen.main.bounds.width - 50, height: 10)
+        }
+        movieContent.addSubview(review_author)
         
-        movieContent.contentSize = CGSize(width: UIScreen.main.bounds.width, height: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + videoView.frame.height + movieRelease.frame.height + movieDirector.frame.height + 200)
+        if (current && (movie_info?.comment_body != nil)) {
+            // add review body in to the scroll view
+            review_body.frame = CGRect(x: 6, y: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + videoView.frame.height + movieRelease.frame.height + movieDirector.frame.height + review_author.frame.height + 10, width: UIScreen.main.bounds.width - 15, height: 1000)
+            review_body.text = movie_info?.comment_body
+            review_body.font = UIFont(name: "HelveticaNeue-thin", size: 15)
+            review_body.textColor = UIColor.black
+            review_body.backgroundColor = UIColor.clear
+            review_body.isEditable = false
+            
+            
+            // resize the detailed info
+            review_body.sizeToFit()
+
+        }
+        else {
+            review_body.frame = CGRect(x: 6, y: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + videoView.frame.height + movieRelease.frame.height + movieDirector.frame.height + review_author.frame.height, width: UIScreen.main.bounds.width - 15, height: 10)
+            review_body.backgroundColor = UIColor.clear
+            review_body.isEditable = false
+
+        }
+        movieContent.addSubview(review_body)
+
+        
+        movieContent.contentSize = CGSize(width: UIScreen.main.bounds.width, height: imageView.frame.height + movieTitle.frame.height + movieDetailedInfo.frame.height + videoView.frame.height + movieRelease.frame.height + review_author.frame.height + movieDirector.frame.height + review_body.frame.height + 200)
         
         
         // add small heart
@@ -460,6 +618,16 @@ class FrameViewController: UIViewController {
             self.doHeartButton.alpha = 1
             doHeartButton.frame = CGRect(x: 10 + movieTitle.frame.width, y: imageView.frame.height + 10, width: 25, height: 25)
             movieContent.addSubview(doHeartButton)
+        }
+        if (!current) {
+            upcomLabel.frame = CGRect(x: movieTitle.frame.width, y: imageView.frame.height + 10, width: 50, height: 25)
+            //movieTitle.frame = CGRect(x: 10, y: imageView.frame.height + 5, width: UIScreen.main.bounds.width - 50, height: 30)
+            upcomLabel.text = "UPCOMING"
+            upcomLabel.font = UIFont(name: "HelveticaNeue-Light", size: 8)
+            upcomLabel.textColor = UIColor.black
+            
+            movieContent.addSubview(upcomLabel)
+            
         }
     }
 }
