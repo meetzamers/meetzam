@@ -107,7 +107,7 @@ class SingleMovie : AWSDynamoDBObjectModel ,AWSDynamoDBModeling  {
                             view.imageView.isUserInteractionEnabled = true
                             let doubletap = UITapGestureRecognizer()
                             doubletap.numberOfTapsRequired = 2;
-                            doubletap.addTarget(self, action: #selector(FrameViewController.doubleTapAction))
+                            doubletap.addTarget(view, action: #selector(FrameViewController.doubleTapAction))
                             view.imageView.addGestureRecognizer(doubletap)
                         }
                         

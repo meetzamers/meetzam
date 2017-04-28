@@ -849,7 +849,7 @@ class FirstTimeUserViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         self.animateTextField(textField: textField, up:true)
-        if (textField.placeholder == "Gender *") {
+        if (textField.placeholder == "Gender") {
             if (genderTextField.text == "") {
                 genderTextField.text = genderOption[0]
             }
