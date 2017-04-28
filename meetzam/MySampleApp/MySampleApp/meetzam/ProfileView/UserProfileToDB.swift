@@ -676,6 +676,28 @@ class UserProfileToDB: AWSDynamoDBObjectModel, AWSDynamoDBModeling {
         })
     }
 
+    
+    func getOneUserProfileById(userID: String) -> UserProfileToDB
+    {
+        print("===== getOneUserProfileById =====")
+        var _userProfile = UserProfileToDB()
+        let mapper = AWSDynamoDBObjectMapper.default()
+        print("userid is \(userID)")
+        mapper.load(UserProfileToDB.self, hashKey: userID, rangeKey: nil) .continueWith(executor: AWSExecutor.immediate(), block: { (task:AWSTask!) -> AnyObject! in
+            if let error = task.error as NSError? {
+                print("InsertError: \(error)")
+            }
+            else if let userProfile = task.result as? UserProfileToDB {
+                _userProfile = userProfile
+            }
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            return nil
+        }).waitUntilFinished()
+        print("getUserProfileByIds SUCCESS")
+        return _userProfile!
+    }
+    
+    
     func downloadUserIcon(userID: String) -> URL
     {
         print("===== downloadUserIcon =====")

@@ -86,7 +86,7 @@ class ChatViewController: UICollectionViewController, UICollectionViewDelegateFl
             print(err)
         }
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Simulate", style: .plain, target: self, action: #selector(simulate))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(image: UIImage.init(named: "Refresh"), style: .plain, target: self, action: #selector(simulate))
         
     }
     
