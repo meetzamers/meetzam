@@ -22,6 +22,7 @@
 		5DD94CEB1E66149500B7DD80 /* LikedMoviesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD94CEA1E66149500B7DD80 /* LikedMoviesView.swift */; };
 		5DD94CED1E6614F800B7DD80 /* MovieCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD94CEC1E6614F800B7DD80 /* MovieCollectionCell.swift */; };
 		5DD94CEF1E67288F00B7DD80 /* TopThreeMovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD94CEE1E67288F00B7DD80 /* TopThreeMovieCell.swift */; };
+		8B47D7711EB2C8C20039BCEA /* TestCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B47D7701EB2C8C20039BCEA /* TestCases.swift */; };
 		8B49E39B1E5E708B0050F8AB /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B49E39A1E5E708B0050F8AB /* EditProfileViewController.swift */; };
 		8B84DB6B1E6904A600C2941F /* UserProfileToDB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B84DB6A1E6904A600C2941F /* UserProfileToDB.swift */; };
 		C40661BA1E5CBC58005D2145 /* MatchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40661B91E5CBC58005D2145 /* MatchViewController.swift */; };
@@ -123,6 +124,16 @@
 		E7A30F04FFE8EDF300000000 /* AWSCognito.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1DD70E29CD2C2CA200000000 /* AWSCognito.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E7A30F04FFE8EDF300000001 /* AWSCognito.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DD70E29CD2C2CA200000000 /* AWSCognito.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8B47D76A1EB2C8910039BCEA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 96C847930000000000000000 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E66DC04E0000000000000000;
+			remoteInfo = MySampleApp;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		FAF5FAC90000000000000000 /* Embed Frameworks */ = {
@@ -231,6 +242,10 @@
 		5DD94CEA1E66149500B7DD80 /* LikedMoviesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LikedMoviesView.swift; path = MySampleApp/meetzam/ProfileView/LikedMoviesView.swift; sourceTree = SOURCE_ROOT; };
 		5DD94CEC1E6614F800B7DD80 /* MovieCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MovieCollectionCell.swift; path = MySampleApp/meetzam/ProfileView/MovieCollectionCell.swift; sourceTree = SOURCE_ROOT; };
 		5DD94CEE1E67288F00B7DD80 /* TopThreeMovieCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TopThreeMovieCell.swift; path = MySampleApp/meetzam/ProfileView/TopThreeMovieCell.swift; sourceTree = SOURCE_ROOT; };
+		8B47D7651EB2C8910039BCEA /* Sprint3TestCases.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Sprint3TestCases.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B47D7691EB2C8910039BCEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8B47D76F1EB2C8C20039BCEA /* Sprint3TestCases-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Sprint3TestCases-Bridging-Header.h"; sourceTree = "<group>"; };
+		8B47D7701EB2C8C20039BCEA /* TestCases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCases.swift; sourceTree = "<group>"; };
 		8B49E39A1E5E708B0050F8AB /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditProfileViewController.swift; path = MySampleApp/meetzam/ProfileView/EditProfileViewController.swift; sourceTree = SOURCE_ROOT; };
 		8B84DB6A1E6904A600C2941F /* UserProfileToDB.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserProfileToDB.swift; path = MySampleApp/meetzam/ProfileView/UserProfileToDB.swift; sourceTree = SOURCE_ROOT; };
 		C40661B91E5CBC58005D2145 /* MatchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MatchViewController.swift; path = MySampleApp/meetzam/MatchView/MatchViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -295,6 +310,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8B47D7621EB2C8910039BCEA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -305,6 +327,16 @@
 				185099731EA1B8B0001FA648 /* NSDate+Util.swift */,
 			);
 			name = utilities;
+			sourceTree = "<group>";
+		};
+		8B47D7661EB2C8910039BCEA /* Sprint3TestCases */ = {
+			isa = PBXGroup;
+			children = (
+				8B47D7691EB2C8910039BCEA /* Info.plist */,
+				8B47D7701EB2C8C20039BCEA /* TestCases.swift */,
+				8B47D76F1EB2C8C20039BCEA /* Sprint3TestCases-Bridging-Header.h */,
+			);
+			path = Sprint3TestCases;
 			sourceTree = "<group>";
 		};
 		B401C979142D220F00000000 /* NoSQL */ = {
@@ -492,6 +524,7 @@
 			isa = PBXGroup;
 			children = (
 				1DD70E29F5DB40AB00000000 /* MySampleApp.app */,
+				8B47D7651EB2C8910039BCEA /* Sprint3TestCases.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -509,6 +542,7 @@
 		B401C979C9A9E59200000000 /* mainGroup */ = {
 			isa = PBXGroup;
 			children = (
+				8B47D7661EB2C8910039BCEA /* Sprint3TestCases */,
 				B401C979BAD7438500000000 /* Frameworks */,
 				B401C979BAF0161800000000 /* Products */,
 				B401C979CB3B363600000000 /* MySampleApp */,
@@ -682,6 +716,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		8B47D7641EB2C8910039BCEA /* Sprint3TestCases */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8B47D76E1EB2C8910039BCEA /* Build configuration list for PBXNativeTarget "Sprint3TestCases" */;
+			buildPhases = (
+				8B47D7611EB2C8910039BCEA /* Sources */,
+				8B47D7621EB2C8910039BCEA /* Frameworks */,
+				8B47D7631EB2C8910039BCEA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8B47D76B1EB2C8910039BCEA /* PBXTargetDependency */,
+			);
+			name = Sprint3TestCases;
+			productName = Sprint3TestCases;
+			productReference = 8B47D7651EB2C8910039BCEA /* Sprint3TestCases.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		E66DC04E0000000000000000 /* MySampleApp */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 218C37090000000000000001 /* Build configuration list for PBXNativeTarget "MySampleApp" */;
@@ -709,9 +761,15 @@
 		96C847930000000000000000 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0820;
+				LastSwiftUpdateCheck = 0830;
 				LastUpgradeCheck = 0830;
 				TargetAttributes = {
+					8B47D7641EB2C8910039BCEA = {
+						CreatedOnToolsVersion = 8.3.2;
+						LastSwiftMigration = 0830;
+						ProvisioningStyle = Automatic;
+						TestTargetID = E66DC04E0000000000000000;
+					};
 					E66DC04E0000000000000000 = {
 						DevelopmentTeam = R4H6V5GYSU;
 						ProvisioningStyle = Automatic;
@@ -732,6 +790,7 @@
 			projectRoot = "";
 			targets = (
 				E66DC04E0000000000000000 /* MySampleApp */,
+				8B47D7641EB2C8910039BCEA /* Sprint3TestCases */,
 			);
 		};
 /* End PBXProject section */
@@ -757,6 +816,13 @@
 				E7A30F049002081F00000000 /* UserFiles.storyboard in Resources */,
 				E7A30F04FA69C05800000000 /* CloudLogicAPI.storyboard in Resources */,
 				E7A30F04A0D4545E00000000 /* DemoView.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8B47D7631EB2C8910039BCEA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -886,7 +952,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8B47D7611EB2C8910039BCEA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8B47D7711EB2C8C20039BCEA /* TestCases.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8B47D76B1EB2C8910039BCEA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E66DC04E0000000000000000 /* MySampleApp */;
+			targetProxy = 8B47D76A1EB2C8910039BCEA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		49524373386D956C00000000 /* Release */ = {
@@ -1041,6 +1123,45 @@
 			};
 			name = Debug;
 		};
+		8B47D76C1EB2C8910039BCEA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				INFOPLIST_FILE = Sprint3TestCases/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = meetzam.Sprint3TestCases;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = "Sprint3TestCases/Sprint3TestCases-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = MySampleApp;
+			};
+			name = Debug;
+		};
+		8B47D76D1EB2C8910039BCEA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				INFOPLIST_FILE = Sprint3TestCases/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = meetzam.Sprint3TestCases;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Sprint3TestCases/Sprint3TestCases-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = MySampleApp;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1061,6 +1182,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		8B47D76E1EB2C8910039BCEA /* Build configuration list for PBXNativeTarget "Sprint3TestCases" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8B47D76C1EB2C8910039BCEA /* Debug */,
+				8B47D76D1EB2C8910039BCEA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 

@@ -70,6 +70,11 @@ class ContactProfile: UIViewController {
 //            UIBarButtonItem(title: "Chat", style: .plain, target: self, action: #selector(goChat))
 
     }
+    
+    // report button
+    @IBAction func reportButton(_ sender: Any) {
+        
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -139,7 +144,7 @@ class ContactProfile: UIViewController {
     var moviePic3 = UIImageView()
     
     var moviePic4 = UIImageView()
-
+    
     @IBOutlet weak var mainScrollView: UIScrollView!
     @IBOutlet weak var mainView: UIView!
 }
