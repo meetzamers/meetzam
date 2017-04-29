@@ -62,7 +62,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         perform(#selector(popSignInViewController), with: nil, afterDelay: 0)
         
         // 1.5 attempt to pop first time user view controller
-//        perform(#selector(popFirstUserViewController), with: nil, afterDelay: 0)
+        perform(#selector(popFirstUserViewController), with: nil, afterDelay: 0)
         
         // 2. signinObserver: need to figure it out.
         new_signinObserver = NotificationCenter.default.addObserver(
@@ -133,7 +133,7 @@ class TabBarHomeViewController:  UIPageViewController, UIPageViewControllerDataS
         // TODO: check if this is new user:
         if (AWSIdentityManager.default().isLoggedIn) {
             if let myID = AWSIdentityManager.default().identityId {
-                if (!UserProfileToDB().isUserIDinTable(_userId: myID)) {
+                if ((UserProfileToDB().getOneUserProfileById(userID: myID).displayName) == nil) {
                     print("First Time User")
                     let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
                     let viewController = storyboard.instantiateViewController(withIdentifier: "FirstTimeUser")
